@@ -1,0 +1,15 @@
+.card-body {
+    padding: .75rem .5rem;
+}
+
+.container-fluid {
+    max-width: 1800px;
+}
+
+* {
+    font-family: 'Rubik', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
+.text-muted {
+    font-weight: 300;
+}

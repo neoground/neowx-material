@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>NeoWX Material</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="css/mdb.min.css">
+  <!-- Weather Icons -->
+  <link rel="stylesheet" href="weather-icons/css/weather-icons.min.css">
+  <link rel="stylesheet" href="weather-icons/css/weather-icons-wind.min.css">
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="rgba-grey-slight">
+
+<header>
+
+  <nav class="navbar navbar-expand-lg navbar-dark indigo">
+    <a class="navbar-brand" href="#"><strong>Altenstadt, DE</strong><br>
+      <span class="font-small">Sub Heading</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="ml-3 collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mr-auto">
+        <li class="nav-item  mr-3 active">
+          <a class="nav-link" href="#">Current <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item mr-3">
+          <a class="nav-link" href="#">Yesterday</a>
+        </li>
+        <li class="nav-item mr-3">
+          <a class="nav-link" href="#">Week</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="archiveDropdownLink" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Archive
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="archiveDropdownLink">
+            <li class="dropdown-submenu">
+              <a href="#">2020</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item">Year</a>
+                <a class="dropdown-item">January</a>
+                <a class="dropdown-item">February</a>
+                <a class="dropdown-item">March</a>
+                <a class="dropdown-item">April</a>
+              </div>
+            </li>
+
+            <li class="dropdown-submenu">
+              <a href="#">2019</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item">Year</a>
+                <a class="dropdown-item">January</a>
+                <a class="dropdown-item">February</a>
+                <a class="dropdown-item">March</a>
+                <a class="dropdown-item">April</a>
+              </div>
+            </li>
+
+            <li class="dropdown-submenu">
+              <a href="#">2018</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item">Year</a>
+                <a class="dropdown-item">January</a>
+                <a class="dropdown-item">February</a>
+                <a class="dropdown-item">March</a>
+                <a class="dropdown-item">April</a>
+              </div>
+            </li>
+
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <ul class="navbar-nav nav-flex-icons" style="line-height: 1.75; padding-top: .5rem">
+      <li class="nav-item mr-4 text-white">
+        <i class="wi wi-sunrise mr-1" style="opacity: .75"></i> 06:55:11 <br>
+        <i class="wi wi-sunset mr-1" style="opacity: .75"></i> 20:00:40
+      </li>
+      <li class="nav-item mr-4 text-white" style="line-height: 1.75">
+        <i class="wi wi-moonrise mr-1" style="opacity: .75"></i> 13:40:27 <br>
+        <i class="wi wi-moonset mr-1" style="opacity: .75"></i> 05:02:08
+      </li>
+      <li class="nav-item mr-4 text-white" style="line-height: 1.75">
+        <i class="wi wi-moon-waning-crescent-3 mr-1" style="opacity: .75"></i> 38% <br>
+        <a href="#" class="text-white" style="opacity: .6">More</a>
+      </li>
+    </ul>
+  </nav>
+
+</header>
+
+<main>
+
+  <div class="container-fluid">
+
+    <div class="row my-4">
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">Outside Temperature</h5>
+
+            <div class="row">
+              <div class="col-12 col-md-3 text-muted font-small">
+                0,7°C <br>
+                (03:56)
+              </div>
+              <div class="col-12 col-md-6">
+                <h4 class="h2-responsive">17,5°C</h4>
+              </div>
+              <div class="col-12 col-md-3 text-muted font-small">
+                12,9°C <br>
+                (14:08)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">Outside Humidity</h5>
+
+            <div class="row">
+              <div class="col-12 col-md-3 text-muted font-small">
+                50% <br>
+                (03:56)
+              </div>
+              <div class="col-12 col-md-6">
+                <h4 class="h2-responsive">65%</h4>
+              </div>
+              <div class="col-12 col-md-3 text-muted font-small">
+                84% <br>
+                (14:08)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">Barometer <i class="wi wi-direction-up-right" title="Trend: 1,6 hPa" data-toggle="tooltip"></i></h5>
+
+            <div class="row">
+              <div class="col-12 col-md-3 text-muted font-small">
+                1011,8 hPa <br>
+                (03:56)
+              </div>
+              <div class="col-12 col-md-6">
+                <h4 class="h3-responsive">1019,5 hPa</h4>
+              </div>
+              <div class="col-12 col-md-3 text-muted font-small">
+                1019,9 hPa <br>
+                (14:08)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">Inside Temperature</h5>
+
+            <div class="row">
+              <div class="col-12 col-md-3 text-muted font-small">
+                0,7°C <br>
+                (03:56)
+              </div>
+              <div class="col-12 col-md-6">
+                <h4 class="h2-responsive">17,5°C</h4>
+              </div>
+              <div class="col-12 col-md-3 text-muted font-small">
+                12,9°C <br>
+                (14:08)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">Inside Humidity</h5>
+
+            <div class="row">
+              <div class="col-12 col-md-3 text-muted font-small">
+                50% <br>
+                (03:56)
+              </div>
+              <div class="col-12 col-md-6">
+                <h4 class="h2-responsive">65%</h4>
+              </div>
+              <div class="col-12 col-md-3 text-muted font-small">
+                84% <br>
+                (14:08)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">Wind <i class="wi wi-wind towards-135-deg" title="135°" data-toggle="tooltip"></i></h5>
+            <div class="row">
+              <div class="col-12 col-md-3 text-muted font-small">
+                88 km/h <br>
+                Avg
+              </div>
+              <div class="col-12 col-md-6">
+                <h4 class="h3-responsive">
+                  34 km/h SSE
+                </h4>
+              </div>
+              <div class="col-12 col-md-3 text-muted font-small">
+                99 km/h <i class="wi wi-wind towards-135-deg"></i> <br>
+                (14:08)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">Rain</h5>
+
+            <div class="row">
+              <div class="col-12 col-md-3 text-muted font-small">
+                99,9 mm/hr <br>
+                Rain Rate
+              </div>
+              <div class="col-12 col-md-6">
+                <h4 class="h2-responsive">88,8 mm</h4>
+              </div>
+              <div class="col-12 col-md-3 text-muted font-small">
+                99,9 mm/hr <br>
+                (14:08)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">Dewpoint</h5>
+
+            <div class="row">
+              <div class="col-12 col-md-3 text-muted font-small">
+                10,1°C <br>
+                (03:56)
+              </div>
+              <div class="col-12 col-md-6">
+                <h4 class="h2-responsive">10,5°C</h4>
+              </div>
+              <div class="col-12 col-md-3 text-muted font-small">
+                10,9°C <br>
+                (14:08)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">UV Index</h5>
+            <div class="row">
+              <div class="col-12 col-md-3 text-muted font-small">
+                0,0 <br>
+                (00:00)
+              </div>
+              <div class="col-12 col-md-6">
+                <h4 class="h3-responsive">
+                  12,4
+                </h4>
+              </div>
+              <div class="col-12 col-md-3 text-muted font-small">
+                16,9<br>
+                (16:08)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">Wind Chill</h5>
+
+            <div class="row">
+              <div class="col-12 col-md-3 text-muted font-small">
+                10,7°C <br>
+                (03:56)
+              </div>
+              <div class="col-12 col-md-6">
+                <h4 class="h2-responsive">17,5°C</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">Heat Index</h5>
+
+            <div class="row">
+              <div class="col-12 col-md-3 text-muted font-small"></div>
+              <div class="col-12 col-md-6">
+                <h4 class="h2-responsive">17,5°C</h4>
+              </div>
+              <div class="col-12 col-md-3 text-muted font-small">
+                10,7°C <br>
+                (03:56)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row mt-5 mb-4">
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive">Temperatures</h5>
+
+            <img src="demo/daytempdew.png" class="img-fluid">
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="page-footer font-small indigo pt-4">
+
+  <!-- Footer Links -->
+  <div class="container-fluid text-center text-md-left">
+
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-md-6 mt-md-0 mt-3">
+
+        <!-- Content -->
+        <h5 class="text-uppercase">About this station</h5>
+        <p>
+          Station: Vantage Vue <br>
+          Last Update: 03.04.2020 22:56:00
+        </p>
+        <p>
+          Custom Text
+        </p>
+
+      </div>
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none pb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="text-uppercase">Links</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!">Link 1</a>
+          </li>
+          <li>
+            <a href="#!">Link 2</a>
+          </li>
+          <li>
+            <a href="#!">Link 3</a>
+          </li>
+          <li>
+            <a href="#!">Link 4</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="text-uppercase">Links</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!">Link 1</a>
+          </li>
+          <li>
+            <a href="#!">Link 2</a>
+          </li>
+          <li>
+            <a href="#!">Link 3</a>
+          </li>
+          <li>
+            <a href="#!">Link 4</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">
+    &copy; 2020 Sven
+    &bull; Powered by <a href="https://weewx.com" target="_blank">weewx</a> v3.9.2
+    &bull; <a href="https://projects.neoground.com/neowx-material" target="_blank">NeoWX Material</a> by Neoground GmbH
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+
+  <!-- jQuery -->
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <!-- Your custom scripts (optional) -->
+  <script type="text/javascript">
+    $(document).ready(function() {
+      // Archive sub menu handling especially for mobile
+      $('.dropdown-submenu > a').on("click", function(e) {
+        var submenu = $(this);
+        $('.dropdown-submenu .dropdown-menu').removeClass('show');
+        submenu.next('.dropdown-menu').addClass('show');
+        e.stopPropagation();
+      });
+
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      });
+    });
+  </script>
+
+</body>
+</html>
