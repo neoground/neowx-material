@@ -10,6 +10,10 @@
     font-weight: 300;
 }
 
+.main-bg {
+    background: rgba(158,158,158,0.1);
+}
+
 /* very large layout */
 @media screen and (min-width: 1660px) {
     .temprow {
@@ -40,5 +44,20 @@
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
+    .main-bg {
+        background: #2e2e2e !important;
+    }
 
+    .card, .dropdown-menu, .dropdown-menu a {
+        background-color: #444 !important;
+        color: #ddd !important;
+    }
+
+    .text-muted {
+        color: #aaa !important;
+    }
+
+    .indigo-text {
+        color: #7E88C6 !important;
+    }
 }
