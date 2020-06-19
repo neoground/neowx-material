@@ -2,14 +2,43 @@
     padding: .75rem .5rem;
 }
 
-.container-fluid {
-    max-width: 1800px;
-}
-
 * {
     font-family: 'Rubik', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
 
 .text-muted {
     font-weight: 300;
+}
+
+/* very large layout */
+@media screen and (min-width: 1660px) {
+    .temprow {
+        display: flex;
+        width: 50%;
+        margin: 1rem 0 0 0 !important;
+    }
+
+    .graphrow {
+        display: flex;
+        width: 50%;
+        margin: 1rem 0 0 0 !important;
+    }
+
+    .container-fluid {
+        display: flex;
+    }
+
+    .temprow .col-xl-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .rowdivider {
+        display: none !important;
+    }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+
 }
