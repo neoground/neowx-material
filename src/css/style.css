@@ -28,8 +28,8 @@
         margin: 1rem 0 0 0 !important;
     }
 
-    .container-fluid {
-        display: flex;
+    .d-flex-xxl {
+        display: flex !important;
     }
 
     .temprow .col-xl-4 {
@@ -59,5 +59,9 @@
 
     .indigo-text {
         color: #7E88C6 !important;
+    }
+
+    .text-dark {
+        color: #ccc !important;
     }
 }

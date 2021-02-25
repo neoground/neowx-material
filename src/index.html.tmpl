@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Weather | $station.location</title>
+  #include "head.inc"
+</head>
+<body class="main-bg">
+
+#include "header.inc"
+
+<main>
+
+  <div class="container-fluid d-flex-xxl">
+
+    <div class="row my-4 temprow align-content-start">
+
+      <div class="col-12 mb-4 text-center">
+        <h2 class="h2-responsive text-dark">$Extras.Translations.current</h2>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.outTemp</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.outTemp.min <br>
+                ($day.outTemp.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.outTemp</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.outTemp.max <br>
+                ($day.outTemp.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.outHumidity</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.outHumidity.min <br>
+                ($day.outHumidity.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.outHumidity</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.outHumidity.max <br>
+                ($day.outHumidity.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.barometer
+              #if $trend.barometer.raw > 0
+              <i class="wi wi-direction-up-right" title="Trend: $trend.barometer" data-toggle="tooltip"></i>
+              #else
+              <i class="wi wi-direction-down-right" title="Trend: $trend.barometer" data-toggle="tooltip"></i>
+              #end if
+            </h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.barometer.min <br>
+                ($day.barometer.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h3-responsive">$current.barometer</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.barometer.max <br>
+                ($day.barometer.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.inTemp</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.inTemp.min <br>
+                ($day.inTemp.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.inTemp</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.inTemp.max <br>
+                ($day.inTemp.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.inHumidity</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.inHumidity.min <br>
+                ($day.inHumidity.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.inHumidity</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.inHumidity.max <br>
+                ($day.inHumidity.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.windSpeed <i class="wi wi-wind from-$current.windDir.formatted-deg" title="$current.windDir.formatted°" data-toggle="tooltip"></i></h5>
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.wind.avg <br>
+                Avg
+              </div>
+              <div class="col-6">
+                <h4 class="h3-responsive">
+                  $current.windSpeed $current.windDir.ordinal_compass
+                </h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.wind.max $day.wind.gustdir.ordinal_compass <i class="wi wi-wind from-$day.wind.gustdir.formatted-deg" title="$day.wind.gustdir.formatted°" data-toggle="tooltip"></i> <br>
+                ($day.wind.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.rain</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $current.rainRate <br>
+                Rain Rate
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$day.rain.sum</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.rainRate.max <br>
+                ($day.rainRate.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.dewpoint</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.dewpoint.min <br>
+                ($day.dewpoint.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.dewpoint</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.dewpoint.max <br>
+                ($day.dewpoint.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.windchill</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.windchill.min <br>
+                ($day.windchill.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.windchill</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.windchill.max <br>
+                ($day.windchill.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.heatindex</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.heatindex.min <br>
+                ($day.heatindex.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.heatindex</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.heatindex.max <br>
+                ($day.heatindex.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      #if $day.UV.has_data
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.UV</h5>
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.UV.min <br>
+                ($day.UV.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.UV</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.UV.max <br>
+                ($day.UV.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.ET.has_data and $day.ET.sum.raw is not None and $day.ET.sum.raw > 0.0
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.ET</h5>
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.ET.min <br>
+                ($day.ET.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.ET</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.ET.max <br>
+                ($day.ET.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.radiation.has_data
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.radiation</h5>
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.radiation.min <br>
+                ($day.radiation.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.radiation</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.radiationmax <br>
+                ($day.radiation.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.extraTemp1.has_data
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.extraTemp1</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.extraTemp1.min <br>
+                ($day.extraTemp1.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.extraTemp1</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.extraTemp1.max <br>
+                ($day.extraTemp1.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.extraTemp2.has_data
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.extraTemp2</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.extraTemp2.min <br>
+                ($day.extraTemp2.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.extraTemp2</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.extraTemp2.max <br>
+                ($day.extraTemp2.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.extraTemp3.has_data
+      <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive indigo-text">$obs.label.extraTemp3</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.extraTemp3.min <br>
+                ($day.extraTemp3.mintime.format("%H:%M"))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.extraTemp3</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.extraTemp3.max <br>
+                ($day.extraTemp3.maxtime.format("%H:%M"))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+    </div>
+
+    <hr class="my-4 rowdivider">
+
+    <div class="row mt-5 mb-4 graphrow">
+      #include "graphs.inc"
+    </div>
+
+  </div>
+
+</main>
+
+#include "footer.inc"
+#include "js.inc"
+
+  <!-- Charts -->
+  <script type="text/javascript">
+    var theme_mode = 'light';
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      theme_mode = 'dark';
+    }
+
+    // ---
+    // outTemp + Dewpoint
+    // ---
+
+    var options = {
+      #include "graph_area_config.inc"
+      series: [
+        {
+          name: '$obs.label.outTemp',
+          data: [
+            #for $record in $span($day_delta=1).spans(interval=600)
+            [$record.start.raw, $record.outTemp.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            #end for
+          ]
+        },
+        {
+          name: '$obs.label.dewpoint',
+          data: [
+            #for $record in $span($day_delta=1).spans(interval=600)
+            [$record.start.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            #end for
+          ]
+        }
+      ]
+    }
+
+    var chart = new ApexCharts(document.querySelector('#tempchart'), options)
+    chart.render()
+
+
+    // ---
+    // Wind chill + Heat index
+    // ---
+
+    var options2 = {
+      #include "graph_area_config.inc"
+      series: [
+        {
+          name: '$obs.label.windchill',
+          data: [
+            #for $record in $span($day_delta=1).spans(interval=600)
+                    [$record.start.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            #end for
+          ]
+        },
+        {
+          name: '$obs.label.heatindex',
+          data: [
+            #for $record in $span($day_delta=1).spans(interval=600)
+            [$record.start.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            #end for
+          ]
+        }
+      ]
+    }
+
+    var chart2 = new ApexCharts(document.querySelector('#wchichart'), options2)
+    chart2.render()
+
+    // ---
+    // Barometer
+    // ---
+
+    var options3 = {
+      #include "graph_area_config.inc"
+      series: [
+        {
+          name: '$obs.label.barometer',
+          data: [
+            #for $record in $span($day_delta=1).spans(interval=600)
+            [$record.start.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            #end for
+          ]
+        }
+      ]
+    }
+
+    var chart3 = new ApexCharts(document.querySelector('#barometerchart'), options3)
+    chart3.render()
+
+    // ---
+    // Rain
+    // ---
+
+    var options4 = {
+      #include "graph_bar_config.inc"
+      series: [
+        {
+          name: '$obs.label.rain',
+          data: [
+            #for $record in $span($day_delta=1).spans(interval=3600)
+                    [$record.start.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False)],
+            #end for
+          ]
+        }
+      ]
+    }
+
+    var chart4 = new ApexCharts(document.querySelector('#rainchart'), options4)
+    chart4.render()
+
+    // ---
+    // Wind
+    // ---
+
+    var options5 = {
+      #include "graph_area_config.inc"
+      series: [
+        {
+          name: '$obs.label.windSpeed',
+          data: [
+            #for $record in $span($day_delta=1).spans(interval=600)
+                    [$record.start.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False)],
+            #end for
+          ]
+        },
+        {
+          name: '$obs.label.windGust',
+          data: [
+            #for $record in $span($day_delta=1).spans(interval=600)
+            [$record.start.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False)],
+            #end for
+          ]
+        }
+      ]
+    }
+
+    var chart5 = new ApexCharts(document.querySelector('#windchart'), options5)
+    chart5.render()
+
+    // ---
+    // outHumidity
+    // ---
+
+    var options6 = {
+        #include "graph_area_config.inc"
+        series: [
+          {
+            name: '$obs.label.outHumidity',
+            data: [
+              #for $record in $span($day_delta=1).spans(interval=600)
+                      [$record.start.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False)],
+              #end for
+            ]
+          }
+        ]
+    }
+
+    var chart6 = new ApexCharts(document.querySelector('#humiditychart'), options6)
+    chart6.render()
+
+    // ---
+    // Build wind vector diagram
+    // ---
+
+    var vector_data = {
+      'N': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+      'NE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+      'E': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+      'SE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+      'S': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+      'SW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+      'W': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+      'NW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+    };
+
+    var raw_data = [
+    #for $record in $span($day_delta=1).spans(interval=600)
+    {
+      'dir': "$record.windDir.avg.raw",
+      'speed': "$record.windSpeed.avg.raw",
+      'max': "$record.windGust.max.raw"
+    },
+    #end for
+    ];
+
+    raw_data.forEach(function(item) {
+      var vec_dir = parseInt(item.dir);
+      var vec_speed = parseFloat(item.speed);
+      var max_speed = parseFloat(item.max);
+
+      if(typeof vec_dir === 'number') {
+        var vec_key = false;
+
+        // Detect key based on vec direction (0-360). 45° steps, using the middle +- 45/2=22.5
+        if(vec_dir > 337.5 || vec_dir <= 22.5) {
+          vec_key = 'N';
+        }
+        if(vec_dir > 22.5 && vec_dir <= 67.5) {
+          vec_key = 'NE';
+        }
+        if(vec_dir > 67.5 && vec_dir <= 112.5) {
+          vec_key = 'E';
+        }
+        if(vec_dir > 112.5 && vec_dir <= 157.5) {
+          vec_key = 'SE';
+        }
+        if(vec_dir > 157.5 && vec_dir <= 202.5) {
+          vec_key = 'S';
+        }
+        if(vec_dir > 202.5 && vec_dir <= 247.5) {
+          vec_key = 'SW';
+        }
+        if(vec_dir > 247.5 && vec_dir <= 292.5) {
+          vec_key = 'W';
+        }
+        if(vec_dir > 292.5 && vec_dir <= 337.5) {
+          vec_key = 'NW';
+        }
+
+        if(vec_key !== false) {
+          vector_data[vec_key]['sum'] += vec_speed;
+          vector_data[vec_key]['amt']++;
+
+          if(max_speed > vector_data[vec_key]['max']) {
+            vector_data[vec_key]['max'] = max_speed;
+          }
+        }
+
+      }
+    });
+
+    // Finally build arrays for chart
+    var avg_values = [];
+    var max_values = [];
+    Object.keys(vector_data).forEach(function (item) {
+      if(vector_data[item]['amt'] > 0) {
+        avg_values.push(vector_data[item]['sum'] / vector_data[item]['amt']);
+      } else {
+        avg_values.push(0);
+      }
+
+      max_values.push(vector_data[item]['max'])
+    });
+
+    // ---
+    // Wind Vector
+    // ---
+
+    var options7 = {
+      #include "graph_radar_config.inc"
+      series: [
+        {
+          name: '$obs.label.windSpeed',
+          data: avg_values
+        },
+        {
+          name: '$obs.label.windGust',
+          data: max_values
+        },
+      ]
+    }
+
+    var chart7 = new ApexCharts(document.querySelector('#windvectorchart'), options7)
+    chart7.render()
+  </script>
+
+</body>
+</html>
