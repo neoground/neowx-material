@@ -26,14 +26,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).outTemp.min <br>
-                ($day($days_ago=1).outTemp.mintime.format("%H:%M"))
+                ($day($days_ago=1).outTemp.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).outTemp.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).outTemp.max <br>
-                ($day($days_ago=1).outTemp.maxtime.format("%H:%M"))
+                ($day($days_ago=1).outTemp.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -48,14 +48,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).outHumidity.min <br>
-                ($day($days_ago=1).outHumidity.mintime.format("%H:%M"))
+                ($day($days_ago=1).outHumidity.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).outHumidity.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).outHumidity.max <br>
-                ($day($days_ago=1).outHumidity.maxtime.format("%H:%M"))
+                ($day($days_ago=1).outHumidity.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -70,14 +70,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).barometer.min <br>
-                ($day($days_ago=1).barometer.mintime.format("%H:%M"))
+                ($day($days_ago=1).barometer.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h3-responsive">$day($days_ago=1).barometer.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).barometer.max <br>
-                ($day($days_ago=1).barometer.maxtime.format("%H:%M"))
+                ($day($days_ago=1).barometer.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -93,14 +93,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).inTemp.min <br>
-                ($day($days_ago=1).inTemp.mintime.format("%H:%M"))
+                ($day($days_ago=1).inTemp.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).inTemp.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).inTemp.max <br>
-                ($day($days_ago=1).inTemp.maxtime.format("%H:%M"))
+                ($day($days_ago=1).inTemp.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -115,14 +115,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).inHumidity.min <br>
-                ($day($days_ago=1).inHumidity.mintime.format("%H:%M"))
+                ($day($days_ago=1).inHumidity.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).inHumidity.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).inHumidity.max <br>
-                ($day($days_ago=1).inHumidity.maxtime.format("%H:%M"))
+                ($day($days_ago=1).inHumidity.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).wind.max $day($days_ago=1).wind.gustdir.ordinal_compass <i class="wi wi-wind from-$day($days_ago=1).wind.gustdir.formatted-deg" title="$day($days_ago=1).wind.gustdir.formatted°" data-toggle="tooltip"></i> <br>
-                ($day($days_ago=1).wind.maxtime.format("%H:%M"))
+                ($day($days_ago=1).wind.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -166,7 +166,7 @@
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).rainRate.max <br>
-                ($day($days_ago=1).rainRate.maxtime.format("%H:%M"))
+                ($day($days_ago=1).rainRate.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -181,14 +181,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).dewpoint.min <br>
-                ($day($days_ago=1).dewpoint.mintime.format("%H:%M"))
+                ($day($days_ago=1).dewpoint.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).dewpoint.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).dewpoint.max <br>
-                ($day($days_ago=1).dewpoint.maxtime.format("%H:%M"))
+                ($day($days_ago=1).dewpoint.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -203,14 +203,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).windchill.min <br>
-                ($day($days_ago=1).windchill.mintime.format("%H:%M"))
+                ($day($days_ago=1).windchill.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).windchill.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).windchill.max <br>
-                ($day($days_ago=1).windchill.maxtime.format("%H:%M"))
+                ($day($days_ago=1).windchill.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -225,14 +225,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).heatindex.min <br>
-                ($day($days_ago=1).heatindex.mintime.format("%H:%M"))
+                ($day($days_ago=1).heatindex.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).heatindex.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).heatindex.max <br>
-                ($day($days_ago=1).heatindex.maxtime.format("%H:%M"))
+                ($day($days_ago=1).heatindex.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -247,14 +247,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).UV.min <br>
-                ($day($days_ago=1).UV.mintime.format("%H:%M"))
+                ($day($days_ago=1).UV.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).UV.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).UV.max <br>
-                ($day($days_ago=1).UV.maxtime.format("%H:%M"))
+                ($day($days_ago=1).UV.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -270,14 +270,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).ET.min <br>
-                ($day($days_ago=1).ET.mintime.format("%H:%M"))
+                ($day($days_ago=1).ET.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).ET.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).ET.max <br>
-                ($day($days_ago=1).ET.maxtime.format("%H:%M"))
+                ($day($days_ago=1).ET.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -293,14 +293,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).radiation.min <br>
-                ($day($days_ago=1).radiation.mintime.format("%H:%M"))
+                ($day($days_ago=1).radiation.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).radiation.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).radiationmax <br>
-                ($day($days_ago=1).radiation.maxtime.format("%H:%M"))
+                ($day($days_ago=1).radiation.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -317,14 +317,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).extraTemp1.min <br>
-                ($day($days_ago=1).extraTemp1.mintime.format("%H:%M"))
+                ($day($days_ago=1).extraTemp1.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).extraTemp1.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).extraTemp1.max <br>
-                ($day($days_ago=1).extraTemp1.maxtime.format("%H:%M"))
+                ($day($days_ago=1).extraTemp1.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -341,14 +341,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).extraTemp2.min <br>
-                ($day($days_ago=1).extraTemp2.mintime.format("%H:%M"))
+                ($day($days_ago=1).extraTemp2.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).extraTemp2.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).extraTemp2.max <br>
-                ($day($days_ago=1).extraTemp2.maxtime.format("%H:%M"))
+                ($day($days_ago=1).extraTemp2.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -365,14 +365,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).extraTemp3.min <br>
-                ($day($days_ago=1).extraTemp3.mintime.format("%H:%M"))
+                ($day($days_ago=1).extraTemp3.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$day($days_ago=1).extraTemp3.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day($days_ago=1).extraTemp3.max <br>
-                ($day($days_ago=1).extraTemp3.maxtime.format("%H:%M"))
+                ($day($days_ago=1).extraTemp3.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>

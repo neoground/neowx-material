@@ -26,14 +26,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.outTemp.min <br>
-                ($day.outTemp.mintime.format("%H:%M"))
+                ($day.outTemp.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.outTemp</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.outTemp.max <br>
-                ($day.outTemp.maxtime.format("%H:%M"))
+                ($day.outTemp.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -48,14 +48,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.outHumidity.min <br>
-                ($day.outHumidity.mintime.format("%H:%M"))
+                ($day.outHumidity.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.outHumidity</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.outHumidity.max <br>
-                ($day.outHumidity.maxtime.format("%H:%M"))
+                ($day.outHumidity.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -76,14 +76,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.barometer.min <br>
-                ($day.barometer.mintime.format("%H:%M"))
+                ($day.barometer.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h3-responsive">$current.barometer</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.barometer.max <br>
-                ($day.barometer.maxtime.format("%H:%M"))
+                ($day.barometer.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -99,14 +99,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.inTemp.min <br>
-                ($day.inTemp.mintime.format("%H:%M"))
+                ($day.inTemp.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.inTemp</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.inTemp.max <br>
-                ($day.inTemp.maxtime.format("%H:%M"))
+                ($day.inTemp.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -121,14 +121,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.inHumidity.min <br>
-                ($day.inHumidity.mintime.format("%H:%M"))
+                ($day.inHumidity.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.inHumidity</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.inHumidity.max <br>
-                ($day.inHumidity.maxtime.format("%H:%M"))
+                ($day.inHumidity.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -151,7 +151,7 @@
               </div>
               <div class="col-3 text-muted font-small">
                 $day.wind.max $day.wind.gustdir.ordinal_compass <i class="wi wi-wind from-$day.wind.gustdir.formatted-deg" title="$day.wind.gustdir.formatted°" data-toggle="tooltip"></i> <br>
-                ($day.wind.maxtime.format("%H:%M"))
+                ($day.wind.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -173,7 +173,7 @@
               </div>
               <div class="col-3 text-muted font-small">
                 $day.rainRate.max <br>
-                ($day.rainRate.maxtime.format("%H:%M"))
+                ($day.rainRate.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -188,14 +188,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.dewpoint.min <br>
-                ($day.dewpoint.mintime.format("%H:%M"))
+                ($day.dewpoint.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.dewpoint</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.dewpoint.max <br>
-                ($day.dewpoint.maxtime.format("%H:%M"))
+                ($day.dewpoint.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -210,14 +210,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.windchill.min <br>
-                ($day.windchill.mintime.format("%H:%M"))
+                ($day.windchill.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.windchill</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.windchill.max <br>
-                ($day.windchill.maxtime.format("%H:%M"))
+                ($day.windchill.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -232,14 +232,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.heatindex.min <br>
-                ($day.heatindex.mintime.format("%H:%M"))
+                ($day.heatindex.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.heatindex</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.heatindex.max <br>
-                ($day.heatindex.maxtime.format("%H:%M"))
+                ($day.heatindex.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -254,14 +254,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.UV.min <br>
-                ($day.UV.mintime.format("%H:%M"))
+                ($day.UV.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.UV</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.UV.max <br>
-                ($day.UV.maxtime.format("%H:%M"))
+                ($day.UV.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -277,14 +277,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.ET.min <br>
-                ($day.ET.mintime.format("%H:%M"))
+                ($day.ET.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.ET</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.ET.max <br>
-                ($day.ET.maxtime.format("%H:%M"))
+                ($day.ET.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -300,14 +300,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.radiation.min <br>
-                ($day.radiation.mintime.format("%H:%M"))
+                ($day.radiation.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.radiation</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.radiationmax <br>
-                ($day.radiation.maxtime.format("%H:%M"))
+                ($day.radiation.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -324,14 +324,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.extraTemp1.min <br>
-                ($day.extraTemp1.mintime.format("%H:%M"))
+                ($day.extraTemp1.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.extraTemp1</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.extraTemp1.max <br>
-                ($day.extraTemp1.maxtime.format("%H:%M"))
+                ($day.extraTemp1.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -348,14 +348,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.extraTemp2.min <br>
-                ($day.extraTemp2.mintime.format("%H:%M"))
+                ($day.extraTemp2.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.extraTemp2</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.extraTemp2.max <br>
-                ($day.extraTemp2.maxtime.format("%H:%M"))
+                ($day.extraTemp2.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
@@ -372,14 +372,14 @@
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.extraTemp3.min <br>
-                ($day.extraTemp3.mintime.format("%H:%M"))
+                ($day.extraTemp3.mintime.format($Extras.Formatting.datetime_today))
               </div>
               <div class="col-6">
                 <h4 class="h2-responsive">$current.extraTemp3</h4>
               </div>
               <div class="col-3 text-muted font-small">
                 $day.extraTemp3.max <br>
-                ($day.extraTemp3.maxtime.format("%H:%M"))
+                ($day.extraTemp3.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
           </div>
