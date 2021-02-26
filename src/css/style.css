@@ -14,6 +14,10 @@
     background: rgba(158,158,158,0.1);
 }
 
+table td {
+    font-weight: normal;
+}
+
 /* very large layout */
 @media screen and (min-width: 1660px) {
     .temprow {
