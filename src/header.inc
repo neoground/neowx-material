@@ -27,6 +27,10 @@
                     <a class="nav-link" href="month.html">$Extras.Translations.month</a>
                 </li>
 
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="year.html">$Extras.Translations.year</a>
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="archiveDropdownLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
@@ -35,9 +39,11 @@
                     <ul class="dropdown-menu" aria-labelledby="archiveDropdownLink">
 
                         #for $yr in $SummaryByYear
+                        #if $yr < $latest.dateTime.format("%Y")
                         <li class="dropdown-submenu">
-                            <a href="archive.html?year=$yr">$yr</a>
+                            <a href="year-${yr}.html">$yr</a>
                         </li>
+                        #end if
                         #end for
 
                     </ul>
