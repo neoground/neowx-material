@@ -43,10 +43,8 @@ The design is based on [Material Design for Bootstrap (MDB) Free](https://mdboot
 
 ## TODO
 
-- Better graphs (better combination, resolutions, dark mode and so on)
 - Archive
 - Localization support in config
 - Assets cleanup
 - Make CDN optional
 - Translating in more languages
-- Preact app

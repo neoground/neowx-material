@@ -23,6 +23,10 @@
                     <a class="nav-link" href="week.html">$Extras.Translations.week</a>
                 </li>
 
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="month.html">$Extras.Translations.month</a>
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="archiveDropdownLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">

@@ -40,12 +40,12 @@ xaxis: {
   tickAmount: 8,
   labels: {
     formatter: function(val, timestamp) {
-      return moment.unix(timestamp).format("HH:mm");
+      return moment.unix(timestamp).format("$Extras.Formatting.datetime_graph_label");
     }
   }
 },
 tooltip: {
   x: {
-    format: "HH:MM"
+    format: "$Extras.Formatting.datetime_graph_tooltip"
   }
 },

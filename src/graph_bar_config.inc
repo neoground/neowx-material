@@ -21,14 +21,7 @@
     size: 0,
   },
   fill: {
-    type: 'gradient',
-    gradient: {
-      shadeIntensity: 1,
-      inverseColors: false,
-      opacityFrom: 0.6,
-      opacityTo: 0,
-      stops: [0, 75, 100]
-    },
+    opacity: 0.1
   },
   stroke: {
     curve: 'smooth',
@@ -40,12 +33,12 @@
     tickAmount: 8,
     labels: {
       formatter: function(val, timestamp) {
-        return moment.unix(timestamp).format("HH:mm");
+        return moment.unix(timestamp).format("$Extras.Formatting.datetime_graph_label");
       }
     }
   },
   tooltip: {
     x: {
-      format: "HH:00"
+      format: "$Extras.Formatting.datetime_graph_tooltip"
     }
   },

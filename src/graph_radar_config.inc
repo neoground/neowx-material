@@ -28,3 +28,10 @@
   xaxis: {
     categories: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
   },
+  tooltip: {
+    x: {
+        formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+            return value
+        }
+    }
+  },

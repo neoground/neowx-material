@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="$Extras.language">
 <head>
-  <title>$Extras.Translations.current | $station.location</title>
+  <title>$Extras.Translations.week | $station.location</title>
   #include "head.inc"
 </head>
 <body class="main-bg">
@@ -15,7 +15,7 @@
     <div class="row my-4 temprow align-content-start">
 
       <div class="col-12 mb-4 text-center">
-        <h2 class="h2-responsive text-dark">$Extras.Translations.current</h2>
+        <h2 class="h2-responsive text-dark">$Extras.Translations.week</h2>
       </div>
 
       <div class="col-12 col-md-6 col-xl-4 mb-4">
@@ -25,15 +25,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.outTemp.min <br>
-                ($day.outTemp.mintime.format("%H:%M"))
+                $week.outTemp.min <br>
+                ($week.outTemp.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.outTemp</h4>
+                <h4 class="h2-responsive">$week.outTemp.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.outTemp.max <br>
-                ($day.outTemp.maxtime.format("%H:%M"))
+                $week.outTemp.max <br>
+                ($week.outTemp.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -47,15 +47,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.outHumidity.min <br>
-                ($day.outHumidity.mintime.format("%H:%M"))
+                $week.outHumidity.min <br>
+                ($week.outHumidity.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.outHumidity</h4>
+                <h4 class="h2-responsive">$week.outHumidity.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.outHumidity.max <br>
-                ($day.outHumidity.maxtime.format("%H:%M"))
+                $week.outHumidity.max <br>
+                ($week.outHumidity.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -65,25 +65,19 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.barometer
-              #if $trend.barometer.raw > 0
-              <i class="wi wi-direction-up-right" title="Trend: $trend.barometer" data-toggle="tooltip"></i>
-              #else
-              <i class="wi wi-direction-down-right" title="Trend: $trend.barometer" data-toggle="tooltip"></i>
-              #end if
-            </h5>
+            <h5 class="h5-responsive indigo-text">$obs.label.barometer</h5>
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.barometer.min <br>
-                ($day.barometer.mintime.format("%H:%M"))
+                $week.barometer.min <br>
+                ($week.barometer.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h3-responsive">$current.barometer</h4>
+                <h4 class="h3-responsive">$week.barometer.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.barometer.max <br>
-                ($day.barometer.maxtime.format("%H:%M"))
+                $week.barometer.max <br>
+                ($week.barometer.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -98,15 +92,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.inTemp.min <br>
-                ($day.inTemp.mintime.format("%H:%M"))
+                $week.inTemp.min <br>
+                ($week.inTemp.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.inTemp</h4>
+                <h4 class="h2-responsive">$week.inTemp.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.inTemp.max <br>
-                ($day.inTemp.maxtime.format("%H:%M"))
+                $week.inTemp.max <br>
+                ($week.inTemp.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -120,15 +114,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.inHumidity.min <br>
-                ($day.inHumidity.mintime.format("%H:%M"))
+                $week.inHumidity.min <br>
+                ($week.inHumidity.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.inHumidity</h4>
+                <h4 class="h2-responsive">$week.inHumidity.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.inHumidity.max <br>
-                ($day.inHumidity.maxtime.format("%H:%M"))
+                $week.inHumidity.max <br>
+                ($week.inHumidity.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -138,20 +132,20 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.windSpeed <i class="wi wi-wind from-$current.windDir.formatted-deg" title="$current.windDir.formatted°" data-toggle="tooltip"></i></h5>
+            <h5 class="h5-responsive indigo-text">$obs.label.windSpeed</h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.wind.avg <br>
+                $week.wind.avg <br>
                 Avg
               </div>
               <div class="col-6">
                 <h4 class="h3-responsive">
-                  $current.windSpeed $current.windDir.ordinal_compass
+                  $week.windSpeed.max $week.windDir.avg.ordinal_compass
                 </h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.wind.max $day.wind.gustdir.ordinal_compass <i class="wi wi-wind from-$day.wind.gustdir.formatted-deg" title="$day.wind.gustdir.formatted°" data-toggle="tooltip"></i> <br>
-                ($day.wind.maxtime.format("%H:%M"))
+                $week.wind.max $week.wind.gustdir.ordinal_compass <i class="wi wi-wind from-$week.wind.gustdir.formatted-deg" title="$week.wind.gustdir.formatted°" data-toggle="tooltip"></i> <br>
+                ($week.wind.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -165,15 +159,14 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $current.rainRate <br>
-                Rain Rate
+                &nbsp;
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day.rain.sum</h4>
+                <h4 class="h2-responsive">$week.rain.sum</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.rainRate.max <br>
-                ($day.rainRate.maxtime.format("%H:%M"))
+                $week.rainRate.max <br>
+                ($week.rainRate.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -187,15 +180,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.dewpoint.min <br>
-                ($day.dewpoint.mintime.format("%H:%M"))
+                $week.dewpoint.min <br>
+                ($week.dewpoint.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.dewpoint</h4>
+                <h4 class="h2-responsive">$week.dewpoint.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.dewpoint.max <br>
-                ($day.dewpoint.maxtime.format("%H:%M"))
+                $week.dewpoint.max <br>
+                ($week.dewpoint.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -209,15 +202,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.windchill.min <br>
-                ($day.windchill.mintime.format("%H:%M"))
+                $week.windchill.min <br>
+                ($week.windchill.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.windchill</h4>
+                <h4 class="h2-responsive">$week.windchill.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.windchill.max <br>
-                ($day.windchill.maxtime.format("%H:%M"))
+                $week.windchill.max <br>
+                ($week.windchill.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -231,37 +224,37 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.heatindex.min <br>
-                ($day.heatindex.mintime.format("%H:%M"))
+                $week.heatindex.min <br>
+                ($week.heatindex.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.heatindex</h4>
+                <h4 class="h2-responsive">$week.heatindex.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.heatindex.max <br>
-                ($day.heatindex.maxtime.format("%H:%M"))
+                $week.heatindex.max <br>
+                ($week.heatindex.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      #if $day.UV.has_data
+      #if $week.UV.has_data
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
             <h5 class="h5-responsive indigo-text">$obs.label.UV</h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.UV.min <br>
-                ($day.UV.mintime.format("%H:%M"))
+                $week.UV.min <br>
+                ($week.UV.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.UV</h4>
+                <h4 class="h2-responsive">$week.UV.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.UV.max <br>
-                ($day.UV.maxtime.format("%H:%M"))
+                $week.UV.max <br>
+                ($week.UV.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -269,22 +262,22 @@
       </div>
       #end if
 
-      #if $day.ET.has_data and $day.ET.sum.raw is not None and $day.ET.sum.raw > 0.0
+      #if $week.ET.has_data and $week.ET.sum.raw is not None and $week.ET.sum.raw > 0.0
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
             <h5 class="h5-responsive indigo-text">$obs.label.ET</h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.ET.min <br>
-                ($day.ET.mintime.format("%H:%M"))
+                $week.ET.min <br>
+                ($week.ET.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.ET</h4>
+                <h4 class="h2-responsive">$week.ET.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.ET.max <br>
-                ($day.ET.maxtime.format("%H:%M"))
+                $week.ET.max <br>
+                ($week.ET.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -292,22 +285,22 @@
       </div>
       #end if
 
-      #if $day.radiation.has_data
+      #if $week.radiation.has_data
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
             <h5 class="h5-responsive indigo-text">$obs.label.radiation</h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.radiation.min <br>
-                ($day.radiation.mintime.format("%H:%M"))
+                $week.radiation.min <br>
+                ($week.radiation.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.radiation</h4>
+                <h4 class="h2-responsive">$week.radiation.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.radiationmax <br>
-                ($day.radiation.maxtime.format("%H:%M"))
+                $week.radiationmax <br>
+                ($week.radiation.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -315,7 +308,7 @@
       </div>
       #end if
 
-      #if $day.extraTemp1.has_data
+      #if $week.extraTemp1.has_data
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
@@ -323,15 +316,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.extraTemp1.min <br>
-                ($day.extraTemp1.mintime.format("%H:%M"))
+                $week.extraTemp1.min <br>
+                ($week.extraTemp1.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.extraTemp1</h4>
+                <h4 class="h2-responsive">$week.extraTemp1.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.extraTemp1.max <br>
-                ($day.extraTemp1.maxtime.format("%H:%M"))
+                $week.extraTemp1.max <br>
+                ($week.extraTemp1.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -339,7 +332,7 @@
       </div>
       #end if
 
-      #if $day.extraTemp2.has_data
+      #if $week.extraTemp2.has_data
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
@@ -347,15 +340,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.extraTemp2.min <br>
-                ($day.extraTemp2.mintime.format("%H:%M"))
+                $week.extraTemp2.min <br>
+                ($week.extraTemp2.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.extraTemp2</h4>
+                <h4 class="h2-responsive">$week.extraTemp2.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.extraTemp2.max <br>
-                ($day.extraTemp2.maxtime.format("%H:%M"))
+                $week.extraTemp2.max <br>
+                ($week.extraTemp2.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -363,7 +356,7 @@
       </div>
       #end if
 
-      #if $day.extraTemp3.has_data
+      #if $week.extraTemp3.has_data
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
@@ -371,15 +364,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day.extraTemp3.min <br>
-                ($day.extraTemp3.mintime.format("%H:%M"))
+                $week.extraTemp3.min <br>
+                ($week.extraTemp3.mintime.format($Extras.Formatting.datetime))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$current.extraTemp3</h4>
+                <h4 class="h2-responsive">$week.extraTemp3.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.extraTemp3.max <br>
-                ($day.extraTemp3.maxtime.format("%H:%M"))
+                $week.extraTemp3.max <br>
+                ($week.extraTemp3.maxtime.format($Extras.Formatting.datetime))
               </div>
             </div>
           </div>
@@ -413,24 +406,28 @@
     // outTemp + Dewpoint
     // ---
 
+    var seriesdata1 = [
+      #for $record in $span($week_delta=1).spans(interval=14400)
+        [$record.start.raw, $record.outTemp.avg.format(add_label=False, format_string="%.2f", localize=False)],
+      #end for
+    ];
+
+    var seriesdata2 = [
+      #for $record in $span($week_delta=1).spans(interval=14400)
+        [$record.start.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False)],
+      #end for
+      ];
+
     var options = {
       #include "graph_area_config.inc"
       series: [
         {
           name: '$obs.label.outTemp',
-          data: [
-            #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.outTemp.avg.format(add_label=False, format_string="%.2f", localize=False)],
-            #end for
-          ]
+          data: seriesdata1
         },
         {
           name: '$obs.label.dewpoint',
-          data: [
-            #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False)],
-            #end for
-          ]
+          data: seriesdata2
         }
       ]
     }
@@ -443,24 +440,28 @@
     // Wind chill + Heat index
     // ---
 
+    seriesdata1 = [
+      #for $record in $span($week_delta=1).spans(interval=14400)
+        [$record.start.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False)],
+      #end for
+      ]
+
+    seriesdata2 = [
+      #for $record in $span($week_delta=1).spans(interval=14400)
+        [$record.start.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False)],
+      #end for
+      ]
+
     var options2 = {
       #include "graph_area_config.inc"
       series: [
         {
           name: '$obs.label.windchill',
-          data: [
-            #for $record in $span($day_delta=1).spans(interval=600)
-                    [$record.start.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False)],
-            #end for
-          ]
+          data: seriesdata1
         },
         {
           name: '$obs.label.heatindex',
-          data: [
-            #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False)],
-            #end for
-          ]
+          data: seriesdata2
         }
       ]
     }
@@ -472,16 +473,18 @@
     // Barometer
     // ---
 
+    seriesdata1 = [
+      #for $record in $span($week_delta=1).spans(interval=14400)
+              [$record.start.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False)],
+      #end for
+      ];
+
     var options3 = {
       #include "graph_area_config.inc"
       series: [
         {
           name: '$obs.label.barometer',
-          data: [
-            #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False)],
-            #end for
-          ]
+          data: seriesdata1
         }
       ]
     }
@@ -493,16 +496,18 @@
     // Rain
     // ---
 
+    seriesdata1 = [
+      #for $record in $span($week_delta=1).spans(interval=21600)
+        [$record.start.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False)],
+      #end for
+      ]
+
     var options4 = {
       #include "graph_bar_config.inc"
       series: [
         {
           name: '$obs.label.rain',
-          data: [
-            #for $record in $span($day_delta=1).spans(interval=3600)
-                    [$record.start.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False)],
-            #end for
-          ]
+          data: seriesdata1
         }
       ]
     }
@@ -514,24 +519,28 @@
     // Wind
     // ---
 
+    seriesdata1 = [
+      #for $record in $span($week_delta=1).spans(interval=14400)
+        [$record.start.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False)],
+      #end for
+      ]
+
+    seriesdata2 = [
+      #for $record in $span($week_delta=1).spans(interval=14400)
+        [$record.start.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False)],
+      #end for
+      ]
+
     var options5 = {
       #include "graph_area_config.inc"
       series: [
         {
           name: '$obs.label.windSpeed',
-          data: [
-            #for $record in $span($day_delta=1).spans(interval=600)
-                    [$record.start.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False)],
-            #end for
-          ]
+          data: seriesdata1
         },
         {
           name: '$obs.label.windGust',
-          data: [
-            #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False)],
-            #end for
-          ]
+          data: seriesdata2
         }
       ]
     }
@@ -543,16 +552,18 @@
     // outHumidity
     // ---
 
+    seriesdata1 = [
+      #for $record in $span($week_delta=1).spans(interval=14400)
+        [$record.start.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False)],
+      #end for
+      ]
+
     var options6 = {
         #include "graph_area_config.inc"
         series: [
           {
             name: '$obs.label.outHumidity',
-            data: [
-              #for $record in $span($day_delta=1).spans(interval=600)
-                      [$record.start.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False)],
-              #end for
-            ]
+            data: seriesdata1
           }
         ]
     }
@@ -576,14 +587,14 @@
     };
 
     var raw_data = [
-    #for $record in $span($day_delta=1).spans(interval=600)
+    #for $record in $span($week_delta=1).spans(interval=3600)
     {
       'dir': "$record.windDir.avg.raw",
-      'speed': "$record.windSpeed.avg.raw",
+      'speed': "$record.windSpeed.max.raw",
       'max': "$record.windGust.max.raw"
     },
     #end for
-    ];
+    ]
 
     raw_data.forEach(function(item) {
       var vec_dir = parseInt(item.dir);
@@ -629,7 +640,7 @@
         }
 
       }
-    });
+    })
 
     // Finally build arrays for chart
     var avg_values = [];
@@ -642,7 +653,7 @@
       }
 
       max_values.push(vector_data[item]['max'])
-    });
+    })
 
     // ---
     // Wind Vector

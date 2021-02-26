@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="$Extras.language">
 <head>
   <title>$Extras.Translations.yesterday | $station.location</title>
   #include "head.inc"
@@ -25,15 +25,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).outTemp.min <br>
-                ($day($hours_ago=48).outTemp.mintime.format("%H:%M"))
+                $day($days_ago=1).outTemp.min <br>
+                ($day($days_ago=1).outTemp.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).outTemp.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).outTemp.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).outTemp.max <br>
-                ($day($hours_ago=48).outTemp.maxtime.format("%H:%M"))
+                $day($days_ago=1).outTemp.max <br>
+                ($day($days_ago=1).outTemp.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -47,15 +47,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).outHumidity.min <br>
-                ($day($hours_ago=48).outHumidity.mintime.format("%H:%M"))
+                $day($days_ago=1).outHumidity.min <br>
+                ($day($days_ago=1).outHumidity.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).outHumidity.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).outHumidity.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).outHumidity.max <br>
-                ($day($hours_ago=48).outHumidity.maxtime.format("%H:%M"))
+                $day($days_ago=1).outHumidity.max <br>
+                ($day($days_ago=1).outHumidity.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -69,15 +69,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).barometer.min <br>
-                ($day($hours_ago=48).barometer.mintime.format("%H:%M"))
+                $day($days_ago=1).barometer.min <br>
+                ($day($days_ago=1).barometer.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h3-responsive">$day($hours_ago=48).barometer.avg</h4>
+                <h4 class="h3-responsive">$day($days_ago=1).barometer.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).barometer.max <br>
-                ($day($hours_ago=48).barometer.maxtime.format("%H:%M"))
+                $day($days_ago=1).barometer.max <br>
+                ($day($days_ago=1).barometer.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -92,15 +92,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).inTemp.min <br>
-                ($day($hours_ago=48).inTemp.mintime.format("%H:%M"))
+                $day($days_ago=1).inTemp.min <br>
+                ($day($days_ago=1).inTemp.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).inTemp.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).inTemp.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).inTemp.max <br>
-                ($day($hours_ago=48).inTemp.maxtime.format("%H:%M"))
+                $day($days_ago=1).inTemp.max <br>
+                ($day($days_ago=1).inTemp.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -114,15 +114,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).inHumidity.min <br>
-                ($day($hours_ago=48).inHumidity.mintime.format("%H:%M"))
+                $day($days_ago=1).inHumidity.min <br>
+                ($day($days_ago=1).inHumidity.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).inHumidity.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).inHumidity.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).inHumidity.max <br>
-                ($day($hours_ago=48).inHumidity.maxtime.format("%H:%M"))
+                $day($days_ago=1).inHumidity.max <br>
+                ($day($days_ago=1).inHumidity.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -135,17 +135,17 @@
             <h5 class="h5-responsive indigo-text">$obs.label.windSpeed</h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).wind.avg <br>
+                $day($days_ago=1).wind.avg <br>
                 Avg
               </div>
               <div class="col-6">
                 <h4 class="h3-responsive">
-                  $day($hours_ago=48).windSpeed.max $day($hours_ago=48).windDir.avg.ordinal_compass
+                  $day($days_ago=1).windSpeed.max $day($days_ago=1).windDir.avg.ordinal_compass
                 </h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).wind.max $day($hours_ago=48).wind.gustdir.ordinal_compass <i class="wi wi-wind from-$day($hours_ago=48).wind.gustdir.formatted-deg" title="$day($hours_ago=48).wind.gustdir.formatted°" data-toggle="tooltip"></i> <br>
-                ($day($hours_ago=48).wind.maxtime.format("%H:%M"))
+                $day($days_ago=1).wind.max $day($days_ago=1).wind.gustdir.ordinal_compass <i class="wi wi-wind from-$day($days_ago=1).wind.gustdir.formatted-deg" title="$day($days_ago=1).wind.gustdir.formatted°" data-toggle="tooltip"></i> <br>
+                ($day($days_ago=1).wind.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -162,11 +162,11 @@
                 &nbsp;
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).rain.sum</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).rain.sum</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).rainRate.max <br>
-                ($day($hours_ago=48).rainRate.maxtime.format("%H:%M"))
+                $day($days_ago=1).rainRate.max <br>
+                ($day($days_ago=1).rainRate.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -180,15 +180,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).dewpoint.min <br>
-                ($day($hours_ago=48).dewpoint.mintime.format("%H:%M"))
+                $day($days_ago=1).dewpoint.min <br>
+                ($day($days_ago=1).dewpoint.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).dewpoint.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).dewpoint.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).dewpoint.max <br>
-                ($day($hours_ago=48).dewpoint.maxtime.format("%H:%M"))
+                $day($days_ago=1).dewpoint.max <br>
+                ($day($days_ago=1).dewpoint.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -202,15 +202,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).windchill.min <br>
-                ($day($hours_ago=48).windchill.mintime.format("%H:%M"))
+                $day($days_ago=1).windchill.min <br>
+                ($day($days_ago=1).windchill.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).windchill.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).windchill.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).windchill.max <br>
-                ($day($hours_ago=48).windchill.maxtime.format("%H:%M"))
+                $day($days_ago=1).windchill.max <br>
+                ($day($days_ago=1).windchill.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -224,37 +224,37 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).heatindex.min <br>
-                ($day($hours_ago=48).heatindex.mintime.format("%H:%M"))
+                $day($days_ago=1).heatindex.min <br>
+                ($day($days_ago=1).heatindex.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).heatindex.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).heatindex.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).heatindex.max <br>
-                ($day($hours_ago=48).heatindex.maxtime.format("%H:%M"))
+                $day($days_ago=1).heatindex.max <br>
+                ($day($days_ago=1).heatindex.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      #if $day($hours_ago=48).UV.has_data
+      #if $day($days_ago=1).UV.has_data
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
             <h5 class="h5-responsive indigo-text">$obs.label.UV</h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).UV.min <br>
-                ($day($hours_ago=48).UV.mintime.format("%H:%M"))
+                $day($days_ago=1).UV.min <br>
+                ($day($days_ago=1).UV.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).UV.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).UV.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).UV.max <br>
-                ($day($hours_ago=48).UV.maxtime.format("%H:%M"))
+                $day($days_ago=1).UV.max <br>
+                ($day($days_ago=1).UV.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -262,22 +262,22 @@
       </div>
       #end if
 
-      #if $day($hours_ago=48).ET.has_data and $day($hours_ago=48).ET.sum.raw is not None and $day($hours_ago=48).ET.sum.raw > 0.0
+      #if $day($days_ago=1).ET.has_data and $day($days_ago=1).ET.sum.raw is not None and $day($days_ago=1).ET.sum.raw > 0.0
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
             <h5 class="h5-responsive indigo-text">$obs.label.ET</h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).ET.min <br>
-                ($day($hours_ago=48).ET.mintime.format("%H:%M"))
+                $day($days_ago=1).ET.min <br>
+                ($day($days_ago=1).ET.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).ET.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).ET.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).ET.max <br>
-                ($day($hours_ago=48).ET.maxtime.format("%H:%M"))
+                $day($days_ago=1).ET.max <br>
+                ($day($days_ago=1).ET.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -285,22 +285,22 @@
       </div>
       #end if
 
-      #if $day($hours_ago=48).radiation.has_data
+      #if $day($days_ago=1).radiation.has_data
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
             <h5 class="h5-responsive indigo-text">$obs.label.radiation</h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).radiation.min <br>
-                ($day($hours_ago=48).radiation.mintime.format("%H:%M"))
+                $day($days_ago=1).radiation.min <br>
+                ($day($days_ago=1).radiation.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).radiation.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).radiation.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).radiationmax <br>
-                ($day($hours_ago=48).radiation.maxtime.format("%H:%M"))
+                $day($days_ago=1).radiationmax <br>
+                ($day($days_ago=1).radiation.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -308,7 +308,7 @@
       </div>
       #end if
 
-      #if $day($hours_ago=48).extraTemp1.has_data
+      #if $day($days_ago=1).extraTemp1.has_data
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
@@ -316,15 +316,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).extraTemp1.min <br>
-                ($day($hours_ago=48).extraTemp1.mintime.format("%H:%M"))
+                $day($days_ago=1).extraTemp1.min <br>
+                ($day($days_ago=1).extraTemp1.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).extraTemp1.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).extraTemp1.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).extraTemp1.max <br>
-                ($day($hours_ago=48).extraTemp1.maxtime.format("%H:%M"))
+                $day($days_ago=1).extraTemp1.max <br>
+                ($day($days_ago=1).extraTemp1.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -332,7 +332,7 @@
       </div>
       #end if
 
-      #if $day($hours_ago=48).extraTemp2.has_data
+      #if $day($days_ago=1).extraTemp2.has_data
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
@@ -340,15 +340,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).extraTemp2.min <br>
-                ($day($hours_ago=48).extraTemp2.mintime.format("%H:%M"))
+                $day($days_ago=1).extraTemp2.min <br>
+                ($day($days_ago=1).extraTemp2.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).extraTemp2.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).extraTemp2.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).extraTemp2.max <br>
-                ($day($hours_ago=48).extraTemp2.maxtime.format("%H:%M"))
+                $day($days_ago=1).extraTemp2.max <br>
+                ($day($days_ago=1).extraTemp2.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
@@ -356,7 +356,7 @@
       </div>
       #end if
 
-      #if $day($hours_ago=48).extraTemp3.has_data
+      #if $day($days_ago=1).extraTemp3.has_data
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
@@ -364,15 +364,15 @@
 
             <div class="row">
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).extraTemp3.min <br>
-                ($day($hours_ago=48).extraTemp3.mintime.format("%H:%M"))
+                $day($days_ago=1).extraTemp3.min <br>
+                ($day($days_ago=1).extraTemp3.mintime.format("%H:%M"))
               </div>
               <div class="col-6">
-                <h4 class="h2-responsive">$day($hours_ago=48).extraTemp3.avg</h4>
+                <h4 class="h2-responsive">$day($days_ago=1).extraTemp3.avg</h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day($hours_ago=48).extraTemp3.max <br>
-                ($day($hours_ago=48).extraTemp3.maxtime.format("%H:%M"))
+                $day($days_ago=1).extraTemp3.max <br>
+                ($day($days_ago=1).extraTemp3.maxtime.format("%H:%M"))
               </div>
             </div>
           </div>
