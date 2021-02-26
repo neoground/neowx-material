@@ -43,8 +43,6 @@ The design is based on [Material Design for Bootstrap (MDB) Free](https://mdboot
 
 ## TODO
 
-- Archive
-- Localization support in config
 - Assets cleanup
 - Make CDN optional
-- Translating in more languages
+- Graph translations
