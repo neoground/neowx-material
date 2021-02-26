@@ -42,7 +42,7 @@
       "type": "image/png"
     }],
   "start_url": "/?utm_source=homescreen",
-  "scope": "",
+  "scope": "/",
   "orientation": "any",
   "display": "standalone",
   "theme_color": "#2196f3",

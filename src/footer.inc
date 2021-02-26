@@ -11,15 +11,15 @@
             <div class="col-md-6 mt-md-0 mt-3">
 
                 <!-- Content -->
-                <h5 class="text-uppercase">$Extras.Translations.about</h5>
+                <h5 class="text-uppercase">$Extras.Translations[$Extras.language].about</h5>
 
                 <table>
                     <tr>
-                        <td>$Extras.Translations.hardware:</td>
+                        <td>$Extras.Translations[$Extras.language].hardware:</td>
                         <td>$station.hardware</td>
                     </tr>
                     <tr>
-                        <td>$Extras.Translations.altitude:</td>
+                        <td>$Extras.Translations[$Extras.language].altitude:</td>
                         <td>$station.altitude</td>
                     </tr>
                 </table>
@@ -50,7 +50,7 @@
             <div class="col-md-3 mb-md-0 mb-3">
 
                 <!-- Links -->
-                <h5 class="text-uppercase">$Extras.Translations.links</h5>
+                <h5 class="text-uppercase">$Extras.Translations[$Extras.language].links</h5>
 
                 <ul class="list-unstyled">
                     #if $Extras.has_key('link1_text') and $Extras.link1_url is not ""

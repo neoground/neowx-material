@@ -65,7 +65,7 @@ table td {
         color: #7E88C6 !important;
     }
 
-    .text-dark {
+    .text-dark, .table {
         color: #ccc !important;
     }
 }

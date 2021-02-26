@@ -12,29 +12,29 @@
             <ul class="navbar-nav ml-auto mr-auto">
 
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="index.html">$Extras.Translations.current</a>
+                    <a class="nav-link" href="index.html">$Extras.Translations[$Extras.language].current</a>
                 </li>
 
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="yesterday.html">$Extras.Translations.yesterday</a>
+                    <a class="nav-link" href="yesterday.html">$Extras.Translations[$Extras.language].yesterday</a>
                 </li>
 
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="week.html">$Extras.Translations.week</a>
+                    <a class="nav-link" href="week.html">$Extras.Translations[$Extras.language].week</a>
                 </li>
 
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="month.html">$Extras.Translations.month</a>
+                    <a class="nav-link" href="month.html">$Extras.Translations[$Extras.language].month</a>
                 </li>
 
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="year.html">$Extras.Translations.year</a>
+                    <a class="nav-link" href="year.html">$Extras.Translations[$Extras.language].year</a>
                 </li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="archiveDropdownLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        $Extras.Translations.archive
+                        $Extras.Translations[$Extras.language].archive
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="archiveDropdownLink">
 
@@ -81,7 +81,7 @@
                 <i class="wi wi-moon-waning-crescent-3 mr-1" style="opacity: .75"></i>
                 #end if
                 $almanac.moon_fullness% <br>
-                <a href="almanac.html" class="text-white" style="opacity: .6">$Extras.Translations.more</a>
+                <a href="almanac.html" class="text-white" style="opacity: .6">$Extras.Translations[$Extras.language].more</a>
             </li>
         </ul>
         #else
