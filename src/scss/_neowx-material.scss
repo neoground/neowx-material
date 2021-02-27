@@ -1,0 +1,98 @@
+// +-------------------------------------------------------------------------+
+// |   N E O W X      M A T E R I A L      S P E C I F I C      S T Y L E    |
+// +-------------------------------------------------------------------------+
+
+// General classes / adjustments
+// ---------------------------------------------------------------------------
+
+.text-muted {
+    font-weight: 300;
+}
+
+.main-bg {
+    background: rgba(158,158,158,0.1);
+}
+
+// Very large (FHD) layout
+// ---------------------------------------------------------------------------
+
+@media screen and (min-width: 1660px) {
+    .temprow {
+        display: flex;
+        width: 50%;
+        margin: 1rem 0 0 0 !important;
+    }
+
+    .graphrow {
+        display: flex;
+        width: 50%;
+        margin: 1rem 0 0 0 !important;
+    }
+
+    .d-flex-xxl {
+        display: flex !important;
+    }
+
+    .temprow .col-xl-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .rowdivider {
+        display: none !important;
+    }
+}
+
+// Dark mode
+// ---------------------------------------------------------------------------
+
+@media (prefers-color-scheme: dark) {
+    .main-bg {
+        background: #2e2e2e !important;
+    }
+
+    .card, .dropdown-menu, .dropdown-menu a {
+        background-color: #444 !important;
+        color: #ddd !important;
+    }
+
+    .text-muted {
+        color: #aaa !important;
+    }
+
+    // Adjusted colors. Default text is color 500, in dark: 300
+    // Not all colors need this, some look nice on dark bgs.
+
+    .purple-text {
+        color: #BA68C8 !important;
+    }
+    .deep-purple-text {
+        color: #9575CD !important;
+    }
+    .indigo-text {
+        color: #7986CB !important;
+    }
+    .teal-text {
+        color: #4DB6AC !important;
+    }
+    .brown-text {
+        color: #A1887F !important;
+    }
+    .blue-grey-text {
+        color: #90A4AE !important;
+    }
+
+    .text-dark, .table {
+        color: #ccc !important;
+    }
+}
+
+// Fix for bright color bgs
+// Normally color 500, darker version: color 700
+
+.lime {
+    background-color: #AFB42B !important;
+}
+.yellow {
+    background-color: #FBC02D !important
+}

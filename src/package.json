@@ -1,0 +1,16 @@
+{
+  "name": "neowx-material",
+  "version": "1.0.0",
+  "description": "The most versatile and modern weewx skin",
+  "main": "index.js",
+  "repository": "https://github.com/neoground/neowx-material",
+  "author": "Neoground GmbH",
+  "license": "MIT",
+  "dependencies": {
+    "node-sass": "^5.0.0"
+  },
+  "scripts": {
+    "build-css": "node-sass --include-path scss scss/style.scss css/style.css",
+    "build-minify-css": "node-sass --output-style compressed --include-path scss scss/style.scss css/style.min.css"
+  }
+}

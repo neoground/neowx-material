@@ -1,0 +1,26 @@
+// Rubik font
+// ---------------------------------------------------------------------------
+
+// rubik light
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/Rubik-Light.eot'); /* IE9 Compat Modes */
+    src: local('Rubik'),
+    url('../fonts/Rubik-Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/Rubik-Light.woff2') format('woff2'), /* Super Modern Browsers */
+    url('../fonts/Rubik-Light.woff') format('woff'); /* Modern Browsers */
+}
+
+// rubik regular
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/Rubik-Regular.eot'); /* IE9 Compat Modes */
+    src: local('Rubik'),
+    url('../fonts/Rubik-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/Rubik-Regular.woff2') format('woff2'), /* Super Modern Browsers */
+    url('../fonts/Rubik-Regular.woff') format('woff'); /* Modern Browsers */
+}

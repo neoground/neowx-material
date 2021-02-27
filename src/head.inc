@@ -27,10 +27,10 @@
 
 ## Bootstrap core CSS
 <link rel="stylesheet" href="css/bootstrap.min.css">
-## Material Design Bootstrap
-<link rel="stylesheet" href="css/mdb.min.css">
+
+## MDB + skin style
+<link rel="stylesheet" href="css/style.min.css">
+
 ## Weather Icons
 <link rel="stylesheet" href="weather-icons/css/weather-icons.min.css">
 <link rel="stylesheet" href="weather-icons/css/weather-icons-wind.min.css">
-## Your custom styles (optional)
-<link rel="stylesheet" href="css/style.css">

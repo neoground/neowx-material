@@ -1,4 +1,5 @@
 # NeoWX Material
+
 **The most versatile and modern weewx skin**
 
 You want a modern UI for your weather station and its archive?
@@ -37,6 +38,22 @@ Feel free to add your own improvements. Contributions are always welcome!
 Our previous skin, NeoWX, was used all over the world in many countries.
 We hope that this skin will do the same. Please consider translating our skin
 in your language.
+
+If you want to provide any improvements, feel free to create a pull request.
+We use [Gitmoji](https://gitmoji.dev/) commit messages.
+
+## Development
+
+Setting up the development environment is easy:
+
+- clone / download repository
+- install npm packages (`yarn install` / `npm install`)
+- for easy testing create a symlink from your `$WEEWX_HOME/skins/neowx-material`
+  to the `src` directory
+  
+For basic tasks npm scripts are available.
+
+Styling is done via SCSS, compile it to `css/style.css` by: `yarn run build-css`.
 
 ## Thank You!
 
