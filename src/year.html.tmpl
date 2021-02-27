@@ -409,7 +409,7 @@
     var seriesdata1 = [
       #for $record in $span($year_delta=1).spans(interval=86400)
         #if $record.outTemp.has_data
-        [$record.start.raw, $record.outTemp.min.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.outTemp.min.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
         #end if
       #end for
     ];
@@ -417,7 +417,7 @@
     var seriesdata1a = [
       #for $record in $span($year_delta=1).spans(interval=86400)
         #if $record.outTemp.has_data
-        [$record.dateTime.raw, $record.outTemp.max.format(add_label=False, format_string="%.2f", localize=False, None_string="0")],
+        [$record.dateTime.raw, $record.outTemp.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
         #end if
       #end for
     ];
@@ -425,7 +425,7 @@
     var seriesdata2 = [
       #for $record in $span($year_delta=1).spans(interval=86400)
         #if $record.dewpoint.has_data
-        [$record.start.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
         #end if
       #end for
       ];
@@ -459,7 +459,7 @@
     seriesdata1 = [
       #for $record in $span($year_delta=1).spans(interval=86400)
         #if $record.windchill.has_data
-        [$record.start.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
         #end if
       #end for
       ]
@@ -467,7 +467,7 @@
     seriesdata2 = [
       #for $record in $span($year_delta=1).spans(interval=86400)
         #if $record.heatindex.has_data
-        [$record.start.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
         #end if
       #end for
       ]
@@ -496,7 +496,7 @@
     seriesdata1 = [
       #for $record in $span($year_delta=1).spans(interval=86400)
         #if $record.barometer.has_data
-        [$record.start.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
         #end if
       #end for
       ];
@@ -520,7 +520,7 @@
 
     seriesdata1 = [
       #for $record in $span($year_delta=1).spans(interval=604800)
-        [$record.start.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
       #end for
       ]
 
@@ -543,13 +543,13 @@
 
     seriesdata1 = [
       #for $record in $span($year_delta=1).spans(interval=86400)
-        [$record.start.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
       #end for
       ]
 
     seriesdata2 = [
       #for $record in $span($year_delta=1).spans(interval=86400)
-        [$record.start.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
       #end for
       ]
 
@@ -577,7 +577,7 @@
     seriesdata1 = [
       #for $record in $span($year_delta=1).spans(interval=86400)
         #if $record.outHumidity.has_data
-        [$record.start.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
         #end if
       #end for
       ]

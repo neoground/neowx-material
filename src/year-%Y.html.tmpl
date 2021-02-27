@@ -442,7 +442,7 @@
     var seriesdata1 = [
         #for $record in $year.days
             #if $record.outTemp.has_data
-            [$record.dateTime.raw, $record.outTemp.min.format(add_label=False, format_string="%.2f", localize=False, None_string="0")],
+            [$record.dateTime.raw, $record.outTemp.min.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end if
         #end for
         ];
@@ -450,7 +450,7 @@
     var seriesdata1a = [
         #for $record in $year.days
             #if $record.outTemp.has_data
-            [$record.dateTime.raw, $record.outTemp.max.format(add_label=False, format_string="%.2f", localize=False, None_string="0")],
+            [$record.dateTime.raw, $record.outTemp.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end if
         #end for
         ];
@@ -458,7 +458,7 @@
     var seriesdata2 = [
         #for $record in $year.days
             #if $record.dewpoint.has_data
-            [$record.dateTime.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="0")],
+            [$record.dateTime.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end if
         #end for
         ];
@@ -492,7 +492,7 @@
     seriesdata1 = [
         #for $record in $year.days
             #if $record.windchill.has_data
-            [$record.dateTime.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            [$record.dateTime.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end if
         #end for
         ]
@@ -500,7 +500,7 @@
     seriesdata2 = [
         #for $record in $year.days
             #if $record.heatindex.has_data
-            [$record.dateTime.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            [$record.dateTime.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end if
         #end for
         ]
@@ -529,7 +529,7 @@
     seriesdata1 = [
         #for $record in $year.days
             #if $record.barometer.has_data
-            [$record.dateTime.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            [$record.dateTime.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end if
         #end for
         ];
@@ -554,7 +554,7 @@
     seriesdata1 = [
         #for $record in $year.spans(interval=604800)
             #if $record.rain.has_data
-            [$record.dateTime.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False)],
+            [$record.dateTime.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end if
         #end for
         ]
@@ -579,7 +579,7 @@
     seriesdata1 = [
         #for $record in $year.days
             #if $record.windSpeed.has_data
-            [$record.dateTime.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False)],
+            [$record.dateTime.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end if
         #end for
         ]
@@ -587,7 +587,7 @@
     seriesdata2 = [
         #for $record in $year.days
             #if $record.windGust.has_data
-            [$record.dateTime.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False)],
+            [$record.dateTime.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end if
         #end for
         ]
@@ -616,7 +616,7 @@
     seriesdata1 = [
         #for $record in $year.days
             #if $record.outHumidity.has_data
-            [$record.dateTime.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            [$record.dateTime.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end if
         #end for
         ]

@@ -150,7 +150,8 @@
                 </h4>
               </div>
               <div class="col-3 text-muted font-small">
-                $day.wind.max $day.wind.gustdir.ordinal_compass <i class="wi wi-wind from-$day.wind.gustdir.formatted-deg" title="$day.wind.gustdir.formatted°" data-toggle="tooltip"></i> <br>
+                $day.wind.max $day.wind.gustdir.ordinal_compass <br>
+                <i class="wi wi-wind from-$day.wind.gustdir.formatted-deg mr-2" title="$day.wind.gustdir.formatted°" data-toggle="tooltip"></i>
                 ($day.wind.maxtime.format($Extras.Formatting.datetime_today))
               </div>
             </div>
@@ -420,7 +421,7 @@
           name: '$obs.label.outTemp',
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.outTemp.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            [$record.start.raw, $record.outTemp.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end for
           ]
         },
@@ -428,7 +429,7 @@
           name: '$obs.label.dewpoint',
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            [$record.start.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end for
           ]
         }
@@ -450,7 +451,7 @@
           name: '$obs.label.windchill',
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-                    [$record.start.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False)],
+                    [$record.start.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end for
           ]
         },
@@ -458,7 +459,7 @@
           name: '$obs.label.heatindex',
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            [$record.start.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end for
           ]
         }
@@ -479,7 +480,7 @@
           name: '$obs.label.barometer',
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False)],
+            [$record.start.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end for
           ]
         }
@@ -500,7 +501,7 @@
           name: '$obs.label.rain',
           data: [
             #for $record in $span($day_delta=1).spans(interval=3600)
-                    [$record.start.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False)],
+                    [$record.start.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end for
           ]
         }
@@ -521,7 +522,7 @@
           name: '$obs.label.windSpeed',
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-                    [$record.start.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False)],
+                    [$record.start.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end for
           ]
         },
@@ -529,7 +530,7 @@
           name: '$obs.label.windGust',
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False)],
+            [$record.start.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
             #end for
           ]
         }
@@ -550,7 +551,7 @@
             name: '$obs.label.outHumidity',
             data: [
               #for $record in $span($day_delta=1).spans(interval=600)
-                      [$record.start.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False)],
+                      [$record.start.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
               #end for
             ]
           }

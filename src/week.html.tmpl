@@ -408,13 +408,13 @@
 
     var seriesdata1 = [
       #for $record in $span($week_delta=1).spans(interval=14400)
-        [$record.start.raw, $record.outTemp.avg.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.outTemp.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
       #end for
     ];
 
     var seriesdata2 = [
       #for $record in $span($week_delta=1).spans(interval=14400)
-        [$record.start.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
       #end for
       ];
 
@@ -442,13 +442,13 @@
 
     seriesdata1 = [
       #for $record in $span($week_delta=1).spans(interval=14400)
-        [$record.start.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
       #end for
       ]
 
     seriesdata2 = [
       #for $record in $span($week_delta=1).spans(interval=14400)
-        [$record.start.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
       #end for
       ]
 
@@ -475,7 +475,7 @@
 
     seriesdata1 = [
       #for $record in $span($week_delta=1).spans(interval=14400)
-              [$record.start.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False)],
+              [$record.start.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
       #end for
       ];
 
@@ -498,7 +498,7 @@
 
     seriesdata1 = [
       #for $record in $span($week_delta=1).spans(interval=21600)
-        [$record.start.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
       #end for
       ]
 
@@ -521,13 +521,13 @@
 
     seriesdata1 = [
       #for $record in $span($week_delta=1).spans(interval=14400)
-        [$record.start.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
       #end for
       ]
 
     seriesdata2 = [
       #for $record in $span($week_delta=1).spans(interval=14400)
-        [$record.start.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
       #end for
       ]
 
@@ -554,7 +554,7 @@
 
     seriesdata1 = [
       #for $record in $span($week_delta=1).spans(interval=14400)
-        [$record.start.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False)],
+        [$record.start.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
       #end for
       ]
 
