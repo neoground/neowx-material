@@ -45,4 +45,4 @@ The design is based on [Material Design for Bootstrap (MDB) Free](https://mdboot
 
 - Assets cleanup
 - Make CDN optional
-- Graph translations
+- Graph translations + add missing graphs
