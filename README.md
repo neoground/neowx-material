@@ -19,6 +19,7 @@ and many more new features.
 - many color schemes to choose from- 
 - interactive and zoomable graphs
 - wind direction + speed visualization as a wind rose
+- accessible HTML + NOAA TXT file archive for all years and months
 - easy translation - provides many languages out of the box! 
   (or add your own translation)
 - auto dark mode - works great on mobile and desktop
@@ -26,7 +27,7 @@ and many more new features.
 - support for all available sensors (not all yet - but we're working on it!)
 - many options to customize your reports even more - 
   have a look at the skin.conf
-- including much more features!
+- ...and much more!
 
 Learn more about all features on our project page: 
 [NeoWX Material | Neoground Projects](https://projects.neoground.com/neowx-material).
@@ -48,7 +49,7 @@ Setting up the development environment is easy:
 
 - clone / download repository
 - install npm packages (`yarn install` / `npm install`)
-- for easy testing create a symlink from your `$WEEWX_HOME/skins/neowx-material`
+- for easy testing create a symlink from your `WEEWX_HOME/skins/neowx-material`
   to the `src` directory
   
 For basic tasks npm scripts are available.
