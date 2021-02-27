@@ -22,15 +22,15 @@
             <div class="col-12 col-md-6 col-xl-4 mb-4 text-center">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="h3-responsive indigo-text">${yr}</h3>
+                        <h3 class="h3-responsive $Extras.color-text">${yr}</h3>
                         <div class="row">
                             #if $yr >= $current.dateTime.format("%Y")
                             <div class="col-6">
-                                <a href="year.html" class="btn btn-indigo">$Extras.Translations[$Extras.language].more</a>
+                                <a href="year.html" class="btn btn-$Extras.color">$Extras.Translations[$Extras.language].more</a>
                             </div>
                             #else
                             <div class="col-6">
-                                <a href="year-${yr}.html" class="btn btn-indigo">$Extras.Translations[$Extras.language].more</a>
+                                <a href="year-${yr}.html" class="btn btn-$Extras.color">$Extras.Translations[$Extras.language].more</a>
                             </div>
                             #end if
 

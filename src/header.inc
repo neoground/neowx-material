@@ -1,6 +1,6 @@
 <header>
 
-    <nav class="navbar navbar-expand-lg navbar-dark indigo">
+    <nav class="navbar navbar-expand-lg navbar-dark $Extras.color">
     <span class="navbar-brand" ><strong>$station.location</strong><br>
       <span class="font-small">$current.dateTime</span>
     </span>

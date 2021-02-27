@@ -21,7 +21,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.outTemp</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.outTemp</h5>
 
             <div class="row">
               <div class="col-3 text-muted font-small">
@@ -43,7 +43,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.outHumidity</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.outHumidity</h5>
 
             <div class="row">
               <div class="col-3 text-muted font-small">
@@ -65,7 +65,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.barometer
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.barometer
               #if $trend.barometer.raw > 0
               <i class="wi wi-direction-up-right" title="Trend: $trend.barometer" data-toggle="tooltip"></i>
               #else
@@ -94,7 +94,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.inTemp</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.inTemp</h5>
 
             <div class="row">
               <div class="col-3 text-muted font-small">
@@ -116,7 +116,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.inHumidity</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.inHumidity</h5>
 
             <div class="row">
               <div class="col-3 text-muted font-small">
@@ -138,7 +138,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.windSpeed <i class="wi wi-wind from-$current.windDir.formatted-deg" title="$current.windDir.formatted°" data-toggle="tooltip"></i></h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.windSpeed <i class="wi wi-wind from-$current.windDir.formatted-deg" title="$current.windDir.formatted°" data-toggle="tooltip"></i></h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.wind.avg <br>
@@ -161,7 +161,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.rain</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.rain</h5>
 
             <div class="row">
               <div class="col-3 text-muted font-small">
@@ -183,7 +183,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.dewpoint</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.dewpoint</h5>
 
             <div class="row">
               <div class="col-3 text-muted font-small">
@@ -205,7 +205,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.windchill</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.windchill</h5>
 
             <div class="row">
               <div class="col-3 text-muted font-small">
@@ -227,7 +227,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.heatindex</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.heatindex</h5>
 
             <div class="row">
               <div class="col-3 text-muted font-small">
@@ -250,7 +250,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.UV</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.UV</h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.UV.min <br>
@@ -273,7 +273,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.ET</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.ET</h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.ET.min <br>
@@ -296,7 +296,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.radiation</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.radiation</h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $day.radiation.min <br>
@@ -319,7 +319,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.extraTemp1</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp1</h5>
 
             <div class="row">
               <div class="col-3 text-muted font-small">
@@ -343,7 +343,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.extraTemp2</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp2</h5>
 
             <div class="row">
               <div class="col-3 text-muted font-small">
@@ -367,7 +367,7 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive indigo-text">$obs.label.extraTemp3</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp3</h5>
 
             <div class="row">
               <div class="col-3 text-muted font-small">
