@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="$Extras.language">
 <head>
     <title>$Extras.Translations[$Extras.language].archive | $station.location</title>
     #include "head.inc"
 </head>
 <body class="main-bg">
 
+#attr $active_nav = 'archive'
 #include "header.inc"
 
 <main>
@@ -14,21 +15,21 @@
 
         <div class="row my-4 align-content-start">
 
-            <div class="col-12 mb-4 text-center">
-                <h2 class="h2-responsive text-dark">$Extras.Translations[$Extras.language].archive</h2>
-            </div>
-
             #for $yr in $SummaryByYear
             <div class="col-12 col-md-6 col-xl-4 mb-4 text-center">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="h3-responsive $Extras.color-text">${yr}</h3>
-                        <div class="row">
+                        <div class="row d-flex align-items-center">
                             <div class="col-6">
-                                <a href="year-${yr}.html" class="btn btn-$Extras.color">$Extras.Translations[$Extras.language].more</a>
+                                <a href="year-${yr}.html" class="btn btn-$Extras.color">
+                                    $Extras.Translations[$Extras.language].more
+                                </a>
                             </div>
                             <div class="col-6">
-                                <a href="archive/NOAA-${yr}.txt" class="btn btn-primary">$Extras.Translations[$Extras.language].noaa_export</a>
+                                <a href="archive/NOAA-${yr}.txt" class="btn btn-primary btn-sm">
+                                    $Extras.Translations[$Extras.language].noaa_export
+                                </a>
                             </div>
                         </div>
                     </div>

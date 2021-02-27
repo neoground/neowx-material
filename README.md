@@ -47,3 +47,4 @@ NOAA reports and some parts of the configuration are based on the Standard weewx
 
 - Assets cleanup
 - Graph translations + add missing graphs
+- Graph export fix

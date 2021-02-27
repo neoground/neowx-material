@@ -6,6 +6,7 @@
 </head>
 <body class="main-bg">
 
+#attr $active_nav = 'archive'
 #include "header.inc"
 
 <main>
@@ -17,8 +18,6 @@
             <div class="col-12 mb-4 text-center">
                 <h2 class="h2-responsive text-dark">$Extras.Translations[$Extras.language].year $year_name</h2>
             </div>
-
-            ## MONTHS
 
             #for $month in $year.months
             <div class="col-12 col-md-6 col-xl-4 mb-4 text-center">
@@ -44,8 +43,6 @@
                 </a>
             </div>
             #end for
-
-            ## / MONTHS
 
             <div class="col-12 mt-2 mb-4">
                 <hr>
