@@ -13,6 +13,10 @@ chart: {
   toolbar: {
     autoSelected: 'zoom'
   },
+  locales: [
+    #include raw "js/vendor/apexcharts/locales/" + $Extras.language + ".json"
+  ],
+  defaultLocale: '$Extras.language',
 },
 dataLabels: {
   enabled: false
