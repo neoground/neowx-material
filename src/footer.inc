@@ -1,16 +1,16 @@
-<!-- Footer -->
+## Footer
 <footer class="page-footer font-small $Extras.color pt-4">
 
-    <!-- Footer Links -->
+    ## Footer Links
     <div class="container-fluid text-center text-md-left">
 
-        <!-- Grid row -->
+        ## Grid row
         <div class="row">
 
-            <!-- Grid column -->
+            ## Grid column
             <div class="col-md-6 mt-md-0 mt-3">
 
-                <!-- Content -->
+                ## Content
                 <h5 class="text-uppercase">$Extras.Translations[$Extras.language].about</h5>
 
                 <table>
@@ -29,11 +29,11 @@
                 #end if
 
             </div>
-            <!-- Grid column -->
+            ## Grid column
 
             <hr class="clearfix w-100 d-md-none pb-3">
 
-            <!-- Grid column -->
+            ## Grid column
             <div class="col-md-3 mb-md-0 mb-3">
 
                 #if $Extras.has_key('footer_box_title') and $Extras.footer_box_title is not ""
@@ -44,12 +44,12 @@
                 $Extras.footer_box_content
                 #end if
             </div>
-            <!-- Grid column -->
+            ## Grid column
 
-            <!-- Grid column -->
+            ## Grid column
             <div class="col-md-3 mb-md-0 mb-3">
 
-                <!-- Links -->
+                ## Links
                 <h5 class="text-uppercase">$Extras.Translations[$Extras.language].links</h5>
 
                 <ul class="list-unstyled">
@@ -76,15 +76,15 @@
                 </ul>
 
             </div>
-            <!-- Grid column -->
+            ## Grid column
 
         </div>
-        <!-- Grid row -->
+        ## Grid row
 
     </div>
-    <!-- Footer Links -->
+    ## Footer Links
 
-    <!-- Copyright -->
+    ## Copyright
     <div class="footer-copyright text-center py-3">
         &copy; $current.dateTime.format("%Y")
         #if $Extras.has_key('you')
@@ -95,7 +95,7 @@
         <span class="mx-2">&bull;</span>
         <a href="https://projects.neoground.com/neowx-material" target="_blank">NeoWX Material</a> skin
     </div>
-    <!-- Copyright -->
+    ## Copyright
 
 </footer>
-<!-- Footer -->
+## Footer

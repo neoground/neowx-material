@@ -5,7 +5,7 @@
 <meta name="description" content="$Extras.description">
 <meta name="keywords" content="$Extras.keywords">
 
-<!-- Web App -->
+## Web App
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="$Extras.Translations[$Extras.language].weather | $station.location">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,15 +25,12 @@
 
 <link href="manifest.json" rel="manifest">
 
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;700&display=swap" rel="stylesheet">
-
-<!-- Bootstrap core CSS -->
+## Bootstrap core CSS
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<!-- Material Design Bootstrap -->
+## Material Design Bootstrap
 <link rel="stylesheet" href="css/mdb.min.css">
-<!-- Weather Icons -->
+## Weather Icons
 <link rel="stylesheet" href="weather-icons/css/weather-icons.min.css">
 <link rel="stylesheet" href="weather-icons/css/weather-icons-wind.min.css">
-<!-- Your custom styles (optional) -->
+## Your custom styles (optional)
 <link rel="stylesheet" href="css/style.css">

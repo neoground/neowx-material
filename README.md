@@ -46,5 +46,4 @@ NOAA reports and some parts of the configuration are based on the Standard weewx
 ## TODO
 
 - Assets cleanup
-- Make CDN optional
 - Graph translations + add missing graphs
