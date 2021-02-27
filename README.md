@@ -41,6 +41,8 @@ the weewx contributors. One of the best solutions for your weather station under
 
 The design is based on [Material Design for Bootstrap (MDB) Free](https://mdbootstrap.com).
 
+NOAA reports and some parts of the configuration are based on the Standard weewx skin.
+
 ## TODO
 
 - Assets cleanup
