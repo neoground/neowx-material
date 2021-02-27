@@ -31,23 +31,10 @@
                     <a class="nav-link" href="year.html">$Extras.Translations[$Extras.language].year</a>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="archiveDropdownLink" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        $Extras.Translations[$Extras.language].archive
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="archiveDropdownLink">
-
-                        #for $yr in $SummaryByYear
-                        #if $yr < $latest.dateTime.format("%Y")
-                        <li class="dropdown-submenu">
-                            <a href="year-${yr}.html">$yr</a>
-                        </li>
-                        #end if
-                        #end for
-
-                    </ul>
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="archive.html">$Extras.Translations[$Extras.language].archive</a>
                 </li>
+
             </ul>
         </div>
         #if $almanac.hasExtras

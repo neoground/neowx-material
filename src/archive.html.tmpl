@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>$Extras.Translations[$Extras.language].archive | $station.location</title>
+    #include "head.inc"
+</head>
+<body class="main-bg">
+
+#include "header.inc"
+
+<main>
+
+    <div class="container">
+
+        <div class="row my-4 align-content-start">
+
+            <div class="col-12 mb-4 text-center">
+                <h2 class="h2-responsive text-dark">$Extras.Translations[$Extras.language].archive</h2>
+            </div>
+
+            #for $yr in $SummaryByYear
+            <div class="col-12 col-md-6 col-xl-4 mb-4 text-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="h3-responsive indigo-text">${yr}</h3>
+                        <div class="row">
+                            #if $yr >= $current.dateTime.format("%Y")
+                            <div class="col-6">
+                                <a href="year.html" class="btn btn-indigo">$Extras.Translations[$Extras.language].more</a>
+                            </div>
+                            #else
+                            <div class="col-6">
+                                <a href="year-${yr}.html" class="btn btn-indigo">$Extras.Translations[$Extras.language].more</a>
+                            </div>
+                            #end if
+
+                            <div class="col-6">
+                                <a href="archive/NOAA-${yr}.txt" class="btn btn-primary">$Extras.Translations[$Extras.language].noaa_export</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            #end for
+
+        </div>
+
+    </div>
+
+</main>
+
+#include "footer.inc"
+#include "js.inc"
+
+</body>
+</html>
