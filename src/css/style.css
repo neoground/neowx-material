@@ -18,6 +18,15 @@ table td {
     font-weight: normal;
 }
 
+.card {
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .05);
+    border-radius: .25rem;
+}
+
+.navbar {
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .05);
+}
+
 /* very large layout */
 @media screen and (min-width: 1660px) {
     .temprow {
@@ -61,12 +70,41 @@ table td {
         color: #aaa !important;
     }
 
-    /* TODO Add for other colors as well (as needed) */
+    /*
+     * Adjusted colors. Default text is color 500, in dark: 300
+     * Not all colors need this, some look nice on dark bgs.
+     */
+
+    .purple-text {
+        color: #BA68C8 !important;
+    }
+    .deep-purple-text {
+        color: #9575CD !important;
+    }
     .indigo-text {
-        color: #7E88C6 !important;
+        color: #7986CB !important;
+    }
+    .teal-text {
+        color: #4DB6AC !important;
+    }
+    .brown-text {
+        color: #A1887F !important;
+    }
+    .blue-grey-text {
+        color: #90A4AE !important;
     }
 
     .text-dark, .table {
         color: #ccc !important;
     }
+}
+
+/* Fix for bright color bgs
+ * Normally color 500, darker version: color 700
+ */
+.lime {
+    background-color: #AFB42B !important;
+}
+.yellow {
+    background-color: #FBC02D !important
 }
