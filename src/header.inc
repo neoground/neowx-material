@@ -1,8 +1,16 @@
 <header>
 
     <nav class="navbar navbar-expand-lg navbar-dark $Extras.color">
-    <span class="navbar-brand" ><strong>$station.location</strong><br>
-      <span class="font-small">$current.dateTime</span>
+    <span class="navbar-brand d-flex">
+        #if $Extras.show_logo
+        <span class="mr-2">
+            <img src="img/icon-alpha-1x.png" srcset="img/icon-alpha-1x.png 1x, img/icon-alpha-2x.png 2x" style="width: 4rem">
+        </span>
+        #end if
+        <span>
+            <strong>$station.location</strong><br>
+            <span class="font-small">$current.dateTime</span>
+        </span>
     </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

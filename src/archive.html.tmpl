@@ -24,16 +24,9 @@
                     <div class="card-body">
                         <h3 class="h3-responsive $Extras.color-text">${yr}</h3>
                         <div class="row">
-                            #if $yr >= $current.dateTime.format("%Y")
-                            <div class="col-6">
-                                <a href="year.html" class="btn btn-$Extras.color">$Extras.Translations[$Extras.language].more</a>
-                            </div>
-                            #else
                             <div class="col-6">
                                 <a href="year-${yr}.html" class="btn btn-$Extras.color">$Extras.Translations[$Extras.language].more</a>
                             </div>
-                            #end if
-
                             <div class="col-6">
                                 <a href="archive/NOAA-${yr}.txt" class="btn btn-primary">$Extras.Translations[$Extras.language].noaa_export</a>
                             </div>
