@@ -22,21 +22,24 @@
             <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h5 class="h5-responsive $Extras.color-text">Sun</h5>
+                        <h5 class="h5-responsive $Extras.color-text">$Extras.Translations[$Extras.language].sun</h5>
 
                         <div class="row">
                             <div class="col-4">
-                                <h6 class="$Extras.color-text"><i class="wi wi-sunrise"></i> Rise</h6>
+                                <h6 class="$Extras.color-text"><i class="wi wi-sunrise"></i>
+                                    $Extras.Translations[$Extras.language].rise</h6>
                                 $almanac.sun.rise
                                 <span class="d-block text-muted" data-toggle="tooltip"
                                       title="Start civil twilight">$almanac(horizon=-6).sun(use_center=1).rise</span>
                             </div>
                             <div class="col-4">
-                                <h6 class="$Extras.color-text"><i class="wi wi-day-sunny"></i> Transit</h6>
+                                <h6 class="$Extras.color-text"><i class="wi wi-day-sunny"></i>
+                                    $Extras.Translations[$Extras.language].transit</h6>
                                 $almanac.sun.transit
                             </div>
                             <div class="col-4">
-                                <h6 class="$Extras.color-text"><i class="wi wi-sunset"></i> Set</h6>
+                                <h6 class="$Extras.color-text"><i class="wi wi-sunset"></i>
+                                    $Extras.Translations[$Extras.language].set</h6>
                                 $almanac.sun.set
                                 <span class="d-block text-muted" data-toggle="tooltip"
                                       title="End civil twilight">$almanac(horizon=-6).sun(use_center=1).set</span>
@@ -50,19 +53,22 @@
             <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h5 class="h5-responsive $Extras.color-text">Moon</h5>
+                        <h5 class="h5-responsive $Extras.color-text">$Extras.Translations[$Extras.language].moon</h5>
 
                         <div class="row">
                             <div class="col-4">
-                                <h6 class="$Extras.color-text"><i class="wi wi-moonrise"></i> Rise</h6>
+                                <h6 class="$Extras.color-text"><i class="wi wi-moonrise"></i>
+                                    $Extras.Translations[$Extras.language].rise</h6>
                                 $almanac.moon.rise
                             </div>
                             <div class="col-4">
-                                <h6 class="$Extras.color-text"><i class="wi wi-night-clear"></i> Transit</h6>
+                                <h6 class="$Extras.color-text"><i class="wi wi-night-clear"></i>
+                                    $Extras.Translations[$Extras.language].transit</h6>
                                 $almanac.moon.transit
                             </div>
                             <div class="col-4">
-                                <h6 class="$Extras.color-text"><i class="wi wi-moonset"></i> Set</h6>
+                                <h6 class="$Extras.color-text"><i class="wi wi-moonset"></i>
+                                    $Extras.Translations[$Extras.language].set</h6>
                                 $almanac.moon.set
                             </div>
                         </div>
@@ -74,23 +80,26 @@
             <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h5 class="h5-responsive $Extras.color-text">Equinox & Solstice</h5>
+                        <h5 class="h5-responsive $Extras.color-text">
+                            $Extras.Translations[$Extras.language].equinox
+                            & $Extras.Translations[$Extras.language].solstice
+                        </h5>
 
                         <table class="table table-striped text-left">
                             <tr>
-                                <td>Vernal equinox:</td>
+                                <td>$Extras.Translations[$Extras.language].vernal_equinox:</td>
                                 <td>$almanac.next_vernal_equinox</td>
                             </tr>
                             <tr>
-                                <td>Summer solstice:</td>
+                                <td>$Extras.Translations[$Extras.language].summer_solstice:</td>
                                 <td>$almanac.next_summer_solstice</td>
                             </tr>
                             <tr>
-                                <td>Autumnal equinox:</td>
+                                <td>$Extras.Translations[$Extras.language].autumnal_equinox:</td>
                                 <td>$almanac.next_autumnal_equinox</td>
                             </tr>
                             <tr>
-                                <td>Winter solstice:</td>
+                                <td>$Extras.Translations[$Extras.language].winter_solstice:</td>
                                 <td>$almanac.next_winter_solstice</td>
                             </tr>
                         </table>
@@ -102,27 +111,29 @@
             <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h5 class="h5-responsive $Extras.color-text">Moon Phases</h5>
+                        <h5 class="h5-responsive $Extras.color-text">
+                            $Extras.Translations[$Extras.language].moonphases
+                        </h5>
 
                         <table class="table table-striped text-left">
                             <tr>
-                                <td>Currently:</td>
+                                <td>$Extras.Translations[$Extras.language].currently:</td>
                                 <td>
-                                    #if $almanac.moon_phase == "New"
+                                    #if $almanac.moon_phase == $almanac.moon_phases[0]
                                     <i class="wi wi-moon-new mr-1" style="opacity: .75"></i>
-                                    #else if $almanac.moon_phase == "Waxing crescent"
+                                    #else if $almanac.moon_phase == $almanac.moon_phases[1]
                                     <i class="wi wi-moon-waxing-crescent-4 mr-1" style="opacity: .75"></i>
-                                    #else if $almanac.moon_phase == "First quarter"
+                                    #else if $almanac.moon_phase == $almanac.moon_phases[2]
                                     <i class="wi wi-moon-first-quarter mr-1" style="opacity: .75"></i>
-                                    #else if $almanac.moon_phase == "Waxing gibbous"
+                                    #else if $almanac.moon_phase == $almanac.moon_phases[3]
                                     <i class="wi wi-moon-waxing-gibbous-4 mr-1" style="opacity: .75"></i>
-                                    #else if $almanac.moon_phase == "Full"
+                                    #else if $almanac.moon_phase == $almanac.moon_phases[4]
                                     <i class="wi wi-moon-full mr-1" style="opacity: .75"></i>
-                                    #else if $almanac.moon_phase == "Waning gibbous"
+                                    #else if $almanac.moon_phase == $almanac.moon_phases[5]
                                     <i class="wi wi-moon-waning-gibbous-4 mr-1" style="opacity: .75"></i>
-                                    #else if $almanac.moon_phase == "Last quarter"
+                                    #else if $almanac.moon_phase == $almanac.moon_phases[6]
                                     <i class="wi wi-moon-third-quarter mr-1" style="opacity: .75"></i>
-                                    #else if $almanac.moon_phase == "Waning crescent"
+                                    #else if $almanac.moon_phase == $almanac.moon_phases[7]
                                     <i class="wi wi-moon-waning-crescent-4 mr-1" style="opacity: .75"></i>
                                     #else
                                     <i class="wi wi-moon-waning-crescent-3 mr-1" style="opacity: .75"></i>
@@ -132,20 +143,20 @@
                             </tr>
                             #if $almanac.next_full_moon.raw < $almanac.next_new_moon.raw
                             <tr>
-                                <td>Next Full Moon:</td>
+                                <td>$Extras.Translations[$Extras.language].next_full_moon:</td>
                                 <td>$almanac.next_full_moon</td>
                             </tr>
                             <tr>
-                                <td>Next New Moon:</td>
+                                <td>$Extras.Translations[$Extras.language].next_new_moon:</td>
                                 <td>$almanac.next_new_moon</td>
                             </tr>
                             #else
                             <tr>
-                                <td>Next New Moon:</td>
+                                <td>$Extras.Translations[$Extras.language].next_new_moon:</td>
                                 <td>$almanac.next_new_moon</td>
                             </tr>
                             <tr>
-                                <td>Next Full Moon:</td>
+                                <td>$Extras.Translations[$Extras.language].next_full_moon:</td>
                                 <td>$almanac.next_full_moon</td>
                             </tr>
                             #end if

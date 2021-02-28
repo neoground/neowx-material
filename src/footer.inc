@@ -41,7 +41,7 @@
                 #end if
 
                 #if $Extras.has_key('footer_box_content') and $Extras.footer_box_content is not ""
-                $Extras.footer_box_content
+                <p>$Extras.footer_box_content</p>
                 #end if
             </div>
             ## Grid column

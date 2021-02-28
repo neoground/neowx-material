@@ -91,22 +91,22 @@
                 <i class="wi wi-moonrise mr-1" style="opacity: .75"></i> $almanac.moon.rise <br>
                 <i class="wi wi-moonset mr-1" style="opacity: .75"></i> $almanac.moon.set
             </li>
-            <li class="nav-item mr-4 text-white" style="line-height: 1.75">
-                #if $almanac.moon_phase == "New"
+            <li class="nav-item mr-4 text-white" style="line-height: 1.75" title="$almanac.moon_phase" data-toggle="tooltip">
+                #if $almanac.moon_phase == $almanac.moon_phases[0]
                 <i class="wi wi-moon-new mr-1" style="opacity: .75"></i>
-                #else if $almanac.moon_phase == "Waxing crescent"
+                #else if $almanac.moon_phase == $almanac.moon_phases[1]
                 <i class="wi wi-moon-waxing-crescent-4 mr-1" style="opacity: .75"></i>
-                #else if $almanac.moon_phase == "First quarter"
+                #else if $almanac.moon_phase == $almanac.moon_phases[2]
                 <i class="wi wi-moon-first-quarter mr-1" style="opacity: .75"></i>
-                #else if $almanac.moon_phase == "Waxing gibbous"
+                #else if $almanac.moon_phase == $almanac.moon_phases[3]
                 <i class="wi wi-moon-waxing-gibbous-4 mr-1" style="opacity: .75"></i>
-                #else if $almanac.moon_phase == "Full"
+                #else if $almanac.moon_phase == $almanac.moon_phases[4]
                 <i class="wi wi-moon-full mr-1" style="opacity: .75"></i>
-                #else if $almanac.moon_phase == "Waning gibbous"
+                #else if $almanac.moon_phase == $almanac.moon_phases[5]
                 <i class="wi wi-moon-waning-gibbous-4 mr-1" style="opacity: .75"></i>
-                #else if $almanac.moon_phase == "Last quarter"
+                #else if $almanac.moon_phase == $almanac.moon_phases[6]
                 <i class="wi wi-moon-third-quarter mr-1" style="opacity: .75"></i>
-                #else if $almanac.moon_phase == "Waning crescent"
+                #else if $almanac.moon_phase == $almanac.moon_phases[7]
                 <i class="wi wi-moon-waning-crescent-4 mr-1" style="opacity: .75"></i>
                 #else
                 <i class="wi wi-moon-waning-crescent-3 mr-1" style="opacity: .75"></i>
