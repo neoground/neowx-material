@@ -38,6 +38,9 @@ Learn more about all features on our project page:
 2. Install the extension: `wee_extension --install=path/to/neowx-material.zip`
 3. restart weewx: `sudo service weewx restart`
 
+If your skin doesn't change edit the `weewx.conf` and set `skin = neowx-material`
+in the `[StdReport]` section, after that reload weewx: `sudo service weewx reload`.
+
 ## Contribution
 
 Feel free to add your own improvements. Contributions are always welcome!
