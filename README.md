@@ -32,6 +32,12 @@ and many more new features.
 Learn more about all features on our project page: 
 [NeoWX Material | Neoground Projects](https://projects.neoground.com/neowx-material).
 
+## Installation
+
+1. [Download](https://projects.neoground.com/neowx-material) the latest version
+2. Install the extension: `wee_extension --install=path/to/neowx-material.zip`
+3. restart weewx: `sudo service weewx restart`
+
 ## Contribution
 
 Feel free to add your own improvements. Contributions are always welcome!
@@ -52,9 +58,37 @@ Setting up the development environment is easy:
 - for easy testing create a symlink from your `WEEWX_HOME/skins/neowx-material`
   to the `src` directory
   
-For basic tasks npm scripts are available.
+For basic tasks npm / yarn scripts are available.
 
 Styling is done via SCSS, compile it to `css/style.css` by: `yarn run build-css`.
+
+### Available scripts
+
+| Script           | Description                                                           |
+| ---------------- | --------------------------------------------------------------------- |
+| build-css        | Create css/style.css from SCSS files                                  |
+| build-minify-css | Create minified css/style.min.css from SCSS files                     |
+| cleanup-build    | Remove development files from dist directory                          |
+| copy-directories | Copy directories from src to dist (for building)                      |
+| copy-files       | Copy files from src to dist (for building)                            |
+| delete-build     | Remove files inside dist/skins/neowx-material                         |
+| build            | Build job: delete-build, build-minify-css, copy files + dirs, cleanup |
+
+### Building
+
+To create a dist package run `yarn run build`. This will clean up the dist environment
+and copy all files, directories and create the minified CSS.
+
+You find the final skin at `dist/skins/neowx-material`. 
+Create a zip-file of the `dist` directory to create the final package
+which you can easily install with `wee_extension`.
+
+You may need to adjust the values if you add / change file names. In this case you
+may also need to adjust the dist/install.py script which contains a list of all
+files which should be copied to the weewx skin directory on installation.
+
+Building is currently only supported on linux systems due to system commands used
+in the npm scripts. On other systems this needs to be adjusted or done manually.
 
 ## Thank You!
 
@@ -80,4 +114,4 @@ These 3rd party libraries are used:
 
 - Add missing graphs
 - Graph export fix
-- Build job
+- Make use of all almanac variables

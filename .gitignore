@@ -1,2 +1,4 @@
 .idea
 /src/node_modules/
+/dist/skins/neowx-material/
+/dist/*.zip
