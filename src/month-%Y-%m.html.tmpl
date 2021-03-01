@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="$Extras.language">
 <head>
-  <title>$month_name $year_name | $station.location</title>
-  #include "head.inc"
+    <title>$month_name $year_name | $station.location</title>
+    #include "head.inc"
 </head>
 <body class="main-bg">
 
@@ -11,396 +11,409 @@
 
 <main>
 
-  <div class="container-fluid d-flex-xxl">
+    <div class="container-fluid d-flex-xxl">
 
-    <div class="row my-4 temprow align-content-start">
+        <div class="row my-4 temprow align-content-start">
 
-      <div class="col-12 mb-4 text-center">
-        <h2 class="h2-responsive text-dark">$month_name $year_name</h2>
-      </div>
-
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.outTemp</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.outTemp.min <br>
-                ($month.outTemp.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.outTemp.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.outTemp.max <br>
-                ($month.outTemp.maxtime.format($Extras.Formatting.datetime))
-              </div>
+            <div class="col-12 mb-4 text-center">
+                <h2 class="h2-responsive text-dark">$month_name $year_name</h2>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.outHumidity</h5>
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.outTemp</h5>
 
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.outHumidity.min <br>
-                ($month.outHumidity.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.outHumidity.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.outHumidity.max <br>
-                ($month.outHumidity.maxtime.format($Extras.Formatting.datetime))
-              </div>
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.outTemp.min <br>
+                                ($month.outTemp.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.outTemp.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.outTemp.max <br>
+                                ($month.outTemp.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.barometer</h5>
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.outHumidity</h5>
 
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.barometer.min <br>
-                ($month.barometer.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h3-responsive">$month.barometer.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.barometer.max <br>
-                ($month.barometer.maxtime.format($Extras.Formatting.datetime))
-              </div>
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.outHumidity.min <br>
+                                ($month.outHumidity.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.outHumidity.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.outHumidity.max <br>
+                                ($month.outHumidity.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.barometer</h5>
 
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.inTemp</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.inTemp.min <br>
-                ($month.inTemp.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.inTemp.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.inTemp.max <br>
-                ($month.inTemp.maxtime.format($Extras.Formatting.datetime))
-              </div>
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.barometer.min <br>
+                                ($month.barometer.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h3-responsive">$month.barometer.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.barometer.max <br>
+                                ($month.barometer.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.inHumidity</h5>
 
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.inHumidity.min <br>
-                ($month.inHumidity.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.inHumidity.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.inHumidity.max <br>
-                ($month.inHumidity.maxtime.format($Extras.Formatting.datetime))
-              </div>
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.inTemp</h5>
+
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.inTemp.min <br>
+                                ($month.inTemp.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.inTemp.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.inTemp.max <br>
+                                ($month.inTemp.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.windSpeed</h5>
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.wind.avg <br>
-                Avg
-              </div>
-              <div class="col-6">
-                <h4 class="h3-responsive">
-                  $month.windSpeed.max $month.windDir.avg.ordinal_compass
-                </h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.wind.max $month.wind.gustdir.ordinal_compass <i class="wi wi-wind from-$month.wind.gustdir.formatted-deg" title="$month.wind.gustdir.formatted°" data-toggle="tooltip"></i> <br>
-                ($month.wind.maxtime.format($Extras.Formatting.datetime))
-              </div>
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.inHumidity</h5>
+
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.inHumidity.min <br>
+                                ($month.inHumidity.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.inHumidity.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.inHumidity.max <br>
+                                ($month.inHumidity.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.rain</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                &nbsp;
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.rain.sum</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.rainRate.max <br>
-                ($month.rainRate.maxtime.format($Extras.Formatting.datetime))
-              </div>
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">
+                            $obs.label.windSpeed
+                            <i class="wi wi-wind $month.windDir.formatted-deg mr-2"
+                               title="$month.windDir.formatted°" data-toggle="tooltip"></i>
+                        </h5>
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.wind.avg <br>
+                                Avg
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h3-responsive">
+                                    $month.windSpeed.max $month.windDir.avg.ordinal_compass
+                                </h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.wind.max $month.wind.gustdir.ordinal_compass <i
+                                    class="wi wi-wind from-$month.wind.gustdir.formatted-deg"
+                                    title="$month.wind.gustdir.formatted°" data-toggle="tooltip"></i> <br>
+                                ($month.wind.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.dewpoint</h5>
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.rain</h5>
 
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.dewpoint.min <br>
-                ($month.dewpoint.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.dewpoint.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.dewpoint.max <br>
-                ($month.dewpoint.maxtime.format($Extras.Formatting.datetime))
-              </div>
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                &nbsp;
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.rain.sum</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.rainRate.max <br>
+                                ($month.rainRate.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.windchill</h5>
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.dewpoint</h5>
 
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.windchill.min <br>
-                ($month.windchill.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.windchill.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.windchill.max <br>
-                ($month.windchill.maxtime.format($Extras.Formatting.datetime))
-              </div>
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.dewpoint.min <br>
+                                ($month.dewpoint.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.dewpoint.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.dewpoint.max <br>
+                                ($month.dewpoint.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.heatindex</h5>
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.windchill</h5>
 
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.heatindex.min <br>
-                ($month.heatindex.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.heatindex.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.heatindex.max <br>
-                ($month.heatindex.maxtime.format($Extras.Formatting.datetime))
-              </div>
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.windchill.min <br>
+                                ($month.windchill.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.windchill.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.windchill.max <br>
+                                ($month.windchill.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      #if $month.UV.has_data
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.UV</h5>
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.UV.min <br>
-                ($month.UV.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.UV.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.UV.max <br>
-                ($month.UV.maxtime.format($Extras.Formatting.datetime))
-              </div>
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.heatindex</h5>
+
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.heatindex.min <br>
+                                ($month.heatindex.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.heatindex.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.heatindex.max <br>
+                                ($month.heatindex.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      #end if
 
-      #if $month.ET.has_data and $month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.ET</h5>
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.ET.min <br>
-                ($month.ET.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.ET.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.ET.max <br>
-                ($month.ET.maxtime.format($Extras.Formatting.datetime))
-              </div>
+            #if $month.UV.has_data
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.UV</h5>
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.UV.min <br>
+                                ($month.UV.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.UV.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.UV.max <br>
+                                ($month.UV.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      #end if
+            #end if
 
-      #if $month.radiation.has_data
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.radiation</h5>
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.radiation.min <br>
-                ($month.radiation.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.radiation.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.radiationmax <br>
-                ($month.radiation.maxtime.format($Extras.Formatting.datetime))
-              </div>
+            #if $month.ET.has_data and $month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.ET</h5>
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.ET.min <br>
+                                ($month.ET.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.ET.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.ET.max <br>
+                                ($month.ET.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      #end if
+            #end if
 
-      #if $month.extraTemp1.has_data
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp1</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.extraTemp1.min <br>
-                ($month.extraTemp1.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.extraTemp1.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.extraTemp1.max <br>
-                ($month.extraTemp1.maxtime.format($Extras.Formatting.datetime))
-              </div>
+            #if $month.radiation.has_data
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.radiation</h5>
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.radiation.min <br>
+                                ($month.radiation.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.radiation.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.radiationmax <br>
+                                ($month.radiation.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      #end if
+            #end if
 
-      #if $month.extraTemp2.has_data
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp2</h5>
+            #if $month.extraTemp1.has_data
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp1</h5>
 
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.extraTemp2.min <br>
-                ($month.extraTemp2.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.extraTemp2.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.extraTemp2.max <br>
-                ($month.extraTemp2.maxtime.format($Extras.Formatting.datetime))
-              </div>
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.extraTemp1.min <br>
+                                ($month.extraTemp1.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.extraTemp1.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.extraTemp1.max <br>
+                                ($month.extraTemp1.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      #end if
+            #end if
 
-      #if $month.extraTemp3.has_data
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp3</h5>
+            #if $month.extraTemp2.has_data
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp2</h5>
 
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.extraTemp3.min <br>
-                ($month.extraTemp3.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.extraTemp3.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.extraTemp3.max <br>
-                ($month.extraTemp3.maxtime.format($Extras.Formatting.datetime))
-              </div>
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.extraTemp2.min <br>
+                                ($month.extraTemp2.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.extraTemp2.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.extraTemp2.max <br>
+                                ($month.extraTemp2.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            #end if
+
+            #if $month.extraTemp3.has_data
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp3</h5>
+
+                        <div class="row">
+                            <div class="col-3 text-muted font-small">
+                                $month.extraTemp3.min <br>
+                                ($month.extraTemp3.mintime.format($Extras.Formatting.datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$month.extraTemp3.avg</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small">
+                                $month.extraTemp3.max <br>
+                                ($month.extraTemp3.maxtime.format($Extras.Formatting.datetime))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            #end if
+
+            <div class="col-12 col-md-6 col-xl-4 mb-4 text-center">
+                <a href="archive/NOAA-${month.dateTime.format('%y')}-${month.dateTime.format('%m')}.txt"
+                   class="btn btn-$Extras.color">
+                    $Extras.Translations[$Extras.language].noaa_export
+                </a>
+            </div>
+
         </div>
-      </div>
-      #end if
+
+        <hr class="my-4 rowdivider">
+
+        <div class="row mt-5 mb-4 graphrow align-content-start">
+            #include "graphs.inc"
+        </div>
 
     </div>
-
-    <hr class="my-4 rowdivider">
-
-    <div class="row mt-5 mb-4 graphrow align-content-start">
-      #include "graphs.inc"
-    </div>
-
-  </div>
 
 </main>
 
 #include "footer.inc"
 #include "js.inc"
 
-  ## Charts
-  <script type="text/javascript">
+## Charts
+<script type="text/javascript">
     var theme_mode = 'light';
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      theme_mode = 'dark';
+        theme_mode = 'dark';
     }
 
     // ---
@@ -408,29 +421,34 @@
     // ---
 
     var seriesdata1 = [
-      #for $record in $month.days
-        [$record.start.raw, $record.outTemp.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
-      #end for
-    ];
+        #for $record in $month.days
+            [$record.start.raw, $record.outTemp.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+        #end
+    for
+        ]
+    ;
 
     var seriesdata2 = [
-      #for $record in $month.days
-        [$record.start.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
-      #end for
-      ];
+        #for $record in $month.days
+            [$record.start.raw, $record.dewpoint.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+        #end
+    for
+        ]
+    ;
 
     var options = {
-      #include "graph_area_config.inc"
-      series: [
+      #include
+    "graph_area_config.inc"
+    series: [
         {
-          name: '$obs.label.outTemp',
-          data: seriesdata1
+            name: '$obs.label.outTemp',
+            data: seriesdata1
         },
         {
-          name: '$obs.label.dewpoint',
-          data: seriesdata2
+            name: '$obs.label.dewpoint',
+            data: seriesdata2
         }
-      ]
+    ]
     }
 
     var chart = new ApexCharts(document.querySelector('#tempchart'), options)
@@ -442,29 +460,32 @@
     // ---
 
     seriesdata1 = [
-      #for $record in $month.days
-        [$record.start.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
-      #end for
-      ]
+        #for $record in $month.days
+            [$record.start.raw, $record.windchill.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+        #end
+    for
+        ]
 
     seriesdata2 = [
-      #for $record in $month.days
-        [$record.start.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
-      #end for
-      ]
+        #for $record in $month.days
+            [$record.start.raw, $record.heatindex.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+        #end
+    for
+        ]
 
     var options2 = {
-      #include "graph_area_config.inc"
-      series: [
+      #include
+    "graph_area_config.inc"
+    series: [
         {
-          name: '$obs.label.windchill',
-          data: seriesdata1
+            name: '$obs.label.windchill',
+            data: seriesdata1
         },
         {
-          name: '$obs.label.heatindex',
-          data: seriesdata2
+            name: '$obs.label.heatindex',
+            data: seriesdata2
         }
-      ]
+    ]
     }
 
     var chart2 = new ApexCharts(document.querySelector('#wchichart'), options2)
@@ -475,19 +496,22 @@
     // ---
 
     seriesdata1 = [
-      #for $record in $month.days
-              [$record.start.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
-      #end for
-      ];
+        #for $record in $month.days
+            [$record.start.raw, $record.barometer.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+        #end
+    for
+        ]
+    ;
 
     var options3 = {
-      #include "graph_area_config.inc"
-      series: [
+      #include
+    "graph_area_config.inc"
+    series: [
         {
-          name: '$obs.label.barometer',
-          data: seriesdata1
+            name: '$obs.label.barometer',
+            data: seriesdata1
         }
-      ]
+    ]
     }
 
     var chart3 = new ApexCharts(document.querySelector('#barometerchart'), options3)
@@ -498,19 +522,21 @@
     // ---
 
     seriesdata1 = [
-      #for $record in $month.days
-        [$record.start.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
-      #end for
-      ]
+        #for $record in $month.days
+            [$record.start.raw, $record.rain.sum.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+        #end
+    for
+        ]
 
     var options4 = {
-      #include "graph_bar_config.inc"
-      series: [
+      #include
+    "graph_bar_config.inc"
+    series: [
         {
-          name: '$obs.label.rain',
-          data: seriesdata1
+            name: '$obs.label.rain',
+            data: seriesdata1
         }
-      ]
+    ]
     }
 
     var chart4 = new ApexCharts(document.querySelector('#rainchart'), options4)
@@ -521,29 +547,32 @@
     // ---
 
     seriesdata1 = [
-      #for $record in $month.days
-        [$record.start.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
-      #end for
-      ]
+        #for $record in $month.days
+            [$record.start.raw, $record.windSpeed.max.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+        #end
+    for
+        ]
 
     seriesdata2 = [
-      #for $record in $month.days
-        [$record.start.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
-      #end for
-      ]
+        #for $record in $month.days
+            [$record.start.raw, $record.windGust.max.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+        #end
+    for
+        ]
 
     var options5 = {
-      #include "graph_area_config.inc"
-      series: [
+      #include
+    "graph_area_config.inc"
+    series: [
         {
-          name: '$obs.label.windSpeed',
-          data: seriesdata1
+            name: '$obs.label.windSpeed',
+            data: seriesdata1
         },
         {
-          name: '$obs.label.windGust',
-          data: seriesdata2
+            name: '$obs.label.windGust',
+            data: seriesdata2
         }
-      ]
+    ]
     }
 
     var chart5 = new ApexCharts(document.querySelector('#windchart'), options5)
@@ -554,19 +583,21 @@
     // ---
 
     seriesdata1 = [
-      #for $record in $month.days
-        [$record.start.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
-      #end for
-      ]
+        #for $record in $month.days
+            [$record.start.raw, $record.outHumidity.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+        #end
+    for
+        ]
 
     var options6 = {
-        #include "graph_area_config.inc"
-        series: [
-          {
+        #include
+    "graph_area_config.inc"
+    series: [
+        {
             name: '$obs.label.outHumidity',
             data: seriesdata1
-          }
-        ]
+        }
+    ]
     }
 
     var chart6 = new ApexCharts(document.querySelector('#humiditychart'), options6)
@@ -577,83 +608,84 @@
     // ---
 
     var vector_data = {
-      'N': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'NE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'E': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'SE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'S': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'SW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'W': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'NW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+        'N': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+        'NE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+        'E': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+        'SE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+        'S': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+        'SW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+        'W': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+        'NW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
     };
 
     var raw_data = [
-    #for $record in $month.days
-    {
-      'dir': "$record.windDir.avg.raw",
-      'speed': "$record.windSpeed.max.raw",
-      'max': "$record.windGust.max.raw"
-    },
-    #end for
-    ]
+        #for $record in $month.days
+        {
+            'dir': "$record.windDir.avg.raw",
+            'speed': "$record.windSpeed.max.raw",
+            'max': "$record.windGust.max.raw"
+        },
+        #end
+    for
+        ]
 
-    raw_data.forEach(function(item) {
-      var vec_dir = parseInt(item.dir);
-      var vec_speed = parseFloat(item.speed);
-      var max_speed = parseFloat(item.max);
+    raw_data.forEach(function (item) {
+        var vec_dir = parseInt(item.dir);
+        var vec_speed = parseFloat(item.speed);
+        var max_speed = parseFloat(item.max);
 
-      if(typeof vec_dir === 'number') {
-        var vec_key = false;
+        if (typeof vec_dir === 'number') {
+            var vec_key = false;
 
-        // Detect key based on vec direction (0-360). 45° steps, using the middle +- 45/2=22.5
-        if(vec_dir > 337.5 || vec_dir <= 22.5) {
-          vec_key = 'N';
-        }
-        if(vec_dir > 22.5 && vec_dir <= 67.5) {
-          vec_key = 'NE';
-        }
-        if(vec_dir > 67.5 && vec_dir <= 112.5) {
-          vec_key = 'E';
-        }
-        if(vec_dir > 112.5 && vec_dir <= 157.5) {
-          vec_key = 'SE';
-        }
-        if(vec_dir > 157.5 && vec_dir <= 202.5) {
-          vec_key = 'S';
-        }
-        if(vec_dir > 202.5 && vec_dir <= 247.5) {
-          vec_key = 'SW';
-        }
-        if(vec_dir > 247.5 && vec_dir <= 292.5) {
-          vec_key = 'W';
-        }
-        if(vec_dir > 292.5 && vec_dir <= 337.5) {
-          vec_key = 'NW';
-        }
+            // Detect key based on vec direction (0-360). 45° steps, using the middle +- 45/2=22.5
+            if (vec_dir > 337.5 || vec_dir <= 22.5) {
+                vec_key = 'N';
+            }
+            if (vec_dir > 22.5 && vec_dir <= 67.5) {
+                vec_key = 'NE';
+            }
+            if (vec_dir > 67.5 && vec_dir <= 112.5) {
+                vec_key = 'E';
+            }
+            if (vec_dir > 112.5 && vec_dir <= 157.5) {
+                vec_key = 'SE';
+            }
+            if (vec_dir > 157.5 && vec_dir <= 202.5) {
+                vec_key = 'S';
+            }
+            if (vec_dir > 202.5 && vec_dir <= 247.5) {
+                vec_key = 'SW';
+            }
+            if (vec_dir > 247.5 && vec_dir <= 292.5) {
+                vec_key = 'W';
+            }
+            if (vec_dir > 292.5 && vec_dir <= 337.5) {
+                vec_key = 'NW';
+            }
 
-        if(vec_key !== false) {
-          vector_data[vec_key]['sum'] += vec_speed;
-          vector_data[vec_key]['amt']++;
+            if (vec_key !== false) {
+                vector_data[vec_key]['sum'] += vec_speed;
+                vector_data[vec_key]['amt']++;
 
-          if(max_speed > vector_data[vec_key]['max']) {
-            vector_data[vec_key]['max'] = max_speed;
-          }
+                if (max_speed > vector_data[vec_key]['max']) {
+                    vector_data[vec_key]['max'] = max_speed;
+                }
+            }
+
         }
-
-      }
     })
 
     // Finally build arrays for chart
     var avg_values = [];
     var max_values = [];
     Object.keys(vector_data).forEach(function (item) {
-      if(vector_data[item]['amt'] > 0) {
-        avg_values.push(vector_data[item]['sum'] / vector_data[item]['amt']);
-      } else {
-        avg_values.push(0);
-      }
+        if (vector_data[item]['amt'] > 0) {
+            avg_values.push(vector_data[item]['sum'] / vector_data[item]['amt']);
+        } else {
+            avg_values.push(0);
+        }
 
-      max_values.push(vector_data[item]['max'])
+        max_values.push(vector_data[item]['max'])
     })
 
     // ---
@@ -661,22 +693,23 @@
     // ---
 
     var options7 = {
-      #include "graph_radar_config.inc"
-      series: [
+      #include
+    "graph_radar_config.inc"
+    series: [
         {
-          name: '$obs.label.windSpeed',
-          data: avg_values
+            name: '$obs.label.windSpeed',
+            data: avg_values
         },
         {
-          name: '$obs.label.windGust',
-          data: max_values
+            name: '$obs.label.windGust',
+            data: max_values
         },
-      ]
+    ]
     }
 
     var chart7 = new ApexCharts(document.querySelector('#windvectorchart'), options7)
     chart7.render()
-  </script>
+</script>
 
 </body>
 </html>

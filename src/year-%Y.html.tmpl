@@ -33,6 +33,8 @@
                                 <i class="wi wi-strong-wind h5-responsive"></i><br>
                                 $month.wind.max<br>
                                 $month.windDir.avg.ordinal_compass
+                                <i class="wi wi-wind from-$month.windDir.formatted-deg mr-2"
+                                   title="$month.windDir.formatted°" data-toggle="tooltip"></i>
                             </div>
                             <div class="col-4">
                                 <i class="wi wi-showers h5-responsive"></i><br>
@@ -162,7 +164,11 @@
             <div class="col-12 col-md-6 col-xl-4 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h5 class="h5-responsive $Extras.color-text">$obs.label.windSpeed</h5>
+                        <h5 class="h5-responsive $Extras.color-text">
+                            $obs.label.windSpeed
+                            <i class="wi wi-wind $year.windDir.formatted-deg mr-2"
+                               title="$year.windDir.formatted°" data-toggle="tooltip"></i>
+                        </h5>
                         <div class="row">
                             <div class="col-3 text-muted font-small">
                                 $year.wind.avg <br>
