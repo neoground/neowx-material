@@ -117,4 +117,3 @@ These 3rd party libraries are used:
 
 - Add missing graphs
 - Graph export fix
-- Make use of all almanac variables
