@@ -11,7 +11,15 @@ chart: {
     autoScaleYaxis: true
   },
   toolbar: {
-    autoSelected: 'zoom'
+    autoSelected: 'zoom',
+    export: {
+      csv: {
+        headerCategory: 'DateTime',
+        dateFormatter(timestamp) {
+          return moment.unix(timestamp).toISOString()
+        }
+      }
+    }
   },
   locales: [
     #include raw "js/vendor/apexcharts/locales/" + $Extras.language + ".json"

@@ -116,4 +116,3 @@ These 3rd party libraries are used:
 ## TODO
 
 - Add missing graphs
-- Graph export fix
