@@ -387,8 +387,8 @@
             </div>
             #end if
 
-            <div class="col-12 col-md-6 col-xl-4 mb-4 text-center">
-                <a href="archive/NOAA-${month.dateTime.format('%y')}-${month.dateTime.format('%m')}.txt"
+            <div class="col-12 col-md-6 col-xl-4 mb-4 d-flex align-items-center justify-content-center">
+                <a href="archive/NOAA-${month.dateTime.format('%Y')}-${month.dateTime.format('%m')}.txt"
                    class="btn btn-$Extras.color">
                     $Extras.Translations[$Extras.language].noaa_export
                 </a>
@@ -400,6 +400,72 @@
 
         <div class="row mt-5 mb-4 graphrow align-content-start">
             #include "graphs.inc"
+
+            #if $month.UV.has_data
+            <div class="col-12 col-xl-6 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.UV</h5>
+                        <div id="uvchart"></div>
+                    </div>
+                </div>
+            </div>
+            #end if
+
+            #if $month.ET.has_data and $month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0
+            <div class="col-12 col-xl-6 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.ET</h5>
+                        <div id="etchart"></div>
+                    </div>
+                </div>
+            </div>
+            #end if
+
+            #if $month.radiation.has_data
+            <div class="col-12 col-xl-6 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.radiation</h5>
+                        <div id="radiationchart"></div>
+                    </div>
+                </div>
+            </div>
+            #end if
+
+            #if $month.extraTemp1.has_data
+            <div class="col-12 col-xl-6 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp1</h5>
+                        <div id="temp1chart"></div>
+                    </div>
+                </div>
+            </div>
+            #end if
+
+            #if $month.extraTemp2.has_data
+            <div class="col-12 col-xl-6 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp2</h5>
+                        <div id="temp2chart"></div>
+                    </div>
+                </div>
+            </div>
+            #end if
+
+            #if $month.extraTemp3.has_data
+            <div class="col-12 col-xl-6 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp3</h5>
+                        <div id="temp3chart"></div>
+                    </div>
+                </div>
+            </div>
+            #end if
         </div>
 
     </div>
@@ -423,22 +489,19 @@
     var seriesdata1 = [
         #for $record in $month.days
             [$record.start.raw, $record.outTemp.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
-        #end
-    for
+        #end for
         ]
     ;
 
     var seriesdata2 = [
         #for $record in $month.days
             [$record.start.raw, $record.dewpoint.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
-        #end
-    for
+        #end for
         ]
     ;
 
     var options = {
-      #include
-    "graph_area_config.inc"
+      #include "graph_area_config.inc"
     series: [
         {
             name: '$obs.label.outTemp',
@@ -462,20 +525,17 @@
     seriesdata1 = [
         #for $record in $month.days
             [$record.start.raw, $record.windchill.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
-        #end
-    for
+        #end for
         ]
 
     seriesdata2 = [
         #for $record in $month.days
             [$record.start.raw, $record.heatindex.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
-        #end
-    for
+        #end for
         ]
 
     var options2 = {
-      #include
-    "graph_area_config.inc"
+      #include "graph_area_config.inc"
     series: [
         {
             name: '$obs.label.windchill',
@@ -498,14 +558,12 @@
     seriesdata1 = [
         #for $record in $month.days
             [$record.start.raw, $record.barometer.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
-        #end
-    for
+        #end for
         ]
     ;
 
     var options3 = {
-      #include
-    "graph_area_config.inc"
+      #include "graph_area_config.inc"
     series: [
         {
             name: '$obs.label.barometer',
@@ -524,13 +582,11 @@
     seriesdata1 = [
         #for $record in $month.days
             [$record.start.raw, $record.rain.sum.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
-        #end
-    for
+        #end for
         ]
 
     var options4 = {
-      #include
-    "graph_bar_config.inc"
+      #include "graph_bar_config.inc"
     series: [
         {
             name: '$obs.label.rain',
@@ -549,20 +605,17 @@
     seriesdata1 = [
         #for $record in $month.days
             [$record.start.raw, $record.windSpeed.max.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
-        #end
-    for
+        #end for
         ]
 
     seriesdata2 = [
         #for $record in $month.days
             [$record.start.raw, $record.windGust.max.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
-        #end
-    for
+        #end for
         ]
 
     var options5 = {
-      #include
-    "graph_area_config.inc"
+      #include "graph_area_config.inc"
     series: [
         {
             name: '$obs.label.windSpeed',
@@ -585,13 +638,11 @@
     seriesdata1 = [
         #for $record in $month.days
             [$record.start.raw, $record.outHumidity.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
-        #end
-    for
+        #end for
         ]
 
     var options6 = {
-        #include
-    "graph_area_config.inc"
+        #include "graph_area_config.inc"
     series: [
         {
             name: '$obs.label.outHumidity',
@@ -625,8 +676,7 @@
             'speed': "$record.windSpeed.max.raw",
             'max': "$record.windGust.max.raw"
         },
-        #end
-    for
+        #end for
         ]
 
     raw_data.forEach(function (item) {
@@ -693,8 +743,7 @@
     // ---
 
     var options7 = {
-      #include
-    "graph_radar_config.inc"
+      #include "graph_radar_config.inc"
     series: [
         {
             name: '$obs.label.windSpeed',
@@ -709,6 +758,128 @@
 
     var chart7 = new ApexCharts(document.querySelector('#windvectorchart'), options7)
     chart7.render()
+    
+    // ---
+    // UV / ET / Radiation
+    // ---
+
+    #if $month.UV.has_data
+    var options8 = {
+      #include "graph_area_config.inc"
+      series: [
+        {
+          name: '$obs.label.UV',
+          data: [
+            #for $record in $month.days
+            [$record.start.raw, $record.UV.max.format(add_label=False, localize=False, None_string="")],
+            #end for
+          ]
+        }
+      ]
+    }
+
+    var chart8 = new ApexCharts(document.querySelector('#uvchart'), options8)
+    chart8.render()
+    #end if
+
+    #if $month.ET.has_data and $month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0
+    var options9 = {
+      #include "graph_area_config.inc"
+      series: [
+        {
+          name: '$obs.label.ET',
+          data: [
+            #for $record in $month.days
+            [$record.start.raw, $record.ET.max.format(add_label=False, localize=False, None_string="")],
+            #end for
+          ]
+        }
+      ]
+    }
+
+    var chart9 = new ApexCharts(document.querySelector('#etchart'), options9)
+    chart9.render()
+    #end if
+
+    #if $month.radiation.has_data
+    var options10 = {
+      #include "graph_area_config.inc"
+      series: [
+        {
+          name: '$obs.label.radiation',
+          data: [
+            #for $record in $month.days
+            [$record.start.raw, $record.radiation.max.format(add_label=False, localize=False, None_string="")],
+            #end for
+          ]
+        }
+      ]
+    }
+
+    var chart10 = new ApexCharts(document.querySelector('#radiationchart'), options10)
+    chart10.render()
+    #end if
+
+    // ---
+    // extraTemp 1-3
+    // ---
+
+    #if $month.extraTemp1.has_data
+    var options11 = {
+      #include "graph_area_config.inc"
+      series: [
+        {
+          name: '$obs.label.extraTemp1',
+          data: [
+            #for $record in $month.days
+            [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            #end for
+          ]
+        }
+      ]
+    }
+
+    var chart11 = new ApexCharts(document.querySelector('#temp1chart'), options11)
+    chart11.render()
+    #end if
+
+    #if $month.extraTemp2.has_data
+    var options12 = {
+      #include "graph_area_config.inc"
+      series: [
+        {
+          name: '$obs.label.extraTemp2',
+          data: [
+            #for $record in $month.days
+            [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            #end for
+          ]
+        }
+      ]
+    }
+
+    var chart12 = new ApexCharts(document.querySelector('#temp2chart'), options12)
+    chart12.render()
+    #end if
+
+    #if $month.extraTemp3.has_data
+    var options13 = {
+      #include "graph_area_config.inc"
+      series: [
+        {
+          name: '$obs.label.extraTemp3',
+          data: [
+            #for $record in $month.days
+            [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            #end for
+          ]
+        }
+      ]
+    }
+
+    var chart13 = new ApexCharts(document.querySelector('#temp3chart'), options13)
+    chart13.render()
+    #end if
 </script>
 
 </body>

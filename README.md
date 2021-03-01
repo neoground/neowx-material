@@ -24,7 +24,7 @@ and many more new features.
   (or add your own translation)
 - auto dark mode - works great on mobile and desktop
 - responsive design - optimized for modern tablets and smartphones
-- support for all available sensors (not all yet - but we're working on it!)
+- support for all available sensors
 - many options to customize your reports even more - 
   have a look at the skin.conf
 - ...and much more!
@@ -112,7 +112,3 @@ These 3rd party libraries are used:
 - [MomentJS](https://github.com/moment/moment) (MIT license)
 - [Weather Icons by Erik Flowers](https://github.com/erikflowers/weather-icons)
   (MIT / SIL OFL 1.1 license)
-
-## TODO
-
-- Add missing graphs
