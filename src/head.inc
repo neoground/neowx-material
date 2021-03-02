@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="$Extras.Translations[$Extras.language].weather | $station.location">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="application-name" content="$Extras.Translations[$Extras.language].weather | $station.location">
 
 <link href="img/icon-32.png" rel="icon" type="image/png" sizes="32x32">
