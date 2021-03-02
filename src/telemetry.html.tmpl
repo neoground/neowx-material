@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="$Extras.language">
+<head>
+  <title>$Extras.Translations[$Extras.language].telemetry | $station.location</title>
+  #include "head.inc"
+</head>
+<body class="main-bg">
+
+#attr $active_nav = ''
+#include "header.inc"
+
+<main>
+
+  <div class="container">
+
+    <div class="row my-4 align-content-start">
+
+      <div class="col-12 mb-4 text-center">
+        <h2 class="h2-responsive text-dark">$Extras.Translations[$Extras.language].telemetry</h2>
+      </div>
+
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.rxCheckPercent</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.rxCheckPercent.min <br>
+                ($day.rxCheckPercent.mintime.format($Extras.Formatting.datetime_today))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.rxCheckPercent</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.rxCheckPercent.max <br>
+                ($day.rxCheckPercent.maxtime.format($Extras.Formatting.datetime_today))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      #if $day.txBatteryStatus.has_data and $day.txBatteryStatus.max.raw > 0
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.txBatteryStatus</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.txBatteryStatus.min <br>
+                ($day.txBatteryStatus.mintime.format($Extras.Formatting.datetime_today))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.txBatteryStatus</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.txBatteryStatus.max <br>
+                ($day.txBatteryStatus.maxtime.format($Extras.Formatting.datetime_today))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.windBatteryStatus.has_data and $day.windBatteryStatus.max.raw > 0
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.windBatteryStatus</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.windBatteryStatus.min <br>
+                ($day.windBatteryStatus.mintime.format($Extras.Formatting.datetime_today))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.windBatteryStatus</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.windBatteryStatus.max <br>
+                ($day.windBatteryStatus.maxtime.format($Extras.Formatting.datetime_today))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.rainBatteryStatus.has_data and $day.rainBatteryStatus.max.raw > 0
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.rainBatteryStatus</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.rainBatteryStatus.min <br>
+                ($day.rainBatteryStatus.mintime.format($Extras.Formatting.datetime_today))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.rainBatteryStatus</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.rainBatteryStatus.max <br>
+                ($day.rainBatteryStatus.maxtime.format($Extras.Formatting.datetime_today))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.outTempBatteryStatus.has_data and $day.outTempBatteryStatus.max.raw > 0
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.outTempBatteryStatus</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.outTempBatteryStatus.min <br>
+                ($day.outTempBatteryStatus.mintime.format($Extras.Formatting.datetime_today))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.outTempBatteryStatus</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.outTempBatteryStatus.max <br>
+                ($day.outTempBatteryStatus.maxtime.format($Extras.Formatting.datetime_today))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.inTempBatteryStatus.has_data and $day.inTempBatteryStatus.max.raw > 0
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.inTempBatteryStatus</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.inTempBatteryStatus.min <br>
+                ($day.inTempBatteryStatus.mintime.format($Extras.Formatting.datetime_today))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.inTempBatteryStatus</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.inTempBatteryStatus.max <br>
+                ($day.inTempBatteryStatus.maxtime.format($Extras.Formatting.datetime_today))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.consBatteryVoltage.has_data and $day.consBatteryVoltage.max.raw > 0
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.consBatteryVoltage</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.consBatteryVoltage.min <br>
+                ($day.consBatteryVoltage.mintime.format($Extras.Formatting.datetime_today))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.consBatteryVoltage</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.consBatteryVoltage.max <br>
+                ($day.consBatteryVoltage.maxtime.format($Extras.Formatting.datetime_today))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.heatingVoltage.has_data and $day.heatingVoltage.max.raw > 0
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.heatingVoltage</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.heatingVoltage.min <br>
+                ($day.heatingVoltage.mintime.format($Extras.Formatting.datetime_today))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.heatingVoltage</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.heatingVoltage.max <br>
+                ($day.heatingVoltage.maxtime.format($Extras.Formatting.datetime_today))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.supplyVoltage.has_data and $day.supplyVoltage.max.raw > 0
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.supplyVoltage</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.supplyVoltage.min <br>
+                ($day.supplyVoltage.mintime.format($Extras.Formatting.datetime_today))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.supplyVoltage</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.supplyVoltage.max <br>
+                ($day.supplyVoltage.maxtime.format($Extras.Formatting.datetime_today))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+      #if $day.referenceVoltage.has_data and $day.referenceVoltage.max.raw > 0
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.referenceVoltage</h5>
+
+            <div class="row">
+              <div class="col-3 text-muted font-small">
+                $day.referenceVoltage.min <br>
+                ($day.referenceVoltage.mintime.format($Extras.Formatting.datetime_today))
+              </div>
+              <div class="col-6">
+                <h4 class="h2-responsive">$current.referenceVoltage</h4>
+              </div>
+              <div class="col-3 text-muted font-small">
+                $day.referenceVoltage.max <br>
+                ($day.referenceVoltage.maxtime.format($Extras.Formatting.datetime_today))
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      #end if
+
+    </div>
+
+  </div>
+
+</main>
+
+#include "footer.inc"
+#include "js.inc"
+
+</body>
+</html>

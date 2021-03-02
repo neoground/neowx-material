@@ -22,6 +22,14 @@
                         <td>$Extras.Translations[$Extras.language].altitude:</td>
                         <td>$station.altitude</td>
                     </tr>
+                    <tr>
+                        <td>
+                            <a href="telemetry.html.tmpl">
+                                $Extras.Translations[$Extras.language].telemetry
+                            </a>
+                        </td>
+                        <td></td>
+                    </tr>
                 </table>
 
                 #if $Extras.has_key('about')
