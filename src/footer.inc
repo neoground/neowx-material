@@ -24,7 +24,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <a href="telemetry.html.tmpl">
+                            <a href="telemetry.html">
                                 $Extras.Translations[$Extras.language].telemetry
                             </a>
                         </td>
