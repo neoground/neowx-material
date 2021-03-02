@@ -38,6 +38,7 @@ class BasicInstaller(ExtensionInstaller):
                     'skins/neowx-material/month-%Y-%m.html.tmpl',
                     'skins/neowx-material/month.html.tmpl',
                     'skins/neowx-material/skin.conf',
+                    'skins/neowx-material/telemetry.html.tmpl',
                     'skins/neowx-material/week.html.tmpl',
                     'skins/neowx-material/year-%Y.html.tmpl',
                     'skins/neowx-material/year.html.tmpl',
