@@ -488,11 +488,11 @@
       #include "graph_area_config.inc"
       series: [
         {
-          name: '$obs.label.outTemp',
+          name: "$obs.label.outTemp",
           data: seriesdata1
         },
         {
-          name: '$obs.label.dewpoint',
+          name: "$obs.label.dewpoint",
           data: seriesdata2
         }
       ]
@@ -522,11 +522,11 @@
       #include "graph_area_config.inc"
       series: [
         {
-          name: '$obs.label.windchill',
+          name: "$obs.label.windchill",
           data: seriesdata1
         },
         {
-          name: '$obs.label.heatindex',
+          name: "$obs.label.heatindex",
           data: seriesdata2
         }
       ]
@@ -549,7 +549,7 @@
       #include "graph_area_config.inc"
       series: [
         {
-          name: '$obs.label.barometer',
+          name: "$obs.label.barometer",
           data: seriesdata1
         }
       ]
@@ -572,7 +572,7 @@
       #include "graph_bar_config.inc"
       series: [
         {
-          name: '$obs.label.rain',
+          name: "$obs.label.rain",
           data: seriesdata1
         }
       ]
@@ -601,11 +601,11 @@
       #include "graph_area_config.inc"
       series: [
         {
-          name: '$obs.label.windSpeed',
+          name: "$obs.label.windSpeed",
           data: seriesdata1
         },
         {
-          name: '$obs.label.windGust',
+          name: "$obs.label.windGust",
           data: seriesdata2
         }
       ]
@@ -628,7 +628,7 @@
         #include "graph_area_config.inc"
         series: [
           {
-            name: '$obs.label.outHumidity',
+            name: "$obs.label.outHumidity",
             data: seriesdata1
           }
         ]
@@ -729,11 +729,11 @@
       #include "graph_radar_config.inc"
       series: [
         {
-          name: '$obs.label.windSpeed',
+          name: "$obs.label.windSpeed",
           data: avg_values
         },
         {
-          name: '$obs.label.windGust',
+          name: "$obs.label.windGust",
           data: max_values
         },
       ]
@@ -751,7 +751,7 @@
       #include "graph_area_config.inc"
       series: [
         {
-          name: '$obs.label.UV',
+          name: "$obs.label.UV",
           data: [
             #for $record in $span($week_delta=1).spans(interval=14400)
             [$record.start.raw, $record.UV.max.format(add_label=False, localize=False, None_string="")],
@@ -770,7 +770,7 @@
       #include "graph_area_config.inc"
       series: [
         {
-          name: '$obs.label.ET',
+          name: "$obs.label.ET",
           data: [
             #for $record in $span($week_delta=1).spans(interval=14400)
             [$record.start.raw, $record.ET.max.format(add_label=False, localize=False, None_string="")],
@@ -789,7 +789,7 @@
       #include "graph_area_config.inc"
       series: [
         {
-          name: '$obs.label.radiation',
+          name: "$obs.label.radiation",
           data: [
             #for $record in $span($week_delta=1).spans(interval=14400)
             [$record.start.raw, $record.radiation.max.format(add_label=False, localize=False, None_string="")],
@@ -812,7 +812,7 @@
       #include "graph_area_config.inc"
       series: [
         {
-          name: '$obs.label.extraTemp1',
+          name: "$obs.label.extraTemp1",
           data: [
             #for $record in $span($week_delta=1).spans(interval=14400)
             [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
@@ -831,7 +831,7 @@
       #include "graph_area_config.inc"
       series: [
         {
-          name: '$obs.label.extraTemp2',
+          name: "$obs.label.extraTemp2",
           data: [
             #for $record in $span($week_delta=1).spans(interval=14400)
             [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
@@ -850,7 +850,7 @@
       #include "graph_area_config.inc"
       series: [
         {
-          name: '$obs.label.extraTemp3',
+          name: "$obs.label.extraTemp3",
           data: [
             #for $record in $span($week_delta=1).spans(interval=14400)
             [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
