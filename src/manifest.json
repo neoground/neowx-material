@@ -1,6 +1,3 @@
-#errorCatcher Echo
-#encoding UTF-8
-
 {
   "name": "Weewx weather",
   "short_name": "Weather",
