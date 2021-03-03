@@ -8,7 +8,8 @@
 
 ### Fixed
 
-- UTF8 encoding on template pages
+- UTF8 encoding now set on template pages
+- Chart labels can now contain an apostrophe
 
 
 ## 1.1 (2021-03-02)
