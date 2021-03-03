@@ -1,3 +1,6 @@
+#errorCatcher Echo
+#encoding UTF-8
+
 theme: {
   mode: theme_mode,
 },

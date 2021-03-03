@@ -1,3 +1,6 @@
+#errorCatcher Echo
+#encoding UTF-8
+
 ## jQuery
 <script type="text/javascript" src="js/jquery.min.js"></script>
 ## Bootstrap tooltips / JS

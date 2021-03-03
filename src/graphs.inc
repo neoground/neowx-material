@@ -1,3 +1,5 @@
+#errorCatcher Echo
+#encoding UTF-8
 <div class="col-12 col-xl-6 mb-4">
     <div class="card">
         <div class="card-body text-center">

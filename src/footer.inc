@@ -1,3 +1,6 @@
+#errorCatcher Echo
+#encoding UTF-8
+
 ## Footer
 <footer class="page-footer font-small $Extras.color pt-4">
 

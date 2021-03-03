@@ -1,3 +1,5 @@
+#errorCatcher Echo
+#encoding UTF-8
 <header>
 
     <nav class="navbar navbar-expand-lg navbar-dark $Extras.color">
