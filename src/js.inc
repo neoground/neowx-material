@@ -9,7 +9,12 @@
 ## MDB core JavaScript
 <script type="text/javascript" src="js/mdb.min.js"></script>
 ## Vendor JS
+#if $Extras.language == "en"
 <script src="js/vendor/moment.min.js"></script>
+#else
+<script src="js/vendor/moment-with-locales.min.js"></script>
+<script type="text/javascript">moment.locale('$Extras.language')</script>
+#end if
 <script src="js/vendor/apexcharts/apexcharts.min.js"></script>
 ## NeoWX Material App
 <script type="text/javascript" src="js/app.js"></script>
