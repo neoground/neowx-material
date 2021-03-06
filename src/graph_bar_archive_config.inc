@@ -3,6 +3,7 @@
 
   theme: {
     mode: theme_mode,
+    palette: '$Extras.chartcolor'
   },
   chart: {
     type: 'bar',
