@@ -474,14 +474,14 @@
 
     var seriesdata1 = [
       #for $record in $span($hour_delta=48).spans(interval=600)
-        [$record.start.raw, $record.outTemp.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+        [$record.start.raw, $record.outTemp.avg.format(add_label=False, localize=False, None_string="")],
       #end for
     ];
     var half_length1 = Math.ceil(seriesdata1.length / 2);
 
     var seriesdata2 = [
       #for $record in $span($hour_delta=48).spans(interval=600)
-        [$record.start.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+        [$record.start.raw, $record.dewpoint.avg.format(add_label=False, localize=False, None_string="")],
       #end for
       ];
     var half_length2 = Math.ceil(seriesdata2.length / 2);
@@ -510,14 +510,14 @@
 
     seriesdata1 = [
       #for $record in $span($hour_delta=48).spans(interval=600)
-        [$record.start.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+        [$record.start.raw, $record.windchill.avg.format(add_label=False, localize=False, None_string="")],
       #end for
       ];
     half_length1 = Math.ceil(seriesdata1.length / 2);
 
     seriesdata2 = [
       #for $record in $span($hour_delta=48).spans(interval=600)
-        [$record.start.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+        [$record.start.raw, $record.heatindex.avg.format(add_label=False, localize=False, None_string="")],
       #end for
       ];
     half_length2 = Math.ceil(seriesdata2.length / 2);
@@ -545,7 +545,7 @@
 
     seriesdata1 = [
       #for $record in $span($hour_delta=48).spans(interval=600)
-              [$record.start.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+              [$record.start.raw, $record.barometer.avg.format(add_label=False, localize=False, None_string="")],
       #end for
       ];
     half_length1 = Math.ceil(seriesdata1.length / 2);
@@ -569,7 +569,7 @@
 
     seriesdata1 = [
       #for $record in $span($hour_delta=48).spans(interval=3600)
-        [$record.start.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+        [$record.start.raw, $record.rain.sum.format(add_label=False, localize=False, None_string="")],
       #end for
       ];
     half_length1 = Math.ceil(seriesdata1.length / 2);
@@ -593,14 +593,14 @@
 
     seriesdata1 = [
       #for $record in $span($hour_delta=48).spans(interval=600)
-        [$record.start.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+        [$record.start.raw, $record.windSpeed.max.format(add_label=False, localize=False, None_string="")],
       #end for
       ];
     half_length1 = Math.ceil(seriesdata1.length / 2);
 
     seriesdata2 = [
       #for $record in $span($hour_delta=48).spans(interval=600)
-        [$record.start.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+        [$record.start.raw, $record.windGust.max.format(add_label=False, localize=False, None_string="")],
       #end for
       ];
     half_length2 = Math.ceil(seriesdata2.length / 2);
@@ -628,7 +628,7 @@
 
     seriesdata1 = [
       #for $record in $span($hour_delta=48).spans(interval=600)
-        [$record.start.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+        [$record.start.raw, $record.outHumidity.avg.format(add_label=False, localize=False, None_string="")],
       #end for
       ];
     half_length1 = Math.ceil(seriesdata1.length / 2);
@@ -827,7 +827,7 @@
           name: "$obs.label.extraTemp1",
           data: [
             #for $record in $span($hour_delta=48).spans(interval=600)
-            [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         }
@@ -846,7 +846,7 @@
           name: "$obs.label.extraTemp2",
           data: [
             #for $record in $span($hour_delta=48).spans(interval=600)
-            [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         }
@@ -865,7 +865,7 @@
           name: "$obs.label.extraTemp3",
           data: [
             #for $record in $span($hour_delta=48).spans(interval=600)
-            [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         }

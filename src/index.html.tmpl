@@ -486,7 +486,7 @@
           name: "$obs.label.outTemp",
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.outTemp.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.outTemp.avg.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         },
@@ -494,7 +494,7 @@
           name: "$obs.label.dewpoint",
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.dewpoint.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.dewpoint.avg.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         }
@@ -516,7 +516,7 @@
           name: "$obs.label.windchill",
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-                    [$record.start.raw, $record.windchill.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+                    [$record.start.raw, $record.windchill.avg.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         },
@@ -524,7 +524,7 @@
           name: "$obs.label.heatindex",
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.heatindex.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.heatindex.avg.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         }
@@ -545,7 +545,7 @@
           name: "$obs.label.barometer",
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.barometer.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.barometer.avg.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         }
@@ -566,7 +566,7 @@
           name: "$obs.label.rain",
           data: [
             #for $record in $span($day_delta=1).spans(interval=3600)
-                    [$record.start.raw, $record.rain.sum.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+                    [$record.start.raw, $record.rain.sum.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         }
@@ -587,7 +587,7 @@
           name: "$obs.label.windSpeed",
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-                    [$record.start.raw, $record.windSpeed.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+                    [$record.start.raw, $record.windSpeed.max.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         },
@@ -595,7 +595,7 @@
           name: "$obs.label.windGust",
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.windGust.max.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.windGust.max.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         }
@@ -616,7 +616,7 @@
             name: "$obs.label.outHumidity",
             data: [
               #for $record in $span($day_delta=1).spans(interval=600)
-                      [$record.start.raw, $record.outHumidity.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+                      [$record.start.raw, $record.outHumidity.avg.format(add_label=False, localize=False, None_string="")],
               #end for
             ]
           }
@@ -804,7 +804,7 @@
           name: "$obs.label.extraTemp1",
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         }
@@ -823,7 +823,7 @@
           name: "$obs.label.extraTemp2",
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         }
@@ -842,7 +842,7 @@
           name: "$obs.label.extraTemp3",
           data: [
             #for $record in $span($day_delta=1).spans(interval=600)
-            [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, localize=False, None_string="")],
             #end for
           ]
         }

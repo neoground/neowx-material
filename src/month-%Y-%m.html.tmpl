@@ -835,7 +835,7 @@
           name: "$obs.label.extraTemp1",
           data: [
             #for $record in $month.days
-            [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, $localize=False, None_string="")],
             #end for
           ]
         }
@@ -854,7 +854,7 @@
           name: "$obs.label.extraTemp2",
           data: [
             #for $record in $month.days
-            [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, $localize=False, None_string="")],
             #end for
           ]
         }
@@ -873,7 +873,7 @@
           name: "$obs.label.extraTemp3",
           data: [
             #for $record in $month.days
-            [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, format_string="%.2f", localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, $localize=False, None_string="")],
             #end for
           ]
         }
