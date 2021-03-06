@@ -16,7 +16,7 @@
                 ## Content
                 <h5 class="text-uppercase">$Extras.Translations[$Extras.language].about</h5>
 
-                <table>
+                <table class="d-inline">
                     <tr>
                         <td>$Extras.Translations[$Extras.language].hardware:</td>
                         <td>$station.hardware</td>
