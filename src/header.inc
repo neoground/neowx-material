@@ -86,7 +86,7 @@
 
         #if $active_nav != 'archive'
             #if $almanac.hasExtras
-            <ul class="navbar-nav nav-flex-icons text-center" style="line-height: 1.75; padding-top: .5rem">
+            <ul class="navbar-nav nav-flex-icons" style="line-height: 1.75; padding-top: .5rem">
                 <li class="nav-item mr-4 text-white">
                     <i class="wi wi-sunrise mr-1" style="opacity: .75"></i> $almanac.sun.rise <br>
                     <i class="wi wi-sunset mr-1" style="opacity: .75"></i> $almanac.sun.set
@@ -95,7 +95,7 @@
                     <i class="wi wi-moonrise mr-1" style="opacity: .75"></i> $almanac.moon.rise <br>
                     <i class="wi wi-moonset mr-1" style="opacity: .75"></i> $almanac.moon.set
                 </li>
-                <li class="nav-item mr-4 text-white" style="line-height: 1.75" >
+                <li class="nav-item mr-4 text-white text-center" style="line-height: 1.75" >
                     <span title="$almanac.moon_phase" data-toggle="tooltip">
                         #if $almanac.moon_phase == $almanac.moon_phases[0]
                         <i class="wi wi-moon-new mr-1" style="opacity: .75"></i>
