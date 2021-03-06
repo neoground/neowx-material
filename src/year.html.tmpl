@@ -132,7 +132,10 @@
       <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.windSpeed</h5>
+            <h5 class="h5-responsive $Extras.color-text">$obs.label.windSpeed
+              <i class="wi wi-wind from-$year.windDir.avg.formatted-deg"
+                 title="$year.windDir.avg.formatted°" data-toggle="tooltip"></i>
+            </h5>
             <div class="row">
               <div class="col-3 text-muted font-small">
                 $year.wind.avg <br>
