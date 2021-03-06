@@ -75,6 +75,7 @@ class BasicInstaller(ExtensionInstaller):
                     'skins/neowx-material/js/popper.min.js',
                     'skins/neowx-material/js/modules/wow.min.js',
                     'skins/neowx-material/js/vendor/moment.min.js',
+                    'skins/neowx-material/js/vendor/moment-with-locales.min.js',
                     'skins/neowx-material/js/vendor/apexcharts/apexcharts.min.js',
                     'skins/neowx-material/js/vendor/apexcharts/locales/ca.json',
                     'skins/neowx-material/js/vendor/apexcharts/locales/cs.json',
