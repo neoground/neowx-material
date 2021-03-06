@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.3 (2021-03-07)
+
+### Added
+
+- Localization support for chart dates (moment.js)
+- Charts color palette selection on skin.conf
+- Wind direction indicator to all pages
+
+### Changed
+
+- Buttons / headings are now uniform
+- Almanac header layout
+- Chart numbers are now formatted as the display values
+
+### Fixed
+
+- The responsive layout on footer
+- Rain rate / avg label
+- Wind direction on archive pages
+
+
 ## 1.2 (2021-03-03)
 
 ### Added
