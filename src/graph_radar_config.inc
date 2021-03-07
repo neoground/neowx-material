@@ -44,13 +44,6 @@
   xaxis: {
     categories: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
   },
-  yaxis: {
-    labels: {
-      formatter: function (val) {
-        return val;
-      }
-    }
-  },
   tooltip: {
     x: {
         formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {

@@ -488,6 +488,13 @@
 
     var options = {
       #include "graph_area_config.inc"
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.outTemp";
+          }
+        }
+      },
       series: [
         {
           name: "$obs.label.outTemp",
@@ -522,6 +529,13 @@
 
     var options2 = {
       #include "graph_area_config.inc"
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.windchill";
+          }
+        }
+      },
       series: [
         {
           name: "$obs.label.windchill",
@@ -549,6 +563,13 @@
 
     var options3 = {
       #include "graph_area_config.inc"
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.barometer";
+          }
+        }
+      },
       series: [
         {
           name: "$obs.label.barometer",
@@ -572,6 +593,13 @@
 
     var options4 = {
       #include "graph_bar_config.inc"
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.rain";
+          }
+        }
+      },
       series: [
         {
           name: "$obs.label.rain",
@@ -601,6 +629,13 @@
 
     var options5 = {
       #include "graph_area_config.inc"
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.windSpeed";
+          }
+        }
+      },
       series: [
         {
           name: "$obs.label.windSpeed",
@@ -628,6 +663,13 @@
 
     var options6 = {
         #include "graph_area_config.inc"
+        yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.outHumidity";
+          }
+        }
+      },
         series: [
           {
             name: "$obs.label.outHumidity",
@@ -729,6 +771,13 @@
 
     var options7 = {
       #include "graph_radar_config.inc"
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.windSpeed";
+          }
+        }
+      },
       series: [
         {
           name: "$obs.label.windSpeed",
@@ -751,6 +800,13 @@
     #if $week.UV.has_data
     var options8 = {
       #include "graph_area_config.inc"
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.UV";
+          }
+        }
+      },
       series: [
         {
           name: "$obs.label.UV",
@@ -770,6 +826,13 @@
     #if $week.ET.has_data and $week.ET.sum.raw is not None and $week.ET.sum.raw > 0.0
     var options9 = {
       #include "graph_area_config.inc"
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.ET";
+          }
+        }
+      },
       series: [
         {
           name: "$obs.label.ET",
@@ -789,6 +852,13 @@
     #if $week.radiation.has_data
     var options10 = {
       #include "graph_area_config.inc"
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.radiation";
+          }
+        }
+      },
       series: [
         {
           name: "$obs.label.radiation",
@@ -812,6 +882,13 @@
     #if $week.extraTemp1.has_data
     var options11 = {
       #include "graph_area_config.inc"
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.extraTemp1";
+          }
+        }
+      },
       series: [
         {
           name: "$obs.label.extraTemp1",
@@ -831,6 +908,13 @@
     #if $week.extraTemp2.has_data
     var options12 = {
       #include "graph_area_config.inc"
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.extraTemp2";
+          }
+        }
+      },
       series: [
         {
           name: "$obs.label.extraTemp2",
@@ -850,6 +934,13 @@
     #if $week.extraTemp3.has_data
     var options13 = {
       #include "graph_area_config.inc"
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return val + "$unit.label.extraTemp3";
+          }
+        }
+      },
       series: [
         {
           name: "$obs.label.extraTemp3",

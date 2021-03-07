@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4 (unreleased)
+
+### Added
+
+- Unit labels to y-axis of charts
+
+
 ## 1.3 (2021-03-07)
 
 ### Added

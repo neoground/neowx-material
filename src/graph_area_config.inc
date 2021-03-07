@@ -60,13 +60,7 @@ xaxis: {
     }
   }
 },
-yaxis: {
-  labels: {
-    formatter: function (val) {
-      return val;
-    }
-  }
-},
+
 tooltip: {
   x: {
     format: "$Extras.Formatting.datetime_graph_tooltip"
