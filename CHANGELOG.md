@@ -5,6 +5,7 @@
 ### Added
 
 - Unit labels to y-axis of charts
+- Numbers in charts now have units
 - Missing favicons
 - Skin version
 - Imprint / privacy links in the footer can be set in skin.conf
@@ -13,6 +14,7 @@
 ### Changed
 
 - iOS Webapp appearance is now better and includes a splash screen
+- Numbers in charts have the same decimals as the display values
 
 
 ## 1.3 (2021-03-07)

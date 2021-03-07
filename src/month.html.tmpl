@@ -492,7 +492,7 @@
       yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.outTemp";
+            return formatNumber(val, "$unit.format.outTemp") + "$unit.label.outTemp";
           }
         }
       },
@@ -533,7 +533,7 @@
       yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.windchill";
+            return formatNumber(val, "$unit.format.windchill") + "$unit.label.windchill";
           }
         }
       },
@@ -567,7 +567,7 @@
       yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.barometer";
+            return formatNumber(val, "$unit.format.barometer") + "$unit.label.barometer";
           }
         }
       },
@@ -597,7 +597,7 @@
       yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.rain";
+            return formatNumber(val, "$unit.format.rain") + "$unit.label.rain";
           }
         }
       },
@@ -633,7 +633,7 @@
       yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.windSpeed";
+            return formatNumber(val, "$unit.format.windSpeed") + "$unit.label.windSpeed";
           }
         }
       },
@@ -667,7 +667,7 @@
         yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.outHumidity";
+            return formatNumber(val, "$unit.format.outHumidity") + "$unit.label.outHumidity";
           }
         }
       },
@@ -775,7 +775,7 @@
       yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.windSpeed";
+            return formatNumber(val, "$unit.format.windSpeed") + "$unit.label.windSpeed";
           }
         }
       },
@@ -804,7 +804,7 @@
       yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.UV";
+            return formatNumber(val, "$unit.format.UV") + "$unit.label.UV";
           }
         }
       },
@@ -830,7 +830,7 @@
       yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.ET";
+            return formatNumber(val, "$unit.format.ET") + "$unit.label.ET";
           }
         }
       },
@@ -856,7 +856,7 @@
       yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.radiation";
+            return formatNumber(val, "$unit.format.radiation") + "$unit.label.radiation";
           }
         }
       },
@@ -886,7 +886,7 @@
       yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.extraTemp1";
+            return formatNumber(val, "$unit.format.extraTemp1") + "$unit.label.extraTemp1";
           }
         }
       },
@@ -912,7 +912,7 @@
       yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.extraTemp2";
+            return formatNumber(val, "$unit.format.extraTemp2") + "$unit.label.extraTemp2";
           }
         }
       },
@@ -938,7 +938,7 @@
       yaxis: {
         labels: {
           formatter: function (val) {
-            return val + "$unit.label.extraTemp3";
+            return formatNumber(val, "$unit.format.extraTemp3") + "$unit.label.extraTemp3";
           }
         }
       },
