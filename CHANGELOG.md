@@ -1,11 +1,13 @@
 # Changelog
 
-## 1.4 (unreleased)
+## 1.4 (2021-03-08)
 
 ### Added
 
 - Unit labels to y-axis of charts
 - Missing favicons
+- Skin version
+- Imprint / privacy links in footer
 
 ### Changed
 

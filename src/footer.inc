@@ -64,24 +64,24 @@
                 <h5 class="text-uppercase">$Extras.Translations[$Extras.language].links</h5>
 
                 <ul class="list-unstyled">
-                    #if $Extras.has_key('link1_text') and $Extras.link1_url is not ""
+                    #if $Extras.has_key('link1_label') and $Extras.link1_url is not ""
                     <li>
-                        <a href="$Extras.link1_url" target="_blank" rel="noopener">$Extras.link1_text</a>
+                        <a href="$Extras.link1_url" target="_blank" rel="noopener">$Extras.link1_label</a>
                     </li>
                     #end if
-                    #if $Extras.has_key('link2_text') and $Extras.link2_url is not ""
+                    #if $Extras.has_key('link2_label') and $Extras.link2_url is not ""
                     <li>
-                        <a href="$Extras.link2_url" target="_blank" rel="noopener">$Extras.link2_text</a>
+                        <a href="$Extras.link2_url" target="_blank" rel="noopener">$Extras.link2_label</a>
                     </li>
                     #end if
-                    #if $Extras.has_key('link3_text') and $Extras.link3_url is not ""
+                    #if $Extras.has_key('link3_label') and $Extras.link3_url is not ""
                     <li>
-                        <a href="$Extras.link3_url" target="_blank" rel="noopener">$Extras.link3_text</a>
+                        <a href="$Extras.link3_url" target="_blank" rel="noopener">$Extras.link3_label</a>
                     </li>
                     #end if
-                    #if $Extras.has_key('link4_text') and $Extras.link4_url is not ""
+                    #if $Extras.has_key('link4_label') and $Extras.link4_url is not ""
                     <li>
-                        <a href="$Extras.link4_url" target="_blank" rel="noopener">$Extras.link4_text</a>
+                        <a href="$Extras.link4_url" target="_blank" rel="noopener">$Extras.link4_label</a>
                     </li>
                     #end if
                 </ul>
@@ -104,7 +104,16 @@
         <span class="mx-2">&bull;</span>
         Powered by <a href="https://weewx.com" target="_blank">weewx</a> v$station.version
         <span class="mx-2">&bull;</span>
-        <a href="https://projects.neoground.com/neowx-material" target="_blank">NeoWX Material</a> skin
+        <a href="https://projects.neoground.com/neowx-material" target="_blank">NeoWX Material</a> skin v$Extras.version
+
+        #if $Extras.has_key('imprint_label') and $Extras.imprint_url is not ""
+        <span class="mx-2">&bull;</span>
+        <a href="$Extras.imprint_url" target="_blank">$Extras.imprint_label</a>
+        #end if
+        #if $Extras.has_key('privacy_label') and $Extras.privacy_url is not ""
+        <span class="mx-2">&bull;</span>
+        <a href="$Extras.privacy_url" target="_blank">$Extras.privacy_label</a>
+        #end if
     </div>
     ## Copyright
 
