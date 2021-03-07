@@ -5,6 +5,11 @@
 ### Added
 
 - Unit labels to y-axis of charts
+- Missing favicons
+
+### Changed
+
+- iOS Webapp appearance is now better and includes a splash screen
 
 
 ## 1.3 (2021-03-07)

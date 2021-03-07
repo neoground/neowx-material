@@ -5,6 +5,11 @@
 // General classes / adjustments
 // ---------------------------------------------------------------------------
 
+// ios webapp improvement
+body {
+    -webkit-tap-highlight-color: transparent;
+}
+
 .text-muted {
     font-weight: 300;
 }
