@@ -7,7 +7,8 @@
 - Unit labels to y-axis of charts
 - Missing favicons
 - Skin version
-- Imprint / privacy links in footer
+- Imprint / privacy links in the footer can be set in skin.conf
+- Custom logo URL can be set in skin.conf
 
 ### Changed
 

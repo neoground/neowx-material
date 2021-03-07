@@ -6,7 +6,11 @@
         <span class="navbar-brand d-flex">
             #if $Extras.show_logo == "yes"
             <a class="mr-2" href="index.html">
+                #if $Extras.custom_logo_url is not ""
+                <img src="$Extras.custom_logo_url" style="width: 4rem">
+                #else
                 <img src="img/icon-alpha-1x.png" srcset="img/icon-alpha-1x.png 1x, img/icon-alpha-2x.png 2x" style="width: 4rem">
+                #end if
             </a>
             #end if
             <span>
