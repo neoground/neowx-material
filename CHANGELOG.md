@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5 (unreleased)
+
+### Added
+
+- Italian translation
+
+
 ## 1.4 (2021-03-08)
 
 ### Added
