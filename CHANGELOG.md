@@ -7,10 +7,19 @@
 - Italian translation
 - Horizontal trend arrow if trend = 0
 
+### Changed
+
+- Removed graph animations on yearly + monthly archive pages due to 
+  high amount of data which increases performance a lot
+- Month charts now show the same layout as year charts in the archive
+  (full date, better performance)
+  
 ### Fixed
 
 - Barometer trend can now also be None without throwing an error
 - Max value of radiation is now shown correctly
+- Partly missing data on an archive page will now result in a correct
+  graph with "null" values instead of just ignoring missing data
 
 
 ## 1.4 (2021-03-08)

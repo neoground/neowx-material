@@ -514,7 +514,7 @@
     var seriesdata1 = [
         #for $record in $year.days
             #if $record.outTemp.has_data
-            [$record.dateTime.raw, $record.outTemp.min.format(add_label=False, $localize=False, None_string="")],
+            [$record.dateTime.raw, $record.outTemp.min.format(add_label=False, $localize=False, None_string="null")],
             #end if
         #end for
         ];
@@ -522,7 +522,7 @@
     var seriesdata1a = [
         #for $record in $year.days
             #if $record.outTemp.has_data
-            [$record.dateTime.raw, $record.outTemp.max.format(add_label=False, $localize=False, None_string="")],
+            [$record.dateTime.raw, $record.outTemp.max.format(add_label=False, $localize=False, None_string="null")],
             #end if
         #end for
         ];
@@ -530,7 +530,7 @@
     var seriesdata2 = [
         #for $record in $year.days
             #if $record.dewpoint.has_data
-            [$record.dateTime.raw, $record.dewpoint.avg.format(add_label=False, $localize=False, None_string="")],
+            [$record.dateTime.raw, $record.dewpoint.avg.format(add_label=False, $localize=False, None_string="null")],
             #end if
         #end for
         ];
@@ -571,7 +571,7 @@
     seriesdata1 = [
         #for $record in $year.days
             #if $record.windchill.has_data
-            [$record.dateTime.raw, $record.windchill.avg.format(add_label=False, $localize=False, None_string="")],
+            [$record.dateTime.raw, $record.windchill.avg.format(add_label=False, $localize=False, None_string="null")],
             #end if
         #end for
         ]
@@ -579,7 +579,7 @@
     seriesdata2 = [
         #for $record in $year.days
             #if $record.heatindex.has_data
-            [$record.dateTime.raw, $record.heatindex.avg.format(add_label=False, $localize=False, None_string="")],
+            [$record.dateTime.raw, $record.heatindex.avg.format(add_label=False, $localize=False, None_string="null")],
             #end if
         #end for
         ]
@@ -615,7 +615,7 @@
     seriesdata1 = [
         #for $record in $year.days
             #if $record.barometer.has_data
-            [$record.dateTime.raw, $record.barometer.avg.format(add_label=False, $localize=False, None_string="")],
+            [$record.dateTime.raw, $record.barometer.avg.format(add_label=False, $localize=False, None_string="null")],
             #end if
         #end for
         ];
@@ -647,7 +647,7 @@
     seriesdata1 = [
         #for $record in $year.spans(interval=604800)
             #if $record.rain.has_data
-            [$record.dateTime.raw, $record.rain.sum.format(add_label=False, $localize=False, None_string="")],
+            [$record.dateTime.raw, $record.rain.sum.format(add_label=False, $localize=False, None_string="null")],
             #end if
         #end for
         ]
@@ -679,7 +679,7 @@
     seriesdata1 = [
         #for $record in $year.days
             #if $record.windSpeed.has_data
-            [$record.dateTime.raw, $record.windSpeed.max.format(add_label=False, $localize=False, None_string="")],
+            [$record.dateTime.raw, $record.windSpeed.max.format(add_label=False, $localize=False, None_string="null")],
             #end if
         #end for
         ]
@@ -687,7 +687,7 @@
     seriesdata2 = [
         #for $record in $year.days
             #if $record.windGust.has_data
-            [$record.dateTime.raw, $record.windGust.max.format(add_label=False, $localize=False, None_string="")],
+            [$record.dateTime.raw, $record.windGust.max.format(add_label=False, $localize=False, None_string="null")],
             #end if
         #end for
         ]
@@ -723,7 +723,7 @@
     seriesdata1 = [
         #for $record in $year.days
             #if $record.outHumidity.has_data
-            [$record.dateTime.raw, $record.outHumidity.avg.format(add_label=False, $localize=False, None_string="")],
+            [$record.dateTime.raw, $record.outHumidity.avg.format(add_label=False, $localize=False, None_string="null")],
             #end if
         #end for
         ]
@@ -881,7 +881,7 @@
           name: "$obs.label.UV",
           data: [
             #for $record in $year.days
-            [$record.start.raw, $record.UV.max.format(add_label=False, localize=False, None_string="")],
+            [$record.start.raw, $record.UV.max.format(add_label=False, localize=False, None_string="null")],
             #end for
           ]
         }
@@ -907,7 +907,7 @@
           name: "$obs.label.ET",
           data: [
             #for $record in $year.days
-            [$record.start.raw, $record.ET.max.format(add_label=False, localize=False, None_string="")],
+            [$record.start.raw, $record.ET.max.format(add_label=False, localize=False, None_string="null")],
             #end for
           ]
         }
@@ -933,7 +933,7 @@
           name: "$obs.label.radiation",
           data: [
             #for $record in $year.days
-            [$record.start.raw, $record.radiation.max.format(add_label=False, localize=False, None_string="")],
+            [$record.start.raw, $record.radiation.max.format(add_label=False, localize=False, None_string="null")],
             #end for
           ]
         }
@@ -963,7 +963,7 @@
           name: "$obs.label.extraTemp1",
           data: [
             #for $record in $year.days
-            [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, $localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, $localize=False, None_string="null")],
             #end for
           ]
         }
@@ -989,7 +989,7 @@
           name: "$obs.label.extraTemp2",
           data: [
             #for $record in $year.days
-            [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, $localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, $localize=False, None_string="null")],
             #end for
           ]
         }
@@ -1015,7 +1015,7 @@
           name: "$obs.label.extraTemp3",
           data: [
             #for $record in $year.days
-            [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, $localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, $localize=False, None_string="null")],
             #end for
           ]
         }

@@ -491,20 +491,20 @@
 
     var seriesdata1 = [
         #for $record in $month.days
-            [$record.start.raw, $record.outTemp.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+            [$record.start.raw, $record.outTemp.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string="null")],
         #end for
         ]
     ;
 
     var seriesdata2 = [
         #for $record in $month.days
-            [$record.start.raw, $record.dewpoint.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+            [$record.start.raw, $record.dewpoint.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string="null")],
         #end for
         ]
     ;
 
     var options = {
-      #include "graph_area_config.inc"
+      #include "graph_area_archive_config.inc"
       yaxis: {
         labels: {
           formatter: function (val) {
@@ -534,18 +534,18 @@
 
     seriesdata1 = [
         #for $record in $month.days
-            [$record.start.raw, $record.windchill.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+            [$record.start.raw, $record.windchill.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string="null")],
         #end for
         ]
 
     seriesdata2 = [
         #for $record in $month.days
-            [$record.start.raw, $record.heatindex.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+            [$record.start.raw, $record.heatindex.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string="null")],
         #end for
         ]
 
     var options2 = {
-      #include "graph_area_config.inc"
+      #include "graph_area_archive_config.inc"
       yaxis: {
         labels: {
           formatter: function (val) {
@@ -574,13 +574,13 @@
 
     seriesdata1 = [
         #for $record in $month.days
-            [$record.start.raw, $record.barometer.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+            [$record.start.raw, $record.barometer.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string="null")],
         #end for
         ]
     ;
 
     var options3 = {
-      #include "graph_area_config.inc"
+      #include "graph_area_archive_config.inc"
       yaxis: {
         labels: {
           formatter: function (val) {
@@ -605,12 +605,12 @@
 
     seriesdata1 = [
         #for $record in $month.days
-            [$record.start.raw, $record.rain.sum.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+            [$record.start.raw, $record.rain.sum.format(add_label = False, format_string = "%.2f", localize = False, None_string="null")],
         #end for
         ]
 
     var options4 = {
-      #include "graph_bar_config.inc"
+      #include "graph_bar_archive_config.inc"
       yaxis: {
         labels: {
           formatter: function (val) {
@@ -635,18 +635,18 @@
 
     seriesdata1 = [
         #for $record in $month.days
-            [$record.start.raw, $record.windSpeed.max.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+            [$record.start.raw, $record.windSpeed.max.format(add_label = False, format_string = "%.2f", localize = False, None_string="null")],
         #end for
         ]
 
     seriesdata2 = [
         #for $record in $month.days
-            [$record.start.raw, $record.windGust.max.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+            [$record.start.raw, $record.windGust.max.format(add_label = False, format_string = "%.2f", localize = False, None_string="null")],
         #end for
         ]
 
     var options5 = {
-      #include "graph_area_config.inc"
+      #include "graph_area_archive_config.inc"
       yaxis: {
         labels: {
           formatter: function (val) {
@@ -675,12 +675,12 @@
 
     seriesdata1 = [
         #for $record in $month.days
-            [$record.start.raw, $record.outHumidity.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string = "")],
+            [$record.start.raw, $record.outHumidity.avg.format(add_label = False, format_string = "%.2f", localize = False, None_string="null")],
         #end for
         ]
 
     var options6 = {
-        #include "graph_area_config.inc"
+        #include "graph_area_archive_config.inc"
         yaxis: {
         labels: {
           formatter: function (val) {
@@ -817,7 +817,7 @@
 
     #if $month.UV.has_data
     var options8 = {
-      #include "graph_area_config.inc"
+      #include "graph_area_archive_config.inc"
       yaxis: {
         labels: {
           formatter: function (val) {
@@ -830,7 +830,7 @@
           name: "$obs.label.UV",
           data: [
             #for $record in $month.days
-            [$record.start.raw, $record.UV.max.format(add_label=False, localize=False, None_string="")],
+            [$record.start.raw, $record.UV.max.format(add_label=False, localize=False, None_string="null")],
             #end for
           ]
         }
@@ -843,7 +843,7 @@
 
     #if $month.ET.has_data and $month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0
     var options9 = {
-      #include "graph_area_config.inc"
+      #include "graph_area_archive_config.inc"
       yaxis: {
         labels: {
           formatter: function (val) {
@@ -856,7 +856,7 @@
           name: "$obs.label.ET",
           data: [
             #for $record in $month.days
-            [$record.start.raw, $record.ET.max.format(add_label=False, localize=False, None_string="")],
+            [$record.start.raw, $record.ET.max.format(add_label=False, localize=False, None_string="null")],
             #end for
           ]
         }
@@ -869,7 +869,7 @@
 
     #if $month.radiation.has_data
     var options10 = {
-      #include "graph_area_config.inc"
+      #include "graph_area_archive_config.inc"
       yaxis: {
         labels: {
           formatter: function (val) {
@@ -882,7 +882,7 @@
           name: "$obs.label.radiation",
           data: [
             #for $record in $month.days
-            [$record.start.raw, $record.radiation.max.format(add_label=False, localize=False, None_string="")],
+            [$record.start.raw, $record.radiation.max.format(add_label=False, localize=False, None_string="null")],
             #end for
           ]
         }
@@ -899,7 +899,7 @@
 
     #if $month.extraTemp1.has_data
     var options11 = {
-      #include "graph_area_config.inc"
+      #include "graph_area_archive_config.inc"
       yaxis: {
         labels: {
           formatter: function (val) {
@@ -912,7 +912,7 @@
           name: "$obs.label.extraTemp1",
           data: [
             #for $record in $month.days
-            [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, $localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, $localize=False, None_string="null")],
             #end for
           ]
         }
@@ -925,7 +925,7 @@
 
     #if $month.extraTemp2.has_data
     var options12 = {
-      #include "graph_area_config.inc"
+      #include "graph_area_archive_config.inc"
       yaxis: {
         labels: {
           formatter: function (val) {
@@ -938,7 +938,7 @@
           name: "$obs.label.extraTemp2",
           data: [
             #for $record in $month.days
-            [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, $localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, $localize=False, None_string="null")],
             #end for
           ]
         }
@@ -951,7 +951,7 @@
 
     #if $month.extraTemp3.has_data
     var options13 = {
-      #include "graph_area_config.inc"
+      #include "graph_area_archive_config.inc"
       yaxis: {
         labels: {
           formatter: function (val) {
@@ -964,7 +964,7 @@
           name: "$obs.label.extraTemp3",
           data: [
             #for $record in $month.days
-            [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, $localize=False, None_string="")],
+            [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, $localize=False, None_string="null")],
             #end for
           ]
         }

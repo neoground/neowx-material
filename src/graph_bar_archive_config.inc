@@ -29,6 +29,9 @@
       #include raw "js/vendor/apexcharts/locales/" + $Extras.language + ".json"
     ],
     defaultLocale: '$Extras.language',
+    animations: {
+      enabled: false
+    },
   },
   dataLabels: {
     enabled: false
