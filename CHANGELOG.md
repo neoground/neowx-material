@@ -10,6 +10,7 @@
 ### Fixed
 
 - Barometer trend can now also be None without throwing an error
+- Max value of radiation is now shown correctly
 
 
 ## 1.4 (2021-03-08)
