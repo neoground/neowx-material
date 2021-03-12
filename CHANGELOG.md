@@ -5,6 +5,7 @@
 ### Added
 
 - Italian translation
+- Horizontal trend arrow if trend = 0
 
 ### Fixed
 

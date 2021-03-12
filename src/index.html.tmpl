@@ -65,10 +65,16 @@
         <div class="card">
           <div class="card-body text-center">
             <h5 class="h5-responsive $Extras.color-text">$obs.label.barometer
-              #if $trend.barometer.raw is not None and $trend.barometer.raw > 0
-              <i class="wi wi-direction-up-right" title="Trend: $trend.barometer" data-toggle="tooltip"></i>
+              #if $trend.barometer.raw is not None
+
+              #if $trend.barometer.raw > 0
+                <i class="wi wi-direction-up-right" title="Trend: $trend.barometer" data-toggle="tooltip"></i>
+              #elseif $trend.barometer.raw == 0
+                <i class="wi wi-direction-right"></i>
               #else
-              <i class="wi wi-direction-down-right" title="Trend: $trend.barometer" data-toggle="tooltip"></i>
+                <i class="wi wi-direction-down-right" title="Trend: $trend.barometer" data-toggle="tooltip"></i>
+              #end if
+
               #end if
             </h5>
 
