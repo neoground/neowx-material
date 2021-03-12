@@ -41,6 +41,10 @@ Learn more about all features on our project page:
 If your skin doesn't change edit the `weewx.conf` and set `skin = neowx-material`
 in the `[StdReport]` section, after that reload weewx: `sudo service weewx reload`.
 
+This skin works best with the python ephem module installed 
+(needed for the almanac). Install `ephem` via pip, or the 
+`python3-ephem` package via package manager.
+
 ## Contribution
 
 Feel free to add your own improvements. Contributions are always welcome!
