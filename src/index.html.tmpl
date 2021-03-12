@@ -69,7 +69,7 @@
 
               #if $trend.barometer.raw > 0
                 <i class="wi wi-direction-up-right" title="Trend: $trend.barometer" data-toggle="tooltip"></i>
-              #elseif $trend.barometer.raw == 0
+              #else if $trend.barometer.raw == 0
                 <i class="wi wi-direction-right"></i>
               #else
                 <i class="wi wi-direction-down-right" title="Trend: $trend.barometer" data-toggle="tooltip"></i>
