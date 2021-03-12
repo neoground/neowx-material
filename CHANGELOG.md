@@ -1,10 +1,14 @@
 # Changelog
 
-## 1.5 (unreleased)
+## 1.5 (2021-03-12)
 
 ### Added
 
 - Italian translation
+
+### Fixed
+
+- Barometer trend can now also be None without throwing an error
 
 
 ## 1.4 (2021-03-08)
