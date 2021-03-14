@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.6 (unreleased)
+
+### Added
+
+- Finnish translation
+
+### Changed
+
+- Apexcharts common config is now centralized in js.inc
+- Graph config refactoring
+
+
 ## 1.5 (2021-03-12)
 
 ### Added
