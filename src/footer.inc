@@ -97,10 +97,7 @@
 
     ## Copyright
     <div class="footer-copyright text-center py-3">
-        &copy; $current.dateTime.format("%Y")
-        #if $Extras.has_key('you')
-        $Extras.you
-        #end if
+        &copy; $current.dateTime.format("%Y") $Extras.Footer.name
         <span class="mx-2">&bull;</span>
         Powered by <a href="https://weewx.com" target="_blank">weewx</a> v$station.version
         <span class="mx-2">&bull;</span>

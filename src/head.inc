@@ -4,8 +4,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-<meta name="description" content="$Extras.description">
-<meta name="keywords" content="$Extras.keywords">
+<meta name="description" content="$Extras.Header.description">
+<meta name="keywords" content="$Extras.Header.keywords">
 
 ## Web App
 <meta name="mobile-web-app-capable" content="yes">
