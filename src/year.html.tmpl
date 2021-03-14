@@ -471,7 +471,7 @@
     // ---
 
     var seriesdata1 = [
-      #for $record in $span($year_delta=1).spans(interval=86400)
+      #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
         #if $record.outTemp.has_data
         [$record.start.raw, $record.outTemp.min.format(add_label=False, $localize=False, None_string="null")],
         #end if
@@ -479,7 +479,7 @@
     ];
 
     var seriesdata1a = [
-      #for $record in $span($year_delta=1).spans(interval=86400)
+      #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
         #if $record.outTemp.has_data
         [$record.dateTime.raw, $record.outTemp.max.format(add_label=False, $localize=False, None_string="null")],
         #end if
@@ -487,7 +487,7 @@
     ];
 
     var seriesdata2 = [
-      #for $record in $span($year_delta=1).spans(interval=86400)
+      #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
         #if $record.dewpoint.has_data
         [$record.start.raw, $record.dewpoint.avg.format(add_label=False, $localize=False, None_string="null")],
         #end if
@@ -528,7 +528,7 @@
     // ---
 
     seriesdata1 = [
-      #for $record in $span($year_delta=1).spans(interval=86400)
+      #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
         #if $record.windchill.has_data
         [$record.start.raw, $record.windchill.avg.format(add_label=False, $localize=False, None_string="null")],
         #end if
@@ -536,7 +536,7 @@
       ]
 
     seriesdata2 = [
-      #for $record in $span($year_delta=1).spans(interval=86400)
+      #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
         #if $record.heatindex.has_data
         [$record.start.raw, $record.heatindex.avg.format(add_label=False, $localize=False, None_string="null")],
         #end if
@@ -572,7 +572,7 @@
     // ---
 
     seriesdata1 = [
-      #for $record in $span($year_delta=1).spans(interval=86400)
+      #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
         #if $record.barometer.has_data
         [$record.start.raw, $record.barometer.avg.format(add_label=False, $localize=False, None_string="null")],
         #end if
@@ -604,7 +604,7 @@
     // ---
 
     seriesdata1 = [
-      #for $record in $span($year_delta=1).spans(interval=604800)
+      #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_rain_timespan))
         [$record.start.raw, $record.rain.sum.format(add_label=False, $localize=False, None_string="null")],
       #end for
       ]
@@ -634,13 +634,13 @@
     // ---
 
     seriesdata1 = [
-      #for $record in $span($year_delta=1).spans(interval=86400)
+      #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
         [$record.start.raw, $record.windSpeed.max.format(add_label=False, $localize=False, None_string="null")],
       #end for
       ]
 
     seriesdata2 = [
-      #for $record in $span($year_delta=1).spans(interval=86400)
+      #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
         [$record.start.raw, $record.windGust.max.format(add_label=False, $localize=False, None_string="null")],
       #end for
       ]
@@ -674,7 +674,7 @@
     // ---
 
     seriesdata1 = [
-      #for $record in $span($year_delta=1).spans(interval=86400)
+      #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
         #if $record.outHumidity.has_data
         [$record.start.raw, $record.outHumidity.avg.format(add_label=False, $localize=False, None_string="null")],
         #end if
@@ -717,7 +717,7 @@
     };
 
     var raw_data = [
-    #for $record in $span($year_delta=1).spans(interval=86400)
+    #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
     {
       'dir': "$record.windDir.avg.raw",
       'speed': "$record.windSpeed.max.raw",
@@ -831,7 +831,7 @@
         {
           name: "$obs.label.UV",
           data: [
-            #for $record in $span($year_delta=1).spans(interval=86400)
+            #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
             [$record.start.raw, $record.UV.max.format(add_label=False, localize=False, None_string="null")],
             #end for
           ]
@@ -857,7 +857,7 @@
         {
           name: "$obs.label.ET",
           data: [
-            #for $record in $span($year_delta=1).spans(interval=86400)
+            #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
             [$record.start.raw, $record.ET.max.format(add_label=False, localize=False, None_string="null")],
             #end for
           ]
@@ -883,7 +883,7 @@
         {
           name: "$obs.label.radiation",
           data: [
-            #for $record in $span($year_delta=1).spans(interval=86400)
+            #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
             [$record.start.raw, $record.radiation.max.format(add_label=False, localize=False, None_string="null")],
             #end for
           ]
@@ -913,7 +913,7 @@
         {
           name: "$obs.label.extraTemp1",
           data: [
-            #for $record in $span($year_delta=1).spans(interval=86400)
+            #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
             [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, $localize=False, None_string="null")],
             #end for
           ]
@@ -939,7 +939,7 @@
         {
           name: "$obs.label.extraTemp2",
           data: [
-            #for $record in $span($year_delta=1).spans(interval=86400)
+            #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
             [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, $localize=False, None_string="null")],
             #end for
           ]
@@ -965,7 +965,7 @@
         {
           name: "$obs.label.extraTemp3",
           data: [
-            #for $record in $span($year_delta=1).spans(interval=86400)
+            #for $record in $span($year_delta=1).spans(interval=int($Extras.Charts.year_timespan))
             [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, $localize=False, None_string="null")],
             #end for
           ]

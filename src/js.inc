@@ -29,7 +29,7 @@
     window.Apex = {
         theme: {
             mode: theme_mode,
-            palette: '$Extras.chartcolor'
+            palette: '$Extras.Charts.palette'
         },
         dataLabels: {
             enabled: false

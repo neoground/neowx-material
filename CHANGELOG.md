@@ -5,11 +5,13 @@
 ### Added
 
 - Finnish translation
+- Timespans of graph data can now be adjusted in skin.conf
 
 ### Changed
 
 - Apexcharts common config is now centralized in js.inc
 - Graph config refactoring
+- Structure of skin.conf: charts have their own subsection
 
 
 ## 1.5 (2021-03-12)

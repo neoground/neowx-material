@@ -640,7 +640,7 @@
     // ---
 
     seriesdata1 = [
-        #for $record in $year.spans(interval=604800)
+        #for $record in $year.spans(interval=int($Extras.Charts.year_rain_timespan))
             #if $record.rain.has_data
             [$record.dateTime.raw, $record.rain.sum.format(add_label=False, $localize=False, None_string="null")],
             #end if
