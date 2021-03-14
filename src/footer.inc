@@ -35,7 +35,7 @@
                     </tr>
                 </table>
 
-                #if $Extras.Footer.has_key('about')
+                #if $Extras.Footer.about is not ""
                 <p>$Extras.Footer.about</p>
                 #end if
 
@@ -47,11 +47,11 @@
             ## Grid column
             <div class="col-md-3 mb-md-0 mb-3">
 
-                #if $Extras.Footer.has_key('box_title') and $Extras.Footer.box_title is not ""
+                #if $Extras.Footer.box_title is not ""
                 <h5 class="text-uppercase">$Extras.Footer.box_title</h5>
                 #end if
 
-                #if $Extras.Footer.has_key('box_content') and $Extras.Footer.box_content is not ""
+                #if $Extras.Footer.box_content is not ""
                 <p>$Extras.Footer.box_content</p>
                 #end if
             </div>
@@ -64,22 +64,22 @@
                 <h5 class="text-uppercase">$Extras.Translations[$Extras.language].links</h5>
 
                 <ul class="list-unstyled">
-                    #if $Extras.Footer.has_key('link1_label') and $Extras.Footer.link1_url is not ""
+                    #if $Extras.Footer.link1_url is not ""
                     <li>
                         <a href="$Extras.Footer.link1_url" target="_blank" rel="noopener">$Extras.Footer.link1_label</a>
                     </li>
                     #end if
-                    #if $Extras.Footer.has_key('link2_label') and $Extras.Footer.link2_url is not ""
+                    #if $Extras.Footer.link2_url is not ""
                     <li>
                         <a href="$Extras.Footer.link2_url" target="_blank" rel="noopener">$Extras.Footer.link2_label</a>
                     </li>
                     #end if
-                    #if $Extras.Footer.has_key('link3_label') and $Extras.Footer.link3_url is not ""
+                    #if $Extras.Footer.link3_url is not ""
                     <li>
                         <a href="$Extras.Footer.link3_url" target="_blank" rel="noopener">$Extras.Footer.link3_label</a>
                     </li>
                     #end if
-                    #if $Extras.Footer.has_key('link4_label') and $Extras.Footer.link4_url is not ""
+                    #if $Extras.Footer.link4_url is not ""
                     <li>
                         <a href="$Extras.Footer.link4_url" target="_blank" rel="noopener">$Extras.Footer.link4_label</a>
                     </li>
@@ -106,11 +106,11 @@
         <span class="mx-2">&bull;</span>
         <a href="https://projects.neoground.com/neowx-material" target="_blank">NeoWX Material</a> skin v$Extras.version
 
-        #if $Extras.Footer.has_key('imprint_label') and $Extras.Footer.imprint_url is not ""
+        #if $Extras.Footer.imprint_url is not ""
         <span class="mx-2">&bull;</span>
         <a href="$Extras.Footer.imprint_url" target="_blank">$Extras.Footer.imprint_label</a>
         #end if
-        #if $Extras.Footer.has_key('privacy_label') and $Extras.Footer.privacy_url is not ""
+        #if $Extras.Footer.privacy_url is not ""
         <span class="mx-2">&bull;</span>
         <a href="$Extras.Footer.privacy_url" target="_blank">$Extras.Footer.privacy_label</a>
         #end if
