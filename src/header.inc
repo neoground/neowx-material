@@ -4,7 +4,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark $Extras.color">
         <span class="navbar-brand d-flex">
-            #if $Extras.Header.show_logo == "yes"
+            #if $Extras.Header.show_logo == 'yes'
             <a class="mr-2" href="index.html">
                 #if $Extras.Header.custom_logo_url is not ""
                 <img src="$Extras.Header.custom_logo_url" style="width: 4rem">
@@ -85,10 +85,16 @@
                 </li>
                 #end if
 
+                #if $Extras.Header.almanac_nav_link == 'yes'
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="almanac.html">$Extras.Translations[$Extras.language].almanac</a>
+                </li>
+                #end if
+
             </ul>
         </div>
 
-        #if $active_nav != 'archive'
+        #if $active_nav != 'archive' and $Extras.Header.show_almanac == 'yes'
             #if $almanac.hasExtras
             <ul class="navbar-nav nav-flex-icons" style="line-height: 1.75; padding-top: .5rem">
                 <li class="nav-item mr-4 text-white">

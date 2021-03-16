@@ -2,6 +2,10 @@
 
 ## 1.7 (unreleased)
 
+### Added
+- Almanac in the header can be disabled
+- Almanac can also be shown as link in navigation menu
+
 ### Fixed
 
 - The almanac page won't throw an error anymore if the 
