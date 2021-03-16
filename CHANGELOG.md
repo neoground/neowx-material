@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.7 (unreleased)
+
+### Fixed
+
+- The almanac page won't throw an error anymore if the 
+  pyephem package is not available
+
+
 ## 1.6 (2021-03-14)
 
 ### Added

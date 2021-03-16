@@ -21,6 +21,8 @@
                 <h2 class="h2-responsive text-dark">$Extras.Translations[$Extras.language].almanac</h2>
             </div>
 
+            #if $almanac.hasExtras
+
             <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
@@ -275,6 +277,32 @@
                     </div>
                 </div>
             </div>
+
+            #else
+
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="h5-responsive $Extras.color-text">$Extras.Translations[$Extras.language].sun</h5>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <h6 class="$Extras.color-text"><i class="wi wi-sunrise"></i>
+                                    $Extras.Translations[$Extras.language].rise</h6>
+                                $almanac.sunrise
+                            </div>
+                            <div class="col-6">
+                                <h6 class="$Extras.color-text"><i class="wi wi-sunset"></i>
+                                    $Extras.Translations[$Extras.language].set</h6>
+                                $almanac.sunset
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            #end if
 
         </div>
 
