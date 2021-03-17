@@ -3,8 +3,14 @@
 ## 1.7 (unreleased)
 
 ### Added
+
 - Almanac in the header can be disabled
 - Almanac can also be shown as link in navigation menu
+
+### Changed
+
+- font-small text is now slightly smaller (0.85rem)
+  to fix the full HD layout
 
 ### Fixed
 

@@ -1636,7 +1636,7 @@ a.text-light:hover, a.text-light:focus {
   color: #c7c7c7 !important; }
 
 .font-small {
-  font-size: 0.9rem; }
+  font-size: 0.85rem; }
 
 strong {
   font-weight: 500; }
@@ -5272,6 +5272,9 @@ table.table-sm td {
 .table-responsive-lg > .table-bordered,
 .table-responsive-xl > .table-bordered {
   border-top: 1px solid #dee2e6; }
+
+body {
+  -webkit-tap-highlight-color: transparent; }
 
 .text-muted {
   font-weight: 300; }
