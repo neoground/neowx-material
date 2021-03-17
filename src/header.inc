@@ -109,6 +109,18 @@
                     #end if
                 #end if
 
+                #if $Extras.Header.custom1_url is not ""
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="$Extras.Header.custom1_url">$Extras.Header.custom1_label</a>
+                </li>
+                #end if
+
+                #if $Extras.Header.custom2_url is not ""
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="$Extras.Header.custom2_url">$Extras.Header.custom2_label</a>
+                </li>
+                #end if
+
             </ul>
         </div>
 
