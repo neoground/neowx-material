@@ -8,6 +8,7 @@
 - Almanac can also be shown as link in navigation menu
 - All navigation menu links can be enabled / disabled
 - You can define 2 custom links in the navigation menu
+- Catalan translation
 
 ### Changed
 
