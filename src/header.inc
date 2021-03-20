@@ -4,7 +4,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark $Extras.color">
         <span class="navbar-brand d-flex">
-            #if $Extras.Header.show_logo is 'yes'
+            #if $Extras.Header.show_logo == "yes"
             <a class="mr-2" href="index.html">
                 #if $Extras.Header.custom_logo_url is not ""
                 <img src="$Extras.Header.custom_logo_url" style="width: 4rem">
