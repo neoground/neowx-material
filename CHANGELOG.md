@@ -16,6 +16,7 @@
   to fix the full HD layout
 - Better year archive layout with improved overview on Full HD screens,
   better visibility of month archives
+- Improved the header + footer layout
 
 ### Fixed
 

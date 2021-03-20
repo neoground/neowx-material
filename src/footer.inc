@@ -5,7 +5,7 @@
 <footer class="page-footer font-small $Extras.color pt-4">
 
     ## Footer Links
-    <div class="container-fluid text-center text-md-left">
+    <div class="container-fluid text-center text-md-left mb-4">
 
         ## Grid row
         <div class="row">

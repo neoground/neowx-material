@@ -25,7 +25,7 @@
         <div class="ml-3 collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto mr-auto">
 
-                #if $Extras.Header.current_nav_link is 'yes'
+                #if $Extras.Header.current_nav_link == "yes"
                     #if $active_nav is 'current'
                     <li class="nav-item active mr-3">
                         <a class="nav-link" href="index.html">$Extras.Translations[$Extras.language].current</a>
@@ -37,7 +37,7 @@
                     #end if
                 #end if
 
-                #if $Extras.Header.yesterday_nav_link is 'yes'
+                #if $Extras.Header.yesterday_nav_link == "yes"
                     #if $active_nav is 'yesterday'
                     <li class="nav-item active mr-3">
                         <a class="nav-link" href="yesterday.html">$Extras.Translations[$Extras.language].yesterday</a>
@@ -49,7 +49,7 @@
                     #end if
                 #end if
 
-                #if $Extras.Header.week_nav_link is 'yes'
+                #if $Extras.Header.week_nav_link == "yes"
                     #if $active_nav is 'week'
                     <li class="nav-item active mr-3">
                         <a class="nav-link" href="week.html">$Extras.Translations[$Extras.language].week</a>
@@ -61,7 +61,7 @@
                     #end if
                 #end if
 
-                #if $Extras.Header.month_nav_link is 'yes'
+                #if $Extras.Header.month_nav_link == "yes"
                     #if $active_nav is 'month'
                     <li class="nav-item active mr-3">
                         <a class="nav-link" href="month.html">$Extras.Translations[$Extras.language].month</a>
@@ -73,7 +73,7 @@
                     #end if
                 #end if
 
-                #if $Extras.Header.year_nav_link is 'yes'
+                #if $Extras.Header.year_nav_link == "yes"
                     #if $active_nav is 'year'
                     <li class="nav-item active mr-3">
                         <a class="nav-link" href="year.html">$Extras.Translations[$Extras.language].year</a>
@@ -85,7 +85,7 @@
                     #end if
                 #end if
 
-                #if $Extras.Header.archive_nav_link is 'yes'
+                #if $Extras.Header.archive_nav_link == "yes"
                     #if $active_nav is 'archive'
                     <li class="nav-item active mr-3">
                         <a class="nav-link" href="archive.html">$Extras.Translations[$Extras.language].archive</a>
@@ -97,7 +97,7 @@
                     #end if
                 #end if
 
-                #if $Extras.Header.almanac_nav_link is 'yes'
+                #if $Extras.Header.almanac_nav_link == "yes"
                     #if $active_nav is 'almanac'
                     <li class="nav-item active mr-3">
                         <a class="nav-link" href="almanac.html">$Extras.Translations[$Extras.language].almanac</a>
@@ -124,7 +124,7 @@
             </ul>
         </div>
 
-        #if $active_nav != 'archive' and $Extras.Header.show_almanac is 'yes'
+        #if $active_nav != 'archive' and $Extras.Header.show_almanac == "yes"
             #if $almanac.hasExtras
             <ul class="navbar-nav nav-flex-icons" style="line-height: 1.75; padding-top: .5rem">
                 <li class="nav-item mr-4 text-white">
