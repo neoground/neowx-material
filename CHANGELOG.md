@@ -14,6 +14,8 @@
 
 - font-small text is now slightly smaller (0.85rem)
   to fix the full HD layout
+- Better year archive layout with improved overview on Full HD screens,
+  better visibility of month archives
 
 ### Fixed
 

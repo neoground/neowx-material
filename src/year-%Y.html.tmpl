@@ -23,11 +23,11 @@
             </div>
 
             #for $month in $year.months
-            <div class="col-12 col-md-6 col-xl-4 mb-4 text-center">
-                <a class="card" href="month-${year_name}-${month.dateTime.format('%m')}.html">
+            <div class="col-12 col-lg-6 mb-4 text-center">
+                <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title $Extras.color-text">$month.dateTime.format("%B")</h5>
-                        <div class="row text-dark">
+                        <h4 class="h4-responsive $Extras.color-text">$month.dateTime.format("%B")</h4>
+                        <div class="row text-dark my-2">
                             <div class="col-4">
                                 <i class="wi wi-thermometer h5-responsive"></i><br>
                                 $month.outTemp.min<br>$month.outTemp.max
@@ -44,16 +44,32 @@
                                 $month.rain.sum
                             </div>
                         </div>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-6">
+                                <a href="month-${year_name}-${month.dateTime.format('%m')}.html"
+                                   class="btn btn-$Extras.color btn-block">
+                                    $Extras.Translations[$Extras.language].more
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a href="archive/NOAA-${year_name}-${month.dateTime.format('%m')}.txt"
+                                   class="btn btn-primary btn-block">
+                                    $Extras.Translations[$Extras.language].noaa_export
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </a>
+                </div>
             </div>
             #end for
 
-            <div class="col-12 mt-2 mb-4">
-                <hr>
-            </div>
+        </div>
 
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <hr class="my-4 rowdivider">
+
+        <div class="row mt-5 mb-4 graphrow align-content-start">
+
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.outTemp</h5>
@@ -75,7 +91,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.outHumidity</h5>
@@ -97,7 +113,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.barometer</h5>
@@ -120,7 +136,7 @@
             </div>
 
 
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.inTemp</h5>
@@ -142,7 +158,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.inHumidity</h5>
@@ -164,7 +180,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">
@@ -191,7 +207,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.rain</h5>
@@ -212,7 +228,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.dewpoint</h5>
@@ -234,7 +250,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.windchill</h5>
@@ -256,7 +272,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.heatindex</h5>
@@ -279,7 +295,7 @@
             </div>
 
             #if $year.UV.has_data
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.UV</h5>
@@ -302,7 +318,7 @@
             #end if
 
             #if $year.ET.has_data and $year.ET.sum.raw is not None and $year.ET.sum.raw > 0.0
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.ET</h5>
@@ -325,7 +341,7 @@
             #end if
 
             #if $year.radiation.has_data
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.radiation</h5>
@@ -348,7 +364,7 @@
             #end if
 
             #if $year.extraTemp1.has_data
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp1</h5>
@@ -372,7 +388,7 @@
             #end if
 
             #if $year.extraTemp2.has_data
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp2</h5>
@@ -396,7 +412,7 @@
             #end if
 
             #if $year.extraTemp3.has_data
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 col-lg-6 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp3</h5>
@@ -419,11 +435,10 @@
             </div>
             #end if
 
-        </div>
+            <div class="col-12 mt-2 mb-4">
+                <hr>
+            </div>
 
-        <hr class="my-4 rowdivider">
-
-        <div class="row mt-5 mb-4 graphrow align-content-start">
             #include "graphs.inc"
 
             #if $year.UV.has_data
