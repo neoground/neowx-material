@@ -9,6 +9,7 @@
 - All navigation menu links can be enabled / disabled
 - You can define 2 custom links in the navigation menu
 - Catalan translation
+- Missing battery status values to telemetry page
 
 ### Changed
 
