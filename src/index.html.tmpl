@@ -46,7 +46,7 @@
               $current.windSpeed $current.windDir.ordinal_compass
             </h4>
           </div>
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small hi-text">
             $day.wind.max $day.wind.gustdir.ordinal_compass <br>
             <i class="wi wi-wind from-$day.wind.gustdir.formatted-deg mr-2"
                title="$day.wind.gustdir.formatted°" data-toggle="tooltip"></i>
@@ -64,7 +64,7 @@
           <div class="col-6">
             <h4 class="h2-responsive">$day.rain.sum</h4>
           </div>
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small hi-text">
             $day.rainRate.max <br>
             ($day.rainRate.maxtime.format($Extras.Formatting.datetime_today))
           </div>
@@ -73,14 +73,14 @@
         #else
 
         <div class="row">
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small lo-text">
             $getVar('day.' + name + '.min') <br>
             ($getVar('day.' + name + '.mintime').format($Extras.Formatting.datetime_today))
           </div>
           <div class="col-6">
             <h4 class="h2-responsive">$getVar('current.' + name)</h4>
           </div>
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small hi-text">
             $getVar('day.' + name + '.max') <br>
             ($getVar('day.' + name + '.maxtime').format($Extras.Formatting.datetime_today))
           </div>

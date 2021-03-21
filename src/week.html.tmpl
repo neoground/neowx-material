@@ -36,7 +36,7 @@
               $week.windSpeed.max $week.windDir.avg.ordinal_compass
             </h4>
           </div>
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small hi-text">
             $week.wind.max $week.wind.gustdir.ordinal_compass <br>
             <i class="wi wi-wind from-$week.wind.gustdir.formatted-deg mr-2"
                title="$week.wind.gustdir.formatted°" data-toggle="tooltip"></i>
@@ -53,7 +53,7 @@
           <div class="col-6">
             <h4 class="h2-responsive">$week.rain.sum</h4>
           </div>
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small hi-text">
             $week.rainRate.max <br>
             ($week.rainRate.maxtime.format($Extras.Formatting.datetime))
           </div>
@@ -62,14 +62,14 @@
         #else
 
         <div class="row">
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small lo-text">
             $getVar('week.' + name + '.min') <br>
             ($getVar('week.' + name + '.mintime').format($Extras.Formatting.datetime))
           </div>
           <div class="col-6">
             <h4 class="h2-responsive">$getVar('week.' + name + '.avg')</h4>
           </div>
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small hi-text">
             $getVar('week.' + name + '.max') <br>
             ($getVar('week.' + name + '.maxtime').format($Extras.Formatting.datetime))
           </div>

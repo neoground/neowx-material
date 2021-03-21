@@ -36,7 +36,7 @@
               $year.windSpeed.max $year.windDir.avg.ordinal_compass
             </h4>
           </div>
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small hi-text">
             $year.wind.max $year.wind.gustdir.ordinal_compass <br>
             <i class="wi wi-wind from-$year.wind.gustdir.formatted-deg mr-2"
                title="$year.wind.gustdir.formatted°" data-toggle="tooltip"></i>
@@ -53,7 +53,7 @@
           <div class="col-6">
             <h4 class="h2-responsive">$year.rain.sum</h4>
           </div>
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small hi-text">
             $year.rainRate.max <br>
             ($year.rainRate.maxtime.format($Extras.Formatting.datetime_archive))
           </div>
@@ -62,14 +62,14 @@
         #else
 
         <div class="row">
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small lo-text">
             $getVar('year.' + name + '.min') <br>
             ($getVar('year.' + name + '.mintime').format($Extras.Formatting.datetime_archive))
           </div>
           <div class="col-6">
             <h4 class="h2-responsive">$getVar('year.' + name + '.avg')</h4>
           </div>
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small hi-text">
             $getVar('year.' + name + '.max') <br>
             ($getVar('year.' + name + '.maxtime').format($Extras.Formatting.datetime_archive))
           </div>

@@ -34,7 +34,7 @@
               $yesterday.windSpeed.max $yesterday.windDir.avg.ordinal_compass
             </h4>
           </div>
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small hi-text">
             $yesterday.wind.max $yesterday.wind.gustdir.ordinal_compass <br>
             <i class="wi wi-wind from-$yesterday.wind.gustdir.formatted-deg mr-2"
                title="$yesterday.wind.gustdir.formatted°" data-toggle="tooltip"></i>
@@ -51,7 +51,7 @@
           <div class="col-6">
             <h4 class="h2-responsive">$yesterday.rain.sum</h4>
           </div>
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small hi-text">
             $yesterday.rainRate.max <br>
             ($yesterday.rainRate.maxtime.format($Extras.Formatting.datetime_today))
           </div>
@@ -60,14 +60,14 @@
         #else
 
         <div class="row">
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small lo-text">
             $getVar('yesterday.' + name + '.min') <br>
             ($getVar('yesterday.' + name + '.mintime').format($Extras.Formatting.datetime_today))
           </div>
           <div class="col-6">
             <h4 class="h2-responsive">$getVar('yesterday.' + name + '.avg')</h4>
           </div>
-          <div class="col-3 text-muted font-small">
+          <div class="col-3 text-muted font-small hi-text">
             $getVar('yesterday.' + name + '.max') <br>
             ($getVar('yesterday.' + name + '.maxtime').format($Extras.Formatting.datetime_today))
           </div>

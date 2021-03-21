@@ -48,6 +48,24 @@
 <link rel="stylesheet" href="weather-icons/css/weather-icons.min.css">
 <link rel="stylesheet" href="weather-icons/css/weather-icons-wind.min.css">
 
+## Appearance settings
+
+#if $Extras.Appearance.lo_value_color is not ""
+<style>
+    .lo-text {
+        color: $Extras.Appearance.lo_value_color !important;
+    }
+</style>
+#end if
+
+#if $Extras.Appearance.hi_value_color is not ""
+<style>
+    .hi-text {
+        color: $Extras.Appearance.hi_value_color !important;
+    }
+</style>
+#end if
+
 ## Startup images (splash screens) for ios web app
 
 <link

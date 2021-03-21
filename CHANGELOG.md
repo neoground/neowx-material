@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8 (unreleased)
+
+### Added
+
+- The low / high values on cards can now have a custom color
+  which you can set in the skin.conf (appearance section)
+
+
 ## 1.7 (2021-03-21)
 
 ### Added

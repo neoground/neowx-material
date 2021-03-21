@@ -15,14 +15,14 @@
       <h5 class="h5-responsive $Extras.color-text">$getVar('obs.label.' + name)</h5>
 
       <div class="row">
-        <div class="col-3 text-muted font-small">
+        <div class="col-3 text-muted font-small lo-text">
           $getVar('day.' + name + '.min') <br>
           ($getVar('day.' + name + '.mintime').format($Extras.Formatting.datetime_today))
         </div>
         <div class="col-6">
           <h4 class="h2-responsive">$getVar('current.' + name)</h4>
         </div>
-        <div class="col-3 text-muted font-small">
+        <div class="col-3 text-muted font-small hi-text">
           $getVar('day.' + name + '.max') <br>
           ($getVar('day.' + name + '.maxtime').format($Extras.Formatting.datetime_today))
         </div>
