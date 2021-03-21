@@ -10,6 +10,11 @@
 - Telemetry values order can be changed in the skin.conf
 - Telemetry page shows 24h charts for all available values
 
+### Changed
+
+- The credits in the footer (powered by weewx + skin) can
+  optionally be hidden if you don't want to support these projects
+
 
 ## 1.7 (2021-03-21)
 

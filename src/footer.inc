@@ -100,10 +100,16 @@
     ## Copyright
     <div class="footer-copyright text-center py-3">
         &copy; $current.dateTime.format("%Y") $Extras.Footer.name
+
+        #if $Extras.Footer.support_weewx == "yes"
         <span class="mx-2">&bull;</span>
         Powered by <a href="https://weewx.com" target="_blank">weewx</a> v$station.version
+        #end if
+
+        #if $Extras.Footer.support_skin == "yes"
         <span class="mx-2">&bull;</span>
         <a href="https://projects.neoground.com/neowx-material" target="_blank">NeoWX Material</a> skin v$Extras.version
+        #end if
 
         #if $Extras.Footer.imprint_url is not ""
         <span class="mx-2">&bull;</span>
