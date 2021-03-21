@@ -5,9 +5,12 @@
 // General classes / adjustments
 // ---------------------------------------------------------------------------
 
-// ios webapp improvement
 body {
+    // ios webapp improvement
     -webkit-tap-highlight-color: transparent;
+
+    // Some tooltips may create a horizontal scroll bar which we don't want
+    overflow-x: hidden;
 }
 
 .text-muted {

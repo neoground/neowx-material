@@ -26,6 +26,11 @@
           $getVar('day.' + name + '.max') <br>
           ($getVar('day.' + name + '.maxtime').format($Extras.Formatting.datetime_today))
         </div>
+
+        <div class="col-12 mt-4">
+          <div id="$name-chart"></div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -58,25 +63,9 @@
         <h2 class="h2-responsive text-dark">$Extras.Translations[$Extras.language].telemetry</h2>
       </div>
 
-      $valuesCard("rxCheckPercent")
-      $valuesCard("txBatteryStatus")
-      $valuesCard("windBatteryStatus")
-      $valuesCard("rainBatteryStatus")
-      $valuesCard("outTempBatteryStatus")
-      $valuesCard("outTempBatteryStatus")
-      $valuesCard("inTempBatteryStatus")
-      $valuesCard("consBatteryVoltage")
-      $valuesCard("heatingVoltage")
-      $valuesCard("supplyVoltage")
-      $valuesCard("referenceVoltage")
-      $valuesCard("extraBatteryStatus1")
-      $valuesCard("extraBatteryStatus2")
-      $valuesCard("extraBatteryStatus3")
-      $valuesCard("extraBatteryStatus4")
-      $valuesCard("extraBatteryStatus5")
-      $valuesCard("extraBatteryStatus6")
-      $valuesCard("extraBatteryStatus7")
-      $valuesCard("extraBatteryStatus8")
+      #for $x in $Extras.Appearance.telemetry_order
+      $valuesCard($x)
+      #end for
 
     </div>
 
@@ -86,6 +75,74 @@
 
 #include "footer.inc"
 #include "js.inc"
+
+## +-------------------------------------------------------------------------+
+## | Chart generation methods (get data for charts + their JS code)          |
+## +-------------------------------------------------------------------------+
+
+## +-------------------------------------------------------------------------+
+## | Get data array for a chart                                              |
+## |                                                                         |
+## | string  $name    the name of the database field  (e.g. outTemp)         |
+## | string  $column  the column of the display value (e.g. min, max, avg)   |
+## +-------------------------------------------------------------------------+
+
+#def getChartData($name, $column)
+  #set current_interval = int($Extras.Charts.current_timespan)
+  #for $record in $span($day_delta=1).spans(interval=current_interval)
+    #set val = $getattr($record, $name)
+    [$record.start.raw, $getattr($val, $column).format(add_label=False, localize=False, None_string="null")],
+  #end for
+#end def
+
+## +-------------------------------------------------------------------------+
+## | Get JavaScript code for a chart                                         |
+## |                                                                         |
+## | string  $name     the name of the database field   (e.g. outTemp)       |
+## | string  $series   field name for series            (e.g. outTemp)       |
+## | string  $column   the column of the display value  (e.g. min, max, avg) |
+## +-------------------------------------------------------------------------+
+
+#def getChartJsCode($name, $series, $column = "avg")
+
+#if $getVar('day.' + name + '.has_data') and $getVar('day.' + name + '.max.raw') > 0
+
+new ApexCharts(document.querySelector('#$name-chart'), {
+  ...graph_area_config,
+  yaxis: {
+    labels: {
+      formatter: function (val) {
+        return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
+      }
+    }
+  },
+  series: [
+    {
+      name: "$getVar('obs.label.' + series)",
+      data: [ $getChartData(series, column) ]
+    }
+  ]
+}).render()
+
+#end if
+
+#end def
+
+## +-------------------------------------------------------------------------+
+## | Chart definitions                                                       |
+## +-------------------------------------------------------------------------+
+
+<script type="text/javascript">
+  // Config templates
+
+  var graph_area_config = {
+    #include "graph_area_config.inc"
+  }
+
+  #for $x in $Extras.Appearance.telemetry_order
+  $getChartJsCode($x, $x)
+  #end for
+</script>
 
 </body>
 </html>

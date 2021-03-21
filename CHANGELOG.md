@@ -6,6 +6,9 @@
 
 - The low / high values on cards can now have a custom color
   which you can set in the skin.conf (appearance section)
+- Telemetry link in the footer can be hidden
+- Telemetry values order can be changed in the skin.conf
+- Telemetry page shows 24h charts for all available values
 
 
 ## 1.7 (2021-03-21)

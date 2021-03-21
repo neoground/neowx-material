@@ -25,6 +25,7 @@
                         <td>$Extras.Translations[$Extras.language].altitude:</td>
                         <td>$station.altitude</td>
                     </tr>
+                    #if $Extras.Footer.show_telemetry == "yes"
                     <tr>
                         <td>
                             <a href="telemetry.html">
@@ -33,6 +34,7 @@
                         </td>
                         <td></td>
                     </tr>
+                    #end if
                 </table>
 
                 #if $Extras.Footer.about is not ""
