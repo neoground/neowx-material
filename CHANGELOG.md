@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.7 (unreleased)
+## 1.7 (2021-03-21)
 
 ### Added
 
