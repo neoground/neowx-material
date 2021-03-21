@@ -7,9 +7,13 @@
 - Almanac in the header can be disabled
 - Almanac can also be shown as link in navigation menu
 - All navigation menu links can be enabled / disabled
-- You can define 2 custom links in the navigation menu
+- Up to two custom links can be defined in the navigation menu in skin.conf
 - Catalan translation
 - Missing battery status values to telemetry page
+- The order of all cards (values and charts) can be changed in skin.conf
+- Cards (values and charts) can easily be hidden in skin.conf
+- Missing values and charts are now displayed if data is available
+  (extraTemp4-8, extraHumid1-8, inTemp, inHumidity)
 
 ### Changed
 
@@ -18,11 +22,13 @@
 - Better year archive layout with improved overview on Full HD screens,
   better visibility of month archives
 - Improved the header + footer layout
+- Full code refactoring of all HTML pages
 
 ### Fixed
 
 - The almanac page won't throw an error anymore if the 
   pyephem package is not available
+- Small appearance bugs were fixed - uniform appearance on all pages
 
 
 ## 1.6 (2021-03-14)

@@ -29,7 +29,6 @@ class BasicInstaller(ExtensionInstaller):
                     'skins/neowx-material/graph_bar_archive_config.inc',
                     'skins/neowx-material/graph_bar_config.inc',
                     'skins/neowx-material/graph_radar_config.inc',
-                    'skins/neowx-material/graphs.inc',
                     'skins/neowx-material/head.inc',
                     'skins/neowx-material/header.inc',
                     'skins/neowx-material/index.html.tmpl',

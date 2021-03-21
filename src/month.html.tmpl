@@ -1,958 +1,455 @@
-#errorCatcher Echo
 #encoding UTF-8
+## +-------------------------------------------------------------------------+
+## |    month.html.tmpl                    Template file for "month" page    |
+## +-------------------------------------------------------------------------+
+
+#attr $active_nav = 'month'
+
+## +-------------------------------------------------------------------------+
+## | Template for display card of values (left column)                       |
+## +-------------------------------------------------------------------------+
+
+#def valuesCard($name)
+  #if $getVar('month.' + name + '.has_data')
+  <div class="col-12 col-md-6 col-xl-4 mb-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <h3 class="h5-responsive $Extras.color-text">
+          $getVar('obs.label.' + name)
+          #if $name == 'windSpeed'
+
+            <i class="wi wi-wind from-$month.windDir.avg.formatted-deg"
+               title="$month.windDir.avg.formatted°" data-toggle="tooltip"></i>
+
+          #end if
+        </h3>
+
+        #if $name == 'windSpeed'
+
+        <div class="row">
+          <div class="col-3 text-muted font-small">
+            $month.wind.avg <br>
+            $Extras.Translations[$Extras.language].avg
+          </div>
+          <div class="col-6">
+            <h4 class="h3-responsive">
+              $month.windSpeed.max $month.windDir.avg.ordinal_compass
+            </h4>
+          </div>
+          <div class="col-3 text-muted font-small">
+            $month.wind.max $month.wind.gustdir.ordinal_compass <br>
+            <i class="wi wi-wind from-$month.wind.gustdir.formatted-deg mr-2"
+               title="$month.wind.gustdir.formatted°" data-toggle="tooltip"></i>
+            ($month.wind.maxtime.format($Extras.Formatting.datetime))
+          </div>
+        </div>
+
+        #else if $name == 'rain'
+
+        <div class="row">
+          <div class="col-3 text-muted font-small">
+            
+          </div>
+          <div class="col-6">
+            <h4 class="h2-responsive">$month.rain.sum</h4>
+          </div>
+          <div class="col-3 text-muted font-small">
+            $month.rainRate.max <br>
+            ($month.rainRate.maxtime.format($Extras.Formatting.datetime))
+          </div>
+        </div>
+
+        #else
+
+        <div class="row">
+          <div class="col-3 text-muted font-small">
+            $getVar('month.' + name + '.min') <br>
+            ($getVar('month.' + name + '.mintime').format($Extras.Formatting.datetime))
+          </div>
+          <div class="col-6">
+            <h4 class="h2-responsive">$getVar('month.' + name + '.avg')</h4>
+          </div>
+          <div class="col-3 text-muted font-small">
+            $getVar('month.' + name + '.max') <br>
+            ($getVar('month.' + name + '.maxtime').format($Extras.Formatting.datetime))
+          </div>
+        </div>
+
+        #end if
+
+      </div>
+    </div>
+  </div>
+  #end if
+#end def
+
+## +-------------------------------------------------------------------------+
+## | Template for display card of a single chart (right column)              |
+## | Chart values are defined in the JS section below                        |
+## +-------------------------------------------------------------------------+
+
+#def chartCard($name, $id, $name2 = "XX")
+  #if $getVar('month.' + name + '.has_data') or $name == "windvec"
+    <div class="col-12 col-xl-6 mb-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="h5-responsive $Extras.color-text">
+            #if $name2 != "XX"
+              $getVar('obs.label.' + name) &
+              $getVar('obs.label.' + name2)
+            #else
+              $getVar('obs.label.' + name)
+            #end if
+          </h5>
+          <div id="$id"></div>
+        </div>
+      </div>
+    </div>
+  #end if
+#end def
+
+## +-------------------------------------------------------------------------+
+## | The main page layout                                                    |
+## +-------------------------------------------------------------------------+
 
 <!DOCTYPE html>
 <html lang="$Extras.language">
 <head>
-  <title>$Extras.Translations[$Extras.language].month | $station.location</title>
+  <title>
+    $Extras.Translations[$Extras.language][$active_nav] | $station.location
+  </title>
   #include "head.inc"
 </head>
 <body class="main-bg" ontouchstart="">
 
-#attr $active_nav = 'month'
 #include "header.inc"
 
 <main>
-
   <div class="container-fluid d-flex-xxl">
 
     <div class="row my-4 temprow align-content-start">
+      #for $x in $Extras.Appearance.values_order
 
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.outTemp</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.outTemp.min <br>
-                ($month.outTemp.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.outTemp.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.outTemp.max <br>
-                ($month.outTemp.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.outHumidity</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.outHumidity.min <br>
-                ($month.outHumidity.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.outHumidity.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.outHumidity.max <br>
-                ($month.outHumidity.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.barometer</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.barometer.min <br>
-                ($month.barometer.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h3-responsive">$month.barometer.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.barometer.max <br>
-                ($month.barometer.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.inTemp</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.inTemp.min <br>
-                ($month.inTemp.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.inTemp.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.inTemp.max <br>
-                ($month.inTemp.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.inHumidity</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.inHumidity.min <br>
-                ($month.inHumidity.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.inHumidity.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.inHumidity.max <br>
-                ($month.inHumidity.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.windSpeed
-              <i class="wi wi-wind from-$month.windDir.avg.formatted-deg"
-                 title="$month.windDir.avg.formatted°" data-toggle="tooltip"></i>
-            </h5>
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.wind.avg <br>
-                $Extras.Translations[$Extras.language].avg
-              </div>
-              <div class="col-6">
-                <h4 class="h3-responsive">
-                  $month.windSpeed.max $month.windDir.avg.ordinal_compass
-                </h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.wind.max $month.wind.gustdir.ordinal_compass <i class="wi wi-wind from-$month.wind.gustdir.formatted-deg" title="$month.wind.gustdir.formatted°" data-toggle="tooltip"></i> <br>
-                ($month.wind.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.rain</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                &nbsp;
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.rain.sum</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.rainRate.max <br>
-                ($month.rainRate.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.dewpoint</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.dewpoint.min <br>
-                ($month.dewpoint.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.dewpoint.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.dewpoint.max <br>
-                ($month.dewpoint.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.windchill</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.windchill.min <br>
-                ($month.windchill.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.windchill.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.windchill.max <br>
-                ($month.windchill.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.heatindex</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.heatindex.min <br>
-                ($month.heatindex.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.heatindex.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.heatindex.max <br>
-                ($month.heatindex.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      #if $month.UV.has_data
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.UV</h5>
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.UV.min <br>
-                ($month.UV.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.UV.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.UV.max <br>
-                ($month.UV.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      #if $x == "ET"
+        #if $month.ET.has_data and $month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0
+          $valuesCard('ET')
+        #end if
+      #else
+        $valuesCard($x)
       #end if
 
-      #if $month.ET.has_data and $month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.ET</h5>
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.ET.min <br>
-                ($month.ET.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.ET.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.ET.max <br>
-                ($month.ET.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      #end if
-
-      #if $month.radiation.has_data
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.radiation</h5>
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.radiation.min <br>
-                ($month.radiation.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.radiation.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.radiation.max <br>
-                ($month.radiation.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      #end if
-
-      #if $month.extraTemp1.has_data
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp1</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.extraTemp1.min <br>
-                ($month.extraTemp1.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.extraTemp1.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.extraTemp1.max <br>
-                ($month.extraTemp1.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      #end if
-
-      #if $month.extraTemp2.has_data
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp2</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.extraTemp2.min <br>
-                ($month.extraTemp2.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.extraTemp2.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.extraTemp2.max <br>
-                ($month.extraTemp2.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      #end if
-
-      #if $month.extraTemp3.has_data
-      <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp3</h5>
-
-            <div class="row">
-              <div class="col-3 text-muted font-small">
-                $month.extraTemp3.min <br>
-                ($month.extraTemp3.mintime.format($Extras.Formatting.datetime))
-              </div>
-              <div class="col-6">
-                <h4 class="h2-responsive">$month.extraTemp3.avg</h4>
-              </div>
-              <div class="col-3 text-muted font-small">
-                $month.extraTemp3.max <br>
-                ($month.extraTemp3.maxtime.format($Extras.Formatting.datetime))
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      #end if
-
+      #end for
     </div>
 
     <hr class="my-4 rowdivider">
 
     <div class="row mt-5 mb-4 graphrow align-content-start">
-      #include "graphs.inc"
+      #for $x in $Extras.Appearance.charts_order
 
-      #if $month.UV.has_data
-      <div class="col-12 col-xl-6 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.UV</h5>
-            <div id="uvchart"></div>
-          </div>
-        </div>
-      </div>
+      #if $x == "ET"
+        #if $month.ET.has_data and $month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0
+        $valuesCard('ET')
+        #end if
+      #else
+        $chartCard($x, $x + 'chart')
       #end if
 
-      #if $month.ET.has_data and $month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0
-      <div class="col-12 col-xl-6 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.ET</h5>
-            <div id="etchart"></div>
-          </div>
-        </div>
-      </div>
-      #end if
-
-      #if $month.radiation.has_data
-      <div class="col-12 col-xl-6 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.radiation</h5>
-            <div id="radiationchart"></div>
-          </div>
-        </div>
-      </div>
-      #end if
-
-      #if $month.extraTemp1.has_data
-      <div class="col-12 col-xl-6 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp1</h5>
-            <div id="temp1chart"></div>
-          </div>
-        </div>
-      </div>
-      #end if
-
-      #if $month.extraTemp2.has_data
-      <div class="col-12 col-xl-6 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp2</h5>
-            <div id="temp2chart"></div>
-          </div>
-        </div>
-      </div>
-      #end if
-
-      #if $month.extraTemp3.has_data
-      <div class="col-12 col-xl-6 mb-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="h5-responsive $Extras.color-text">$obs.label.extraTemp3</h5>
-            <div id="temp3chart"></div>
-          </div>
-        </div>
-      </div>
-      #end if
+      #end for
     </div>
 
   </div>
-
 </main>
 
 #include "footer.inc"
 #include "js.inc"
 
-  ## Charts
-  <script type="text/javascript">
-    // ---
-    // outTemp + Dewpoint
-    // ---
+## +-------------------------------------------------------------------------+
+## | Chart generation methods (get data for charts + their JS code)          |
+## +-------------------------------------------------------------------------+
 
-    var seriesdata1 = [
-      #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-        [$record.start.raw, $record.outTemp.avg.format(add_label=False, $localize=False, None_string="null")],
-      #end for
-    ];
+## +-------------------------------------------------------------------------+
+## | Get data array for a chart                                              |
+## |                                                                         |
+## | string  $name    the name of the database field  (e.g. outTemp)         |
+## | string  $column  the column of the display value (e.g. min, max, avg)   |
+## +-------------------------------------------------------------------------+
 
-    var seriesdata2 = [
-      #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-        [$record.start.raw, $record.dewpoint.avg.format(add_label=False, $localize=False, None_string="null")],
-      #end for
-      ];
+#def getChartData($name, $column)
+  #set current_interval = int($Extras.Charts.month_timespan)
+  #if $name == "rain"
+    #set current_interval = int($Extras.Charts.month_rain_timespan)
+  #end if
 
-    var options = {
-      #include "graph_area_config.inc"
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.outTemp") + "$unit.label.outTemp";
-          }
-        }
-      },
-      series: [
-        {
-          name: "$obs.label.outTemp",
-          data: seriesdata1
-        },
-        {
-          name: "$obs.label.dewpoint",
-          data: seriesdata2
-        }
-      ]
+  #for $record in $span($month_delta=1).spans(interval=current_interval)
+    #set val = $getattr($record, $name)
+    [$record.start.raw, $getattr($val, $column).format(add_label=False, localize=False, None_string="null")],
+  #end for
+#end def
+
+## +-------------------------------------------------------------------------+
+## | Get JavaScript code for a chart                                         |
+## |                                                                         |
+## | string  $name     the name of the database field   (e.g. outTemp)       |
+## | string  $id       the ID of the chart target       (without hash)       |
+## | string  $type     type of chart                    (area, bar, radar)   |
+## | string  $series1  field name for (1st) series      (e.g. outTemp)       |
+## | string  $series2  opt. field name for 2nd series   (e.g. outTemp or "") |
+## | string  $column   the column of the display value  (e.g. min, max, avg) |
+## +-------------------------------------------------------------------------+
+
+#def getChartJsCode($name, $id, $type, $series1, $series2 = "", $column = "avg")
+
+new ApexCharts(document.querySelector('#$id'), {
+  ...graph_${type}_config,
+  yaxis: {
+    labels: {
+      formatter: function (val) {
+        return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
+      }
     }
-
-    var chart = new ApexCharts(document.querySelector('#tempchart'), options)
-    chart.render()
-
-
-    // ---
-    // Wind chill + Heat index
-    // ---
-
-    seriesdata1 = [
-      #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-        [$record.start.raw, $record.windchill.avg.format(add_label=False, $localize=False, None_string="null")],
-      #end for
-      ]
-
-    seriesdata2 = [
-      #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-        [$record.start.raw, $record.heatindex.avg.format(add_label=False, $localize=False, None_string="null")],
-      #end for
-      ]
-
-    var options2 = {
-      #include "graph_area_config.inc"
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.windchill") + "$unit.label.windchill";
-          }
-        }
-      },
-      series: [
-        {
-          name: "$obs.label.windchill",
-          data: seriesdata1
-        },
-        {
-          name: "$obs.label.heatindex",
-          data: seriesdata2
-        }
-      ]
-    }
-
-    var chart2 = new ApexCharts(document.querySelector('#wchichart'), options2)
-    chart2.render()
-
-    // ---
-    // Barometer
-    // ---
-
-    seriesdata1 = [
-      #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-              [$record.start.raw, $record.barometer.avg.format(add_label=False, $localize=False, None_string="null")],
-      #end for
-      ];
-
-    var options3 = {
-      #include "graph_area_config.inc"
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.barometer") + "$unit.label.barometer";
-          }
-        }
-      },
-      series: [
-        {
-          name: "$obs.label.barometer",
-          data: seriesdata1
-        }
-      ]
-    }
-
-    var chart3 = new ApexCharts(document.querySelector('#barometerchart'), options3)
-    chart3.render()
-
-    // ---
-    // Rain
-    // ---
-
-    seriesdata1 = [
-      #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_rain_timespan))
-        [$record.start.raw, $record.rain.sum.format(add_label=False, $localize=False, None_string="null")],
-      #end for
-      ]
-
-    var options4 = {
-      #include "graph_bar_config.inc"
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.rain") + "$unit.label.rain";
-          }
-        }
-      },
-      series: [
-        {
-          name: "$obs.label.rain",
-          data: seriesdata1
-        }
-      ]
-    }
-
-    var chart4 = new ApexCharts(document.querySelector('#rainchart'), options4)
-    chart4.render()
-
-    // ---
-    // Wind
-    // ---
-
-    seriesdata1 = [
-      #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-        [$record.start.raw, $record.windSpeed.max.format(add_label=False, $localize=False, None_string="null")],
-      #end for
-      ]
-
-    seriesdata2 = [
-      #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-        [$record.start.raw, $record.windGust.max.format(add_label=False, $localize=False, None_string="null")],
-      #end for
-      ]
-
-    var options5 = {
-      #include "graph_area_config.inc"
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.windSpeed") + "$unit.label.windSpeed";
-          }
-        }
-      },
-      series: [
-        {
-          name: "$obs.label.windSpeed",
-          data: seriesdata1
-        },
-        {
-          name: "$obs.label.windGust",
-          data: seriesdata2
-        }
-      ]
-    }
-
-    var chart5 = new ApexCharts(document.querySelector('#windchart'), options5)
-    chart5.render()
-
-    // ---
-    // outHumidity
-    // ---
-
-    seriesdata1 = [
-      #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-        [$record.start.raw, $record.outHumidity.avg.format(add_label=False, $localize=False, None_string="null")],
-      #end for
-      ]
-
-    var options6 = {
-        #include "graph_area_config.inc"
-        yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.outHumidity") + "$unit.label.outHumidity";
-          }
-        }
-      },
-        series: [
-          {
-            name: "$obs.label.outHumidity",
-            data: seriesdata1
-          }
-        ]
-    }
-
-    var chart6 = new ApexCharts(document.querySelector('#humiditychart'), options6)
-    chart6.render()
-
-    // ---
-    // Build wind vector diagram
-    // ---
-
-    var vector_data = {
-      'N': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'NE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'E': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'SE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'S': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'SW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'W': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-      'NW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
-    };
-
-    var raw_data = [
-    #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
+  },
+  series: [
     {
-      'dir': "$record.windDir.avg.raw",
-      'speed': "$record.windSpeed.max.raw",
-      'max': "$record.windGust.max.raw"
+      name: "$getVar('obs.label.' + series1)",
+      data: [ $getChartData(series1, column) ]
+    }
+    #if $series2 is not ""
+    ,{
+      name: "$getVar('obs.label.' + series2)",
+      data: [ $getChartData(series2, column) ]
+    }
+    #end if
+  ]
+}).render()
+
+#end def
+
+## +-------------------------------------------------------------------------+
+## | Chart definitions                                                       |
+## +-------------------------------------------------------------------------+
+
+<script type="text/javascript">
+  // Config templates
+
+  var graph_area_config = {
+    #include "graph_area_config.inc"
+  }
+  var graph_bar_config = {
+    #include "graph_bar_config.inc"
+  }
+
+  var graph_radar_config = {
+    #include "graph_radar_config.inc"
+  }
+
+  // outTemp + Dewpoint
+  $getChartJsCode("outTemp", "outTempchart", "area", "outTemp", "dewpoint")
+
+  // Wind chill + Heat index
+  $getChartJsCode("windchill", "windchillchart", "area", "windchill", "heatindex")
+
+  // Barometer
+  $getChartJsCode("barometer", "barometerchart", "area", "barometer")
+
+  // Rain
+  $getChartJsCode("rain", "rainchart", "bar", "rain", "", "sum")
+
+  // Wind
+  $getChartJsCode("windSpeed", "windSpeedchart", "area", "windSpeed", "windGust", "max")
+
+  // outHumidity
+  $getChartJsCode("outHumidity", "outHumiditychart", "area", "outHumidity")
+
+  // UV / ET / Radiation
+  #if $month.UV.has_data
+  $getChartJsCode("UV", "UVchart", "area", "UV", "", "max")
+  #end if
+
+  #if $month.ET.has_data and $month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0
+  $getChartJsCode("ET", "ETchart", "area", "ET", "", "max")
+  #end if
+
+  #if $month.radiation.has_data
+  $getChartJsCode("radiation", "radiationchart", "area", "radiation", "", "max")
+  #end if
+
+  // inTemp + inHumidity
+  $getChartJsCode("inTemp", "inTempchart", "area", "inTemp")
+  $getChartJsCode("inHumidity", "inHumiditychart", "area", "inHumidity")
+
+  // Build wind vector chart
+  var vector_data = {
+    'N': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+    'NE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+    'E': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+    'SE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+    'S': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+    'SW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+    'W': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+    'NW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+  };
+
+  var raw_data = [
+  #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
+  {
+    'dir': "$record.windDir.avg.raw",
+    'speed': "$record.windSpeed.avg.raw",
+    'max': "$record.windGust.max.raw"
+  },
+  #end for
+  ];
+
+  raw_data.forEach(function(item) {
+    var vec_dir = parseInt(item.dir);
+    var vec_speed = parseFloat(item.speed);
+    var max_speed = parseFloat(item.max);
+
+    if(typeof vec_dir === 'number') {
+      var vec_key = false;
+
+      // Detect key based on vec direction (0-360). 45° steps, using the middle +- 45/2=22.5
+      if(vec_dir > 337.5 || vec_dir <= 22.5) {
+        vec_key = 'N';
+      }
+      if(vec_dir > 22.5 && vec_dir <= 67.5) {
+        vec_key = 'NE';
+      }
+      if(vec_dir > 67.5 && vec_dir <= 112.5) {
+        vec_key = 'E';
+      }
+      if(vec_dir > 112.5 && vec_dir <= 157.5) {
+        vec_key = 'SE';
+      }
+      if(vec_dir > 157.5 && vec_dir <= 202.5) {
+        vec_key = 'S';
+      }
+      if(vec_dir > 202.5 && vec_dir <= 247.5) {
+        vec_key = 'SW';
+      }
+      if(vec_dir > 247.5 && vec_dir <= 292.5) {
+        vec_key = 'W';
+      }
+      if(vec_dir > 292.5 && vec_dir <= 337.5) {
+        vec_key = 'NW';
+      }
+
+      if(vec_key !== false) {
+        vector_data[vec_key]['sum'] += vec_speed;
+        vector_data[vec_key]['amt']++;
+
+        if(max_speed > vector_data[vec_key]['max']) {
+          vector_data[vec_key]['max'] = max_speed;
+        }
+      }
+
+    }
+  });
+
+  // Finally build arrays for chart
+  var avg_values = [];
+  var max_values = [];
+  Object.keys(vector_data).forEach(function (item) {
+    if(vector_data[item]['amt'] > 0) {
+      avg_values.push(vector_data[item]['sum'] / vector_data[item]['amt']);
+    } else {
+      avg_values.push(0);
+    }
+
+    max_values.push(vector_data[item]['max'])
+  });
+
+  // Display wind vector chart
+
+  new ApexCharts(document.querySelector('#windvecchart'), {
+    ...graph_radar_config,
+    yaxis: {
+      labels: {
+        formatter: function (val) {
+          return formatNumber(val, "$unit.format.windSpeed") + "$unit.label.windSpeed";
+        }
+      }
     },
-    #end for
+    series: [
+      {
+        name: "$obs.label.windSpeed",
+        data: avg_values
+      },
+      {
+        name: "$obs.label.windGust",
+        data: max_values
+      },
     ]
+  }).render()
 
-    raw_data.forEach(function(item) {
-      var vec_dir = parseInt(item.dir);
-      var vec_speed = parseFloat(item.speed);
-      var max_speed = parseFloat(item.max);
+  // extraTemp 1-8
 
-      if(typeof vec_dir === 'number') {
-        var vec_key = false;
+  #if $month.extraTemp1.has_data
+  $getChartJsCode("extraTemp1", "extraTemp1chart", "area", "extraTemp1")
+  #end if
 
-        // Detect key based on vec direction (0-360). 45° steps, using the middle +- 45/2=22.5
-        if(vec_dir > 337.5 || vec_dir <= 22.5) {
-          vec_key = 'N';
-        }
-        if(vec_dir > 22.5 && vec_dir <= 67.5) {
-          vec_key = 'NE';
-        }
-        if(vec_dir > 67.5 && vec_dir <= 112.5) {
-          vec_key = 'E';
-        }
-        if(vec_dir > 112.5 && vec_dir <= 157.5) {
-          vec_key = 'SE';
-        }
-        if(vec_dir > 157.5 && vec_dir <= 202.5) {
-          vec_key = 'S';
-        }
-        if(vec_dir > 202.5 && vec_dir <= 247.5) {
-          vec_key = 'SW';
-        }
-        if(vec_dir > 247.5 && vec_dir <= 292.5) {
-          vec_key = 'W';
-        }
-        if(vec_dir > 292.5 && vec_dir <= 337.5) {
-          vec_key = 'NW';
-        }
+  #if $month.extraTemp2.has_data
+  $getChartJsCode("extraTemp2", "extraTemp2chart", "area", "extraTemp2")
+  #end if
 
-        if(vec_key !== false) {
-          vector_data[vec_key]['sum'] += vec_speed;
-          vector_data[vec_key]['amt']++;
+  #if $month.extraTemp3.has_data
+  $getChartJsCode("extraTemp3", "extraTemp3chart", "area", "extraTemp3")
+  #end if
 
-          if(max_speed > vector_data[vec_key]['max']) {
-            vector_data[vec_key]['max'] = max_speed;
-          }
-        }
+  #if $month.extraTemp4.has_data
+  $getChartJsCode("extraTemp4", "extraTemp4chart", "area", "extraTemp4")
+  #end if
 
-      }
-    })
+  #if $month.extraTemp5.has_data
+  $getChartJsCode("extraTemp5", "extraTemp5chart", "area", "extraTemp5")
+  #end if
 
-    // Finally build arrays for chart
-    var avg_values = [];
-    var max_values = [];
-    Object.keys(vector_data).forEach(function (item) {
-      if(vector_data[item]['amt'] > 0) {
-        avg_values.push(vector_data[item]['sum'] / vector_data[item]['amt']);
-      } else {
-        avg_values.push(0);
-      }
+  #if $month.extraTemp6.has_data
+  $getChartJsCode("extraTemp6", "extraTemp6chart", "area", "extraTemp6")
+  #end if
 
-      max_values.push(vector_data[item]['max'])
-    })
+  #if $month.extraTemp7.has_data
+  $getChartJsCode("extraTemp7", "extraTemp7chart", "area", "extraTemp7")
+  #end if
 
-    // ---
-    // Wind Vector
-    // ---
+  #if $month.extraTemp8.has_data
+  $getChartJsCode("extraTemp8", "extraTemp8chart", "area", "extraTemp8")
+  #end if
 
-    var options7 = {
-      #include "graph_radar_config.inc"
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.windSpeed") + "$unit.label.windSpeed";
-          }
-        }
-      },
-      series: [
-        {
-          name: "$obs.label.windSpeed",
-          data: avg_values
-        },
-        {
-          name: "$obs.label.windGust",
-          data: max_values
-        },
-      ]
-    }
+  // extraHumid 1-8
 
-    var chart7 = new ApexCharts(document.querySelector('#windvectorchart'), options7)
-    chart7.render()
-    
-    // ---
-    // UV / ET / Radiation
-    // ---
+  #if $month.extraHumid1.has_data
+  $getChartJsCode("extraHumid1", "extraHumid1chart", "area", "extraHumid1")
+  #end if
 
-    #if $month.UV.has_data
-    var options8 = {
-      #include "graph_area_config.inc"
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.UV") + "$unit.label.UV";
-          }
-        }
-      },
-      series: [
-        {
-          name: "$obs.label.UV",
-          data: [
-            #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-            [$record.start.raw, $record.UV.max.format(add_label=False, localize=False, None_string="null")],
-            #end for
-          ]
-        }
-      ]
-    }
+  #if $month.extraHumid2.has_data
+  $getChartJsCode("extraHumid2", "extraHumid2chart", "area", "extraHumid2")
+  #end if
 
-    var chart8 = new ApexCharts(document.querySelector('#uvchart'), options8)
-    chart8.render()
-    #end if
+  #if $month.extraHumid3.has_data
+  $getChartJsCode("extraHumid3", "extraHumid3chart", "area", "extraHumid3")
+  #end if
 
-    #if $month.ET.has_data and $month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0
-    var options9 = {
-      #include "graph_area_config.inc"
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.ET") + "$unit.label.ET";
-          }
-        }
-      },
-      series: [
-        {
-          name: "$obs.label.ET",
-          data: [
-            #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-            [$record.start.raw, $record.ET.max.format(add_label=False, localize=False, None_string="null")],
-            #end for
-          ]
-        }
-      ]
-    }
+  #if $month.extraHumid4.has_data
+  $getChartJsCode("extraHumid4", "extraHumid4chart", "area", "extraHumid4")
+  #end if
 
-    var chart9 = new ApexCharts(document.querySelector('#etchart'), options9)
-    chart9.render()
-    #end if
+  #if $month.extraHumid5.has_data
+  $getChartJsCode("extraHumid5", "extraHumid5chart", "area", "extraHumid5")
+  #end if
 
-    #if $month.radiation.has_data
-    var options10 = {
-      #include "graph_area_config.inc"
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.radiation") + "$unit.label.radiation";
-          }
-        }
-      },
-      series: [
-        {
-          name: "$obs.label.radiation",
-          data: [
-            #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-            [$record.start.raw, $record.radiation.max.format(add_label=False, localize=False, None_string="null")],
-            #end for
-          ]
-        }
-      ]
-    }
+  #if $month.extraHumid6.has_data
+  $getChartJsCode("extraHumid6", "extraHumid6chart", "area", "extraHumid6")
+  #end if
 
-    var chart10 = new ApexCharts(document.querySelector('#radiationchart'), options10)
-    chart10.render()
-    #end if
+  #if $month.extraHumid7.has_data
+  $getChartJsCode("extraHumid7", "extraHumid7chart", "area", "extraHumid7")
+  #end if
 
-    // ---
-    // extraTemp 1-3
-    // ---
+  #if $month.extraHumid8.has_data
+  $getChartJsCode("extraHumid8", "extraHumid8chart", "area", "extraHumid8")
+  #end if
 
-    #if $month.extraTemp1.has_data
-    var options11 = {
-      #include "graph_area_config.inc"
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.extraTemp1") + "$unit.label.extraTemp1";
-          }
-        }
-      },
-      series: [
-        {
-          name: "$obs.label.extraTemp1",
-          data: [
-            #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-            [$record.start.raw, $record.extraTemp1.avg.format(add_label=False, $localize=False, None_string="null")],
-            #end for
-          ]
-        }
-      ]
-    }
-
-    var chart11 = new ApexCharts(document.querySelector('#temp1chart'), options11)
-    chart11.render()
-    #end if
-
-    #if $month.extraTemp2.has_data
-    var options12 = {
-      #include "graph_area_config.inc"
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.extraTemp2") + "$unit.label.extraTemp2";
-          }
-        }
-      },
-      series: [
-        {
-          name: "$obs.label.extraTemp2",
-          data: [
-            #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-            [$record.start.raw, $record.extraTemp2.avg.format(add_label=False, $localize=False, None_string="null")],
-            #end for
-          ]
-        }
-      ]
-    }
-
-    var chart12 = new ApexCharts(document.querySelector('#temp2chart'), options12)
-    chart12.render()
-    #end if
-
-    #if $month.extraTemp3.has_data
-    var options13 = {
-      #include "graph_area_config.inc"
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return formatNumber(val, "$unit.format.extraTemp3") + "$unit.label.extraTemp3";
-          }
-        }
-      },
-      series: [
-        {
-          name: "$obs.label.extraTemp3",
-          data: [
-            #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
-            [$record.start.raw, $record.extraTemp3.avg.format(add_label=False, $localize=False, None_string="null")],
-            #end for
-          ]
-        }
-      ]
-    }
-
-    var chart13 = new ApexCharts(document.querySelector('#temp3chart'), options13)
-    chart13.render()
-    #end if
-  </script>
+</script>
 
 </body>
 </html>
