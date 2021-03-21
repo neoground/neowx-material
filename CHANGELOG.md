@@ -16,6 +16,11 @@
   optionally be hidden if you don't want to support these projects
 - The weewx + skin version can be hidden in the footer
 
+### Fixed
+
+- The monthly archive TXT report does now have the correct template
+- Wind speed value does now have the same size as all other values
+
 
 ## 1.7 (2021-03-21)
 
