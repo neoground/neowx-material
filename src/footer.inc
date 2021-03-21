@@ -102,13 +102,19 @@
         &copy; $current.dateTime.format("%Y") $Extras.Footer.name
 
         #if $Extras.Footer.support_weewx == "yes"
-        <span class="mx-2">&bull;</span>
-        Powered by <a href="https://weewx.com" target="_blank">weewx</a> v$station.version
+          <span class="mx-2">&bull;</span>
+          Powered by <a href="https://weewx.com" target="_blank">weewx</a>
+          #if $Extras.Footer.show_version == "yes"
+          v$station.version
+          #end if
         #end if
 
         #if $Extras.Footer.support_skin == "yes"
-        <span class="mx-2">&bull;</span>
-        <a href="https://projects.neoground.com/neowx-material" target="_blank">NeoWX Material</a> skin v$Extras.version
+          <span class="mx-2">&bull;</span>
+          <a href="https://projects.neoground.com/neowx-material" target="_blank">NeoWX Material</a> skin
+          #if $Extras.Footer.show_version == "yes"
+          v$Extras.version
+          #end if
         #end if
 
         #if $Extras.Footer.imprint_url is not ""

@@ -14,6 +14,7 @@
 
 - The credits in the footer (powered by weewx + skin) can
   optionally be hidden if you don't want to support these projects
+- The weewx + skin version can be hidden in the footer
 
 
 ## 1.7 (2021-03-21)
