@@ -9,17 +9,21 @@
 - Telemetry link in the footer can be hidden
 - Telemetry values order can be changed in the skin.conf
 - Telemetry page shows 24h charts for all available values
+- Support for sensors: appTemp, snowDepth, leafTemp1-2, 
+  soilTemp1-4, soilMoist1-4
 
 ### Changed
 
 - The credits in the footer (powered by weewx + skin) can
   optionally be hidden if you don't want to support these projects
 - The weewx + skin version can be hidden in the footer
+- Hidden charts won't get any JS code created - better performance
 
 ### Fixed
 
 - The monthly archive TXT report does now have the correct template
 - Wind speed value does now have the same size as all other values
+- ET chart is displayed again correctly on yesterday page
 
 
 ## 1.7 (2021-03-21)

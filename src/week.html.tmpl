@@ -199,6 +199,9 @@
 
 #def getChartJsCode($name, $id, $type, $series1, $series2 = "", $column = "avg")
 
+## Only add JS chart code if in array
+#if $name in $Extras.Appearance.charts_order
+
 new ApexCharts(document.querySelector('#$id'), {
   ...graph_${type}_config,
   yaxis: {
@@ -221,6 +224,8 @@ new ApexCharts(document.querySelector('#$id'), {
     #end if
   ]
 }).render()
+
+#end if
 
 #end def
 
@@ -276,6 +281,35 @@ new ApexCharts(document.querySelector('#$id'), {
   // inTemp + inHumidity
   $getChartJsCode("inTemp", "inTempchart", "area", "inTemp")
   $getChartJsCode("inHumidity", "inHumiditychart", "area", "inHumidity")
+  
+  // Other sensors
+  #if $week.snowDepth.has_data
+  $getChartJsCode("snowDepth", "snowDepthchart", "bar", "snowDepth", "", "sum")
+  #end if
+
+  #if $week.appTemp.has_data
+  $getChartJsCode("appTemp", "appTempchart", "area", "appTemp", "", "avg")
+  #end if
+
+  #if $week.leafTemp1.has_data or $week.leafTemp2.has_data
+  $getChartJsCode("leafTemp", "leafTempchart", "area", "leafTemp1", "leafTemp2", "avg")
+  #end if
+
+  #if $week.soilTemp1.has_data or $week.soilTemp2.has_data
+  $getChartJsCode("soilTempA", "soilTempAchart", "area", "soilTemp1", "soilTemp2", "avg")
+  #end if
+
+  #if $week.soilTemp3.has_data or $week.soilTemp4.has_data
+  $getChartJsCode("soilTempB", "soilTempBchart", "area", "soilTemp3", "soilTemp4", "avg")
+  #end if
+
+  #if $week.soilMoist1.has_data or $week.soilMoist2.has_data
+  $getChartJsCode("soilMoistA", "soilMoistAchart", "area", "soilMoist1", "soilMoist2", "avg")
+  #end if
+
+  #if $week.soilMoist3.has_data or $week.soilMoist4.has_data
+  $getChartJsCode("soilMoistB", "soilMoistBchart", "area", "soilMoist3", "soilMoist4", "avg")
+  #end if
 
   // Build wind vector chart
   var vector_data = {

@@ -146,7 +146,7 @@
       #for $x in $Extras.Appearance.charts_order
 
       #if $x == "ET"
-        #if $day.ET.has_data and $day.ET.sum.raw is not None and $day.ET.sum.raw > 0.0
+        #if $yesterday.ET.has_data and $yesterday.ET.sum.raw is not None and $yesterday.ET.sum.raw > 0.0
         $valuesCard('ET')
         #end if
       #else
@@ -198,6 +198,9 @@
 
 #def getChartJsCode($name, $id, $type, $series1, $series2 = "", $column = "avg")
 
+## Only add JS chart code if in array
+#if $name in $Extras.Appearance.charts_order
+
 ## Get chart data and slice it (only first half of last 48 hours)
 
 series1data = [ $getChartData(series1, column) ];
@@ -229,6 +232,8 @@ new ApexCharts(document.querySelector('#$id'), {
     #end if
   ]
 }).render()
+
+#end if
 
 #end def
 
@@ -288,6 +293,35 @@ new ApexCharts(document.querySelector('#$id'), {
   // inTemp + inHumidity
   $getChartJsCode("inTemp", "inTempchart", "area", "inTemp")
   $getChartJsCode("inHumidity", "inHumiditychart", "area", "inHumidity")
+
+  // Other sensors
+  #if $yesterday.snowDepth.has_data
+  $getChartJsCode("snowDepth", "snowDepthchart", "bar", "snowDepth", "", "sum")
+  #end if
+
+  #if $yesterday.appTemp.has_data
+  $getChartJsCode("appTemp", "appTempchart", "area", "appTemp", "", "avg")
+  #end if
+
+  #if $yesterday.leafTemp1.has_data or $yesterday.leafTemp2.has_data
+  $getChartJsCode("leafTemp", "leafTempchart", "area", "leafTemp1", "leafTemp2", "avg")
+  #end if
+
+  #if $yesterday.soilTemp1.has_data or $yesterday.soilTemp2.has_data
+  $getChartJsCode("soilTempA", "soilTempAchart", "area", "soilTemp1", "soilTemp2", "avg")
+  #end if
+
+  #if $yesterday.soilTemp3.has_data or $yesterday.soilTemp4.has_data
+  $getChartJsCode("soilTempB", "soilTempBchart", "area", "soilTemp3", "soilTemp4", "avg")
+  #end if
+
+  #if $yesterday.soilMoist1.has_data or $yesterday.soilMoist2.has_data
+  $getChartJsCode("soilMoistA", "soilMoistAchart", "area", "soilMoist1", "soilMoist2", "avg")
+  #end if
+
+  #if $yesterday.soilMoist3.has_data or $yesterday.soilMoist4.has_data
+  $getChartJsCode("soilMoistB", "soilMoistBchart", "area", "soilMoist3", "soilMoist4", "avg")
+  #end if
 
   // Build wind vector chart
   var vector_data = {
