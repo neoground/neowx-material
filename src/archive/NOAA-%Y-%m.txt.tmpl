@@ -24,7 +24,11 @@
 
 
 NAME: $station.location
+#if $Extras.Appearance.show_coordinates == "yes"
 ELEV: $station.altitude    LAT: $station.latitude[0]-$station.latitude[1] $station.latitude[2]    LONG: $station.longitude[0]-$station.longitude[1] $station.longitude[2]
+#else
+ELEV: $station.altitude
+#end if
 
 
                    TEMPERATURE ($unit.label.outTemp.strip()), RAIN ($unit.label.rain.strip()), WIND SPEED ($unit.label.windSpeed.strip())
