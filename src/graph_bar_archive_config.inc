@@ -1,14 +1,13 @@
-#errorCatcher Echo
 #encoding UTF-8
+## +-------------------------------------------------------------------------+
+## |    graph_bar_archive_config.inc    JS config for bar charts in archive  |
+## +-------------------------------------------------------------------------+
 
 chart: {
     type: 'bar'
 },
 fill: {
     opacity: 0.1
-},
-stroke: {
-    curve: 'smooth'
 },
 xaxis: {
     type: 'datetime',

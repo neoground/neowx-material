@@ -1,14 +1,13 @@
-#errorCatcher Echo
 #encoding UTF-8
+## +-------------------------------------------------------------------------+
+## |    graph_bar_config.inc             JS config for default bar charts    |
+## +-------------------------------------------------------------------------+
 
 chart: {
     type: 'bar'
 },
 fill: {
     opacity: 0.1
-},
-stroke: {
-    curve: 'smooth'
 },
 xaxis: {
     type: 'datetime',

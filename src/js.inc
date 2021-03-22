@@ -1,5 +1,7 @@
-#errorCatcher Echo
 #encoding UTF-8
+## +-------------------------------------------------------------------------+
+## |    js.inc                   Common javascript code for all templates    |
+## +-------------------------------------------------------------------------+
 
 ## jQuery
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -35,14 +37,14 @@
             enabled: false
         },
         stroke: {
-            curve: 'smooth',
-            width: 2
+            curve: '$Extras.Charts.stroke_curve',
+            width: $Extras.Charts.stroke_width
         },
         markers: {
-            size: 0,
+            size: $Extras.Charts.markers_size,
         },
         chart: {
-            height: 300,
+            height: $Extras.Charts.height,
             stacked: false,
             zoom: {
                 type: 'x',

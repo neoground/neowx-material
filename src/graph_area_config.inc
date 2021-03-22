@@ -1,5 +1,7 @@
-#errorCatcher Echo
 #encoding UTF-8
+## +-------------------------------------------------------------------------+
+## |    graph_area_config.inc           JS config for default area charts    |
+## +-------------------------------------------------------------------------+
 
 chart: {
     type: 'area'
@@ -13,9 +15,6 @@ fill: {
         opacityTo: 0,
         stops: [0, 75, 100]
     },
-},
-stroke: {
-    curve: 'smooth'
 },
 xaxis: {
     type: 'datetime',

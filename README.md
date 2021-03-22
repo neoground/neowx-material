@@ -17,7 +17,7 @@ and many more new features.
 
 - beautiful Material Design
 - many color schemes to choose from- 
-- interactive and zoomable graphs
+- interactive and zoomable charts
 - wind direction + speed visualization as a wind rose
 - accessible HTML + NOAA TXT file archive for all years and months
 - easy translation - provides many languages out of the box! 

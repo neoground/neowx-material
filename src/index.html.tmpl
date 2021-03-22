@@ -14,16 +14,22 @@
       <div class="card-body text-center">
         <h3 class="h5-responsive $Extras.color-text">
           $getVar('obs.label.' + name)
-          #if $name == 'barometer' and $trend.barometer.raw is not None
 
-            #if $trend.barometer.raw > 0
+
+          #if $name in $Extras.Appearance.show_trend_on and $getVar('trend.' + name + '.raw') is not None
+
+            #if $getVar('trend.' + name + '.raw') > 0.1
             <i class="wi wi-direction-up-right"
-               title="Trend: $trend.barometer" data-toggle="tooltip"></i>
-            #else if $trend.barometer.raw == 0
-            <i class="wi wi-direction-right"></i>
-            #else
+               title="$Extras.Translations[$Extras.language].trend: $getVar('trend.' + name) ($trend.time_delta.hour)"
+               data-toggle="tooltip"></i>
+            #else if $getVar('trend.' + name + '.raw') < 0.1
             <i class="wi wi-direction-down-right"
-               title="Trend: $trend.barometer" data-toggle="tooltip"></i>
+               title="$Extras.Translations[$Extras.language].trend: $getVar('trend.' + name) ($trend.time_delta.hour)"
+               data-toggle="tooltip"></i>
+            #else
+              <i class="wi wi-direction-right"
+                 title="$Extras.Translations[$Extras.language].trend: 0 ($trend.time_delta.hour)"
+                 data-toggle="tooltip"></i>
             #end if
 
           #else if $name == 'windSpeed'

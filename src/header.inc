@@ -1,5 +1,7 @@
-#errorCatcher Echo
 #encoding UTF-8
+## +-------------------------------------------------------------------------+
+## |    header.inc                 Header section (nav) for all templates    |
+## +-------------------------------------------------------------------------+
 <header>
 
     <nav class="navbar navbar-expand-lg navbar-dark $Extras.color">

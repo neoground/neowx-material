@@ -11,6 +11,9 @@
 - Telemetry page shows 24h charts for all available values
 - Support for sensors: appTemp, snowDepth, leafTemp1-2, 
   soilTemp1-4, soilMoist1-4
+- More chart settings
+- Translation for hemispheres on radar chart (wind vector)
+- Trend arrows can be shown at any value on the "current" page
 
 ### Changed
 

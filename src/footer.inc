@@ -1,7 +1,8 @@
-#errorCatcher Echo
 #encoding UTF-8
+## +-------------------------------------------------------------------------+
+## |    footer.inc                       Footer section for all templates    |
+## +-------------------------------------------------------------------------+
 
-## Footer
 <footer class="page-footer font-small $Extras.color pt-4">
 
     ## Footer Links
@@ -129,4 +130,3 @@
     ## Copyright
 
 </footer>
-## Footer
