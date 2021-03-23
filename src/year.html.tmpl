@@ -148,7 +148,7 @@
 
       #if $x == "ET"
         #if $year.ET.has_data and $year.ET.sum.raw is not None and $year.ET.sum.raw > 0.0
-        $valuesCard('ET')
+          $chartCard($x, $x + 'chart')
         #end if
       #else
         $chartCard($x, $x + 'chart')

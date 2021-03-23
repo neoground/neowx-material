@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.9 (unreleased)
+
+### Fixed
+
+- ET chart is shown correctly again
+
+
 ## 1.8 (2021-03-23)
 
 ### Added
