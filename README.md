@@ -34,6 +34,8 @@ Learn more about all features on our project page:
 
 ## Installation
 
+See the [official documentation](https://neoground.com/docs/neowx-material/index) for more information.
+
 1. [Download](https://projects.neoground.com/neowx-material) the latest version
 2. Install the extension: `wee_extension --install=path/to/neowx-material.zip`
 3. restart weewx: `sudo service weewx restart`
