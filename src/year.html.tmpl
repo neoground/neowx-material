@@ -219,11 +219,11 @@ new ApexCharts(document.querySelector('#$id'), {
   },
   series: [
     {
-      name: "$getVar('obs.label.' + series1) Min",
+      name: "$getVar('obs.label.' + series1) $Extras.Translations[$Extras.language].min",
       data: [ $getChartData(series1, 'min') ]
     },
     {
-      name: "$getVar('obs.label.' + series1) Max",
+      name: "$getVar('obs.label.' + series1) $Extras.Translations[$Extras.language].max",
       data: [ $getChartData(series1, 'max') ]
     }
     #if $series2 is not "" and $getVar('year.' + series2 + '.has_data')

@@ -6,6 +6,7 @@
 
 - Charts now support up to 4 sensors / series
 - Apptemp is shown on windchill / heat index chart if it's enabled
+- Min / Max texts can be translated as well
 
 ### Fixed
 
