@@ -16,6 +16,7 @@
     "copy-files": "rsync -avh *.tmpl *.inc manifest.json skin.conf ../dist/skins/neowx-material/",
     "delete-build": "rm -Rf ../dist/skins/neowx-material/",
     "cleanup-build": "rm -Rf ../dist/skins/neowx-material/img/*.psd ../dist/skins/neowx-material/js/*.map ../dist/skins/neowx-material/css/style.css",
-    "build": "yarn run build-minify-css && yarn run delete-build && yarn run copy-directories && yarn run copy-files && yarn run cleanup-build"
+    "build": "yarn run build-minify-css && yarn run delete-build && yarn run copy-directories && yarn run copy-files && yarn run cleanup-build",
+    "create-zip": "cd .. && zip -r neowx-material-latest.zip dist && cd src"
   }
 }
