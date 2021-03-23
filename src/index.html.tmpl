@@ -213,9 +213,11 @@
 ## | string  $series1  field name for (1st) series      (e.g. outTemp)       |
 ## | string  $series2  opt. field name for 2nd series   (e.g. outTemp or "") |
 ## | string  $column   the column of the display value  (e.g. min, max, avg) |
+## | string  $series3  opt. field name for 3rd series   (e.g. outTemp or "") |
+## | string  $series4  opt. field name for 4th series   (e.g. outTemp or "") |
 ## +-------------------------------------------------------------------------+
 
-#def getChartJsCode($name, $id, $type, $series1, $series2 = "", $column = "avg")
+#def getChartJsCode($name, $id, $type, $series1, $series2 = "", $column = "avg", $series3 = "", $series4 = "")
 
 ## Only add JS chart code if in array
 #if $name in $Extras.Appearance.charts_order
@@ -234,10 +236,22 @@ new ApexCharts(document.querySelector('#$id'), {
       name: "$getVar('obs.label.' + series1)",
       data: [ $getChartData(series1, column) ]
     }
-    #if $series2 is not ""
+    #if $series2 is not "" and $getVar('day.' + series2 + '.has_data')
     ,{
       name: "$getVar('obs.label.' + series2)",
       data: [ $getChartData(series2, column) ]
+    }
+    #end if
+    #if $series3 is not "" and $getVar('day.' + series3 + '.has_data')
+    ,{
+      name: "$getVar('obs.label.' + series3)",
+      data: [ $getChartData(series3, column) ]
+    }
+    #end if
+    #if $series4 is not "" and $getVar('day.' + series4 + '.has_data')
+    ,{
+      name: "$getVar('obs.label.' + series4)",
+      data: [ $getChartData(series4, column) ]
     }
     #end if
   ]
@@ -268,8 +282,12 @@ new ApexCharts(document.querySelector('#$id'), {
   // outTemp + Dewpoint
   $getChartJsCode("outTemp", "outTempchart", "area", "outTemp", "dewpoint")
 
-  // Wind chill + Heat index
+  // Wind chill + Heat index + optional appTemp
+  #if "appTemp" in $Extras.Appearance.charts_order and $day.appTemp.has_data
+  $getChartJsCode("windchill", "windchillchart", "area", "windchill", "heatindex", "avg", "appTemp")
+  #else
   $getChartJsCode("windchill", "windchillchart", "area", "windchill", "heatindex")
+  #end if
 
   // Barometer
   $getChartJsCode("barometer", "barometerchart", "area", "barometer")
@@ -305,28 +323,16 @@ new ApexCharts(document.querySelector('#$id'), {
   $getChartJsCode("snowDepth", "snowDepthchart", "bar", "snowDepth", "", "sum")
   #end if
 
-  #if $day.appTemp.has_data
-  $getChartJsCode("appTemp", "appTempchart", "area", "appTemp", "", "avg")
-  #end if
-
   #if $day.leafTemp1.has_data or $day.leafTemp2.has_data
   $getChartJsCode("leafTemp", "leafTempchart", "area", "leafTemp1", "leafTemp2", "avg")
   #end if
 
   #if $day.soilTemp1.has_data or $day.soilTemp2.has_data
-  $getChartJsCode("soilTempA", "soilTempAchart", "area", "soilTemp1", "soilTemp2", "avg")
-  #end if
-
-  #if $day.soilTemp3.has_data or $day.soilTemp4.has_data
-  $getChartJsCode("soilTempB", "soilTempBchart", "area", "soilTemp3", "soilTemp4", "avg")
+  $getChartJsCode("soilTemp", "soilTempchart", "area", "soilTemp1", "soilTemp2", "avg", "soilTemp3", "soilTemp4")
   #end if
 
   #if $day.soilMoist1.has_data or $day.soilMoist2.has_data
-  $getChartJsCode("soilMoistA", "soilMoistAchart", "area", "soilMoist1", "soilMoist2", "avg")
-  #end if
-
-  #if $day.soilMoist3.has_data or $day.soilMoist4.has_data
-  $getChartJsCode("soilMoistB", "soilMoistBchart", "area", "soilMoist3", "soilMoist4", "avg")
+  $getChartJsCode("soilMoist", "soilMoistchart", "area", "soilMoist1", "soilMoist2", "avg", "soilMoist3", "soilMoist4")
   #end if
 
   // Build wind vector chart

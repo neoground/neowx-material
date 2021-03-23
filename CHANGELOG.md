@@ -2,6 +2,11 @@
 
 ## 1.9 (unreleased)
 
+### Added
+
+- Charts now support up to 4 sensors / series
+- Apptemp is shown on windchill / heat index chart if it's enabled
+
 ### Fixed
 
 - ET chart is shown correctly again
