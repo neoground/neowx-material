@@ -95,10 +95,10 @@
         <div class="card-body text-center">
           <h5 class="h5-responsive $Extras.color-text">
             #if $name2 != "XX"
-              $getVar('obs.label.' + name) &
-              $getVar('obs.label.' + name2)
+              $getVar('Extras.Charts.Titles.' + name, $getVar('obs.label.' + name)) &
+              $getVar('Extras.Charts.Titles.' + name2, $getVar('obs.label.' + name2))
             #else
-              $getVar('obs.label.' + name)
+              $getVar('Extras.Charts.Titles.' + name, $getVar('obs.label.' + name))
             #end if
           </h5>
           <div id="$id"></div>

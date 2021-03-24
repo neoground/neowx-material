@@ -82,6 +82,7 @@ Styling is done via SCSS, compile it to `css/style.css` by: `yarn run build-css`
 | copy-files       | Copy files from src to dist (for building)                            |
 | delete-build     | Remove files inside dist/skins/neowx-material                         |
 | build            | Build job: delete-build, build-minify-css, copy files + dirs, cleanup |
+| create-zip       | Creates a zip file of the dist directory. Use this after `build`      |
 
 ### Building
 
