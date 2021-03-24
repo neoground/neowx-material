@@ -106,7 +106,7 @@
 ## +-------------------------------------------------------------------------+
 
 #def chartCard($name, $id, $name2 = "XX")
-  #if $getVar('day.' + name + '.has_data') or $name == "windvec"
+  #if ($getVar('day.' + name + '.has_data') or $name == "windvec") and $name != "appTemp"
     <div class="col-12 col-xl-6 mb-4">
       <div class="card">
         <div class="card-body text-center">
@@ -334,6 +334,8 @@ new ApexCharts(document.querySelector('#$id'), {
   #if $day.soilMoist1.has_data or $day.soilMoist2.has_data
   $getChartJsCode("soilMoist", "soilMoistchart", "area", "soilMoist1", "soilMoist2", "avg", "soilMoist3", "soilMoist4")
   #end if
+
+  $getChartJsCode("cloudbase", "cloudbasechart", "area", "cloudbase", "avg")
 
   // Build wind vector chart
   var vector_data = {

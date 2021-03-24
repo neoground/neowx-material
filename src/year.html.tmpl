@@ -89,7 +89,7 @@
 ## +-------------------------------------------------------------------------+
 
 #def chartCard($name, $id, $name2 = "XX")
-  #if $getVar('year.' + name + '.has_data') or $name == "windvec"
+  #if ($getVar('year.' + name + '.has_data') or $name == "windvec") and $name != "appTemp"
     <div class="col-12 col-xl-6 mb-4">
       <div class="card">
         <div class="card-body text-center">

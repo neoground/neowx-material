@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.10 (unreleased)
+
+### Added
+
+- Cloudbase chart
+
+### Fixed
+
+- Empty appTemp card isn't shown anymore
+
+
 ## 1.9 (2021-03-24)
 
 ### Added
