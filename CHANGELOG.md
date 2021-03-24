@@ -5,6 +5,7 @@
 ### Added
 
 - Cloudbase chart
+- Chart titles can be changed
 
 ### Fixed
 
