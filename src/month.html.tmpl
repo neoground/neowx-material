@@ -325,7 +325,9 @@ new ApexCharts(document.querySelector('#$id'), {
   $getChartJsCode("soilMoistB", "soilMoistBchart", "area", "soilMoist3", "soilMoist4", "avg")
   #end if
 
+  #if $month.cloudbase.has_data
   $getChartJsCode("cloudbase", "cloudbasechart", "area", "cloudbase", "avg")
+  #end if
 
   // Build wind vector chart
   var vector_data = {
