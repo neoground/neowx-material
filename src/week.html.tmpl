@@ -181,8 +181,13 @@
   #end if
 
   #for $record in $span($week_delta=1).spans(interval=current_interval)
-    #set val = $getattr($record, $name)
-    [$record.start.raw, $getattr($val, $column).format(add_label=False, localize=False, None_string="null")],
+    #try
+      #set val = $getattr($record, $name)
+      #set data = $getattr($val, $column).format(add_label=False, localize=False, None_string="null")
+      [$record.start.raw, $data],
+    #except
+
+    #end try
   #end for
 #end def
 

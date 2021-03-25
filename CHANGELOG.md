@@ -6,6 +6,7 @@
 
 - Cloudbase chart
 - Chart titles can be changed
+- Better error handling if data isn't available for a chart
 
 ### Fixed
 
