@@ -112,7 +112,7 @@
 
         #if $Extras.Footer.support_skin == "yes"
           <span class="mx-2">&bull;</span>
-          <a href="https://projects.neoground.com/neowx-material" target="_blank">NeoWX Material</a> skin
+          <a href="https://neoground.com/projects/neowx-material" target="_blank">NeoWX Material</a> skin
           #if $Extras.Footer.show_version == "yes"
           v$Extras.version
           #end if

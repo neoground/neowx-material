@@ -30,13 +30,13 @@ and many more new features.
 - ...and much more!
 
 Learn more about all features on our project page: 
-[NeoWX Material | Neoground Projects](https://projects.neoground.com/neowx-material).
+[NeoWX Material | Neoground Projects](https://neoground.com/projects/neowx-material).
 
 ## Installation
 
 See the [official documentation](https://neoground.com/docs/neowx-material/index) for more information.
 
-1. [Download](https://projects.neoground.com/neowx-material) the latest version
+1. [Download](https://neoground.com/projects/neowx-material) the latest version
 2. Install the extension: `wee_extension --install=path/to/neowx-material.zip`
 3. restart weewx: `sudo service weewx restart`
 
