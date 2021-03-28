@@ -55,7 +55,50 @@ body {
 // ---------------------------------------------------------------------------
 
 @media (prefers-color-scheme: dark) {
-    .main-bg {
+    .auto-theme {
+        &.main-bg {
+            background: #2e2e2e !important;
+        }
+
+        .card, .dropdown-menu, .dropdown-menu a {
+            background-color: #444 !important;
+            color: #ddd !important;
+        }
+
+        .text-muted {
+            color: #aaa !important;
+        }
+
+        // Adjusted colors. Default text is color 500, in dark: 300
+        // Not all colors need this, some look nice on dark bgs.
+
+        .purple-text {
+            color: #BA68C8 !important;
+        }
+        .deep-purple-text {
+            color: #9575CD !important;
+        }
+        .indigo-text {
+            color: #7986CB !important;
+        }
+        .teal-text {
+            color: #4DB6AC !important;
+        }
+        .brown-text {
+            color: #A1887F !important;
+        }
+        .blue-grey-text {
+            color: #90A4AE !important;
+        }
+
+        .text-dark, .table {
+            color: #ccc !important;
+        }
+    }
+}
+
+.dark-theme {
+    &.main-bg {
         background: #2e2e2e !important;
     }
 

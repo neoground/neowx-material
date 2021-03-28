@@ -1,6 +1,14 @@
 # Changelog
 
-## 1.10 (unreleased)
+## 1.11 (2021-03-28)
+
+### Added
+
+- The theme mode (auto / light / dark) can now be changed
+  in the settings
+
+
+## 1.10 (2021-03-27)
 
 ### Added
 

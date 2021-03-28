@@ -23,9 +23,14 @@
 
 ## Global apexcharts config
 <script type="text/javascript">
+    var config_mode = '${Extras.Appearance.mode}';
     var theme_mode = 'light';
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         theme_mode = 'dark';
+    }
+    // Override mode by config
+    if(config_mode != "auto") {
+        theme_mode = config_mode;
     }
 
     window.Apex = {
