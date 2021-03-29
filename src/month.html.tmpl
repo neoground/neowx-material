@@ -180,7 +180,7 @@
     #set current_interval = int($Extras.Charts.month_rain_timespan)
   #end if
 
-  #for $record in $span($month_delta=1).spans(interval=current_interval)
+  #for $record in $span($day_delta=31).spans(interval=current_interval)
     #try
       #set val = $getattr($record, $name)
       #set data = $getattr($val, $column).format(add_label=False, localize=False, None_string="null")
@@ -347,7 +347,7 @@ new ApexCharts(document.querySelector('#$id'), {
   };
 
   var raw_data = [
-  #for $record in $span($month_delta=1).spans(interval=int($Extras.Charts.month_timespan))
+  #for $record in $span($day_delta=31).spans(interval=int($Extras.Charts.month_timespan))
   {
     'dir': "$record.windDir.avg.raw",
     'speed': "$record.windSpeed.avg.raw",

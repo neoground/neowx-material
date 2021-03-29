@@ -1,11 +1,17 @@
 # Changelog
 
-## 1.11 (2021-03-29)
+## 1.11 (2021-03-30)
 
 ### Added
 
 - The theme mode (auto / light / dark) can now be changed
   in the settings
+  
+### Fixed
+
+- Month page will get generated again. The timespan
+  "1 month" didn't work due to missing Feb 29th this year.
+  Now the month page shows a timespan of 31 days.
 
 
 ## 1.10 (2021-03-27)
