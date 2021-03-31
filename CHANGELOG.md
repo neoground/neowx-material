@@ -1,6 +1,9 @@
 # Changelog
 
-## 1.11 (2021-03-30)
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.11] - 2021-03-30
 
 ### Added
 
@@ -14,7 +17,7 @@
   Now the month page shows a timespan of 31 days.
 
 
-## 1.10 (2021-03-27)
+## [1.10] - 2021-03-27
 
 ### Added
 
@@ -27,7 +30,7 @@
 - Empty appTemp card isn't shown anymore
 
 
-## 1.9 (2021-03-24)
+## [1.9] - 2021-03-24
 
 ### Added
 
@@ -40,7 +43,7 @@
 - ET chart is shown correctly again
 
 
-## 1.8 (2021-03-23)
+## [1.8] - 2021-03-23
 
 ### Added
 
@@ -71,7 +74,7 @@
 - ET chart is displayed again correctly on yesterday page
 
 
-## 1.7 (2021-03-21)
+## [1.7] - 2021-03-21
 
 ### Added
 
@@ -102,7 +105,7 @@
 - Small appearance bugs were fixed - uniform appearance on all pages
 
 
-## 1.6 (2021-03-14)
+## [1.6] - 2021-03-14
 
 ### Added
 
@@ -116,7 +119,7 @@
 - Structure of skin.conf: better subsections and comments
 
 
-## 1.5 (2021-03-12)
+## [1.5] - 2021-03-12
 
 ### Added
 
@@ -141,7 +144,7 @@
   displaying "null" values which increases performance a lot
 
 
-## 1.4 (2021-03-08)
+## [1.4] - 2021-03-08
 
 ### Added
 
@@ -158,7 +161,7 @@
 - Numbers in charts have the same decimals as the display values
 
 
-## 1.3 (2021-03-07)
+## [1.3] - 2021-03-07
 
 ### Added
 
@@ -179,7 +182,7 @@
 - Wind direction on archive pages
 
 
-## 1.2 (2021-03-03)
+## [1.2] - 2021-03-03
 
 ### Added
 
@@ -191,7 +194,7 @@
 - Chart labels can now contain an apostrophe
 
 
-## 1.1 (2021-03-02)
+## [1.1] - 2021-03-02
 
 ### Added
 
@@ -199,6 +202,6 @@
 - Telemetry page link in footer
 
 
-## 1.0 (2021-03-01)
+## [1.0] - 2021-03-01
 
 - Initial release
