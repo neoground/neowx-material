@@ -38,7 +38,7 @@
                     #end if
                 </table>
 
-                #if $Extras.Footer.about is not ""
+                #if $Extras.Footer.about != ""
                 <p>$Extras.Footer.about</p>
                 #end if
 
@@ -50,11 +50,11 @@
             ## Grid column
             <div class="col-md-3 mb-md-0 mb-3">
 
-                #if $Extras.Footer.box_title is not ""
+                #if $Extras.Footer.box_title != ""
                 <h5 class="text-uppercase">$Extras.Footer.box_title</h5>
                 #end if
 
-                #if $Extras.Footer.box_content is not ""
+                #if $Extras.Footer.box_content != ""
                 <p>$Extras.Footer.box_content</p>
                 #end if
             </div>
@@ -67,22 +67,22 @@
                 <h5 class="text-uppercase">$Extras.Translations[$Extras.language].links</h5>
 
                 <ul class="list-unstyled">
-                    #if $Extras.Footer.link1_url is not ""
+                    #if $Extras.Footer.link1_url != ""
                     <li>
                         <a href="$Extras.Footer.link1_url" target="_blank" rel="noopener">$Extras.Footer.link1_label</a>
                     </li>
                     #end if
-                    #if $Extras.Footer.link2_url is not ""
+                    #if $Extras.Footer.link2_url != ""
                     <li>
                         <a href="$Extras.Footer.link2_url" target="_blank" rel="noopener">$Extras.Footer.link2_label</a>
                     </li>
                     #end if
-                    #if $Extras.Footer.link3_url is not ""
+                    #if $Extras.Footer.link3_url != ""
                     <li>
                         <a href="$Extras.Footer.link3_url" target="_blank" rel="noopener">$Extras.Footer.link3_label</a>
                     </li>
                     #end if
-                    #if $Extras.Footer.link4_url is not ""
+                    #if $Extras.Footer.link4_url != ""
                     <li>
                         <a href="$Extras.Footer.link4_url" target="_blank" rel="noopener">$Extras.Footer.link4_label</a>
                     </li>
@@ -118,11 +118,11 @@
           #end if
         #end if
 
-        #if $Extras.Footer.imprint_url is not ""
+        #if $Extras.Footer.imprint_url != ""
         <span class="mx-2">&bull;</span>
         <a href="$Extras.Footer.imprint_url" target="_blank">$Extras.Footer.imprint_label</a>
         #end if
-        #if $Extras.Footer.privacy_url is not ""
+        #if $Extras.Footer.privacy_url != ""
         <span class="mx-2">&bull;</span>
         <a href="$Extras.Footer.privacy_url" target="_blank">$Extras.Footer.privacy_label</a>
         #end if

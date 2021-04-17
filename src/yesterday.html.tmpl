@@ -213,17 +213,17 @@
 series1data = [ $getChartData(series1, column) ];
 half_length1 = Math.ceil(series1data.length / 2);
 
-#if $series2 is not ""
+#if $series2 != ""
 series2data = [ $getChartData(series2, column) ];
 half_length2 = Math.ceil(series2data.length / 2);
 #end if
 
-#if $series3 is not ""
+#if $series3 != ""
 series3data = [ $getChartData(series3, column) ];
 half_length3 = Math.ceil(series3data.length / 2);
 #end if
 
-#if $series4 is not ""
+#if $series4 != ""
 series4data = [ $getChartData(series4, column) ];
 half_length4 = Math.ceil(series4data.length / 2);
 #end if
@@ -242,19 +242,19 @@ new ApexCharts(document.querySelector('#$id'), {
       name: "$getVar('obs.label.' + series1)",
       data: series1data.splice(0,half_length1)
     }
-    #if $series2 is not "" and $getVar('yesterday.' + series2 + '.has_data')
+    #if $series2 != "" and $getVar('yesterday.' + series2 + '.has_data')
     ,{
       name: "$getVar('obs.label.' + series2)",
       data: series2data.splice(0,half_length2)
     }
     #end if
-    #if $series3 is not "" and $getVar('yesterday.' + series3 + '.has_data')
+    #if $series3 != "" and $getVar('yesterday.' + series3 + '.has_data')
     ,{
       name: "$getVar('obs.label.' + series3)",
       data: series3data.splice(0,half_length3)
     }
     #end if
-    #if $series4 is not "" and $getVar('yesterday.' + series4 + '.has_data')
+    #if $series4 != "" and $getVar('yesterday.' + series4 + '.has_data')
     ,{
       name: "$getVar('obs.label.' + series4)",
       data: series4data.splice(0,half_length4)

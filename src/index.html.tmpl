@@ -241,19 +241,19 @@ new ApexCharts(document.querySelector('#$id'), {
       name: "$getVar('obs.label.' + series1)",
       data: [ $getChartData(series1, column) ]
     }
-    #if $series2 is not "" and $getVar('day.' + series2 + '.has_data')
+    #if $series2 != "" and $getVar('day.' + series2 + '.has_data')
     ,{
       name: "$getVar('obs.label.' + series2)",
       data: [ $getChartData(series2, column) ]
     }
     #end if
-    #if $series3 is not "" and $getVar('day.' + series3 + '.has_data')
+    #if $series3 != "" and $getVar('day.' + series3 + '.has_data')
     ,{
       name: "$getVar('obs.label.' + series3)",
       data: [ $getChartData(series3, column) ]
     }
     #end if
-    #if $series4 is not "" and $getVar('day.' + series4 + '.has_data')
+    #if $series4 != "" and $getVar('day.' + series4 + '.has_data')
     ,{
       name: "$getVar('obs.label.' + series4)",
       data: [ $getChartData(series4, column) ]
