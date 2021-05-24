@@ -18,7 +18,7 @@
           $getVar('obs.label.' + name)
           #if $name == 'windSpeed'
 
-            <i class="wi wi-wind from-$year.windDir.avg.formatted-deg"
+            <i class="wi wi-wind towards-$year.windDir.avg.formatted-deg"
                title="$year.windDir.avg.formatted°" data-toggle="tooltip"></i>
 
           #end if
@@ -38,7 +38,7 @@
           </div>
           <div class="col-3 text-muted font-small hi-text">
             $year.wind.max $year.wind.gustdir.ordinal_compass <br>
-            <i class="wi wi-wind from-$year.wind.gustdir.formatted-deg mr-2"
+            <i class="wi wi-wind towards-$year.wind.gustdir.formatted-deg mr-2"
                title="$year.wind.gustdir.formatted°" data-toggle="tooltip"></i>
             ($year.wind.maxtime.format($Extras.Formatting.datetime_archive))
           </div>
