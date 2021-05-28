@@ -17,14 +17,14 @@
       <div class="row">
         <div class="col-3 text-muted font-small lo-text">
           $getVar('day.' + name + '.min') <br>
-          ($getVar('day.' + name + '.mintime').format($Extras.Formatting.datetime_today))
+          ($getVar('day.' + name + '.mintime').format($Extras.Formatting.datetime))
         </div>
         <div class="col-6">
           <h4 class="h2-responsive">$getVar('current.' + name)</h4>
         </div>
         <div class="col-3 text-muted font-small hi-text">
           $getVar('day.' + name + '.max') <br>
-          ($getVar('day.' + name + '.maxtime').format($Extras.Formatting.datetime_today))
+          ($getVar('day.' + name + '.maxtime').format($Extras.Formatting.datetime))
         </div>
 
         <div class="col-12 mt-4">
@@ -89,7 +89,7 @@
 
 #def getChartData($name, $column)
   #set current_interval = int($Extras.Charts.current_timespan)
-  #for $record in $span($day_delta=1).spans(interval=current_interval)
+  #for $record in $span($day_delta=7).spans(interval=current_interval)
     #try
       #set val = $getattr($record, $name)
       #set data = $getattr($val, $column).format(add_label=False, localize=False, None_string="null")
