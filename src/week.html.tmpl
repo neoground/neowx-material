@@ -18,7 +18,7 @@
           $getVar('obs.label.' + name)
           #if $name == 'windSpeed'
 
-            <i class="wi wi-wind from-$week.windDir.avg.formatted-deg"
+            <i class="wi wi-wind towards-$week.windDir.avg.formatted-deg"
                title="$week.windDir.avg.formatted°" data-toggle="tooltip"></i>
 
           #end if
@@ -38,7 +38,7 @@
           </div>
           <div class="col-3 text-muted font-small hi-text">
             $week.wind.max $week.wind.gustdir.ordinal_compass <br>
-            <i class="wi wi-wind from-$week.wind.gustdir.formatted-deg mr-2"
+            <i class="wi wi-wind towards-$week.wind.gustdir.formatted-deg mr-2"
                title="$week.wind.gustdir.formatted°" data-toggle="tooltip"></i>
             ($week.wind.maxtime.format($Extras.Formatting.datetime))
           </div>
@@ -249,6 +249,71 @@ new ApexCharts(document.querySelector('#$id'), {
 #end def
 
 ## +-------------------------------------------------------------------------+
+## | Get JavaScript code for a chart with extra values in tooltips           |
+## |                                                                         |
+## | string  $name     the name of the database field   (e.g. windSpeed)     |
+## | string  $nameE    the name of the extra field      (e.g. windDir)       |
+## | string  $id       the ID of the chart target       (without hash)       |
+## | string  $type     type of chart                    (area, bar, radar)   |
+## | string  $series1  field name for (1st) series      (e.g. windSpeed)     |
+## | string  $seriesE1 field name for series paired with first (e.g. windDir |
+## | string  $series2  opt. field name for 2nd series   (e.g. windGust or "")|
+## | string  $seriesE2 opt. field name for 4th series   (e.g. windDir or "") |
+## | string  $column   the column of the display value  (e.g. min, max, avg) |
+## +-------------------------------------------------------------------------+
+
+#def getChartJsCodeExtraTooltips($name, $nameE, $id, $type, $series1, $seriesE1, $series2 = "", $seriesE2 = "", $column = "avg")
+
+## Only add JS chart code if in array
+#if $name in $Extras.Appearance.charts_order
+
+new ApexCharts(document.querySelector('#$id'), {
+  ...graph_${type}_config,
+  yaxis: {
+    labels: {
+      formatter: function (val) {
+        return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
+      }
+    }
+  },
+  tooltip: {
+    y: {
+      formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+        return formatNumber(value, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)" + " " + formatNumber(w.config.seriesE[seriesIndex].data[dataPointIndex][1], "$getVar('unit.format.' + nameE)") + "$getVar('unit.label.' + nameE)";
+      }
+    }
+  },
+  series: [
+    {
+      name: "$getVar('obs.label.' + series1)",
+      data: [ $getChartData(series1, column) ]
+    }
+    #if $series2 != "" and $getVar('day.' + series2 + '.has_data')
+    ,{
+      name: "$getVar('obs.label.' + series2)",
+      data: [ $getChartData(series2, column) ]
+    }
+    #end if
+  ],
+  seriesE: [
+    {
+      name: "$getVar('obs.label.' + seriesE1)",
+      data: [ $getChartData(seriesE1, column) ]
+    }
+    #if $seriesE2 != "" and $getVar('day.' + seriesE2 + '.has_data')
+    ,{
+      name: "$getVar('obs.label.' + seriesE2)",
+      data: [ $getChartData(seriesE2, column) ]
+    }
+    #end if
+  ]
+}).render()
+
+#end if
+
+#end def
+
+## +-------------------------------------------------------------------------+
 ## | Chart definitions                                                       |
 ## +-------------------------------------------------------------------------+
 
@@ -283,7 +348,7 @@ new ApexCharts(document.querySelector('#$id'), {
   $getChartJsCode("rain", "rainchart", "bar", "rain", "", "sum")
 
   // Wind
-  $getChartJsCode("windSpeed", "windSpeedchart", "area", "windSpeed", "windGust", "max")
+  $getChartJsCodeExtraTooltips("windSpeed", "windDir", "windSpeedchart", "area", "windSpeed", "windDir", "windGust", "windGustDir", "max")
 
   // outHumidity
   $getChartJsCode("outHumidity", "outHumiditychart", "area", "outHumidity")

@@ -8,7 +8,7 @@
 ## +-------------------------------------------------------------------------+
 
 #def valuesCard($name)
-#if $getVar('day.' + name + '.has_data') and $getVar('day.' + name + '.max.raw') > 0
+#if $getVar('week.' + name + '.has_data') and $getVar('week.' + name + '.max.raw') > 0
 <div class="col-12 col-lg-6 mb-4">
   <div class="card">
     <div class="card-body text-center">
@@ -16,15 +16,15 @@
 
       <div class="row">
         <div class="col-3 text-muted font-small lo-text">
-          $getVar('day.' + name + '.min') <br>
-          ($getVar('day.' + name + '.mintime').format($Extras.Formatting.datetime_today))
+          $getVar('week.' + name + '.min') <br>
+          ($getVar('week.' + name + '.mintime').format($Extras.Formatting.datetime))
         </div>
         <div class="col-6">
           <h4 class="h2-responsive">$getVar('current.' + name)</h4>
         </div>
         <div class="col-3 text-muted font-small hi-text">
-          $getVar('day.' + name + '.max') <br>
-          ($getVar('day.' + name + '.maxtime').format($Extras.Formatting.datetime_today))
+          $getVar('week.' + name + '.max') <br>
+          ($getVar('week.' + name + '.maxtime').format($Extras.Formatting.datetime))
         </div>
 
         <div class="col-12 mt-4">
@@ -89,7 +89,7 @@
 
 #def getChartData($name, $column)
   #set current_interval = int($Extras.Charts.current_timespan)
-  #for $record in $span($day_delta=1).spans(interval=current_interval)
+  #for $record in $span($day_delta=7).spans(interval=current_interval)
     #try
       #set val = $getattr($record, $name)
       #set data = $getattr($val, $column).format(add_label=False, localize=False, None_string="null")
@@ -110,7 +110,7 @@
 
 #def getChartJsCode($name, $series, $column = "avg")
 
-#if $getVar('day.' + name + '.has_data') and $getVar('day.' + name + '.max.raw') > 0
+#if $getVar('week.' + name + '.has_data') and $getVar('week.' + name + '.max.raw') > 0
 
 new ApexCharts(document.querySelector('#$name-chart'), {
   ...graph_area_config,
