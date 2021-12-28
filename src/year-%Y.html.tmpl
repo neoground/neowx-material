@@ -182,7 +182,7 @@
       #for $x in $Extras.Appearance.values_order
 
       #if $x == "ET"
-        #if $year.ET.has_data and $year.ET.sum.raw is not None and $year.ET.sum.raw > 0.0
+        #if $year.ET.has_data and $year.ET.sum.raw != None and $year.ET.sum.raw > 0.0
           $valuesCard('ET')
         #end if
       #else
@@ -198,7 +198,7 @@
       #for $x in $Extras.Appearance.charts_order
 
       #if $x == "ET"
-        #if $year.ET.has_data and $year.ET.sum.raw is not None and $year.ET.sum.raw > 0.0
+        #if $year.ET.has_data and $year.ET.sum.raw != None and $year.ET.sum.raw > 0.0
           $chartCard($x, $x + 'chart')
         #end if
       #else
@@ -386,7 +386,7 @@ new ApexCharts(document.querySelector('#$id'), {
   $getChartJsCode("UV", "UVchart", "area", "UV", "", "max")
   #end if
 
-  #if $year.ET.has_data and $year.ET.sum.raw is not None and $year.ET.sum.raw > 0.0
+  #if $year.ET.has_data and $year.ET.sum.raw != None and $year.ET.sum.raw > 0.0
   $getChartJsCode("ET", "ETchart", "area", "ET", "", "max")
   #end if
 
