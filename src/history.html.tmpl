@@ -15,50 +15,103 @@
         </title>
         #include "head.inc"
 
-        <style type="text/css">
-        .col-md-8 {
-            max-width: 80%
-        }
-        table.table th, table.table td {
-            padding: .75rem;
-        }
-        </style>
+         <style type="text/css">
+ 			 .auto-theme .table {color:black !important;}
+		 </style>
 
     </head>
-    <body>
+
+    <body class="${Extras.Appearance.mode}-theme main-bg" ontouchstart="">
         #attr $active_nav = 'history'
         #include "header.inc"
 
-        <div class="main" >
-            <div class="container" >
-                <br>
-                <div class="col-md-8 main" >
-                    <h4>$Extras.Translations[$Extras.language].min_temp</h4>
-                    $min_temp_table
+        <main>
+            <div class="container-fluid d-flex-xxl">
+                 <div class="row mt-5 mb-4 graphrow align-content-start">
+                    <div class="col-md-8 main" >
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+                                <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].min_temp</h4>
+                                $min_temp_table
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row mt-5 mb-4 graphrow align-content-start">
+                     <div class="col-md-8 main" >
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+                                <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].avg_temp</h4>
+                                $avg_temp_table
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+                 <div class="row mt-5 mb-4 graphrow align-content-start">
+                     <div class="col-md-8 main" >
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+                                <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].max_temp</h4>
+                                $max_temp_table
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+                 <div class="row mt-5 mb-4 graphrow align-content-start">
+                     <div class="col-md-8 main" >
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+                                <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].rain</h4>
+                                $rain_table
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+                 <div class="row mt-5 mb-4 graphrow align-content-start">
+                     <div class="col-md-8 main" >
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+                                <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].rain_days</h4>
+                                $rain_days_table
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+                 <div class="row mt-5 mb-4 graphrow align-content-start">
+                     <div class="col-md-8 main" >
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
 
-                    <h4>$Extras.Translations[$Extras.language].avg_temp</h4>
-                    $avg_temp_table
+                        <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].max_wind</h4>
+                        $max_wind_table
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+                 <div class="row mt-5 mb-4 graphrow align-content-start">
+                     <div class="col-md-8 main" >
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
 
-                    <h4>$Extras.Translations[$Extras.language].max_temp</h4>
-                    $max_temp_table
+                        <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].avg_wind</h4>
+                        $avg_wind_table
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+                 <div class="row mt-5 mb-4 graphrow align-content-start">
+                     <div class="col-md-8 main" >
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
 
-                    <h4>$Extras.Translations[$Extras.language].rain</h4>
-                    $rain_table
-
-                    <h4>$Extras.Translations[$Extras.language].rain_days</h4>
-                    $rain_days_table
-
-                    <h4>$Extras.Translations[$Extras.language].max_wind</h4>
-                    $max_wind_table
-
-                    <h4>$Extras.Translations[$Extras.language].avg_wind</h4>
-                    $avg_wind_table
-
-                    <h4>$Extras.Translations[$Extras.language].uv_max</h4>
-                    $uv_max_table
-                </div>
+                        <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].uv_max</h4>
+                        $uv_max_table
+                            </div>
+                        </div>
+                     </div>
+                 </div>
             </div>
-        </div>
+        </main>
 
         #include "footer.inc"
         #include "js.inc"
