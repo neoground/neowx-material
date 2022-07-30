@@ -1,0 +1,105 @@
+#encoding UTF-8
+#attr $active_nav = 'history'
+
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="profile" href="http://gmpg.org/xfn/11" />
+
+        <title>
+           $Extras.Translations[$Extras.language].history | $station.location
+        </title>
+        #include "head.inc"
+
+         <style type="text/css">
+ 			 .auto-theme .table {color:black !important;}
+		 </style>
+
+    </head>
+
+    <body class="${Extras.Appearance.mode}-theme main-bg" ontouchstart="">
+        #attr $active_nav = 'history'
+        #include "header.inc"
+
+        <main>
+            <div class="container-fluid d-flex-xxl">
+                 <div class="row mt-5 mb-4 graphrow align-content-start">
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+                                <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].min_temp</h4>
+                                $min_temp_table
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+                                <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].avg_temp</h4>
+                                $avg_temp_table
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+                                <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].max_temp</h4>
+                                $max_temp_table
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+                                <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].rain</h4>
+                                $rain_table
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+                                <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].rain_days</h4>
+                                $rain_days_table
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+
+                        <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].max_wind</h4>
+                        $max_wind_table
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+
+                        <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].avg_wind</h4>
+                        $avg_wind_table
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body text-center" style="position: relative;">
+
+                        <h4 class="h5-responsive indigo-text">$Extras.Translations[$Extras.language].uv_max</h4>
+                        $uv_max_table
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+            </div>
+        </main>
+
+        #include "footer.inc"
+        #include "js.inc"
+    </body>
+</html>

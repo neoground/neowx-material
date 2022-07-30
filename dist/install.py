@@ -42,6 +42,7 @@ class BasicInstaller(ExtensionInstaller):
                     'skins/neowx-material/year-%Y.html.tmpl',
                     'skins/neowx-material/year.html.tmpl',
                     'skins/neowx-material/yesterday.html.tmpl',
+                    'skins/neowx-material/history.html.tmpl',
                     'skins/neowx-material/archive/NOAA-%Y.txt.tmpl',
                     'skins/neowx-material/archive/NOAA-%Y-%m.txt.tmpl',
                     'skins/neowx-material/css/bootstrap.min.css',
@@ -140,5 +141,7 @@ class BasicInstaller(ExtensionInstaller):
                     'skins/neowx-material/weather-icons/font/weathericons-regular-webfont.ttf',
                     'skins/neowx-material/weather-icons/font/weathericons-regular-webfont.woff',
                     'skins/neowx-material/weather-icons/font/weathericons-regular-webfont.woff2']),
+                   ('bin/user',
+                    ['bin/user/historygenerator.py']),
             ]
             )
