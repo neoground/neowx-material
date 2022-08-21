@@ -314,7 +314,7 @@ class MyXSearch(SearchList):
             cellText = "<td"
 
             for c in bgColours:
-                if (value >= int(c[0])) and (value <= int(c[1])):
+                if (value >= float(c[0])) and (value <= float(c[1])):
                     cellText += " bgcolor = \"%s\"" % c[2]
 
             formatted_value = format_string % value
