@@ -354,9 +354,11 @@ new ApexCharts(document.querySelector('#$id'), {
   var graph_bar_config = {
     #include "graph_bar_archive_config.inc"
   }
-
   var graph_radar_config = {
     #include "graph_radar_config.inc"
+  }
+  var graph_line_config = {
+    #include "graph_line_archive_config.inc"
   }
 
   // outTemp + Dewpoint
@@ -377,6 +379,7 @@ new ApexCharts(document.querySelector('#$id'), {
 
   // Wind
   $getChartJsCode("windSpeed", "windSpeedchart", "area", "windSpeed", "windGust", "max")
+  $getChartJsCode("windDir", "windDirchart", "line", "windDir")
 
   // outHumidity
   $getChartJsCode("outHumidity", "outHumiditychart", "area", "outHumidity")
