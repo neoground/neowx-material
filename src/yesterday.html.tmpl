@@ -231,11 +231,16 @@ half_length4 = Math.ceil(series4data.length / 2);
 new ApexCharts(document.querySelector('#$id'), {
   ...graph_${type}_config,
   yaxis: {
-    labels: {
-      formatter: function (val) {
-        return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
-      }
-    }
+    #if $name == "windDir"
+        max: 360,
+        min: 0,
+        tickAmount: 6,
+    #end if
+        labels: {
+            formatter: function (val) {
+                return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)"; 
+            }
+        },
   },
   series: [
     {

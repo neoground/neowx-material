@@ -57,13 +57,6 @@ xaxis: {
     }
 },
 
-yaxis: {
-    max: 359,
-    min: 0,
-    tickAmount: 5,
-    forceNiceScale: true,
-},
-
 grid: {
     show: true,
     strokeDashArray: 0,
