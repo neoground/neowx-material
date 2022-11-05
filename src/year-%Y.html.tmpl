@@ -261,12 +261,12 @@
 
 new ApexCharts(document.querySelector('#$id'), {
   ...graph_${type}_config,
-  yaxis: {
-    labels: {
-      formatter: function (val) {
-        return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
-      }
-    }
+  yaxis: { 
+        labels: {
+            formatter: function (val) {
+                return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
+            }
+        },
   },
   series: [
     {
@@ -303,11 +303,16 @@ new ApexCharts(document.querySelector('#$id'), {
 new ApexCharts(document.querySelector('#$id'), {
   ...graph_${type}_config,
   yaxis: {
-    labels: {
-      formatter: function (val) {
-        return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
-      }
-    }
+    #if $name == "windDir"
+        max: 360,
+        min: 0,
+        tickAmount: 8,
+    #end if
+        labels: {
+            formatter: function (val) {
+                return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
+            }
+        },
   },
   series: [
     {
