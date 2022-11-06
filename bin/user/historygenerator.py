@@ -48,7 +48,7 @@ Adding the section below to your skins.conf file will create these new tags:
     # Default is temperature scale
     minvalues = -50, -10, -5, 0, 5, 10, 15, 20, 25, 30, 35
     maxvalues =  -10, -5, 0, 5, 10, 15, 20, 25, 30, 35, 60
-    colours =   "#0029E5", "#0186E7", "#02E3EA", "#04EC97", "#05EF3D2", "#2BF207", "#8AF408", "#E9F70A", "#F9A90B", "#FC4D0D", "#FF0F2D"
+    colours =   "#0029E5", "#0186E7", "#02E3EA", "#04EC97", "#5EF3D2", "#2BF207", "#8AF408", "#E9F70A", "#F9A90B", "#FC4D0D", "#FF0F2D"
     fontColours =   "#FFFFFF", "#FFFFFF", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#FFFFFF", "#FFFFFF", "#FFFFFF"
     monthnames = Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
 
