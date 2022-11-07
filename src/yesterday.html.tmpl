@@ -231,11 +231,16 @@ half_length4 = Math.ceil(series4data.length / 2);
 new ApexCharts(document.querySelector('#$id'), {
   ...graph_${type}_config,
   yaxis: {
-    labels: {
-      formatter: function (val) {
-        return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
-      }
-    }
+    #if $name == "windDir"
+        max: 360,
+        min: 0,
+        tickAmount: 8,
+    #end if
+        labels: {
+            formatter: function (val) {
+                return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)"; 
+            }
+        },
   },
   series: [
     {
@@ -284,10 +289,13 @@ new ApexCharts(document.querySelector('#$id'), {
   var graph_bar_config = {
     #include "graph_bar_config.inc"
   }
-
   var graph_radar_config = {
     #include "graph_radar_config.inc"
   }
+  var graph_line_config = {
+    #include "graph_line_config.inc"
+  }
+
 
   // outTemp + Dewpoint
   $getChartJsCode("outTemp", "outTempchart", "area", "outTemp", "dewpoint")
@@ -307,6 +315,7 @@ new ApexCharts(document.querySelector('#$id'), {
 
   // Wind
   $getChartJsCode("windSpeed", "windSpeedchart", "area", "windSpeed", "windGust", "max")
+  $getChartJsCode("windDir", "windDirchart", "line", "windDir")
 
   // outHumidity
   $getChartJsCode("outHumidity", "outHumiditychart", "area", "outHumidity")

@@ -49,7 +49,10 @@
 | 1) copy files to the weeWX skins directory                              |
 |    > cp -rp skins/neowx-material /home/weewx/skins                      |
 |                                                                         |
-| 2) in the weeWX configuration file, add / change a report and set       |
+| 3) copy /bin/user/historygenerator.py to                                |
+|              $WEEWX_ROOT/user. default: /usr/share/weewx/user           |
+|                                                                         |
+| 3) in the weeWX configuration file, add / change a report and set       |
 |    neowx-material as its skin                                           |
 |    [StdReport]                                                          |
 |        ...                                                              |

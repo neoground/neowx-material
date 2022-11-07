@@ -7,7 +7,7 @@
   "author": "Neoground GmbH",
   "license": "MIT",
   "dependencies": {
-    "node-sass": "^5.0.0"
+    "node-sass": "^7.0.0"
   },
   "scripts": {
     "build-css": "node-sass --include-path scss scss/style.scss css/style.css",
