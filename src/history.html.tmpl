@@ -15,9 +15,9 @@
         </title>
         #include "head.inc"
 
-         <style type="text/css">
- 			 .auto-theme .table {color:black !important;}
-		 </style>
+         <!-- <style type="text/css">
+			 .auto-theme .table {color:black !important;}
+		 </style> -->
 
     </head>
 
@@ -26,166 +26,165 @@
         #include "header.inc"
 
         <main>
-            <div class="container-fluid d-flex-xxl">
-                 <div class="row mt-5 mb-4 graphrow align-content-start">
-                    <div class="col-sm">
-                        <div class="card">
-                            <div class="card-body text-center" style="position: relative;">                                
-                                <h4 class="h5-responsive indigo-text"><i class="wi wi-thermometer h5-responsive"></i> $Extras.Translations[$Extras.language].min_temp</h4>
+            <div class="container">
+            <div class="row my-4 align-content-start">
+             <div class="col-12 mb-4 text-center">
+                 <h2 class="h2-responsive text-dark"><i class="wi wi-day-cloudy-gusts" ></i> <dfn data-info="Colour coded weather statistics by year and month">Weather Statistics</dfn></h2></br>
+
+                <div class="col-sm">
+                    <div class="card">
+
+                            <div class="card card-body">
+                                <h4 class="h5-responsive blue-text"><i class="wi wi-thermometer" ></i> $Extras.Translations[$Extras.language].min_temp</h4>
                                 $min_temp_table
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card">
-                            <div class="card-body text-center" style="position: relative;">                                
-                                <h4 class="h5-responsive indigo-text"><i class="wi wi-thermometer h5-responsive"></i> $Extras.Translations[$Extras.language].avg_temp</h4>
+               
+                            <div class="card card-body">
+                                <h4 class="h5-responsive blue-text"><i class="wi wi-thermometer" ></i> $Extras.Translations[$Extras.language].avg_temp</h4>
                                 $avg_temp_table
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card">
-                            <div class="card-body text-center" style="position: relative;">                                
-                                <h4 class="h5-responsive indigo-text"><i class="wi wi-thermometer h5-responsive"></i> $Extras.Translations[$Extras.language].max_temp</h4>
+
+                            <div class="card card-body">
+                                <h4 class="h5-responsive blue-text"><i class="wi wi-thermometer" ></i> $Extras.Translations[$Extras.language].max_temp</h4>
                                 $max_temp_table
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card">
-                            <div class="card-body text-center" style="position: relative;">                                
-                                <h4 class="h5-responsive indigo-text"><i class="wi wi-showers h5-responsive"></i> $Extras.Translations[$Extras.language].rain</h4>
+
+                            <div class="card card-body">
+                                <h4 class="h5-responsive blue-text"><i class="wi wi-showers" ></i> $Extras.Translations[$Extras.language].rain</h4>
                                 $rain_table
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card">
-                            <div class="card-body text-center" style="position: relative;">                                
-                                <h4 class="h5-responsive indigo-text"><i class="wi wi-showers h5-responsive"></i> $Extras.Translations[$Extras.language].rain_days</h4>
+
+                            <div class="card card-body">
+                                <h4 class="h5-responsive blue-text"><i class="wi wi-showers" ></i> $Extras.Translations[$Extras.language].rain_days (> 0.2mm)</h4>
                                 $rain_days_table
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card">
-                            <div class="card-body text-center" style="position: relative;">
-                                <h4 class="h5-responsive indigo-text"><i class="wi wi-strong-wind h5-responsive"></i> $Extras.Translations[$Extras.language].max_wind</h4>
+
+                            <div class="card card-body">
+                                <h4 class="h5-responsive blue-text"><i class="wi wi-strong-wind" ></i> $Extras.Translations[$Extras.language].max_wind</h4>
                                 $max_wind_table
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card">
-                            <div class="card-body text-center" style="position: relative;">
-                                <h4 class="h5-responsive indigo-text"><i class="wi wi-strong-wind h5-responsive"></i> $Extras.Translations[$Extras.language].avg_wind</h4>
-                                 $avg_wind_table
+
+                            <div class="card card-body">
+                                <h4 class="h5-responsive blue-text"><i class="wi wi-strong-wind" ></i> $Extras.Translations[$Extras.language].avg_wind</h4>
+                                $avg_wind_table
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card">
-                            <div class="card-body text-center" style="position: relative;">
-                                <h4 class="h5-responsive indigo-text"><i class="wi wi-day-sunny"></i> $Extras.Translations[$Extras.language].uv_max</h4>
+
+                            <div class="card card-body">
+                                <h4 class="h5-responsive blue-text"><i class="wi wi-day-sunny" ></i> $Extras.Translations[$Extras.language].uv_max</h4>
                                 $uv_max_table
                             </div>
-                        </div>
                     </div>
+                    </br><h2 class="h2-responsive text-dark text-center"><i class="wi wi-time-2" ></i> <dfn data-info="All time records since September 2021">All Time Records</dfn></h2></br>
+                    <div class="card">
 
-                    <div class="card-body text-center">
-                        <h3 class="h4-responsive $Extras.color-text"><i class="fa fa-list-alt" ></i> All-Time Records</h3>
-                        <div class="card-body text-center">
-                            <div class="card">
-                                <table class="table text-left">
+                                <div class="card-body text-center" style="text-align:left;width:100%;">
+                                <table class="table text-left records" style="width:100%;font-size:19px;">
                                     <tr>
-                                        <th colspan="3" class="text-center"><b>Temperatures</b></td>
+                                        <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-thermometer" ></i> Temperature</th>
                                     </tr>
                                     <tr>
-                                        <td>Highest:</td>
-                                        <td>$alltime.outTemp.max</td>
-                                        <td>$alltime.outTemp.maxtime</td>
+                                        <td style="font-size:18px;">Highest:</td>
+                                        <td style="font-size:18px;">$alltime.outTemp.max</td>
+                                        <td style="font-size:18px;">$alltime.outTemp.maxtime</td>
                                      </tr>
                                      <tr>
-                                        <td>Lowest:</td>
-                                        <td>$alltime.outTemp.min</td>
-                                        <td>$alltime.outTemp.mintime</td>
+                                        <td style="font-size:18px;">Lowest:</td>
+                                        <td style="font-size:18px;">$alltime.outTemp.min</td>
+                                        <td style="font-size:18px;">$alltime.outTemp.mintime</td>
                                     </tr>
                                     <tr>
-                                        <th colspan="3" class="text-center"><br><b>Heat Index</b></td>
+                                        <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-day-windy" ></i> Feels Like</th>
                                     </tr>
                                     <tr>
-                                        <td>Highest:</td>
-                                        <td>$alltime.heatindex.max</td>
-                                        <td>$alltime.heatindex.maxtime</td>
+                                        <td style="font-size:18px;">Highest:</td>
+                                        <td style="font-size:18px;">$alltime.appTemp.max</td>
+                                        <td style="font-size:18px;">$alltime.appTemp.maxtime</td>
+                                     </tr>
+                                    <tr>
+                                        <td style="font-size:18px;">Lowest:</td>
+                                        <td style="font-size:18px;">$alltime.appTemp.min</td>
+                                        <td style="font-size:18px;">$alltime.appTemp.mintime</td>
                                     </tr>
                                     <tr>
-                                        <th colspan="3" class="text-center"><br><b>Wind Chill</b></td>
+                                         <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-humidity" ></i> Humidity</th>
                                     </tr>
                                     <tr>
-                                        <td>Lowest:</td>
-                                        <td>$alltime.windchill.min</td>
-                                        <td>$alltime.windchill.mintime</td>
+                                        <td style="font-size:18px;">Highest:</td>
+                                        <td style="font-size:18px;">$alltime.outHumidity.max</td>
+                                        <td style="font-size:18px;">$alltime.outHumidity.maxtime</td>
                                     </tr>
                                     <tr>
-                                        <th colspan="3" class="text-center"><br><b>Dewpoint</b></td>
+                                        <td style="font-size:18px;">Lowest:</td>
+                                        <td style="font-size:18px;">$alltime.outHumidity.min</td>
+                                        <td style="font-size:18px;">$alltime.outHumidity.mintime</td>
                                     </tr>
                                     <tr>
-                                        <td>Highest:</td>
-                                        <td>$alltime.dewpoint.max</td>
-                                        <td>$alltime.dewpoint.maxtime</td>
+                                         <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-barometer" ></i> Pressure</th>
                                     </tr>
                                     <tr>
-                                        <td>Lowest:</td>
-                                        <td>$alltime.dewpoint.min</td>
-                                        <td>$alltime.dewpoint.mintime</td>
+                                        <td style="font-size:18px;">Highest:</td>
+                                        <td style="font-size:18px;">$alltime.barometer.max</td>
+                                        <td style="font-size:18px;">$alltime.barometer.maxtime</td>
                                     </tr>
                                     <tr>
-                                        <th colspan="3" class="text-center"><br><b>Pressure</b></td>
+                                        <td style="font-size:18px;">Lowest:</td>
+                                        <td style="font-size:18px;">$alltime.barometer.min</td>
+                                        <td style="font-size:18px;">$alltime.barometer.mintime</td>
                                     </tr>
                                     <tr>
-                                        <td>Highest:</td>
-                                        <td>$alltime.barometer.max</td>
-                                        <td>$alltime.barometer.maxtime</td>
+                                         <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-strong-wind" ></i> Wind</th>
                                     </tr>
                                     <tr>
-                                        <td>Lowest:</td>
-                                        <td>$alltime.barometer.min</td>
-                                        <td>$alltime.barometer.mintime</td>
+                                        <td style="font-size:18px;">Highest Sustained:</td>
+                                        <td style="font-size:18px;">$alltime.windSpeed.max.format('%.0f')</td>
+                                        <td style="font-size:18px;">$alltime.windSpeed.maxtime</td>
                                     </tr>
                                     <tr>
-                                        <th colspan="3" class="text-center"><br><b>Wind</b></td>
+                                        <td style="font-size:18px;">Highest Gust:</td>
+                                        <td style="font-size:18px;">$alltime.windGust.max.format('%.0f')</td>
+                                        <td style="font-size:18px;">$alltime.windGust.maxtime</td>
                                     </tr>
                                     <tr>
-                                        <td>Highest Sustained:</td>
-                                        <td>$alltime.windSpeed.max.format('%.0f')</td>
-                                        <td>$alltime.windSpeed.maxtime</td>
+                                        <td style="font-size:18px;">Longest Wind Run:</td>
+                                        <td style="font-size:18px;">$alltime.windrun.max</td>
+                                        <td style="font-size:18px;">$alltime.windrun.maxtime</td>
+                                     </tr>
+                                    <tr>
+                                         <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-umbrella" ></i> Precipitation</th>
                                     </tr>
                                     <tr>
-                                        <td>Highest Gust:</td>
-                                        <td>$alltime.windGust.max.format('%.0f')</td>
-                                        <td>$alltime.windGust.maxtime</td>
+                                        <td style="font-size:18px;">Highest Daily Rainfall:</td>
+                                        <td style="font-size:18px;">$alltime.rain.maxsum</td>
+                                        <td style="font-size:18px;">$alltime.rain.maxsumtime</td>
                                     </tr>
                                     <tr>
-                                        <th colspan="3" class="text-center"><br><b>Precipitation</b></td>
+                                        <td style="font-size:18px;">Highest Rain Rate:</td>
+                                        <td style="font-size:18px;">$alltime.rainRate.max</td>
+                                        <td style="font-size:18px;">$alltime.rainRate.maxtime</td>
                                     </tr>
                                     <tr>
-                                        <td>Highest Daily Rainfall:</td>
-                                        <td>$alltime.rain.maxsum</td>
-                                        <td>$alltime.rain.maxsumtime</td>
+                                        <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-day-sunny" ></i> UV Index</th>
                                     </tr>
                                     <tr>
-                                        <td>Highest Rain Rate:</td>
-                                        <td>$alltime.rainRate.max</td>
-                                        <td>$alltime.rainRate.maxtime</td>
+                                        <td style="font-size:18px;">Highest:</td>
+                                        <td style="font-size:18px;">$alltime.UV.max</td>
+                                        <td style="font-size:18px;">$alltime.UV.maxtime</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-day-sunny" ></i> Solar Radiation</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:18px;">Highest:</td>
+                                        <td style="font-size:18px;">$alltime.radiation.max</td>
+                                        <td style="font-size:18px;">$alltime.radiation.maxtime</td>
                                     </tr>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                 </div>
-            </div>
+                </div>
+            </div>       
         </main>
 
         #include "footer.inc"
