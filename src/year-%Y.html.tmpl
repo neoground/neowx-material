@@ -134,6 +134,7 @@
       </div>
 
       #for $month in $year.months
+        #if $month.outTemp.has_data
         <div class="col-12 col-lg-6 mb-4 text-center">
           <div class="card">
             <div class="card-body">
@@ -172,7 +173,8 @@
             </div>
           </div>
         </div>
-        #end for
+        #end if
+      #end for
 
     </div>
 
@@ -261,12 +263,12 @@
 
 new ApexCharts(document.querySelector('#$id'), {
   ...graph_${type}_config,
-  yaxis: {
-    labels: {
-      formatter: function (val) {
-        return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
-      }
-    }
+  yaxis: { 
+        labels: {
+            formatter: function (val) {
+                return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
+            }
+        },
   },
   series: [
     {
@@ -303,11 +305,16 @@ new ApexCharts(document.querySelector('#$id'), {
 new ApexCharts(document.querySelector('#$id'), {
   ...graph_${type}_config,
   yaxis: {
-    labels: {
-      formatter: function (val) {
-        return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
-      }
-    }
+    #if $name == "windDir"
+        max: 360,
+        min: 0,
+        tickAmount: 8,
+    #end if
+        labels: {
+            formatter: function (val) {
+                return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
+            }
+        },
   },
   series: [
     {
@@ -348,15 +355,21 @@ new ApexCharts(document.querySelector('#$id'), {
 <script type="text/javascript">
   // Config templates
 
+  var graph_line_config = {
+    #include "graph_line_archive_config.inc"
+  }
+
   var graph_area_config = {
     #include "graph_area_archive_config.inc"
   }
   var graph_bar_config = {
     #include "graph_bar_archive_config.inc"
   }
-
   var graph_radar_config = {
     #include "graph_radar_config.inc"
+  }
+  var graph_line_config = {
+    #include "graph_line_archive_config.inc"
   }
 
   // outTemp + Dewpoint
@@ -377,6 +390,7 @@ new ApexCharts(document.querySelector('#$id'), {
 
   // Wind
   $getChartJsCode("windSpeed", "windSpeedchart", "area", "windSpeed", "windGust", "max")
+  $getChartJsCode("windDir", "windDirchart", "line", "windDir")
 
   // outHumidity
   $getChartJsCode("outHumidity", "outHumiditychart", "area", "outHumidity")
