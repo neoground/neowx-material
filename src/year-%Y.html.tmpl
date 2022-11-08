@@ -134,6 +134,7 @@
       </div>
 
       #for $month in $year.months
+        #if $month.outTemp.has_data
         <div class="col-12 col-lg-6 mb-4 text-center">
           <div class="card">
             <div class="card-body">
@@ -172,7 +173,8 @@
             </div>
           </div>
         </div>
-        #end for
+        #end if
+      #end for
 
     </div>
 
