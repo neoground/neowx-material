@@ -79,6 +79,7 @@
 
                                 <div class="card-body text-center" style="text-align:left;width:100%;">
                                 <table class="table text-left records" style="width:100%;font-size:19px;">
+                                #if $alltime.outTemp.has_data
                                     <tr>
                                         <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-thermometer" ></i> Temperature</th>
                                     </tr>
@@ -92,6 +93,8 @@
                                         <td style="font-size:18px;">$alltime.outTemp.min</td>
                                         <td style="font-size:18px;">$alltime.outTemp.mintime</td>
                                     </tr>
+                                #end if    
+                                #if $alltime.appTemp.has_data
                                     <tr>
                                         <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-day-windy" ></i> Feels Like</th>
                                     </tr>
@@ -99,12 +102,14 @@
                                         <td style="font-size:18px;">Highest:</td>
                                         <td style="font-size:18px;">$alltime.appTemp.max</td>
                                         <td style="font-size:18px;">$alltime.appTemp.maxtime</td>
-                                     </tr>
+                                    </tr>
                                     <tr>
                                         <td style="font-size:18px;">Lowest:</td>
                                         <td style="font-size:18px;">$alltime.appTemp.min</td>
                                         <td style="font-size:18px;">$alltime.appTemp.mintime</td>
                                     </tr>
+                                #end if
+                                #if $alltime.outHumidity.has_data
                                     <tr>
                                          <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-humidity" ></i> Humidity</th>
                                     </tr>
@@ -118,6 +123,8 @@
                                         <td style="font-size:18px;">$alltime.outHumidity.min</td>
                                         <td style="font-size:18px;">$alltime.outHumidity.mintime</td>
                                     </tr>
+                                #end if    
+                                #if $alltime.barometer.has_data
                                     <tr>
                                          <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-barometer" ></i> Pressure</th>
                                     </tr>
@@ -131,37 +138,53 @@
                                         <td style="font-size:18px;">$alltime.barometer.min</td>
                                         <td style="font-size:18px;">$alltime.barometer.mintime</td>
                                     </tr>
+                                #end if    
+                                #if $alltime.windSpeed.has_data or $alltime.windGust.has_data or $alltime.windrun.has_data
                                     <tr>
                                          <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-strong-wind" ></i> Wind</th>
                                     </tr>
+                                    #if $alltime.windSpeed.has_data
                                     <tr>
                                         <td style="font-size:18px;">Highest Sustained:</td>
                                         <td style="font-size:18px;">$alltime.windSpeed.max.format('%.0f')</td>
                                         <td style="font-size:18px;">$alltime.windSpeed.maxtime</td>
                                     </tr>
+                                    #end if
+                                    #if $alltime.windGust.has_data
                                     <tr>
                                         <td style="font-size:18px;">Highest Gust:</td>
                                         <td style="font-size:18px;">$alltime.windGust.max.format('%.0f')</td>
                                         <td style="font-size:18px;">$alltime.windGust.maxtime</td>
                                     </tr>
-                                    <tr>
-                                        <td style="font-size:18px;">Longest Wind Run:</td>
-                                        <td style="font-size:18px;">$alltime.windrun.max</td>
-                                        <td style="font-size:18px;">$alltime.windrun.maxtime</td>
-                                     </tr>
+                                    #end if
+                                    #if $alltime.windrun.has_data    
+                                        <tr>
+                                            <td style="font-size:18px;">Longest Wind Run:</td>
+                                            <td style="font-size:18px;">$alltime.windrun.max</td>
+                                            <td style="font-size:18px;">$alltime.windrun.maxtime</td>
+                                        </tr>
+                                    #end if  
+                                #end if
+                                #if $alltime.rain.has_data or $alltime.rainRate.has_data      
                                     <tr>
                                          <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-umbrella" ></i> Precipitation</th>
                                     </tr>
+                                    #if $alltime.rain.has_data
                                     <tr>
                                         <td style="font-size:18px;">Highest Daily Rainfall:</td>
                                         <td style="font-size:18px;">$alltime.rain.maxsum</td>
                                         <td style="font-size:18px;">$alltime.rain.maxsumtime</td>
                                     </tr>
+                                    #end if
+                                    #if $alltime.rainRate.has_data
                                     <tr>
                                         <td style="font-size:18px;">Highest Rain Rate:</td>
                                         <td style="font-size:18px;">$alltime.rainRate.max</td>
                                         <td style="font-size:18px;">$alltime.rainRate.maxtime</td>
                                     </tr>
+                                    #end if
+                                #end if    
+                                #if $alltime.UV.has_data      
                                     <tr>
                                         <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-day-sunny" ></i> UV Index</th>
                                     </tr>
@@ -170,6 +193,8 @@
                                         <td style="font-size:18px;">$alltime.UV.max</td>
                                         <td style="font-size:18px;">$alltime.UV.maxtime</td>
                                     </tr>
+                                #end if    
+                                #if $alltime.radiation.has_data  
                                     <tr>
                                         <th colspan="3" class="blue-text" style="text-align:left;font-size:20px;"><i class="wi wi-day-sunny" ></i> Solar Radiation</th>
                                     </tr>
@@ -178,6 +203,7 @@
                                         <td style="font-size:18px;">$alltime.radiation.max</td>
                                         <td style="font-size:18px;">$alltime.radiation.maxtime</td>
                                     </tr>
+                                #end if    
                                 </table>
                                 </div>
                             </div>
