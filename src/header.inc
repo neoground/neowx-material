@@ -98,7 +98,15 @@
                     </li>
                     #end if
                 #end if
-
+                #if $active_nav == 'history'
+                    <li class="nav-item active mr-3">
+                        <a class="nav-link" href="history.html">$Extras.Translations[$Extras.language].history</a>
+                    </li>
+                #else
+                    <li class="nav-item mr-3">
+                        <a class="nav-link" href="history.html">$Extras.Translations[$Extras.language].history</a>
+                    </li>
+                #end if
                 #if $Extras.Header.almanac_nav_link == "yes"
                     #if $active_nav == 'almanac'
                     <li class="nav-item active mr-3">

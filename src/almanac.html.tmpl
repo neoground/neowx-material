@@ -1,4 +1,27 @@
 #encoding UTF-8
+#set $now = $current.dateTime.raw
+#set $yesterday = $now - 24*3600
+#set $today_dayluminosity = $almanac.sun.set.raw -  $almanac.sun.rise.raw                                                                                   
+#set $yesterday_dayluminosity = $almanac($almanac_time=$yesterday).sun.set.raw - $almanac($almanac_time=$yesterday).sun.rise.raw                            
+#set $difference_pre = $today_dayluminosity - $yesterday_dayluminosity
+#set $difference = $difference_pre//60
+#set $seconds = $almanac.sun.set.raw - $almanac.sun.rise.raw
+#set $hours = $seconds //3600
+#set $seconds %= 3600
+#set $minutes = $seconds//60
+#set $seconds %= 60
+#set $dayluminosity_str = "%d hours, %d minutes, %d seconds" % ($hours, $minutes, $seconds)                                                                 
+#set $difference = $today_dayluminosity - $yesterday_dayluminosity
+#if $difference
+    #set $delta = abs($difference)
+    #set $amt_str = "%s%d seconds" % (str(int($delta) // 60) + ' minutes, ' if ($delta // 60) > 0 else '', $delta % 60 if ($delta // 60) > 0 else $delta)
+    #if $difference > 0
+        #set $delta_str = "%s more than yesterday" % $amt_str
+    #else
+        #set $delta_str = "%s less than yesterday" % $amt_str
+    #end if
+    #set $dayluminosity_str = "%s" % ($dayluminosity_str)
+#end if
 ## +-------------------------------------------------------------------------+
 ## |    almanac.html.tmpl                Template file for "almanac" page    |
 ## +-------------------------------------------------------------------------+
@@ -51,7 +74,12 @@
                                       title="End civil twilight">$almanac(horizon=-6).sun(use_center=1).set</span>
                             </div>
                         </div>
-
+                        <h6 class="h6-responsive $Extras.color-text"> Today's Total Luminosity</h6>
+                        <div class="row">
+                            <div class="col">
+                                $dayluminosity_str ($delta_str)
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
