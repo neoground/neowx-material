@@ -17,7 +17,11 @@
             #end if
             <span>
                 <strong>$station.location</strong><br>
+                #if $active_nav == 'archive'
+                <span class="font-small"></span>
+                #else 
                 <span class="font-small">$current.dateTime</span>
+                #end if
             </span>
         </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
