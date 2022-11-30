@@ -17,7 +17,7 @@
             #end if
             <span>
                 <strong>$station.location</strong><br>
-                #if $active_nav is 'archive'
+                #if $active_nav == 'archive'
                 <span class="font-small"></span>
                 #else 
                 <span class="font-small">$current.dateTime</span>
