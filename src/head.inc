@@ -24,6 +24,19 @@
 ## Tap highlighting
 <meta name="msapplication-tap-highlight" content="no">
 
+## Google Analytics
+#if $Extras.Header.google_analytics_enable == "yes"
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=$Extras.Header.google_analytics_id"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '$Extras.Header.google_analytics_id');
+</script>
+#end if
+
 ## Favicons / mobile icons
 <link href="img/icon-16.ico" rel="shortcut icon" type="image/x-icon">
 <link href="img/icon-16.png" rel="icon" type="image/png" sizes="16x16">
