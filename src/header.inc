@@ -138,7 +138,7 @@
             </ul>
         </div>
 
-        #if $active_nav != 'archive' and $Extras.Header.show_almanac == "yes"
+        #if $Extras.Header.show_almanac == "yes"
             #if $almanac.hasExtras
             <ul class="navbar-nav nav-flex-icons" style="line-height: 1.75; padding-top: .5rem">
                 <li class="nav-item mr-4 text-white">
