@@ -24,7 +24,7 @@
                         <td>&nbsp</td>
                         <td>&nbsp</td>
                         <td>$Extras.Translations[$Extras.language].station_uptime:</td>
-                        <td>$station.uptime</td>
+                        <td>$station.uptime.long_form</td>
                     </tr>
                     <tr>
                         <td>$Extras.Translations[$Extras.language].altitude:</td>
@@ -32,7 +32,7 @@
                         <td>&nbsp</td>
                         <td>&nbsp</td>
                         <td>$Extras.Translations[$Extras.language].server_uptime:</td>
-                        <td>$station.os_uptime:</td>
+                        <td>$station.os_uptime.long_form</td>
                     </tr>
                     #if $Extras.Footer.show_telemetry == "yes"
                     <tr>
