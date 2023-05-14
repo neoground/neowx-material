@@ -230,18 +230,45 @@ half_length4 = Math.ceil(series4data.length / 2);
 
 new ApexCharts(document.querySelector('#$id'), {
   ...graph_${type}_config,
-  yaxis: {
-    #if $name == "windDir"
+  #if $name == "windDir"
+    yaxis: {
         max: 360,
         min: 0,
+        type: 'datetime',
         tickAmount: 8,
-    #end if
+        trim: false,
         labels: {
-            formatter: function (val) {
-                return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)"; 
+            tickAmount: 8,
+            rotateAlways: false,
+            hideOverlappingLabels: true,
+            showDuplicates: false,
+            trim: false,
+            formatter: function(val, timestamp) {
+                var degrees = Number(val);
+                var direction = getOrdinalDirection(degrees);
+                return direction;
             }
         },
-  },
+    },
+    tooltip: {
+        enabled: true,
+        y: {
+            formatter: function (val) {
+              var degrees = Number(val);
+              var direction = getOrdinalDirection(degrees);
+              return direction + ' (' + degrees.toFixed(0) + '°)';
+            }
+         },
+    },
+  #else
+    yaxis: {
+      labels: {
+          formatter: function (val) {
+              return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
+          }
+      },
+    },
+  #end if
   series: [
     {
       name: "$getVar('obs.label.' + series1)",

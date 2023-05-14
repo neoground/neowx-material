@@ -63,7 +63,7 @@ grid: {
     position: 'back',
     xaxis: {
         lines: {
-            show: true
+            show: false
         }
     },
     yaxis: {
