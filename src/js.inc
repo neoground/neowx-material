@@ -76,4 +76,11 @@
             },
         },
     }
+
+## Ordinals conversion for W0CHP's custom WindDir Charts:
+function getOrdinalDirection(degrees) {
+    var sectors = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW'];
+    var index = Math.round(degrees / (360 / sectors.length));
+    return sectors[index % sectors.length];
+}
 </script>
