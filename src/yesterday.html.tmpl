@@ -324,6 +324,10 @@ new ApexCharts(document.querySelector('#$id'), {
   $getChartJsCode("radiation", "radiationchart", "area", "radiation", "", "max")
   #end if
 
+  #if $yesterday.luminosity.has_data
+  $getChartJsCode("luminosity", "luminositychart", "area", "luminosity", "", "max")
+  #end if
+  
   // inTemp + inHumidity
   $getChartJsCode("inTemp", "inTempchart", "area", "inTemp")
   $getChartJsCode("inHumidity", "inHumiditychart", "area", "inHumidity")
