@@ -466,26 +466,29 @@ new ApexCharts(document.querySelector('#$id'), {
 
   // Display wind vector chart
 
-  new ApexCharts(document.querySelector('#windvecchart'), {
-    ...graph_radar_config,
-    yaxis: {
-      labels: {
-        formatter: function (val) {
-          return formatNumber(val, "$unit.format.windSpeed") + "$unit.label.windSpeed";
+  var windvecchart = document.querySelector('#windvecchart');
+  if (windvecchart) {
+    new ApexCharts(windvecchart, {
+      ...graph_radar_config,
+      yaxis: {
+        labels: {
+          formatter: function (val) {
+            return formatNumber(val, "$unit.format.windSpeed") + "$unit.label.windSpeed";
+          }
         }
-      }
-    },
-    series: [
-      {
-        name: "$obs.label.windSpeed",
-        data: avg_values
       },
-      {
-        name: "$obs.label.windGust",
-        data: max_values
-      },
-    ]
-  }).render()
+      series: [
+        {
+          name: "$obs.label.windSpeed",
+          data: avg_values
+        },
+        {
+          name: "$obs.label.windGust",
+          data: max_values
+        },
+      ]
+    }).render()
+  }
 
   // extraTemp 1-8
 
