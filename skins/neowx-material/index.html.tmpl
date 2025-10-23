@@ -7,6 +7,37 @@
 ## | Template for display card of values (left column)                       |
 ## +-------------------------------------------------------------------------+
 
+#def iframeCard($name)
+  #set iframe_num = $name.replace("iFrame", "")
+  #set iframe_url = $getVar('Extras.Embedded.iFrame' + iframe_num + '.url', "")
+  #set iframe_aspect = $getVar('Extras.Embedded.iFrame' + iframe_num + '.aspect_ratio', "4 / 3")
+  #if iframe_url != ""
+    <div class="col-12 col-xl-6 mb-4">
+      <div class="card overflow-hidden">
+        <div class="card-body text-center p-0 m-0 overflow-hidden" style="aspect-ratio: ${iframe_aspect};">
+          <iframe src="$iframe_url" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+      </div>
+    </div>
+  #end if
+#end def
+
+#def imageCard($name)
+  #set image_num = $name.replace("image", "")
+  #set image_url = $getVar('Extras.Embedded.image' + image_num + '.url', "")
+  #set image_aspect = $getVar('Extras.Embedded.image' + image_num + '.aspect_ratio', "4 / 3")
+  #set image_alt = $getVar('Extras.Embedded.image' + image_num + '.alt', "Just an image")
+  #if image_url != ""
+    <div class="col-12 col-xl-6 mb-4">
+      <div class="card overflow-hidden">
+        <div class="card-body text-center p-0 m-0 overflow-hidden" style="aspect-ratio: ${image_aspect};">
+          <img src="$image_url" width="100%" height="100%" alt="${image_alt}" />
+        </div>
+      </div>
+    </div>
+  #end if
+#end def
+
 #def valuesCard($name)
   #if $getVar('day.' + name + '.has_data')
   <div class="col-12 col-md-6 col-xl-4 mb-4">
@@ -191,7 +222,7 @@
 #include "header.inc"
 
 <main>
-  <div class="container-fluid d-flex-xxl">
+  <div class="container-fluid d-flex-xxl flex-wrap">
 
     <div class="row mt-3 temprow align-content-start">
       #set seen_cards = set()
@@ -228,9 +259,33 @@
           #end if
         #end if
       #end for
-
     </div>
 
+    #set $embedded_order = $Extras.Appearance.embedded_order
+    #if not isinstance($embedded_order, list)
+      #if $embedded_order.strip() == ""
+      #set $embedded_order = []
+      #else
+      #set $embedded_order = [$embedded_order]
+      #end if
+    #end if
+    ## Show embedded section only if there are embedded items
+    #if len($embedded_order) > 0
+    <div class="row align-content-start flex-1">
+      <div class="col-12 "><hr class="mt-0 mb-4"></div>
+      #set seen_embedded = set()
+      #for $x in $embedded_order
+        #if $x not in $seen_embedded
+          #silent $seen_embedded.add($x)
+          #if $x.startswith("iFrame")
+            $iframeCard($x)
+          #else if $x.startswith("image")
+            $imageCard($x)
+          #end if
+        #end if
+      #end for
+    </div>
+    #end if
   </div>
 </main>
 

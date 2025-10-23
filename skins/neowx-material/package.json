@@ -1,6 +1,6 @@
 {
   "name": "neowx-material",
-  "version": "1.50.14",
+  "version": "1.50.15",
   "description": "The most versatile and modern weewx skin",
   "main": "index.js",
   "repository": "https://github.com/neoground/neowx-material",
