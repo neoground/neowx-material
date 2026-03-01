@@ -1,0 +1,856 @@
+#encoding UTF-8
+## +-------------------------------------------------------------------------+
+## |    index.html.tmpl                  Template file for "current" page    |
+## +-------------------------------------------------------------------------+
+
+## +-------------------------------------------------------------------------+
+## | Template for display card of values (left column)                       |
+## +-------------------------------------------------------------------------+
+
+#set global $custom_time_delta = int(($current.dateTime.raw % 3600) + 86400)  ## Align to the last full hour and add lenght of 1 day (86400 seconds)
+
+#def notFoundCard($name)
+    <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                Section definition not found for "$name"
+            </div>
+        </div>
+    </div>
+#end def
+
+#def iframeCard($name)
+    #set iframe_url = $getVar('Extras.Embedded.' + name + '.url', "")
+    #set iframe_title = $getVar('Extras.Embedded.' + name + '.title', "")
+    #set iframe_aspect = $getVar('Extras.Embedded.' + name + '.aspect_ratio', "4/3")
+    #if iframe_url != ""
+        <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="card overflow-hidden">
+                <div class="card-body text-center d-flex flex-column px-0 ${'pb-0' if iframe_title != '' else 'py-0'} overflow-hidden">
+                    #if iframe_title != ""
+                        <h5 class="h5-responsive $Extras.color-text">
+                            $iframe_title
+                        </h5>
+                    #end if
+                    <iframe src="$iframe_url" frameborder="0" class="flex-grow-1 w-100" style="aspect-ratio: ${iframe_aspect};"></iframe>
+                </div>
+            </div>
+        </div>
+    #else
+        $notFoundCard($name)
+    #end if
+#end def
+
+#def imageCard($name)
+    #set image_url = $getVar('Extras.Embedded.' + name + '.url', "")
+    ## by adding a timestamp parameter we prevent browser caching of the image
+    #set $sep = '&' if '?' in $image_url else '?'
+    #set $timestamp = int($time.time() / 60)
+    #set image_title = $getVar('Extras.Embedded.' + name + '.title', "")
+    #set image_link = $getVar('Extras.Embedded.' + name + '.link', "")
+    #set image_new_tab = $getVar('Extras.Embedded.' + name + '.new_tab', "no")
+    #set image_padding = $getVar('Extras.Embedded.' + name + '.padding', "no")
+    #set image_aspect = $getVar('Extras.Embedded.' + name + '.aspect_ratio', "4/3")
+    #set image_alt = $getVar('Extras.Embedded.' + name + '.alt', "Image")
+
+    #if image_padding != "yes"
+        #set padding_x = "px-0"
+        #if image_title != ""
+            #set padding_y = "pb-0"
+        #else
+            #set padding_y = "py-0"
+        #end if
+    #else
+        #set padding_x = "px-3"
+        #if image_title != ""
+            #set padding_y = "pb-3"
+        #else
+            #set padding_y = "py-3"
+        #end if
+    #end if
+
+    #if image_url != ""
+        <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="card overflow-hidden">
+                <div class="card-body text-center d-flex flex-column ${padding_x} ${padding_y} overflow-hidden">
+                    #if image_title != ""
+                        <h5 class="h5-responsive $Extras.color-text">
+                            $image_title
+                        </h5>
+                    #end if
+                    #if image_link != ""
+                        #if image_new_tab.lower() == "yes"
+                            <a href="$image_link" target="_blank" rel="noopener noreferrer" class="flex-grow-1 d-flex flex-column w-100">
+                            #else
+                                <a href="$image_link" class="flex-grow-1 d-flex flex-column w-100">
+                                #end if
+                            #end if
+
+                            <img src="${image_url}${sep}ts=${timestamp}" alt="${image_alt}" class="flex-grow-1 w-100" style="aspect-ratio: ${image_aspect};" />
+                            #if image_link != ""
+                            </a>
+                        #end if
+                    </div>
+                </div>
+            </div>
+        #else
+            $notFoundCard($name)
+        #end if
+    #end def
+
+    #def valuesCard($name)
+        #if $getVar('day.' + name + '.has_data')
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card card-value" id="${name}-value" data-name="$name">
+                    <div class="card-body text-center">
+                        <h3 class="h5-responsive $Extras.color-text">
+                            $getVar('obs.label.' + name)
+
+                            #if $name in $Extras.Appearance.show_trend_on and $getVar('trend.' + name + '.raw') is not None
+
+                                #if $getVar('trend.' + name + '.raw') > 0.5
+                                    <i class="wi wi-direction-up-right"
+                                    title="$gettext("trend"): $getVar('trend.' + name) ($trend.time_delta.hour)"
+                                    data-toggle="tooltip" data-html="true">
+                                </i>
+                            #else if $getVar('trend.' + name + '.raw') < -0.5
+                                <i class="wi wi-direction-down-right"
+                                title="$gettext("trend"): $getVar('trend.' + name) ($trend.time_delta.hour)"
+                                data-toggle="tooltip" data-html="true">
+                            </i>
+                        #else
+                            <i class="wi wi-direction-right"
+                            title="$gettext("trend"): $getVar('trend.' + name) ($trend.time_delta.hour)"
+                            data-toggle="tooltip" data-html="true">
+                        </i>
+                    #end if
+
+                #else if $name == 'windSpeed'
+
+                    <i class="wi wi-wind from-$current.windDir.formatted-deg"
+                    title="$current.windDir.formatted°" data-toggle="tooltip" data-html="true"></i>
+
+                #end if
+            </h3>
+
+            #if $name == 'windSpeed'
+
+                <div class="row">
+                    <div class="col-3 text-muted font-small lo-text">
+                        $day.wind.avg <br>
+                        $gettext("avg")
+                    </div>
+                    <div class="col-6">
+                        <h4 class="h2-responsive">
+                            $current.windSpeed $current.windDir.ordinal_compass
+                        </h4>
+                    </div>
+                    <div class="col-3 text-muted font-small hi-text">
+                        $day.wind.max $day.wind.gustdir.ordinal_compass <br>
+                        <i class="wi wi-wind from-$day.wind.gustdir.formatted-deg mr-2"
+                        title="$day.wind.gustdir.formatted°" data-toggle="tooltip" data-html="true"></i>
+                        ($day.wind.maxtime.format($Extras.Formatting.datetime_today))
+                    </div>
+                </div>
+
+            #else if $name == 'rain'
+
+                <div class="row">
+                    <div class="col-3 text-muted font-small lo-text">
+                        $current.rainRate <br>
+                        $obs.label.rainRate
+                    </div>
+                    <div class="col-6">
+                        <h4 class="h2-responsive">$day.rain.sum</h4>
+                    </div>
+                    <div class="col-3 text-muted font-small hi-text">
+                        $day.rainRate.max <br>
+                        ($day.rainRate.maxtime.format($Extras.Formatting.datetime_today))
+                    </div>
+                </div>
+
+            #else if $name == 'lightning_strike_count'
+
+                <div class="row">
+                    <div class="col-3 text-muted font-small"></div>
+                    <div class="col-6">
+                        <h4 class="h2-responsive">$day.lightning_strike_count.sum</h4>
+                    </div>
+                    <div class="col-3 text-muted font-small hi-text"></div>
+                </div>
+
+            #else if $name == 'lightning_distance'
+
+                <div class="row">
+                    <div class="col-3 text-muted font-small lo-text">
+                        $getVar('day.' + name + '.min') <br>
+                        ($getVar('day.' + name + '.mintime').format($Extras.Formatting.datetime_today))
+                    </div>
+                    <div class="col-6">
+                        <h4 class="h2-responsive">$day.lightning_distance.avg</h4>
+                    </div>
+                    <div class="col-3 text-muted font-small hi-text">
+                        $getVar('day.' + name + '.max') <br>
+                        ($getVar('day.' + name + '.maxtime').format($Extras.Formatting.datetime_today))
+                    </div>
+                </div>
+
+            #else if $name == 'windrun'
+
+                <div class="row">
+                    <div class="col-3 text-muted font-small lo-text"></div>
+                    <div class="col-6">
+                        <h4 class="h2-responsive">$day.windrun.sum</h4>
+                    </div>
+                    <div class="col-3 text-muted font-small hi-text"></div>
+                </div>
+
+            #else if $name == 'ET'
+
+                <div class="row">
+                    <div class="col-3 text-muted font-small lo-text"></div>
+                    <div class="col-6">
+                        <h4 class="h2-responsive">$day.ET.sum</h4>
+                    </div>
+                    <div class="col-3 text-muted font-small hi-text"></div>
+                </div>
+
+            #else
+
+                <div class="row">
+                    <div class="col-3 text-muted font-small lo-text">
+                        $getVar('day.' + name + '.min') <br>
+                        ($getVar('day.' + name + '.mintime').format($Extras.Formatting.datetime_today))
+                    </div>
+                    <div class="col-6">
+                        <h4 class="h2-responsive">$getVar('current.' + name)</h4>
+                    </div>
+                    <div class="col-3 text-muted font-small hi-text">
+                        $getVar('day.' + name + '.max') <br>
+                        ($getVar('day.' + name + '.maxtime').format($Extras.Formatting.datetime_today))
+                    </div>
+                </div>
+
+            #end if
+
+        </div>
+    </div>
+</div>
+#end if
+#end def
+
+## +-------------------------------------------------------------------------+
+## | Template for display card of a single chart (right column)              |
+## | Chart values are defined in the JS section below                        |
+## +-------------------------------------------------------------------------+
+
+#def chartCard($name, $name2 = "XX")
+    #if ($getVar('day.' + name + '.has_data') or $name == "windvec") and $name != "appTemp" and $name != "ET" and $name != "windrun"
+        <div class="col-12 col-xl-6 mb-4">
+            <div class="card card-chart" id="${name}-chart" data-name="$name">
+                <div class="card-body text-center">
+                    <h5 class="h5-responsive $Extras.color-text">
+                        #if $name2 != "XX"
+                            $getVar('Extras.Charts.Titles.' + name, $getVar('obs.label.' + name)) &
+                            $getVar('Extras.Charts.Titles.' + name, $getVar('obs.label.' + name2))
+                        #else
+                            $getVar('Extras.Charts.Titles.' + name, $getVar('obs.label.' + name))
+                        #end if
+                    </h5>
+                    <div id="${name}chart"></div>
+                </div>
+            </div>
+        </div>
+    #end if
+#end def
+
+## +-------------------------------------------------------------------------+
+## | The main page layout                                                    |
+## +-------------------------------------------------------------------------+
+
+<!DOCTYPE html>
+<html lang="$lang">
+    <head>
+        <title>
+            $gettext("current") | $station.location
+        </title>
+        #include "head.inc"
+    </head>
+    <body class="${Extras.Appearance.mode}-theme main-bg" ontouchstart="">
+
+        #attr $active_nav = 'current'
+        #include "header.inc"
+
+        <main>
+            <div class="container-fluid d-flex-xxl flex-wrap">
+
+                <div class="row mt-3 temprow align-content-start">
+                    #set seen_cards = set()
+                    #for $x in $Extras.Appearance.values_order
+                        #if $x not in $seen_cards
+                            #silent $seen_cards.add($x)
+                            #if $x == "ET"
+                                #if $day.ET.has_data and $day.ET.sum.raw is not None and $day.ET.sum.raw > 0.0
+                                    $valuesCard('ET')
+                                #end if
+                            #else if $x == "forecast"
+                                #include "forecast.inc"
+                            #else
+                                $valuesCard($x)
+                            #end if
+                        #end if
+                    #end for
+
+                </div>
+
+                <hr class="m-0 mb-4 rowdivider">
+
+                <div class="row mt-3 graphrow align-content-start">
+                    #set seen_charts = set()
+                    #for $x in $Extras.Appearance.charts_order
+                        #if $x not in $seen_charts
+                            #silent $seen_charts.add($x)
+                            #if $x == "ET"
+                                #if $day.ET.has_data and $day.ET.sum.raw is not None and $day.ET.sum.raw > 0.0
+                                    $chartCard($x)
+                                #end if
+                            #else
+                                $chartCard($x)
+                            #end if
+                        #end if
+                    #end for
+                </div>
+
+                #set $embedded_order = $Extras.Appearance.embedded_order
+                #if not isinstance($embedded_order, list)
+                    #if $embedded_order.strip() == ""
+                        #set $embedded_order = []
+                    #else
+                        #set $embedded_order = [$embedded_order]
+                    #end if
+                #end if
+                ## Show embedded section only if there are embedded items
+                #if len($embedded_order) > 0
+                    <div class="row align-content-start flex-grow-1">
+                        <div class="col-12 "><hr class="mt-0 mb-4"></div>
+                        #set seen_embedded = set()
+                        #for $x in $embedded_order
+                            #if $x not in $seen_embedded
+                                #silent $seen_embedded.add($x)
+                                #if $x.startswith("iFrame")
+                                    $iframeCard($x)
+                                #else if $x.startswith("image")
+                                    $imageCard($x)
+                                #else
+                                    $notFoundCard($x)
+                                #end if
+                            #end if
+                        #end for
+                    </div>
+                #end if
+            </div>
+        </main>
+
+        #include "footer.inc"
+
+        ## +-------------------------------------------------------------------------+
+        ## | MQTT Configuration - Injected as global variables                       |
+        ## +-------------------------------------------------------------------------+
+        ## +-------------------------------------------------------------------------+
+        ## | MQTT Configuration - Injected as global variables                       |
+        ## +-------------------------------------------------------------------------+
+        #set $mqtt_enabled = ($Extras.MQTT.enabled == "true" or $Extras.MQTT.enabled == True)
+        #if $mqtt_enabled
+        #set $enabled_str = "true"
+        #else
+        #set $enabled_str = "false"
+        #end if
+        #set $mqtt_debug = ($Extras.MQTT.get('debug', 'false') == "true" or $Extras.MQTT.get('debug', False) == True)
+        #if $mqtt_debug
+        #set $debug_str = "true"
+        #else
+        #set $debug_str = "false"
+        #end if
+        #set $flash_on_update = $Extras.MQTT.get('flash_on_update', 'true')
+        #if $flash_on_update == 'true' or $flash_on_update == True
+        #set $flash_on_update_str = "true"
+        #else
+        #set $flash_on_update_str = "false"
+        #end if
+        #set $flash_color_raw = $Extras.MQTT.get('flash_color', '#00ff00')
+        #set $flash_color = $flash_color_raw.strip('"').strip("'") if $flash_color_raw else '#00ff00'
+        <script type="text/javascript">
+            // MQTT Connection Configuration from skin.conf
+            window.MQTT_CONFIG = {
+                enabled: $enabled_str,
+                debug: $debug_str,
+                host: "$Extras.MQTT.host",
+                port: $Extras.MQTT.port,
+                websocket_path: "$Extras.MQTT.websocket_path",
+                use_ssl: $Extras.MQTT.use_ssl,
+                username: "$Extras.MQTT.username",
+                password: "$Extras.MQTT.password",
+                topic: "$Extras.MQTT.topic",
+                text_connected: "$gettext('mqtt_connected')",
+                text_failed: "$gettext('mqtt_failed')",
+                flash_on_update: $flash_on_update_str,
+                flash_color: "$flash_color"
+            };
+
+            // DateTime format configuration from skin.conf
+            // Store the current datetime value to detect format
+            window.DATETIME_CONFIG = {
+                initial_value: "$current.dateTime",
+                initial_format: null  // Will be detected from initial_value
+            };
+
+            // MQTT Sensor Mapping Configuration from skin.conf
+            // Parsed from CSV format: sensor_name = "payload_attr", "unit", decimals
+            // ConfigObj automatically parses this as a list
+            window.MQTT_SENSOR_MAPPING = {
+                #for $sensor_name in $Extras.MQTT.SensorMapping
+                #set $config = $Extras.MQTT.SensorMapping[$sensor_name]
+                #if isinstance($config, list) and len($config) >= 3
+                '$sensor_name': {
+                    payloadAttr: '$config[0]',
+                    unit: '$config[1]',
+                    decimals: $int($config[2])
+                },
+                #end if
+                #end for
+            };
+        </script>
+
+        #include "js.inc"
+
+        ## +-------------------------------------------------------------------------+
+        ## | Chart generation methods (get data for charts + their JS code)          |
+        ## +-------------------------------------------------------------------------+
+
+        ## +-------------------------------------------------------------------------+
+        ## | Get data array for a chart                                              |
+        ## |                                                                         |
+        ## | string  $name    the name of the database field  (e.g. outTemp)         |
+        ## | string  $column  the column of the display value (e.g. min, max, avg)   |
+        ## +-------------------------------------------------------------------------+
+
+        #def getChartData($name, $column)
+            #set current_interval = int($Extras.Charts.current_timespan)
+            #if $name == "rain" or $name == "ET"
+                #set current_interval = int($Extras.Charts.current_rain_timespan)
+            #end if
+
+            #set $records = list($span($time_delta=$custom_time_delta).spans(interval=current_interval))
+            #for idx, record in enumerate($records)
+                #try
+                    #set val = $getattr($record, $name)
+                    #set data = $getattr($val, $column).format(add_label=False, localize=False, None_string="null")
+                    #if $data != "null" or $idx == 0 or $idx == len($records) - 1
+                        [$record.start.raw, $data],
+                    #end if
+                #except
+
+                #end try
+            #end for
+        #end def
+
+        ## +-------------------------------------------------------------------------+
+        ## | Get JavaScript code for a chart                                         |
+        ## |                                                                         |
+        ## | string  $name     the name of the database field   (e.g. outTemp)       |
+        ## | string  $id       the ID of the chart target       (without hash)       |
+        ## | string  $type     type of chart                    (area, bar, radar)   |
+        ## | string  $series1  field name for (1st) series      (e.g. outTemp)       |
+        ## | string  $series2  opt. field name for 2nd series   (e.g. outTemp or "") |
+        ## | string  $column   the column of the display value  (e.g. min, max, avg) |
+        ## | string  $series3  opt. field name for 3rd series   (e.g. outTemp or "") |
+        ## | string  $series4  opt. field name for 4th series   (e.g. outTemp or "") |
+        ## +-------------------------------------------------------------------------+
+
+        #def getChartJsCode($name, $id, $type, $series1, $series2 = "", $column = "avg", $series3 = "", $series4 = "")
+
+            ## Only add JS chart code if in array
+            #if $name in $Extras.Appearance.charts_order
+
+                var chartElement = document.querySelector('#$id');
+                if (chartElement) {
+                    new ApexCharts(chartElement, {
+                        ...graph_${type}_config,
+                        #if $name == "windDir"
+                            yaxis: {
+                                max: 360,
+                                min: 0,
+                                type: 'datetime',
+                                tickAmount: 8,
+                                trim: false,
+                                labels: {
+                                    tickAmount: 8,
+                                    rotateAlways: false,
+                                    hideOverlappingLabels: true,
+                                    showDuplicates: false,
+                                    trim: false,
+                                    formatter: function(val, timestamp) {
+                                        var degrees = Number(val);
+                                        var direction = getOrdinalDirection(degrees);
+                                        return direction;
+                                    }
+                                },
+                            },
+                            tooltip: {
+                                enabled: true,
+                                y: {
+                                    formatter: function (val) {
+                                        var degrees = Number(val);
+                                        var direction = getOrdinalDirection(degrees);
+                                        return direction + ' (' + degrees.toFixed(0) + '°)';
+                                    }
+                                },
+                            },
+                        #else
+                            yaxis: {
+                                labels: {
+                                    formatter: function (val) {
+                                        return formatNumber(val, "$getVar('unit.format.' + name)") + "$getVar('unit.label.' + name)";
+                                    }
+                                },
+                            },
+                        #end if
+                        series: [
+                            {
+                                name: "$getVar('obs.label.' + series1)",
+                                data: [ $getChartData(series1, column) ]
+                            }
+                            #if $series2 != "" and $getVar('day.' + series2 + '.has_data')
+                                ,{
+                                    name: "$getVar('obs.label.' + series2)",
+                                    data: [ $getChartData(series2, column) ]
+                                }
+                            #end if
+                            #if $series3 != "" and $getVar('day.' + series3 + '.has_data')
+                                ,{
+                                    name: "$getVar('obs.label.' + series3)",
+                                    data: [ $getChartData(series3, column) ]
+                                }
+                            #end if
+                            #if $series4 != "" and $getVar('day.' + series4 + '.has_data')
+                                ,{
+                                    name: "$getVar('obs.label.' + series4)",
+                                    data: [ $getChartData(series4, column) ]
+                                }
+                            #end if
+                        ]
+                    }).render()
+                }
+
+            #end if
+
+        #end def
+
+        ## +-------------------------------------------------------------------------+
+        ## | Chart definitions                                                       |
+        ## +-------------------------------------------------------------------------+
+
+        <script type="text/javascript">
+            // Config templates
+
+            var graph_area_config = {
+                #include "graph_area_config.inc"
+            }
+            var graph_bar_config = {
+                #include "graph_bar_config.inc"
+            }
+            var graph_radar_config = {
+                #include "graph_radar_config.inc"
+            }
+            var graph_line_config = {
+                #include "graph_line_config.inc"
+            }
+
+            // altimeter
+            #if $day.altimeter.has_data
+                $getChartJsCode("altimeter", "altimeterchart", "area", "altimeter")
+            #end if
+
+            // outTemp + Dewpoint
+            $getChartJsCode("outTemp", "outTempchart", "area", "outTemp", "dewpoint")
+
+            // Wind chill + Heat index + optional appTemp
+            #if "appTemp" in $Extras.Appearance.charts_order and $day.appTemp.has_data
+                $getChartJsCode("windchill", "windchillchart", "area", "windchill", "heatindex", "avg", "appTemp")
+            #else
+                $getChartJsCode("windchill", "windchillchart", "area", "windchill", "heatindex")
+            #end if
+
+            // Barometer
+            $getChartJsCode("barometer", "barometerchart", "area", "barometer")
+
+            // Pressure
+            $getChartJsCode("pressure", "pressurechart", "area", "pressure")
+
+            // Rain
+            $getChartJsCode("rain", "rainchart", "bar", "rain", "", "sum")
+
+            // Wind
+            $getChartJsCode("windSpeed", "windSpeedchart", "area", "windSpeed", "windGust", "max")
+            $getChartJsCode("windDir", "windDirchart", "line", "wind", "", "vecdir")
+
+            // outHumidity
+            $getChartJsCode("outHumidity", "outHumiditychart", "area", "outHumidity")
+
+            // PM2.5
+            #if $day.pm2_5.has_data
+                $getChartJsCode("pm2_5", "pm2_5chart", "area", "pm2_5", "avg")
+            #end if
+
+            // CO2
+            #if $day.co2.has_data
+                $getChartJsCode("co2", "co2chart", "area", "co2")
+            #end if
+
+            // UV / ET / Radiation
+            #if $day.UV.has_data
+                $getChartJsCode("UV", "UVchart", "area", "UV", "", "max")
+            #end if
+
+            #if $day.ET.has_data and $day.ET.sum.raw is not None and $day.ET.sum.raw > 0.0
+                $getChartJsCode("ET", "ETchart", "bar", "ET", "", "sum")
+            #end if
+
+            #if $day.radiation.has_data
+                $getChartJsCode("radiation", "radiationchart", "area", "radiation", "", "max")
+            #end if
+
+            #if $day.luminosity.has_data
+                $getChartJsCode("luminosity", "luminositychart", "area", "luminosity", "", "max")
+            #end if
+
+            // inTemp
+            $getChartJsCode("inTemp", "inTempchart", "area", "inTemp", "inDewpoint")
+
+            // inHumidity
+            $getChartJsCode("inHumidity", "inHumiditychart", "area", "inHumidity")
+
+            // Other sensors
+            #if $day.snowDepth.has_data
+                $getChartJsCode("snowDepth", "snowDepthchart", "bar", "snowDepth", "", "sum")
+            #end if
+
+            #if $day.leafTemp1.has_data or $day.leafTemp2.has_data
+                $getChartJsCode("leafTemp", "leafTempchart", "area", "leafTemp1", "leafTemp2", "avg")
+            #end if
+
+            #if $day.soilTemp1.has_data or $day.soilTemp2.has_data
+                $getChartJsCode("soilTemp", "soilTempchart", "area", "soilTemp1", "soilTemp2", "avg", "soilTemp3", "soilTemp4")
+            #end if
+
+            #if $day.soilMoist1.has_data or $day.soilMoist2.has_data
+                $getChartJsCode("soilMoist", "soilMoistchart", "area", "soilMoist1", "soilMoist2", "avg", "soilMoist3", "soilMoist4")
+            #end if
+
+            #if $day.cloudbase.has_data
+                $getChartJsCode("cloudbase", "cloudbasechart", "area", "cloudbase", "avg")
+            #end if
+
+            // Build wind vector chart
+            var vector_data = {
+                'N': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'NE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'E': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'SE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'S': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'SW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'W': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'NW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+            };
+
+            var raw_data = [
+                #for $record in $span($time_delta=$custom_time_delta).spans(interval=int($Extras.Charts.current_timespan))
+                    {
+                        'dir': "$record.wind.vecdir.raw",
+                        'speed': "$record.windSpeed.avg.raw",
+                        'max': "$record.windGust.max.raw"
+                    },
+                #end for
+            ];
+
+            raw_data.forEach(function(item) {
+                var vec_dir = parseInt(item.dir);
+                var vec_speed = parseFloat(item.speed);
+                var max_speed = parseFloat(item.max);
+
+                if(typeof vec_dir === 'number') {
+                    var vec_key = false;
+
+                    // Detect key based on vec direction (0-360). 45° steps, using the middle +- 45/2=22.5
+                    if(vec_dir > 337.5 || vec_dir <= 22.5) {
+                        vec_key = 'N';
+                    }
+                    if(vec_dir > 22.5 && vec_dir <= 67.5) {
+                        vec_key = 'NE';
+                    }
+                    if(vec_dir > 67.5 && vec_dir <= 112.5) {
+                        vec_key = 'E';
+                    }
+                    if(vec_dir > 112.5 && vec_dir <= 157.5) {
+                        vec_key = 'SE';
+                    }
+                    if(vec_dir > 157.5 && vec_dir <= 202.5) {
+                        vec_key = 'S';
+                    }
+                    if(vec_dir > 202.5 && vec_dir <= 247.5) {
+                        vec_key = 'SW';
+                    }
+                    if(vec_dir > 247.5 && vec_dir <= 292.5) {
+                        vec_key = 'W';
+                    }
+                    if(vec_dir > 292.5 && vec_dir <= 337.5) {
+                        vec_key = 'NW';
+                    }
+
+                    if(vec_key !== false) {
+                        vector_data[vec_key]['sum'] += vec_speed;
+                        vector_data[vec_key]['amt']++;
+
+                        if(max_speed > vector_data[vec_key]['max']) {
+                            vector_data[vec_key]['max'] = max_speed;
+                        }
+                    }
+
+                }
+            });
+
+            // Finally build arrays for chart
+            var avg_values = [];
+            var max_values = [];
+            Object.keys(vector_data).forEach(function (item) {
+                if(vector_data[item]['amt'] > 0) {
+                    avg_values.push(vector_data[item]['sum'] / vector_data[item]['amt']);
+                    } else {
+                    avg_values.push(0);
+                }
+
+                max_values.push(vector_data[item]['max'])
+            });
+
+            // Display wind vector chart
+
+            var windvecchart = document.querySelector('#windvecchart');
+            if (windvecchart) {
+                new ApexCharts(windvecchart, {
+                    ...graph_radar_config,
+                    yaxis: {
+                        labels: {
+                            formatter: function (val) {
+                                return formatNumber(val, "$unit.format.windSpeed") + "$unit.label.windSpeed";
+                            }
+                        }
+                    },
+                    series: [
+                        {
+                            name: "$obs.label.windSpeed",
+                            data: avg_values
+                        },
+                        {
+                            name: "$obs.label.windGust",
+                            data: max_values
+                        },
+                    ]
+                }).render()
+            }
+
+            // extraTemp 1-8
+
+            #if $day.extraTemp1.has_data
+                $getChartJsCode("extraTemp1", "extraTemp1chart", "area", "extraTemp1")
+            #end if
+
+            #if $day.extraTemp2.has_data
+                $getChartJsCode("extraTemp2", "extraTemp2chart", "area", "extraTemp2")
+            #end if
+
+            #if $day.extraTemp3.has_data
+                $getChartJsCode("extraTemp3", "extraTemp3chart", "area", "extraTemp3")
+            #end if
+
+            #if $day.extraTemp4.has_data
+                $getChartJsCode("extraTemp4", "extraTemp4chart", "area", "extraTemp4")
+            #end if
+
+            #if $day.extraTemp5.has_data
+                $getChartJsCode("extraTemp5", "extraTemp5chart", "area", "extraTemp5")
+            #end if
+
+            #if $day.extraTemp6.has_data
+                $getChartJsCode("extraTemp6", "extraTemp6chart", "area", "extraTemp6")
+            #end if
+
+            #if $day.extraTemp7.has_data
+                $getChartJsCode("extraTemp7", "extraTemp7chart", "area", "extraTemp7")
+            #end if
+
+            #if $day.extraTemp8.has_data
+                $getChartJsCode("extraTemp8", "extraTemp8chart", "area", "extraTemp8")
+            #end if
+
+            // extraHumid 1-8
+
+            #if $day.extraHumid1.has_data
+                $getChartJsCode("extraHumid1", "extraHumid1chart", "area", "extraHumid1")
+            #end if
+
+            #if $day.extraHumid2.has_data
+                $getChartJsCode("extraHumid2", "extraHumid2chart", "area", "extraHumid2")
+            #end if
+
+            #if $day.extraHumid3.has_data
+                $getChartJsCode("extraHumid3", "extraHumid3chart", "area", "extraHumid3")
+            #end if
+
+            #if $day.extraHumid4.has_data
+                $getChartJsCode("extraHumid4", "extraHumid4chart", "area", "extraHumid4")
+            #end if
+
+            #if $day.extraHumid5.has_data
+                $getChartJsCode("extraHumid5", "extraHumid5chart", "area", "extraHumid5")
+            #end if
+
+            #if $day.extraHumid6.has_data
+                $getChartJsCode("extraHumid6", "extraHumid6chart", "area", "extraHumid6")
+            #end if
+
+            #if $day.extraHumid7.has_data
+                $getChartJsCode("extraHumid7", "extraHumid7chart", "area", "extraHumid7")
+            #end if
+
+            #if $day.extraHumid8.has_data
+                $getChartJsCode("extraHumid8", "extraHumid8chart", "area", "extraHumid8")
+            #end if
+
+            // Lightning
+            #if $day.lightning_strike_count.has_data
+                $getChartJsCode("lightning_strike_count", "lightning_strike_countchart", "bar", "lightning_strike_count", "", "sum")
+            #end if
+
+            #if $day.lightning_noise_count.has_data
+                $getChartJsCode("lightning_noise_count", "lightning_noise_countchart", "bar", "lightning_noise_count")
+            #end if
+
+            #if $day.lightning_disturber_count.has_data
+                $getChartJsCode("lightning_disturber_count", "lightning_disturber_countchart", "bar", "lightning_disturber_count")
+            #end if
+
+            #if $day.lightning_distance.has_data
+                $getChartJsCode("lightning_distance", "lightning_distancechart", "bar", "lightning_distance")
+            #end if
+
+            #if $day.lightning_energy.has_data
+                $getChartJsCode("lightning_energy", "lightning_energychart", "area", "lightning_energy")
+            #end if
+
+        </script>
+
+        <script src="$Extras.MQTT.paho_mqtt_url" type="text/javascript"></script>
+        <script type="text/javascript" src="js/weewx-mqtt.js"></script>
+
+    </body>
+</html>

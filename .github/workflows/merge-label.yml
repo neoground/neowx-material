@@ -1,0 +1,36 @@
+name: tag-master
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: fetch version Label
+        run: |
+          echo The PR was merged
+          git checkout master
+          HEAD_VERSION=$( grep 'version = 1' skins/neowx-material/skin.conf | cut -d '=' -f 2 | xargs echo )
+          echo "DIST_VERSION=${HEAD_VERSION}" >> $GITHUB_ENV     
+          echo New label: $HEAD_VERSION
+
+      - name: Create Tag
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const {DIST_VERSION} = process.env          
+            github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `refs/tags/${DIST_VERSION}`,
+                sha: context.sha
+            })   

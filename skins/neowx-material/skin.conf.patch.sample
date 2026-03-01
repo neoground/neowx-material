@@ -1,0 +1,24 @@
+[Extras]
+  [[Header]]
+    custom1_label = Homepage
+    custom1_url = https://myhomepage.org/
+
+  [[Footer]]
+    name = station Name
+    link1_label = Lightning Maps
+    link1_url = https://www.lightningmaps.org/#m=ses;t=3;s=0;o=0;b=;ts=0;y=48.7750;x=11.4550;z=8;d=2;dl=2;dc=0;
+
+  [[Appearance]]
+    values_order = outTemp, outHumidity, barometer, forecast, altimeter, pressure, windSpeed, windrun, rain, snowDepth, dewpoint, windchill, heatindex, inTemp, inHumidity, UV, ET, radiation, appTemp, cloudbase, extraTemp1, extraHumid1, extraTemp2, extraHumid2, extraTemp3, extraHumid3, extraTemp4, extraHumid4, extraTemp5, extraHumid5, extraTemp6, extraHumid6, extraTemp7, extraHumid7, extraTemp8, extraHumid8, lightning_strike_count, lightning_noise_count, lightning_disturber_count, lightning_distance, lightning_energy, pm2_5, co2, temperatureThresholdDays
+    embedded_order = iFrame_windy
+
+  [[Embedded]]
+     [[[iFrame_windy]]]
+       url = "https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=default&metricWind=default&zoom=5&overlay=wind&product=ecmwf&level=surface&lat=48.717&lon=11.495"
+       title = Windy Map
+
+  [[Forecast]]
+    variables = temperature, precipitation, uv-sun, wind, evapotranspiration
+    forecast_separator = yes
+    show_today_tomorrow = yes
+    show_hourly_icons = yes
