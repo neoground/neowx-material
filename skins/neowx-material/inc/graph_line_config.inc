@@ -64,7 +64,7 @@ markers: {
 
 xaxis: {
     type: 'datetime',
-    #include "graph_tick_amount.inc"
+    #include "inc/graph_tick_amount.inc"
     trim: true,
     labels: {
         hideOverlappingLabels: true,
@@ -74,7 +74,7 @@ xaxis: {
         trim: true,
         formatter: function(val, timestamp) {
             #set global $gdf_base = 'datetime_graph_label'
-            #include "graph_date_format.inc"
+            #include "inc/graph_date_format.inc"
             var fmt = "$gdf_fmt";
             // If the format uses uppercase MM for minutes (common mistake), convert
             // only occurrences of ":MM" to Moment's minutes token ":mm" so we don't
@@ -105,7 +105,7 @@ tooltip: {
     x: {
         formatter: function(val) {
             #set global $gdf_base = 'datetime_graph_tooltip'
-            #include "graph_date_format.inc"
+            #include "inc/graph_date_format.inc"
             var fmt = "$gdf_fmt";
             fmt = fmt.replace(/:MM/g, ':mm');
             return moment(val).format(fmt);

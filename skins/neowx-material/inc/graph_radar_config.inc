@@ -25,7 +25,7 @@ tooltip: {
     x: {
         formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
             #set global $gdf_base = 'datetime_graph_tooltip'
-            #include "graph_date_format.inc"
+            #include "inc/graph_date_format.inc"
             var fmt = "$gdf_fmt";
             fmt = fmt.replace(/:MM/g, ':mm');
             // the first argument is 'value' (timestamp), use that

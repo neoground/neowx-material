@@ -13,7 +13,7 @@
 #if $cc_tick_set
     #if $cc_tick_align
         #set global $align_count = $cc_tick_count
-        #include "graph_align_axis.inc"
+        #include "inc/graph_align_axis.inc"
     #else if $cc_tick_fixed > 0
         tickAmount: $cc_tick_fixed,
     #else
@@ -23,5 +23,5 @@
 #else if $pg_align_mid
     ## no per-chart override: follow the page's align setting
     #set global $align_count = $pg_align_count
-    #include "graph_align_axis.inc"
+    #include "inc/graph_align_axis.inc"
 #end if

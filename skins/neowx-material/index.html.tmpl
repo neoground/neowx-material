@@ -3,128 +3,14 @@
 ## |    index.html.tmpl                  Template file for "current" page    |
 ## +-------------------------------------------------------------------------+
 
-#attr $page = 'day'
+#attr $page = 'today'
+#attr $subpage = 'today'
 
 ## +-------------------------------------------------------------------------+
 ## | Template for display card of values (left column)                       |
 ## +-------------------------------------------------------------------------+
 
 #set global $custom_time_delta = int(($current.dateTime.raw % 3600) + 86400)  ## Align to the last full hour and add lenght of 1 day (86400 seconds)
-
-#def notFoundCard($name)
-    <div class="col-12 col-md-6 col-xl-4 mb-4">
-        <div class="card">
-            <div class="card-body text-center">
-                Section definition not found for "$name"
-            </div>
-        </div>
-    </div>
-#end def
-
-## +-------------------------------------------------------------------------+
-## | Expand button for [[Embedded]] cards. Styled to match the ApexCharts    |
-## | chart toolbars. The data-nwm-embed-popup attribute is the contract: a   |
-## | delegated click handler in js/app.js keys on it, so renaming it here    |
-## | silently stops the button working.                                      |
-## |                                                                         |
-## | The toolbar must stay a direct child of .card, next to .card-body -     |
-## | it anchors against Bootstrap's .card { position: relative }, and the    |
-## | handler walks up to .card to find the heading and the media.            |
-## +-------------------------------------------------------------------------+
-
-#def embedToolbar()
-    ## Default-on, so normalise rather than exact-match - see the same handling
-    ## of enableChartPopup in js.inc.
-    #if str($Extras.Appearance.get('enableEmbeddedPopup', 'true')).strip().lower() not in ('false', 'no', '0')
-        <div class="nwm-embed-toolbar">
-            <button type="button" class="nwm-embed-toolbar-icon" data-nwm-embed-popup
-                    title="$gettext('expand')" aria-label="$gettext('expand')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
-            </button>
-        </div>
-    #end if
-#end def
-
-#def iframeCard($name, $section = "")
-    #set iframe_url = $getVar('Extras.Embedded.' + name + '.url', "")
-    #set iframe_title = $getVar('Extras.Embedded.' + name + '.title', "")
-    #set iframe_aspect = $getVar('Extras.Embedded.' + name + '.aspect_ratio', "4/3")
-    #if iframe_url != ""
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
-            <div class="card overflow-hidden" data-name="$name" data-section="$section">
-                $embedToolbar()
-                <div class="card-body text-center d-flex flex-column px-0 ${'pb-0' if iframe_title != '' else 'py-0'} overflow-hidden">
-                    #if iframe_title != ""
-                        <h5 class="h5-responsive $Extras.color-text">
-                            $iframe_title
-                        </h5>
-                    #end if
-                    <iframe src="$iframe_url" frameborder="0" class="flex-grow-1 w-100" style="aspect-ratio: ${iframe_aspect};"></iframe>
-                </div>
-            </div>
-        </div>
-    #else
-        $notFoundCard($name)
-    #end if
-#end def
-
-#def imageCard($name, $section = "")
-    #set image_url = $getVar('Extras.Embedded.' + name + '.url', "")
-    ## by adding a timestamp parameter we prevent browser caching of the image
-    #set $sep = '&' if '?' in $image_url else '?'
-    #set $timestamp = int($time.time() / 60)
-    #set image_title = $getVar('Extras.Embedded.' + name + '.title', "")
-    #set image_link = $getVar('Extras.Embedded.' + name + '.link', "")
-    #set image_new_tab = $getVar('Extras.Embedded.' + name + '.new_tab', "no")
-    #set image_padding = $getVar('Extras.Embedded.' + name + '.padding', "no")
-    #set image_aspect = $getVar('Extras.Embedded.' + name + '.aspect_ratio', "4/3")
-    #set image_alt = $getVar('Extras.Embedded.' + name + '.alt', "Image")
-
-    #if image_padding != "yes"
-        #set padding_x = "px-0"
-        #if image_title != ""
-            #set padding_y = "pb-0"
-        #else
-            #set padding_y = "py-0"
-        #end if
-    #else
-        #set padding_x = "px-3"
-        #if image_title != ""
-            #set padding_y = "pb-3"
-        #else
-            #set padding_y = "py-3"
-        #end if
-    #end if
-
-    #if image_url != ""
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
-            <div class="card overflow-hidden" data-name="$name" data-section="$section">
-                $embedToolbar()
-                <div class="card-body text-center d-flex flex-column ${padding_x} ${padding_y} overflow-hidden">
-                    #if image_title != ""
-                        <h5 class="h5-responsive $Extras.color-text">
-                            $image_title
-                        </h5>
-                    #end if
-                    #if image_link != ""
-                        #if image_new_tab.lower() == "yes"
-                            <a href="$image_link" target="_blank" rel="noopener noreferrer" class="flex-grow-1 d-flex flex-column w-100">
-                            #else
-                                <a href="$image_link" class="flex-grow-1 d-flex flex-column w-100">
-                                #end if
-                            #end if
-
-                            <img src="${image_url}${sep}ts=${timestamp}" alt="${image_alt}" class="flex-grow-1 w-100" style="aspect-ratio: ${image_aspect};" />
-                            #if image_link != ""
-                            </a>
-                        #end if
-                    </div>
-                </div>
-            </div>
-        #else
-            $notFoundCard($name)
-        #end if
-    #end def
 
     #def valuesCard($name, $section = "")
         ## ET requires a valid positive sum to be shown
@@ -138,7 +24,7 @@
                             #if $name in $Extras.Appearance.show_trend_on
 
                                 #set global $_trend_obs = $name
-                                #include "trend_indicator.inc"
+                                #include "inc/trend_indicator.inc"
 
                 #else if $name == 'windSpeed'
 
@@ -313,7 +199,21 @@
         #set global $forecast_is_first = $is_first
         #set global $forecast_is_last  = $is_last
         #set global $forecast_section  = $section
-        #include "forecast.inc"
+        #include "inc/forecast.inc"
+    #else if $isTelemetryItem($x)
+        ## A telemetry item renders through the shared include: Cheetah's
+        ## #include cannot share defs, so the include drives itself from these
+        ## four globals. It always reads day.* - a gauge shows today's battery
+        ## on every page.
+        #set global $tele_mode    = 'card'
+        #set global $tele_item    = $x
+        #set global $tele_section = $section
+        #include "inc/telemetry.inc"
+    #else if $isEmbeddedItem($x)
+        #set global $emb_item     = $x
+        #set global $emb_section  = $section
+        #include "inc/embedded_region.inc"
+        #set global $emb_item     = None
     #else
         $valuesCard($x, $section)
     #end if
@@ -332,13 +232,23 @@
     ## holding the forecast (which needs to know its neighbours) need this.
     ## Plain rows skip it, so they don't pay a second day.<obs>.has_data lookup
     ## - that is a database aggregate - for every card.
+    ## Computed once and used in both places below. Two separate lookups can
+    ## drift apart; one cannot.
     #set $items_l = [i.strip().lower() for i in $seg['items']]
     #set $vis_items = []
     #set $f_first = False
     #set $f_last  = False
     #if $seg['type'] is not None or 'forecast' in $items_l
         #for $x in $seg['items']
-            #if $x == "forecast"
+            #if $isTelemetryItem($x)
+                ## batteryCard's own guard, so the panel never opens for an
+                ## item that then renders nothing.
+                #if $getVar('day.' + $x + '.has_data') and ($getVar('day.' + $x + '.max.raw') > 0 or $Extras.Telemetry.allow_zero_values == "yes")
+                    #silent $vis_items.append($x)
+                #end if
+            #else if $isEmbeddedItem($x)
+                #silent $vis_items.append($x)
+            #else if $x == "forecast"
                 #if $forecast is not None
                     #silent $vis_items.append($x)
                 #end if
@@ -366,7 +276,7 @@
                     #set global $panel_title = $seg['title']
                     #set global $panel_id    = $p_id
                     #set global $panel_type  = $seg['type']
-                    #include "panel_header.inc"
+                    #include "inc/panel_header.inc"
                     <div id="${p_id}" class="collapse${p_show}">
                         <div class="nwm-panel-body">
                             <div class="row">
@@ -389,12 +299,30 @@
 #def renderChartSegment($seg, $panel_idx)
     #if $seg['type'] is None
         #for $x in $seg['items']
-            $chartCard($x, section=$seg['slug'])
+            #if $isTelemetryItem($x)
+                #set global $tele_mode    = 'chart'
+                #set global $tele_item    = $x
+                #set global $tele_section = $seg['slug']
+                #include "inc/telemetry.inc"
+            #else if $isEmbeddedItem($x)
+                #set global $emb_item     = $x
+                #set global $emb_section  = $seg['slug']
+                #include "inc/embedded_region.inc"
+                #set global $emb_item     = None
+            #else
+                $chartCard($x, section=$seg['slug'])
+            #end if
         #end for
     #else
         #set $any_has_data = False
         #for $x in $seg['items']
-            #if $x.startswith('customChart')
+            #if $isTelemetryItem($x)
+                #if $getVar('day.' + $x + '.has_data') and ($getVar('day.' + $x + '.max.raw') > 0 or $Extras.Telemetry.allow_zero_values == "yes")
+                    #set $any_has_data = True
+                #end if
+            #else if $isEmbeddedItem($x)
+                #set $any_has_data = True
+            #else if $x.startswith('customChart')
                 #set $cc = $Extras.Appearance.get($x, {})
                 #if $cc
                     #set $cc_values_raw = $cc.get('values', '')
@@ -421,12 +349,24 @@
                     #set global $panel_title = $seg['title']
                     #set global $panel_id    = $p_id
                     #set global $panel_type  = $seg['type']
-                    #include "panel_header.inc"
+                    #include "inc/panel_header.inc"
                     <div id="${p_id}" class="collapse${p_show}">
                         <div class="nwm-panel-body">
                             <div class="row">
                                 #for $x in $seg['items']
-                                    $chartCard($x, section=$seg['slug'])
+                                    #if $isTelemetryItem($x)
+                                        #set global $tele_mode    = 'chart'
+                                        #set global $tele_item    = $x
+                                        #set global $tele_section = $seg['slug']
+                                        #include "inc/telemetry.inc"
+                                    #else if $isEmbeddedItem($x)
+                                        #set global $emb_item     = $x
+                                        #set global $emb_section  = $seg['slug']
+                                        #include "inc/embedded_region.inc"
+                                        #set global $emb_item     = None
+                                    #else
+                                        $chartCard($x, section=$seg['slug'])
+                                    #end if
                                 #end for
                             </div>
                         </div>
@@ -434,50 +374,6 @@
                 </div>
             </div>
         #end if
-    #end if
-#end def
-
-## +-------------------------------------------------------------------------+
-## | Helper: render items inside a panel (or directly) for embedded content   |
-## +-------------------------------------------------------------------------+
-
-#def renderEmbItem($x, $section = "")
-    #if $x.startswith("iFrame")
-        $iframeCard($x, $section)
-    #else if $x.startswith("image")
-        $imageCard($x, $section)
-    #else
-        $notFoundCard($x)
-    #end if
-#end def
-
-#def renderEmbSegment($seg, $panel_idx)
-    #if $seg['type'] is None
-        #for $x in $seg['items']
-            $renderEmbItem($x, $seg['slug'])
-        #end for
-    #else
-        ## Embedded items are always rendered, so a group is never empty.
-        #set $p_exp   = ($seg['type'] != 'collapsed')
-        #set $p_show  = ' show' if $p_exp else ''
-        #set $p_id    = 'nwm-emb-panel-' + str($panel_idx)
-        <div class="col-12 mb-3">
-            <div class="card nwm-expansion-panel" data-section="$seg['slug']">
-                #set global $panel_title = $seg['title']
-                #set global $panel_id    = $p_id
-                #set global $panel_type  = $seg['type']
-                #include "panel_header.inc"
-                <div id="${p_id}" class="collapse${p_show}">
-                    <div class="nwm-panel-body">
-                        <div class="row">
-                            #for $x in $seg['items']
-                                $renderEmbItem($x, $seg['slug'])
-                            #end for
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     #end if
 #end def
 
@@ -491,8 +387,7 @@
 ## Parsing lives in bin/user/panelorder.py, which reads [[[sections]]] from
 ## skin.conf. Sections with a title become collapsible panels; those without
 ## render loose in the surrounding row.
-#set $val_segments   = $panelSegments('card', page=$page)
-#set $chart_segments = $panelSegments('chart', page=$page)
+#set $page_segments = $panelSegments(page=$page, subpage=$subpage)
 
 ## +-------------------------------------------------------------------------+
 ## | The main page layout                                                    |
@@ -504,24 +399,24 @@
         <title>
             $gettext("current") | $station.location
         </title>
-        #include "head.inc"
+        #include "inc/head.inc"
     </head>
     <body class="${Extras.Appearance.mode}-theme main-bg" ontouchstart="">
 
         #attr $active_nav = 'current'
-        #include "header.inc"
+        #include "inc/header.inc"
 
         #set global $card_scope = $page
         #set global $card_default = $Extras.Formatting.datetime_today
-        #include "card_datetime.inc"
+        #include "inc/card_datetime.inc"
         <main>
-            <div class="container-fluid d-flex-xxl flex-wrap">
+            <div class="container-fluid">
 
-                <div class="row mt-3 temprow align-content-start">
-                    #set $val_panel_idx = 0
-                    #for $seg_i, $seg in $enumerate($val_segments)
+                <div class="row mt-3 align-content-start">
+                    #set $panel_idx = 0
+                    #for $seg_i, $seg in $enumerate($page_segments)
                         #if $seg['type'] is not None
-                            #set $val_panel_idx = $val_panel_idx + 1
+                            #set $panel_idx = $panel_idx + 1
                         #end if
                         ## Section boundary. A col-12 fills a whole flex line, so this is
                         ## what makes each section start on a fresh row. Panels are col-12
@@ -529,53 +424,17 @@
                         #if $seg_i > 0
                             <div class="col-12"></div>
                         #end if
-                        $renderValSegment($seg, $val_panel_idx)
-                    #end for
-
-                </div>
-
-                <hr class="m-0 mb-4 rowdivider">
-
-                <div class="row mt-3 graphrow align-content-start">
-                    #set $chart_panel_idx = 0
-                    #for $seg_i, $seg in $enumerate($chart_segments)
-                        #if $seg['type'] is not None
-                            #set $chart_panel_idx = $chart_panel_idx + 1
+                        #if $seg['content'] in ('chart', 'telemetry_chart')
+                            $renderChartSegment($seg, $panel_idx)
+                        #else
+                            $renderValSegment($seg, $panel_idx)
                         #end if
-                        ## Section boundary. A col-12 fills a whole flex line, so this is
-                        ## what makes each section start on a fresh row. Panels are col-12
-                        ## already; plain sections need it emitted explicitly.
-                        #if $seg_i > 0
-                            <div class="col-12"></div>
-                        #end if
-                        $renderChartSegment($seg, $chart_panel_idx)
                     #end for
                 </div>
-
-                #set $emb_segments = $panelSegments('embedded', page=$page)
-                ## Show embedded section only if there are embedded items
-                #if len($panelItems('embedded', page=$page)) > 0
-                    <div class="row align-content-start flex-grow-1">
-                        <div class="col-12 "><hr class="mt-0 mb-4"></div>
-                        #set $emb_panel_idx = 0
-                        #for $seg_i, $seg in $enumerate($emb_segments)
-                            #if $seg['type'] is not None
-                                #set $emb_panel_idx = $emb_panel_idx + 1
-                            #end if
-                            ## Section boundary. A col-12 fills a whole flex line, so this is
-                            ## what makes each section start on a fresh row. Panels are col-12
-                            ## already; plain sections need it emitted explicitly.
-                            #if $seg_i > 0
-                                <div class="col-12"></div>
-                            #end if
-                            $renderEmbSegment($seg, $emb_panel_idx)
-                        #end for
-                    </div>
-                #end if
             </div>
         </main>
 
-        #include "footer.inc"
+        #include "inc/footer.inc"
 
         ## +-------------------------------------------------------------------------+
         ## | MQTT Configuration - Injected as global variables                       |
@@ -658,7 +517,7 @@
             };
         </script>
 
-        #include "js.inc"
+        #include "inc/js.inc"
 
         ## +-------------------------------------------------------------------------+
         ## | Chart generation methods (get data for charts + their JS code)          |
@@ -711,10 +570,10 @@
         #def getChartJsCode($name, $id, $type, $series1, $series2 = "", $column = "avg", $series3 = "", $series4 = "", $series5 = "", $series6 = "", $series7 = "", $series8 = "")
 
             ## Only add JS chart code if in array
-            #if $name in $panelItems('chart', page=$page)
+            #if $name in $panelItems('chart', page=$page, subpage=$subpage)
                 #set global $cc_name  = $name
                 #set global $cc_scope = ''
-                #include "chart_colors_setup.inc"
+                #include "inc/chart_colors_setup.inc"
 
                 document.querySelectorAll('[data-chart-mount="$name"]').forEach(function (chartElement) {
                     new ApexCharts(chartElement, {
@@ -742,7 +601,7 @@
                         #if $pg_align_mid and $type != 'radar'
                             xaxis: {
                                 ...graph_${type}_config.xaxis,
-                                #include "graph_align_axis.inc"
+                                #include "inc/graph_align_axis.inc"
                             },
                         #end if
                         #if $name == "windDir"
@@ -849,18 +708,18 @@
             ## ---- align setup (once per page): shared by standard AND custom charts ----
             #set global $align_start = int($span($time_delta=$custom_time_delta).start.raw)
             #set global $align_stop  = int($current.dateTime.raw)
-            #include "graph_align_setup.inc"
+            #include "inc/graph_align_setup.inc"
             var graph_area_config = {
-                #include "graph_area_config.inc"
+                #include "inc/graph_area_config.inc"
             }
             var graph_bar_config = {
-                #include "graph_bar_config.inc"
+                #include "inc/graph_bar_config.inc"
             }
             var graph_radar_config = {
-                #include "graph_radar_config.inc"
+                #include "inc/graph_radar_config.inc"
             }
             var graph_line_config = {
-                #include "graph_line_config.inc"
+                #include "inc/graph_line_config.inc"
             }
 
             // --- Special charts: multi-series or non-default columns ---
@@ -958,7 +817,7 @@
 
             #set global $cc_name  = 'windvec'
             #set global $cc_scope = ''
-            #include "chart_colors_setup.inc"
+            #include "inc/chart_colors_setup.inc"
             #set $sc_color_list = []
             #silent $sc_color_list.append($cc_color_refs[0] if len($cc_color_refs) > 0 else 'default')
             #silent $sc_color_list.append($cc_color_refs[1] if len($cc_color_refs) > 1 else 'default')
@@ -1002,8 +861,8 @@
             // Series1 field overrides for charts where the series field name differs from the chart name
             #set $default_chart_series = {'windDir': 'wind'}
 
-            #for $x in $panelItems('chart', page=$page)
-                #if not $x.startswith('customChart') and $x not in $processed_charts
+            #for $x in $panelItems('chart', page=$page, subpage=$subpage)
+                #if not $x.startswith('customChart') and $x not in $processed_charts and not $isTelemetryItem($x) and not $isEmbeddedItem($x)
                     #silent $processed_charts.add($x)
                     #if $chartHasData($x)
                         #set $c_type = $default_chart_types.get($x, 'area')
@@ -1017,14 +876,14 @@
 
             // Custom charts (dynamically generated from skin.conf [[Appearance]] [[[customChart*]]] sections)
             #set $seen_custom_charts = set()
-            #for $x in $panelItems('chart', page=$page)
+            #for $x in $panelItems('chart', page=$page, subpage=$subpage)
                 #if $x.startswith('customChart') and $x not in $seen_custom_charts
                     #silent $seen_custom_charts.add($x)
                     #set $cc = $Extras.Appearance.get($x, {})
                     #if $cc
                         #set $cc_type = $cc.get('charttype', 'area')
-                        ## Page-specific override subsection (key = "current" for this page).
-                        #set $cc_page = $cc.get('current', {})
+                        ## Page-specific override subsection (key = "today" or "current" for this page).
+                        #set $cc_page = $cc.get('today', $cc.get('current', {}))
                         ## Resolve column list: page → top-level → 'avg'
                         #set $cc_column_raw = $cc_page.get('column', $cc.get('column', 'avg'))
                         #set $cc_cols = ['avg']
@@ -1114,12 +973,12 @@
                         ## Resolve per-chart date-format overrides (shared logic)
                         #set global $cc_name  = $x
                         #set global $cc_scope = 'current'
-                        #include "chart_date_format.inc"
-                        #include "chart_tick_setup.inc"
-                        #include "chart_colors_setup.inc"
+                        #include "inc/chart_date_format.inc"
+                        #include "inc/chart_tick_setup.inc"
+                        #include "inc/chart_colors_setup.inc"
 
                         ## Render chart JS
-                        #if len($cc_series_pairs) > 0 and $x in $panelItems('chart', page=$page)
+                        #if len($cc_series_pairs) > 0 and $x in $panelItems('chart', page=$page, subpage=$subpage)
                             #try
                                 #set $_ = $axes_list
                             #except
@@ -1145,11 +1004,11 @@
                                 #end if
                                 new ApexCharts(chartElement, {
                                     ...graph_${cc_type}_config,
-                                    #include "chart_hidden_series.inc"
+                                    #include "inc/chart_hidden_series.inc"
                                     #if $cc_label_fmt or $pg_align_mid or $cc_tick_set
                                     xaxis: {
                                         ...graph_${cc_type}_config.xaxis,
-                                        #include "chart_tick_axis.inc"
+                                        #include "inc/chart_tick_axis.inc"
                                         #if $cc_label_fmt
                                         labels: { ...graph_${cc_type}_config.xaxis.labels, formatter: neowxDateFormatter("$cc_label_fmt") }
                                         #end if
@@ -1306,6 +1165,18 @@
                     #end if
                 #end if
             #end for
+
+            ## Telemetry charts on this page. The include never touches the
+            ## alignment globals - a telemetry chart follows the page's window
+            ## like every chart beside it - so it only has to come after
+            ## graph_align_setup.inc and var graph_area_config, which it reads.
+            ## This page's own data window, so a telemetry chart here fetches what the
+            ## weather charts beside it fetch - not chart_days at default_interval.
+            #set global $tele_chart_span     = $span($time_delta=$custom_time_delta)
+            #set global $tele_chart_interval = int($Extras.Charts.current_timespan)
+            #set global $tele_mode        = 'js'
+            #set global $tele_chart_items = [x for x in $panelItems('chart', page=$page, subpage=$subpage) if $isTelemetryItem(x)]
+            #include "inc/telemetry.inc"
 
         </script>
 

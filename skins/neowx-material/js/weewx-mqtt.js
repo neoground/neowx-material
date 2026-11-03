@@ -425,6 +425,18 @@ function updatePayloadValues(payload) {
             }
             formattedValue += mapEntry.unit;
 
+            // Telemetry gauge cards (inc/telemetry.inc) carry a server-built spec
+            // in data-nwm-gauge: they show a mapped state such as "OK" and a
+            // drawn gauge, not just a number. Since telemetry items may sit in
+            // any card section they share this page with MQTT, and writing
+            // formattedValue over them turned "OK" into "0.0 V". They get
+            // their own updater instead - the attribute is the contract.
+            var gaugeSpec = card.getAttribute('data-nwm-gauge');
+            if (gaugeSpec !== null) {
+                updateGaugeCard(card, gaugeSpec, numValue, formattedValue, h4Element);
+                return;
+            }
+
             if (cardName === 'windSpeed') {
                 let windDirMapEntry = mapping['windDir'];
                 let windDirValue = payload[windDirMapEntry ? windDirMapEntry.payloadAttr : null];
@@ -463,6 +475,124 @@ function updatePayloadValues(payload) {
             }
         }
     });
+}
+
+// --- HELPER FUNCTION 4b: Update a telemetry gauge card from its spec ---
+// The spec is built server-side by gaugeSpec() in inc/telemetry.inc from the same
+// helpers that drew the card, so nothing here reads [[Telemetry]]. A status
+// field arrives as a complete per-state table (label, bar percentage, fill
+// width, colour); a range field as min/max and low_threshold. The arithmetic
+// below mirrors rangePercentage(), percentValue() and getGaugeColor() in the
+// include - change one and change the other.
+var GAUGE_RED = '#f44336';
+var GAUGE_GREEN = '#4caf50';
+
+function gaugePercent(spec, value) {
+    var pct;
+    if (spec.type === 'percent') {
+        pct = value;
+    } else if (spec.max === null || spec.max === undefined) {
+        // No usable range. A voltage gauge is then not drawn at all (the card
+        // reserves the space); a signal gauge reads the raw value as a percentage.
+        if (spec.type !== 'signal') return null;
+        pct = value;
+    } else {
+        var min = Number(spec.min) || 0;
+        pct = ((value - min) / (Number(spec.max) - min)) * 100;
+    }
+    if (pct < 0) pct = 0;
+    if (pct > 100) pct = 100;
+    // Same epsilon as the include, so 56.99999 reads as 57 on both sides
+    return Math.floor(pct + 0.0000001);
+}
+
+// Recompute the two filled wings of the signal cone. Geometry is a port of
+// signalCone() in inc/telemetry.inc; the static grey wings and the centre dot are
+// not touched.
+function drawSignalCone(svg, pct, color) {
+    var R = 14.6, hhI = 4.75, hhO = 11.0;
+    var f = Math.min(1, Math.max(0, pct / 100));
+    var si = R - Math.sqrt(R * R - hhI * hhI);
+    var hhf = hhI + f * (hhO - hhI);
+    var sf = R - Math.sqrt(R * R - hhf * hhf);
+    var xfL = 52 + f * (12 - 52);
+    var xfR = 68 + f * (108 - 68);
+    var n = function (v) { return v.toFixed(3); };
+    var left = svg.querySelector('path[data-nwm-cone="l"]');
+    var right = svg.querySelector('path[data-nwm-cone="r"]');
+    if (left) {
+        left.setAttribute('d', 'M 52 7.25 L ' + n(xfL) + ' ' + n(12 - hhf) +
+            ' Q ' + n(xfL - 2 * sf) + ' 12 ' + n(xfL) + ' ' + n(12 + hhf) +
+            ' L 52 16.75 Q ' + n(52 - 2 * si) + ' 12 52 7.25 Z');
+        left.setAttribute('fill', color);
+    }
+    if (right) {
+        right.setAttribute('d', 'M 68 7.25 L ' + n(xfR) + ' ' + n(12 - hhf) +
+            ' Q ' + n(xfR + 2 * sf) + ' 12 ' + n(xfR) + ' ' + n(12 + hhf) +
+            ' L 68 16.75 Q ' + n(68 + 2 * si) + ' 12 68 7.25 Z');
+        right.setAttribute('fill', color);
+    }
+}
+
+function updateGaugeCard(card, specJson, numValue, formattedValue, h4Element) {
+    var spec;
+    try {
+        spec = JSON.parse(specJson);
+    } catch (e) {
+        debugLog('⚠️ Unreadable gauge spec on ' + card.getAttribute('data-name'));
+        return;
+    }
+
+    // What the server would have rendered for this value
+    var heading = formattedValue;   // raw number + unit, as the card shows when unmapped
+    var pct = null, fillWidth = null, color = null, valText = null;
+
+    if (spec.type === 'status') {
+        var key = String(Math.floor(numValue + 0.000001));
+        var state = spec.states ? spec.states[key] : undefined;
+        if (state) {
+            heading = state.label;
+            pct = state.pct;
+            fillWidth = state.fill;
+            color = state.color;
+        }
+        valText = numValue.toFixed(0);
+    } else if (spec.type === 'voltage' || spec.type === 'signal' || spec.type === 'percent') {
+        pct = gaugePercent(spec, numValue);
+        if (pct !== null) {
+            var threshold = Number(spec.low_threshold);
+            if (Number.isNaN(threshold)) threshold = 20;
+            color = pct < threshold ? GAUGE_RED : GAUGE_GREEN;
+            fillWidth = pct;
+            valText = pct + '%';
+        }
+        if (spec.type === 'percent') {
+            heading = valText || (Math.round(numValue) + '%');
+        }
+    }
+    // sensor_type none: the heading is all there is
+
+    if (h4Element && h4Element.textContent.trim() !== heading) {
+        h4Element.textContent = heading;
+        applyGreenFlash(h4Element);
+    }
+
+    if (fillWidth !== null && color !== null) {
+        var fill = card.querySelector('.battery-fill');
+        if (fill) {
+            fill.style.width = fillWidth + '%';
+            fill.style.backgroundColor = color;
+        }
+    }
+    if (pct !== null && color !== null) {
+        var cone = card.querySelector('svg[data-nwm-gauge-cone]');
+        if (cone) drawSignalCone(cone, pct, color);
+    }
+    if (valText !== null) {
+        var text = card.querySelector('[data-nwm-gauge-text]');
+        if (text) text.textContent = valText;
+    }
+    debugLog('✓ Updated gauge ' + card.getAttribute('data-name') + ' to: ' + heading);
 }
 
 // --- HELPER FUNCTION 5: Apply visual feedback (green flash) ---

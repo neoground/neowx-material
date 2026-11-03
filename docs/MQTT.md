@@ -530,6 +530,10 @@ If you have additional sensors, add them to the mapping:
 
 ---
 
+### Telemetry gauges
+
+A telemetry item listed in a card section (see "Telemetry items on other dashboard pages" in the telemetry guide) updates live as well, as long as it has a `SensorMapping` entry. The gauge is not redrawn from the raw number alone: the page carries, per gauge card, everything the browser needs to show the right state for a value, taken from that item's `[[Telemetry]]` settings. A `status` sensor flips between its configured labels, a `voltage` or `signal` sensor moves its bar or cone and changes colour at `low_threshold`, and the small value line follows. Today's min and max in the side columns still wait for the next report, the same as on every other card. An item without a mapping entry is left alone until the next report.
+
 ## Testing Your Setup
 
 ### 1. Check MQTT Broker Logs

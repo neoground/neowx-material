@@ -1,5 +1,6 @@
 #encoding UTF-8
 #attr $page = 'history'
+#attr $subpage = 'history'
 ## +-------------------------------------------------------------------------+
 ## |    history.html.tmpl                Template file for "history" page    |
 ## +-------------------------------------------------------------------------+
@@ -7,12 +8,12 @@
 <html lang="$lang">
     <head>
         <title>$gettext("history") | $station.location</title>
-        #include "head.inc"
+        #include "inc/head.inc"
     </head>
     <body class="${Extras.Appearance.mode}-theme main-bg" ontouchstart="">
 
         #attr $active_nav = 'history'
-        #include "header.inc"
+        #include "inc/header.inc"
 
         <main>
 
@@ -24,106 +25,233 @@
                         <h2 class="h2-responsive text-dark">$gettext("weather_statistics")</h2>
                     </div>
 
-                    <div class="col-sm mb-4 text-center">
-                        <div class="card" style="overflow-x: auto;white-space: nowrap;">
-                            <div class="card card-body">
-                                <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-thermometer"></i>
-                                $gettext("min_temp")</h4>
-                                $min_temp_table
-                            </div>
-
-                            <div class="card card-body">
-                                <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-thermometer"></i>
-                                $gettext("avg_temp")</h4>
-                                $avg_temp_table
-                            </div>
-
-                            <div class="card card-body">
-                                <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-thermometer"></i>
-                                $gettext("max_temp")</h4>
-                                $max_temp_table
-                            </div>
-
-                            <div class="card card-body">
-                                <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-thermometer"></i>
-                                $gettext("summer_days")</h4>
-                                $summer_days_table
-                            </div>
-
-                            <div class="card card-body">
-                                <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-thermometer"></i>
-                                $gettext("tropical_days")</h4>
-                                $tropical_days_table
-                            </div>
-
-                            <div class="card card-body">
-                                <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-thermometer"></i>
-                                $gettext("tropical_nights")</h4>
-                                $tropical_nights_table
-                            </div>
-
-                            <div class="card card-body">
-                                <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-thermometer"></i>
-                                $gettext("arctic_days")</h4>
-                                $arctic_days_table
-                            </div>
-
-                            #if $alltime.rain.has_data
-                                <div class="card card-body">
-                                    <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-showers"></i>
-                                    $gettext("rain")</h4>
-                                    $rain_table
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-min-temp">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("min_temp")
+                            #set global $panel_id    = 'nwm-hist-min-temp'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-min-temp" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $min_temp_table
+                                    </div>
                                 </div>
-
-                                <div class="card card-body">
-                                    <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-showers"></i>
-                                    $gettext("rain_days") (> 0.2mm)</h4>
-                                    $rain_days_table
-                                </div>
-                            #end if
-
-                            #if $alltime.windSpeed.has_data
-                                <div class="card card-body">
-                                    <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-strong-wind"></i>
-                                    $gettext("max_wind")</h4>
-                                    $max_wind_table
-                                </div>
-
-                                <div class="card card-body">
-                                    <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-strong-wind"></i>
-                                    $gettext("avg_wind")</h4>
-                                    $avg_wind_table
-                                </div>
-                            #end if
-
-                            #if $alltime.UV.has_data
-                                <div class="card card-body">
-                                    <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-day-sunny"></i>
-                                    $gettext("uv_max")</h4>
-                                    $uv_max_table
-                                </div>
-                            #end if
-
-                            #if $alltime.lightning_strike_count.has_data
-                                <div class="card card-body">
-                                    <h4 class="h5-responsive $Extras.color-text"><i class="wi wi-lightning"></i>
-                                    $gettext("lightning_strikes")</h4>
-                                    $lightning_strike_count_table
-                                </div>
-                            #end if
+                            </div>
                         </div>
                     </div>
 
-                    ## RT Code Start
-                    <div class="col-12 mb-4 text-center">
-                        <h2 class="h2-responsive text-dark">$gettext("year_records")</h2>
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-avg-temp">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("avg_temp")
+                            #set global $panel_id    = 'nwm-hist-avg-temp'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-avg-temp" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $avg_temp_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="col-sm mb-4 text-center">
-                        <div class="card">
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-max-temp">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("max_temp")
+                            #set global $panel_id    = 'nwm-hist-max-temp'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-max-temp" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $max_temp_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                            <div class="card-body" style="text-align:left;width:100%;">
-                                <table class="table text-left records" style="width:100%;">
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-summer-days">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("summer_days")
+                            #set global $panel_id    = 'nwm-hist-summer-days'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-summer-days" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $summer_days_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-tropical-days">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("tropical_days")
+                            #set global $panel_id    = 'nwm-hist-tropical-days'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-tropical-days" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $tropical_days_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-tropical-nights">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("tropical_nights")
+                            #set global $panel_id    = 'nwm-hist-tropical-nights'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-tropical-nights" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $tropical_nights_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-arctic-days">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("arctic_days")
+                            #set global $panel_id    = 'nwm-hist-arctic-days'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-arctic-days" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $arctic_days_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    #if $alltime.rain.has_data
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="history-rain">
+                                #set global $panel_title = '<i class="wi wi-showers mr-1"></i> ' + $gettext("rain")
+                                #set global $panel_id    = 'nwm-hist-rain'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-hist-rain" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                            $rain_table
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="history-rain-days">
+                                #set global $panel_title = '<i class="wi wi-showers mr-1"></i> ' + $gettext("rain_days") + ' (> 0.2mm)'
+                                #set global $panel_id    = 'nwm-hist-rain-days'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-hist-rain-days" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                            $rain_days_table
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    #end if
+
+                    #if $alltime.windSpeed.has_data
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="history-max-wind">
+                                #set global $panel_title = '<i class="wi wi-strong-wind mr-1"></i> ' + $gettext("max_wind")
+                                #set global $panel_id    = 'nwm-hist-max-wind'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-hist-max-wind" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                            $max_wind_table
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="history-avg-wind">
+                                #set global $panel_title = '<i class="wi wi-strong-wind mr-1"></i> ' + $gettext("avg_wind")
+                                #set global $panel_id    = 'nwm-hist-avg-wind'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-hist-avg-wind" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                            $avg_wind_table
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    #end if
+
+                    #if $alltime.UV.has_data
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="history-uv-max">
+                                #set global $panel_title = '<i class="wi wi-day-sunny mr-1"></i> ' + $gettext("uv_max")
+                                #set global $panel_id    = 'nwm-hist-uv-max'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-hist-uv-max" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                            $uv_max_table
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    #end if
+
+                    #if $alltime.lightning_strike_count.has_data
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="history-lightning">
+                                #set global $panel_title = '<i class="wi wi-lightning mr-1"></i> ' + $gettext("lightning_strikes")
+                                #set global $panel_id    = 'nwm-hist-lightning'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-hist-lightning" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                            $lightning_strike_count_table
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    #end if
+
+                    ## RT Code Start
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-year-records">
+                            #set global $panel_title = '<i class="mdi mdi-calendar-blank-outline mr-1"></i> ' + $gettext("year_records")
+                            #set global $panel_id    = 'nwm-hist-year-records'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-year-records" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-3" style="text-align: left; width: 100%; overflow-x: auto;">
+                                        <table class="table text-left records mb-0" style="width: 100%;">
                                     #if $year.outTemp.has_data
                                         <tr>
                                             <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-thermometer"></i>
@@ -272,18 +400,21 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    ## RT Code End
+            ## RT Code End
 
-                    <div class="col-12 mb-4 text-center">
-                        <h2 class="h2-responsive text-dark">$gettext("all_time_records")</h2>
-                    </div>
-
-                    <div class="col-sm mb-4 text-center">
-                        <div class="card">
-
-                            <div class="card-body" style="text-align:left;width:100%;">
-                                <table class="table text-left records" style="width:100%;">
+            <div class="col-12 mb-3">
+                <div class="card nwm-expansion-panel" data-section="history-alltime-records">
+                    #set global $panel_title = '<i class="mdi mdi-trophy-outline mr-1"></i> ' + $gettext("all_time_records")
+                    #set global $panel_id    = 'nwm-hist-alltime-records'
+                    #set global $panel_type  = 'expanded'
+                    #include "inc/panel_header.inc"
+                    <div id="nwm-hist-alltime-records" class="collapse show">
+                        <div class="nwm-panel-body">
+                            <div class="card p-3" style="text-align: left; width: 100%; overflow-x: auto;">
+                                <table class="table text-left records mb-0" style="width: 100%;">
                                     #if $alltime.outTemp.has_data
                                         <tr>
                                             <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-thermometer"></i>
@@ -432,6 +563,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
                 </div>
 
@@ -439,8 +572,8 @@
 
         </main>
 
-        #include "footer.inc"
-        #include "js.inc"
+        #include "inc/footer.inc"
+        #include "inc/js.inc"
 
     </body>
 </html>

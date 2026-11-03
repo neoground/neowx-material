@@ -1,0 +1,1176 @@
+#encoding UTF-8
+## +-------------------------------------------------------------------------+
+## |    day-%Y-%m-%d.html.tmpl              Template file for "day" page     |
+## +-------------------------------------------------------------------------+
+
+#attr $active_nav = 'day'
+#attr $page = 'day'
+#attr $subpage = 'day'
+
+## +-------------------------------------------------------------------------+
+## | Template for display card of values (left column)                       |
+## +-------------------------------------------------------------------------+
+
+#def valuesCard($name, $section = "")
+    ## ET requires a valid positive sum to be shown
+    #if $getVar('day.' + name + '.has_data') and ($name != 'ET' or ($day.ET.sum.raw is not None and $day.ET.sum.raw > 0.0))
+        <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="card card-value" data-name="$name" data-section="$section">
+                <div class="card-body text-center">
+                    <h3 class="h5-responsive $Extras.color-text">
+                        $getVar('obs.label.' + name)
+                        #if $name == 'windSpeed'
+                            <i class="wi wi-wind from-$day.wind.vecdir.formatted-deg"
+                            title="$day.wind.vecdir.formatted°" data-toggle="tooltip" data-html="true"></i>
+                        #end if
+                    </h3>
+                    #if $name == 'windSpeed'
+                        <div class="row">
+                            <div class="col-3 text-muted font-small lo-text">
+                                $day.wind.avg <br>
+                                $gettext("avg")
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">
+                                    $day.windSpeed.max $day.wind.vecdir.ordinal_compass
+                                </h4>
+                            </div>
+                            <div class="col-3 text-muted font-small hi-text">
+                                $day.wind.max $day.wind.gustdir.ordinal_compass <br>
+                                <i class="wi wi-wind from-$day.wind.gustdir.formatted-deg mr-2"
+                                title="$day.wind.gustdir.formatted°" data-toggle="tooltip" data-html="true"></i>
+                                ($day.wind.maxtime.format($card_datetime))
+                            </div>
+                        </div>
+                    #else if $name == 'rain'
+                        <div class="row">
+                            <div class="col-3 text-muted font-small"></div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$day.rain.sum</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small hi-text">
+                                $day.rainRate.max <br>
+                                ($day.rainRate.maxtime.format($card_datetime))
+                            </div>
+                        </div>
+                    #else if $name in set(['lightning_strike_count', 'windrun', 'ET'])
+                        <div class="row">
+                            <div class="col-3 text-muted font-small lo-text"></div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$getVar('day.' + name + '.sum')</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small hi-text"></div>
+                        </div>
+                    #else
+                        <div class="row">
+                            <div class="col-3 text-muted font-small lo-text">
+                                $getVar('day.' + name + '.min') <br>
+                                ($getVar('day.' + name + '.mintime').format($card_datetime))
+                            </div>
+                            <div class="col-6">
+                                <h4 class="h2-responsive">$getVar('day.' + name + '.avg')</h4>
+                            </div>
+                            <div class="col-3 text-muted font-small hi-text">
+                                $getVar('day.' + name + '.max') <br>
+                                ($getVar('day.' + name + '.maxtime').format($card_datetime))
+                            </div>
+                        </div>
+                    #end if
+                </div>
+            </div>
+        </div>
+    #end if
+#end def
+
+## +-------------------------------------------------------------------------+
+## | Template for display card of a single chart (right column)              |
+## +-------------------------------------------------------------------------+
+
+#def chartCard($name, $id, $name2="XX", $section = "")
+    #if $name.startswith('customChart')
+        #set $cc = $Extras.Appearance.get($name, {})
+        #if $cc
+            #set $cc_title = $cc.get('title', $name)
+            #set $cc_values_raw = $cc.get('values', '')
+            #if isinstance($cc_values_raw, list)
+                #set $cc_vals_list = [v.strip() for v in $cc_values_raw if v.strip()]
+            #else
+                #set $cc_vals_list = [v.strip() for v in $cc_values_raw.split(',') if v.strip()]
+            #end if
+            #set $cc_any_has_data = any($getVar('day.' + v + '.has_data') for v in $cc_vals_list)
+            #set $cc_sensors_str = chr(44).join($cc_vals_list)
+            #if len($cc_vals_list) > 0 and $cc_any_has_data
+                <div class="col-12 col-xl-6 mb-4">
+                    <div class="card card-chart" data-name="$name" data-section="$section" data-sensors="$cc_sensors_str">
+                        <div class="card-body text-center">
+                            <h5 class="h5-responsive $Extras.color-text">$cc_title</h5>
+                            <div data-chart-mount="$name"></div>
+                        </div>
+                    </div>
+                </div>
+            #end if
+        #end if
+    #else if ($getVar('day.' + name + '.has_data') or $name == "windvec") and $name != "appTemp" and ($name != 'ET' or ($day.ET.sum.raw is not None and $day.ET.sum.raw > 0.0))
+        <div class="col-12 col-xl-6 mb-4">
+            <div class="card card-chart" data-name="$name" data-section="$section">
+                <div class="card-body text-center">
+                    <h5 class="h5-responsive $Extras.color-text">
+                        #if $name2 != "XX"
+                            $getVar('Extras.Charts.Titles.' + name, $getVar('obs.label.' + name)) &
+                            $getVar('Extras.Charts.Titles.' + name2, $getVar('obs.label.' + name2))
+                        #else
+                            $getVar('Extras.Charts.Titles.' + name, $getVar('obs.label.' + name))
+                        #end if
+                    </h5>
+                    <div data-chart-mount="$name"></div>
+                </div>
+            </div>
+        </div>
+    #end if
+#end def
+
+## Access HistoryReport section from skin.conf
+#set $table_dict = $generator.skin_dict['HistoryReport']
+#set $threshold_unit = $table_dict.get('threshold_unit', 'degree_C')
+## Use #set global so these are accessible inside #def renderValueItem()
+#set global $SummerDay = ($table_dict.get('summer_days_threshold', 25.0),  $threshold_unit)
+#set global $TropicDay = ($table_dict.get('tropical_days_threshold', 30.0),  $threshold_unit)
+#set global $TropicNight = ($table_dict.get('tropical_nights_threshold', 20.0),  $threshold_unit)
+#set global $ArcticDay = ($table_dict.get('arctic_days_threshold', 0.0),  $threshold_unit)
+
+## +-------------------------------------------------------------------------+
+## | Helper: render a single value-card item by name                         |
+## | (handles ET guard, temperatureThresholdDays, and all normal cards)      |
+## +-------------------------------------------------------------------------+
+
+#def renderValueItem($x, $in_panel, $is_first, $is_last, $section = "")
+    ## 'forecast' renders via #include, which only sees the search list and
+    ## globals - hence the #set global handoff. The first/last flags drive the
+    ## forecast_separator rules inside forecast.inc.
+    #if $x == "forecast"
+        #set global $forecast_in_panel = $in_panel
+        #set global $forecast_is_first = $is_first
+        #set global $forecast_is_last  = $is_last
+        #set global $forecast_section  = $section
+        #include "inc/forecast.inc"
+    #else if $x == "ET"
+        #if $day.ET.has_data and $day.ET.sum.raw is not None and $day.ET.sum.raw > 0.0
+            $valuesCard('ET', $section)
+        #end if
+    #else if $x == "temperatureThresholdDays"
+        <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="card" data-name="temperatureThresholdDays" data-section="$section">
+                <div class="card-body text-center">
+                    <h3 class="h5-responsive $Extras.color-text">$gettext("summer_days")</h3>
+                    <div class="row">
+                        <div class="col-3 text-muted font-small"></div>
+                        <div class="col-6"><h4 class="h2-responsive">$day.outTemp.max_ge($SummerDay).nolabel("%6d", " N/A")</h4></div>
+                        <div class="col-3 text-muted font-small hi-text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h3 class="h5-responsive $Extras.color-text">$gettext("tropical_days")</h3>
+                    <div class="row">
+                        <div class="col-3 text-muted font-small"></div>
+                        <div class="col-6"><h4 class="h2-responsive">$day.outTemp.max_ge($TropicDay).nolabel("%6d", " N/A")</h4></div>
+                        <div class="col-3 text-muted font-small hi-text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h3 class="h5-responsive $Extras.color-text">$gettext("tropical_nights")</h3>
+                    <div class="row">
+                        <div class="col-3 text-muted font-small"></div>
+                        <div class="col-6"><h4 class="h2-responsive">$day.outTemp.min_ge($TropicNight).nolabel("%6d", " N/A")</h4></div>
+                        <div class="col-3 text-muted font-small hi-text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h3 class="h5-responsive $Extras.color-text">$gettext("arctic_days")</h3>
+                    <div class="row">
+                        <div class="col-3 text-muted font-small"></div>
+                        <div class="col-6"><h4 class="h2-responsive">$day.outTemp.max_le($ArcticDay).nolabel("%6d", " N/A")</h4></div>
+                        <div class="col-3 text-muted font-small hi-text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    #else if $isTelemetryItem($x)
+        ## A telemetry item renders through the shared include: Cheetah's
+        ## #include cannot share defs, so the include drives itself from these
+        ## four globals. It always reads day.* - a gauge shows today's battery
+        ## on every page.
+        #set global $tele_mode    = 'card'
+        #set global $tele_item    = $x
+        #set global $tele_section = $section
+        #include "inc/telemetry.inc"
+    #else if $isEmbeddedItem($x)
+        #set global $emb_item     = $x
+        #set global $emb_section  = $section
+        #include "inc/embedded_region.inc"
+        #set global $emb_item     = None
+    #else
+        $valuesCard($x, $section)
+    #end if
+#end def
+
+## +-------------------------------------------------------------------------+
+## | Helper: render items inside a panel (or directly) for a value segment   |
+## +-------------------------------------------------------------------------+
+
+#def renderValSegment($seg, $panel_idx)
+    ## Which items will actually draw. A panel needs this to decide whether to
+    ## render at all, and the forecast needs to know whether it lands first or
+    ## last among them - that drives the separator rules inside forecast.inc.
+    ## Computed once and used in both places below. Two separate lookups can
+    ## drift apart; one cannot.
+    #set $items_l = [i.strip().lower() for i in $seg['items']]
+    #set $vis_items = []
+    #set $f_first = False
+    #set $f_last  = False
+    #if $seg['type'] is not None or 'forecast' in $items_l
+        #for $x in $seg['items']
+            #if $x == "forecast"
+                #if $forecast is not None
+                    #silent $vis_items.append($x)
+                #end if
+            #else if $isTelemetryItem($x)
+                ## batteryCard's own guard, so the panel never opens for an
+                ## item that then renders nothing.
+                #if $getVar('day.' + $x + '.has_data') and ($getVar('day.' + $x + '.max.raw') > 0 or $Extras.Telemetry.allow_zero_values == "yes")
+                    #silent $vis_items.append($x)
+                #end if
+            #else if $isEmbeddedItem($x)
+                #silent $vis_items.append($x)
+            #else if $x == "ET"
+                #if $day.ET.has_data and $day.ET.sum.raw is not None and $day.ET.sum.raw > 0.0
+                    #silent $vis_items.append($x)
+                #end if
+            #else if $x == "temperatureThresholdDays"
+                #silent $vis_items.append($x)
+            #else
+                #if $getVar('day.' + $x + '.has_data')
+                    #silent $vis_items.append($x)
+                #end if
+            #end if
+        #end for
+        #set $f_first = (len($vis_items) > 0 and $vis_items[0] == 'forecast')
+        #set $f_last  = (len($vis_items) > 0 and $vis_items[-1] == 'forecast')
+    #end if
+
+    #if $seg['type'] is None
+        ## No panel – render cards directly into the surrounding row
+        #for $x in $seg['items']
+            $renderValueItem($x, False, $f_first, $f_last, $seg['slug'])
+        #end for
+    #else
+        ## Expansion panel
+        #if len($vis_items) > 0
+            #set $p_exp   = ($seg['type'] != 'collapsed')
+            #set $p_show  = ' show' if $p_exp else ''
+            #set $p_id    = 'nwm-val-panel-' + str($panel_idx)
+            <div class="col-12 mb-3">
+                <div class="card nwm-expansion-panel" data-section="$seg['slug']">
+                    #set global $panel_title = $seg['title']
+                    #set global $panel_id    = $p_id
+                    #set global $panel_type  = $seg['type']
+                    #include "inc/panel_header.inc"
+                    <div id="${p_id}" class="collapse${p_show}">
+                        <div class="nwm-panel-body">
+                            <div class="row">
+                                #for $x in $seg['items']
+                                    $renderValueItem($x, True, $f_first, $f_last, $seg['slug'])
+                                #end for
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        #end if
+    #end if
+#end def
+
+## +-------------------------------------------------------------------------+
+## | Helper: render items inside a panel (or directly) for a chart segment   |
+## +-------------------------------------------------------------------------+
+
+#def renderChartSegment($seg, $panel_idx)
+    #if $seg['type'] is None
+        #for $x in $seg['items']
+            #if $isTelemetryItem($x)
+                #set global $tele_mode    = 'chart'
+                #set global $tele_item    = $x
+                #set global $tele_section = $seg['slug']
+                #include "inc/telemetry.inc"
+            #else if $isEmbeddedItem($x)
+                #set global $emb_item     = $x
+                #set global $emb_section  = $seg['slug']
+                #include "inc/embedded_region.inc"
+                #set global $emb_item     = None
+            #else
+                $chartCard($x, $x + 'chart', section=$seg['slug'])
+            #end if
+        #end for
+    #else
+        #set $any_has_data = False
+        #for $x in $seg['items']
+            #if $isTelemetryItem($x)
+                #if $getVar('day.' + $x + '.has_data') and ($getVar('day.' + $x + '.max.raw') > 0 or $Extras.Telemetry.allow_zero_values == "yes")
+                    #set $any_has_data = True
+                #end if
+            #else if $isEmbeddedItem($x)
+                #set $any_has_data = True
+            #else if $x.startswith('customChart')
+                #set $cc = $Extras.Appearance.get($x, {})
+                #if $cc
+                    #set $cc_values_raw = $cc.get('values', '')
+                    #if isinstance($cc_values_raw, list)
+                        #set $cc_vals_list = [v.strip() for v in $cc_values_raw if v.strip()]
+                    #else
+                        #set $cc_vals_list = [v.strip() for v in $cc_values_raw.split(',') if v.strip()]
+                    #end if
+                    #set $cc_any_has_data = any($getVar('day.' + v + '.has_data') for v in $cc_vals_list)
+                    #if len($cc_vals_list) > 0 and $cc_any_has_data
+                        #set $any_has_data = True
+                    #end if
+                #end if
+            #else if ($getVar('day.' + $x + '.has_data') or $x == "windvec") and $x != "appTemp" and ($x != 'ET' or ($day.ET.sum.raw is not None and $day.ET.sum.raw > 0.0))
+                #set $any_has_data = True
+            #end if
+        #end for
+        #if $any_has_data
+            #set $p_exp   = ($seg['type'] != 'collapsed')
+            #set $p_show  = ' show' if $p_exp else ''
+            #set $p_id    = 'nwm-chart-panel-' + str($panel_idx)
+            <div class="col-12 mb-3">
+                <div class="card nwm-expansion-panel" data-section="$seg['slug']">
+                    #set global $panel_title = $seg['title']
+                    #set global $panel_id    = $p_id
+                    #set global $panel_type  = $seg['type']
+                    #include "inc/panel_header.inc"
+                    <div id="${p_id}" class="collapse${p_show}">
+                        <div class="nwm-panel-body">
+                            <div class="row">
+                                #for $x in $seg['items']
+                                    #if $isTelemetryItem($x)
+                                        #set global $tele_mode    = 'chart'
+                                        #set global $tele_item    = $x
+                                        #set global $tele_section = $seg['slug']
+                                        #include "inc/telemetry.inc"
+                                    #else if $isEmbeddedItem($x)
+                                        #set global $emb_item     = $x
+                                        #set global $emb_section  = $seg['slug']
+                                        #include "inc/embedded_region.inc"
+                                        #set global $emb_item     = None
+                                    #else
+                                        $chartCard($x, $x + 'chart', section=$seg['slug'])
+                                    #end if
+                                #end for
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        #end if
+    #end if
+#end def
+
+## +-------------------------------------------------------------------------+
+## | Collapsible Expansion Panels – pre-processing                           |
+## +-------------------------------------------------------------------------+
+##
+
+
+## --- Build layout segments -------------------------------------------------
+## Parsing lives in bin/user/panelorder.py, which reads [[[sections]]] from
+## skin.conf. Sections with a title become collapsible panels; those without
+## render loose in the surrounding row.
+#set $page_segments = $panelSegments(page=$page, subpage=$subpage)
+
+#set global $card_scope = $page
+#set global $card_default = $Extras.Formatting.datetime_today
+#include "inc/card_datetime.inc"
+
+## +-------------------------------------------------------------------------+
+## | The main page layout                                                    |
+## +-------------------------------------------------------------------------+
+
+<!DOCTYPE html>
+<html lang="$lang">
+    <head>
+        <title>
+            $day.dateTime.format($Extras.Formatting.date) | $station.location
+        </title>
+        #include "inc/head.inc"
+        #if ($varExists('is_current_day') and $is_current_day) or $day.dateTime.format('%Y-%m-%d') == $archive_stop_date or $day.dateTime.format('%Y-%m-%d') == $time.strftime('%Y-%m-%d')
+            <script>window.location.replace('${base_path}index.html');</script>
+            <meta http-equiv="refresh" content="0; url=${base_path}index.html">
+        #end if
+    </head>
+    <body class="${Extras.Appearance.mode}-theme main-bg" ontouchstart="">
+
+        #include "inc/header.inc"
+
+        <main>
+            <div class="container-fluid">
+
+                <div class="row mt-3 align-content-start">
+                    #set $panel_idx = 0
+                    #for $seg_i, $seg in $enumerate($page_segments)
+                        #if $seg['type'] is not None
+                            #set $panel_idx = $panel_idx + 1
+                        #end if
+                        ## Section boundary. A col-12 fills a whole flex line, so this is
+                        ## what makes each section start on a fresh row. Panels are col-12
+                        ## already; plain sections need it emitted explicitly.
+                        #if $seg_i > 0
+                            <div class="col-12"></div>
+                        #end if
+                        #if $seg['content'] in ('chart', 'telemetry_chart')
+                            $renderChartSegment($seg, $panel_idx)
+                        #else
+                            $renderValSegment($seg, $panel_idx)
+                        #end if
+                    #end for
+                </div>
+            </div>
+        </main>
+
+        #include "inc/footer.inc"
+        #include "inc/js.inc"
+
+        ## +-------------------------------------------------------------------------+
+        ## | Chart generation methods (get data for charts + their JS code)          |
+        ## +-------------------------------------------------------------------------+
+
+        ## +-------------------------------------------------------------------------+
+        ## | Get data array for a chart                                              |
+        ## |                                                                         |
+        ## | string  $name    the name of the database field  (e.g. outTemp)         |
+        ## | string  $column  the column of the display value (e.g. min, max, avg)   |
+        ## +-------------------------------------------------------------------------+
+
+        #def getChartData($name, $column)
+            #set current_interval = int($Extras.Charts.current_timespan)
+            #if $name == "rain"
+                #set current_interval = int($Extras.Charts.current_rain_timespan)
+            #end if
+            #if $name == "ET"
+                #set current_interval = int($Extras.Charts.current_rain_timespan)
+            #end if
+            #if $name == "windrun"
+                #set current_interval = int($Extras.Charts.current_timespan)
+            #end if
+
+            #set $records = list($day.spans(interval=current_interval))
+            #for idx, record in enumerate($records)
+                #try
+                    #set val = $getattr($record, $name)
+                    #set data = $getattr($val, $column).format(add_label=False, localize=False, None_string="null")
+                    #if $data != "null" or $idx == 0 or $idx == len($records) - 1
+                        [$record.start.raw * 1000, $data],
+                    #end if
+                #except
+
+                #end try
+            #end for
+        #end def
+
+        ## +-------------------------------------------------------------------------+
+        ## | Get JavaScript code for a chart                                         |
+        ## |                                                                         |
+        ## | string  $name     the name of the database field   (e.g. outTemp)       |
+        ## | string  $id       the ID of the chart target       (without hash)       |
+        ## | string  $type     type of chart                    (area, bar, radar)   |
+        ## | string  $series1  field name for (1st) series      (e.g. outTemp)       |
+        ## | string  $series2  opt. field name for 2nd series   (e.g. outTemp or "") |
+        ## | string  $column   the column of the display value  (e.g. min, max, avg) |
+        ## | string  $series3  opt. field name for 3rd series   (e.g. outTemp or "") |
+        ## | string  $series4  opt. field name for 4th series   (e.g. outTemp or "") |
+        ## | string  $series5  opt. field name for 5th series   (e.g. outTemp or "") |
+        ## | string  $series6  opt. field name for 6th series   (e.g. outTemp or "") |
+        ## | string  $series7  opt. field name for 7th series   (e.g. outTemp or "") |
+        ## | string  $series8  opt. field name for 8th series   (e.g. outTemp or "") |
+        ## +-------------------------------------------------------------------------+
+
+        #def getChartJsCode($name, $id, $type, $series1, $series2 = "", $column = "avg", $series3 = "", $series4 = "", $series5 = "", $series6 = "", $series7 = "", $series8 = "")
+
+            ## Only add JS chart code if in array
+            #if $name in $panelItems('chart', page=$page, subpage=$subpage)
+                #set global $cc_name  = $name
+                #set global $cc_scope = ''
+                #include "inc/chart_colors_setup.inc"
+
+                document.querySelectorAll('[data-chart-mount="$name"]').forEach(function (chartElement) {
+                    new ApexCharts(chartElement, {
+                        ...graph_${type}_config,
+                        ## Per-series colors aligned to emitted series: series1 = slot 0; series2-8
+                        ## each advance a slot, appending a color only when the series has data.
+                        #set $sc_color_list = []
+                        #silent $sc_color_list.append($cc_color_refs[0] if len($cc_color_refs) > 0 else 'default')
+                        #set $sc_pos = 1
+                        #for $sname in [$series2, $series3, $series4, $series5, $series6, $series7, $series8]
+                            #if $sname != ""
+                                #if $getVar('day.' + $sname + '.has_data')
+                                    #silent $sc_color_list.append($cc_color_refs[$sc_pos] if $sc_pos < len($cc_color_refs) else 'default')
+                                #end if
+                                #set $sc_pos = $sc_pos + 1
+                            #end if
+                        #end for
+                        #if len($cc_color_refs) > 0 and len($sc_color_list) > 0
+                        colors: neowxChartColors([
+                            #for $cref in $sc_color_list
+                            "$cref",
+                            #end for
+                        ], $len($sc_color_list), "$name"),
+                        #end if
+                        #if $pg_align_mid and $type != 'radar'
+                            xaxis: {
+                                ...graph_${type}_config.xaxis,
+                                #include "inc/graph_align_axis.inc"
+                            },
+                        #end if
+                        #if $name == "windDir"
+                            yaxis: {
+                                max: 360,
+                                min: 0,
+                                type: 'datetime',
+                                tickAmount: 8,
+                                trim: false,
+                                labels: {
+                                    tickAmount: 8,
+                                    rotateAlways: false,
+                                    hideOverlappingLabels: true,
+                                    showDuplicates: false,
+                                    trim: false,
+                                    formatter: function(val, timestamp) {
+                                        var degrees = Number(val);
+                                        var direction = getOrdinalDirection(degrees);
+                                        return direction;
+                                    }
+                                },
+                            },
+                            tooltip: {
+                                enabled: true,
+                                y: {
+                                    formatter: function (val) {
+                                        var degrees = Number(val);
+                                        var direction = getOrdinalDirection(degrees);
+                                        return direction + ' (' + degrees.toFixed(0) + '°)';
+                                    }
+                                },
+                            },
+                        #else
+                            yaxis: {
+                                labels: {
+                                    formatter: function (val) {
+                                        return formatNumber(val, "$getVar('unit.format.' + series1)") + "$getVar('unit.label.' + series1)";
+                                    }
+                                },
+                            },
+                        #end if
+                        series: [
+                            {
+                                name: "$getVar('obs.label.' + series1)",
+                                data: [ $getChartData(series1, column) ]
+                            }
+                            #if $series2 != "" and $getVar('day.' + series2 + '.has_data')
+                                ,{
+                                    name: "$getVar('obs.label.' + series2)",
+                                    data: [ $getChartData(series2, column) ]
+                                }
+                            #end if
+                            #if $series3 != "" and $getVar('day.' + series3 + '.has_data')
+                                ,{
+                                    name: "$getVar('obs.label.' + series3)",
+                                    data: [ $getChartData(series3, column) ]
+                                }
+                            #end if
+                            #if $series4 != "" and $getVar('day.' + series4 + '.has_data')
+                                ,{
+                                    name: "$getVar('obs.label.' + series4)",
+                                    data: [ $getChartData(series4, column) ]
+                                }
+                            #end if
+                            #if $series5 != "" and $getVar('day.' + series5 + '.has_data')
+                                ,{
+                                    name: "$getVar('obs.label.' + series5)",
+                                    data: [ $getChartData(series5, column) ]
+                                }
+                            #end if
+                            #if $series6 != "" and $getVar('day.' + series6 + '.has_data')
+                                ,{
+                                    name: "$getVar('obs.label.' + series6)",
+                                    data: [ $getChartData(series6, column) ]
+                                }
+                            #end if
+                            #if $series7 != "" and $getVar('day.' + series7 + '.has_data')
+                                ,{
+                                    name: "$getVar('obs.label.' + series7)",
+                                    data: [ $getChartData(series7, column) ]
+                                }
+                            #end if
+                            #if $series8 != "" and $getVar('day.' + series8 + '.has_data')
+                                ,{
+                                    name: "$getVar('obs.label.' + series8)",
+                                    data: [ $getChartData(series8, column) ]
+                                }
+                            #end if
+                        ]
+                    }).render()
+                });
+
+            #end if
+
+        #end def
+
+        ## +-------------------------------------------------------------------------+
+        ## | Chart definitions                                                       |
+        ## +-------------------------------------------------------------------------+
+
+        <script type="text/javascript">
+            // Config templates
+
+            ## ---- align setup (once per page): shared by standard AND custom charts ----
+            #set global $align_start = int($day.start.raw)
+            #set global $align_stop  = int($day.end.raw)
+            #include "inc/graph_align_setup.inc"
+
+            var graph_area_config = {
+                #include "inc/graph_area_config.inc"
+            }
+            var graph_bar_config = {
+                #include "inc/graph_bar_config.inc"
+            }
+            var graph_radar_config = {
+                #include "inc/graph_radar_config.inc"
+            }
+            var graph_line_config = {
+                #include "inc/graph_line_config.inc"
+            }
+
+            // --- Special charts: multi-series or non-default columns ---
+            #set $processed_charts = set()
+
+            // Wind (windSpeed + windGust, max column)
+            #if $day.windSpeed.has_data
+                $getChartJsCode("windSpeed", "windSpeedchart", "area", "windSpeed", "windGust", "max")
+            #end if
+            #silent $processed_charts.add("windSpeed")
+
+            // Build wind vector chart
+            var vector_data = {
+                'N': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'NE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'E': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'SE': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'S': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'SW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'W': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+                'NW': {'sum': 0.0, 'amt': 0, 'avg': 0.0, 'max': 0.0},
+            };
+
+            var raw_data = [
+                #for $record in $day.spans(interval=int($Extras.Charts.current_timespan))
+                    {
+                        'dir': "$record.wind.vecdir.raw",
+                        'speed': "$record.windSpeed.avg.raw",
+                        'max': "$record.windGust.max.raw"
+                    },
+                #end for
+            ];
+
+            raw_data.forEach(function(item) {
+                var vec_dir = parseInt(item.dir);
+                var vec_speed = parseFloat(item.speed);
+                var max_speed = parseFloat(item.max);
+
+                if(typeof vec_dir === 'number') {
+                    var vec_key = false;
+
+                    // Detect key based on vec direction (0-360). 45° steps, using the middle +- 45/2=22.5
+                    if(vec_dir > 337.5 || vec_dir <= 22.5) {
+                        vec_key = 'N';
+                    }
+                    if(vec_dir > 22.5 && vec_dir <= 67.5) {
+                        vec_key = 'NE';
+                    }
+                    if(vec_dir > 67.5 && vec_dir <= 112.5) {
+                        vec_key = 'E';
+                    }
+                    if(vec_dir > 112.5 && vec_dir <= 157.5) {
+                        vec_key = 'SE';
+                    }
+                    if(vec_dir > 157.5 && vec_dir <= 202.5) {
+                        vec_key = 'S';
+                    }
+                    if(vec_dir > 202.5 && vec_dir <= 247.5) {
+                        vec_key = 'SW';
+                    }
+                    if(vec_dir > 247.5 && vec_dir <= 292.5) {
+                        vec_key = 'W';
+                    }
+                    if(vec_dir > 292.5 && vec_dir <= 337.5) {
+                        vec_key = 'NW';
+                    }
+
+                    if(vec_key !== false) {
+                        vector_data[vec_key]['sum'] += vec_speed;
+                        vector_data[vec_key]['amt']++;
+
+                        if(max_speed > vector_data[vec_key]['max']) {
+                            vector_data[vec_key]['max'] = max_speed;
+                        }
+                    }
+
+                }
+            });
+
+            // Finally build arrays for chart
+            var avg_values = [];
+            var max_values = [];
+            Object.keys(vector_data).forEach(function (item) {
+                if(vector_data[item]['amt'] > 0) {
+                    avg_values.push(vector_data[item]['sum'] / vector_data[item]['amt']);
+                    } else {
+                    avg_values.push(0);
+                }
+
+                max_values.push(vector_data[item]['max'])
+            });
+
+            // Display wind vector chart
+
+            #set global $cc_name  = 'windvec'
+            #set global $cc_scope = ''
+            #include "inc/chart_colors_setup.inc"
+            #set $sc_color_list = []
+            #silent $sc_color_list.append($cc_color_refs[0] if len($cc_color_refs) > 0 else 'default')
+            #silent $sc_color_list.append($cc_color_refs[1] if len($cc_color_refs) > 1 else 'default')
+            document.querySelectorAll('[data-chart-mount="windvec"]').forEach(function (windvecchart) {
+                new ApexCharts(windvecchart, {
+                    ...graph_radar_config,
+                    #if len($cc_color_refs) > 0
+                    colors: neowxChartColors([
+                        #for $cref in $sc_color_list
+                        "$cref",
+                        #end for
+                    ], $len($sc_color_list), "windvec"),
+                    #end if
+                    yaxis: {
+                        labels: {
+                            formatter: function (val) {
+                                return formatNumber(val, "$unit.format.windSpeed") + "$unit.label.windSpeed";
+                            }
+                        }
+                    },
+                    series: [
+                        {
+                            name: "$obs.label.windSpeed",
+                            data: avg_values
+                        },
+                        {
+                            name: "$obs.label.windGust",
+                            data: max_values
+                        },
+                    ]
+                }).render()
+            });
+            #silent $processed_charts.add("windvec")
+
+            // --- Default single-series charts: loop over the chart sections ---
+            // Charts added to $processed_charts above are skipped here
+            // Chart type overrides for charts that are not 'area' (default)
+            #set $default_chart_types = {'windDir': 'line', 'rain': 'bar', 'ET': 'bar', 'windrun': 'bar', 'snowDepth': 'bar', 'lightning_strike_count': 'bar', 'lightning_noise_count': 'bar', 'lightning_disturber_count': 'bar', 'lightning_distance': 'bar'}
+            // Aggregate column overrides for charts that are not 'avg' (default)
+            #set $default_chart_columns = {'windDir': 'vecdir', 'ET': 'sum', 'rain': 'sum', 'windrun': 'sum', 'UV': 'max', 'radiation': 'max', 'luminosity': 'max', 'snowDepth': 'sum', 'lightning_strike_count': 'sum'}
+            // Series1 field overrides for charts where the series field name differs from the chart name
+            #set $default_chart_series = {'windDir': 'wind'}
+
+            #for $x in $panelItems('chart', page=$page, subpage=$subpage)
+                #if not $x.startswith('customChart') and $x not in $processed_charts and not $isTelemetryItem($x) and not $isEmbeddedItem($x)
+                    #silent $processed_charts.add($x)
+                    #if $getVar('day.' + $x + '.has_data')
+                        #set $c_type = $default_chart_types.get($x, 'area')
+                        #set $c_col = $default_chart_columns.get($x, 'avg')
+                        #set $c_series = $default_chart_series.get($x, $x)
+                        #set $c_id = $x + 'chart'
+                        $getChartJsCode($x, $c_id, $c_type, $c_series, "", $c_col)
+                    #end if
+                #end if
+            #end for
+
+            // Custom charts (dynamically generated from skin.conf [[Appearance]] [[[customChart*]]] sections)
+            #set $seen_custom_charts = set()
+            #for $x in $panelItems('chart', page=$page, subpage=$subpage)
+                #if $x.startswith('customChart') and $x not in $seen_custom_charts
+                    #silent $seen_custom_charts.add($x)
+                    #set $cc = $Extras.Appearance.get($x, {})
+                    #if $cc
+                        #set $cc_type = $cc.get('charttype', 'area')
+                        ## Page-specific override subsection (key = "day" for this page).
+                        ## Keys absent from the subsection fall back to the top-level default.
+                        #set $cc_page = $cc.get('day', $cc.get('yesterday', {}))
+                        ## Resolve default column list: page → top-level → 'avg'
+                        #set $cc_column_raw = $cc_page.get('column', $cc.get('column', 'avg'))
+                        #set $cc_cols = ['avg']
+                        #if isinstance($cc_column_raw, list)
+                            #set $cc_cols = [c.strip() for c in $cc_column_raw if c.strip()]
+                        #else
+                            #set $cc_cols = [c.strip() for c in str($cc_column_raw).split(',') if c.strip()]
+                        #end if
+                        #if len($cc_cols) == 0
+                            #set $cc_cols = ['avg']
+                        #end if
+                        ## Resolve default values list: page → top-level
+                        #set $cc_values_raw = $cc_page.get('values', $cc.get('values', ''))
+                        #if isinstance($cc_values_raw, list)
+                            #set $cc_vals = [v.strip() for v in $cc_values_raw if v.strip()]
+                        #else
+                            #set $cc_vals = [v.strip() for v in str($cc_values_raw).split(',') if v.strip()]
+                        #end if
+                        ##
+                        ## Build cc_series_pairs: list of (field, [columns])
+                        ##
+                        ## If the page subsection contains any field-name keys (anything that is
+                        ## NOT a reserved key and whose value is a string or list), those define
+                        ## exactly which fields are shown and with which columns on this page.
+                        ## Reserved keys inside a page subsection: column, values, title, charttype
+                        ## Example:
+                        ##   [[[[day]]]]
+                        ##       outTemp  = min, max   <- two series for outTemp
+                        ##       dewpoint = avg        <- one series for dewpoint
+                        ## If NO field-name keys are present, fall back to cc_vals + cc_cols.
+                        ##
+                        ## Build cc_field_map without a generator (avoids Python 3 / Cheetah scope issue)
+                        #set $cc_field_map = {}
+                        #for $fk, $fv in $cc_page.items()
+                            #if $fk not in ('column', 'values', 'title', 'charttype', 'yaxis', 'yaxis_config', 'datetime_label_format', 'datetime_tooltip_format', 'colors', 'tick_style', 'hidevalues') and isinstance($fv, (str, list))
+                                #silent $cc_field_map[$fk] = $fv
+                            #end if
+                        #end for
+                        #if len($cc_field_map) > 0
+                            ## Per-field column assignment found
+                            #set $cc_series_pairs = []
+                            #for $field_k, $col_v in $cc_field_map.items()
+                                #if isinstance($col_v, list)
+                                    #set $cols_k = [c.strip() for c in $col_v if c.strip()]
+                                #else
+                                    #set $cols_k = [c.strip() for c in $col_v.split(',') if c.strip()]
+                                #end if
+                                #if $cols_k
+                                    #silent $cc_series_pairs.append(($field_k, $cols_k))
+                                #end if
+                            #end for
+                        #else
+                            ## No field-name keys: every field gets the same column list
+                            ## Use #for loop instead of list comprehension to avoid Cheetah/Python 3
+                            ## scope issue where $cc_cols cannot be resolved inside a comprehension.
+                            #set $cc_series_pairs = []
+                            #for $v in $cc_vals
+                                #silent $cc_series_pairs.append(($v, $cc_cols))
+                            #end for
+                        #end if
+
+                        ## +-------------------------------------------------------------+
+                        ## | Multi-Axis Configuration Parser                             |
+                        ## +-------------------------------------------------------------+
+                        ## Parse yaxis configuration for multi-axis support
+                        #set $yaxis_config = $cc_page.get('yaxis_config', $cc.get('yaxis_config', {}))
+                        #set $axis_map = {}  ## Maps series_name -> axis_id (y1, y2, etc)
+                        #set $axes_used = set()  ## Track which axes are actually used
+
+                        ## Check for yaxis subsection that maps fields to axes
+                        #set $yaxis_section = $cc_page.get('yaxis', $cc.get('yaxis', {}))
+                        #if isinstance($yaxis_section, dict)
+                            #for $yaxis_item in $yaxis_section.items()
+                                #set $field_k = $yaxis_item[0]
+                                #set $axis_id = $yaxis_item[1]
+                                #set $axis_id_clean = str($axis_id).strip()
+                                #silent $axis_map[$field_k] = $axis_id_clean
+                                #silent $axes_used.add($axis_id_clean)
+                            #end for
+                        #end if
+
+                        ## Default: all series on y1 if no assignments
+                        #if len($axis_map) == 0
+                            #for $field_k, $cols_k in $cc_series_pairs
+                                #silent $axis_map[$field_k] = 'y1'
+                                #silent $axes_used.add('y1')
+                            #end for
+                        #else
+                            ## Ensure any unmapped fields get y1
+                            #for $field_k, $cols_k in $cc_series_pairs
+                                #if $field_k not in $axis_map
+                                    #silent $axis_map[$field_k] = 'y1'
+                                    #silent $axes_used.add('y1')
+                                #end if
+                            #end for
+                        #end if
+
+                        ## Build sorted list of axes (y1, y2, y3, ...)
+                        #set $axes_list = sorted(list($axes_used))
+
+                        ## Resolve per-chart date-format overrides (shared logic)
+                        #set global $cc_name  = $x
+                        #set global $cc_scope = 'day'
+                        #include "inc/chart_date_format.inc"
+                        #include "inc/chart_tick_setup.inc"
+                        #include "inc/chart_colors_setup.inc"
+
+                        ##
+                        ## Render the chart JS
+                        ## Render chart JS
+                        #if len($cc_series_pairs) > 0 and $x in $panelItems('chart', page=$page, subpage=$subpage)
+                            #try
+                                #set $_ = $axes_list
+                            #except
+                                #set $axes_list = ['y1']
+                            #end try
+                            ## hidevalues: series that start collapsed (page -> chart level).
+                            #set $cc_hidden_raw = $cc_page.get('hidevalues', $cc.get('hidevalues', ''))
+                            #if isinstance($cc_hidden_raw, list)
+                                #set $cc_hidden_obs = [v.strip().replace(' ', '') for v in $cc_hidden_raw if v.strip()]
+                            #else
+                                #set $cc_hidden_obs = [v.strip().replace(' ', '') for v in str($cc_hidden_raw).split(',') if v.strip()]
+                            #end if
+                            #set global $cc_hidden_names = []
+                            #for $val, $cols in $cc_series_pairs
+                                #if len($cols) == 1
+                                    #if ($val in $cc_hidden_obs or ($val + ':' + $cols[0]) in $cc_hidden_obs) and $getVar('day.' + val + '.has_data')
+                                        #silent $cc_hidden_names.append($getVar('obs.label.' + val))
+                                    #end if
+                                #else
+                                    #for $col in $cols
+                                        #if ($val in $cc_hidden_obs or ($val + ':' + $col) in $cc_hidden_obs) and $getVar('day.' + val + '.has_data')
+                                            #silent $cc_hidden_names.append($getVar('obs.label.' + val) + ' ' + $gettext($col))
+                                        #end if
+                                    #end for
+                                #end if
+                            #end for
+                            document.querySelectorAll('[data-chart-mount="$x"]').forEach(function (chartElement) {
+                                #if len($cc_hidden_names) > 0
+                                chartElement.style.opacity = '0';
+                                setTimeout(function () { chartElement.style.opacity = '1'; }, 2000);
+                                #end if
+                                new ApexCharts(chartElement, {
+                                    ...graph_${cc_type}_config,
+                                    #include "inc/chart_hidden_series.inc"
+                                    #if $cc_label_fmt or $pg_align_mid or $cc_tick_set
+                                    xaxis: {
+                                        ...graph_${cc_type}_config.xaxis,
+                                        #include "inc/chart_tick_axis.inc"
+                                        #if $cc_label_fmt
+                                        labels: { ...graph_${cc_type}_config.xaxis.labels, formatter: neowxDateFormatter("$cc_label_fmt") }
+                                        #end if
+                                    },
+                                    #end if
+                                    #if $cc_tooltip_fmt or len($axes_list) > 1
+                                    tooltip: {
+                                        ...graph_${cc_type}_config.tooltip,
+                                        #if $cc_tooltip_fmt
+                                        x: { ...graph_${cc_type}_config.tooltip.x, formatter: neowxDateFormatter("$cc_tooltip_fmt") },
+                                        #end if
+                                        #if len($axes_list) > 1
+                                        ## Per-series tooltip unit formatter. ApexCharts picks the y-axis label
+                                        ## formatter by series index, which mismatches units on multi-axis charts
+                                        ## (e.g. >1 series per axis). Key the unit off the series name instead.
+                                        #set $series_field_by_name = {}
+                                        #for $ttf_val, $ttf_cols in $cc_series_pairs
+                                            #if len($ttf_cols) == 1
+                                                #silent $series_field_by_name[$getVar('obs.label.' + $ttf_val)] = $ttf_val
+                                            #else
+                                                #for $ttf_col in $ttf_cols
+                                                    #silent $series_field_by_name[$getVar('obs.label.' + $ttf_val) + ' ' + $gettext($ttf_col)] = $ttf_val
+                                                #end for
+                                            #end if
+                                        #end for
+                                        y: {
+                                            formatter: function (val, opts) {
+                                                var u = {
+                                                    #for $ttn, $ttf in $series_field_by_name.items()
+                                                    "$ttn": ["$getVar('unit.format.' + $ttf)", "$getVar('unit.label.' + $ttf)"],
+                                                    #end for
+                                                };
+                                                var s = opts.w.config.series[opts.seriesIndex];
+                                                var p = s ? u[s.name] : null;
+                                                return p ? (formatNumber(val, p[0]) + p[1]) : val;
+                                            }
+                                        },
+                                        #end if
+                                    },
+                                    #end if
+                                    #if len($axes_list) <= 1
+                                        ## Single axis (backward compatible)
+                                        yaxis: {
+                                            labels: {
+                                                formatter: function (val) {
+                                                    return formatNumber(val, "$getVar('unit.format.' + cc_series_pairs[0][0])") + "$getVar('unit.label.' + cc_series_pairs[0][0])";
+                                                }
+                                            },
+                                        },
+                                    #else
+                                        ## Multiple axes configuration
+                                        ## Build per-axis lists of the emitted series names so seriesName can be
+                                        ## an ARRAY. An array seriesName makes ApexCharts use its array-style axis
+                                        ## mapping, which avoids a crash in setSeriesYAxisMappings when a series'
+                                        ## index exceeds the y-axis count (e.g. >1 field on an axis, or >2 series).
+                                        #set $axis_series_names = {}
+                                        #for $asn_axis_id in $axes_list
+                                            #silent $axis_series_names[$asn_axis_id] = []
+                                        #end for
+                                        #for $asn_val, $asn_cols in $cc_series_pairs
+                                            #set $asn_axis = $axis_map.get($asn_val, $axes_list[0])
+                                            #if $asn_axis not in $axis_series_names
+                                                #set $asn_axis = $axes_list[0]
+                                            #end if
+                                            #if len($asn_cols) == 1
+                                                #silent $axis_series_names[$asn_axis].append($getVar('obs.label.' + $asn_val))
+                                            #else
+                                                #for $asn_col in $asn_cols
+                                                    #silent $axis_series_names[$asn_axis].append($getVar('obs.label.' + $asn_val) + ' ' + $gettext($asn_col))
+                                                #end for
+                                            #end if
+                                        #end for
+                                        yaxis: [
+                                            #for $axis_entry in enumerate($axes_list)
+                                                #set $idx = $axis_entry[0]
+                                                #set $axis_id = $axis_entry[1]
+                                                ## Find fields assigned to this axis
+                                                #set $fields_on_axis = []
+                                                #for $f, $a in $axis_map.items()
+                                                    #if $a == $axis_id
+                                                        #silent $fields_on_axis.append($f)
+                                                    #end if
+                                                #end for
+                                                #set $first_field = $fields_on_axis[0] if len($fields_on_axis) > 0 else $cc_series_pairs[0][0]
+                                                ## Get axis-specific configuration
+                                                #set $axis_cfg = $yaxis_config.get($axis_id, {})
+                                                #set $axis_title = $axis_cfg.get('title', '')
+                                                #set $axis_opposite_raw = $axis_cfg.get('opposite', None)
+                                                ## Default: first axis on left (false), others on right (true)
+                                                #if $axis_opposite_raw is None
+                                                    #set $axis_opposite = 'true' if $idx > 0 else 'false'
+                                                #else
+                                                    #set $axis_opposite = 'true' if str($axis_opposite_raw).lower() in ['true', 'yes', '1'] else 'false'
+                                                #end if
+                                                #set $axis_decimals = $axis_cfg.get('decimals', None)
+                                                #set $axis_min = $axis_cfg.get('min', None)
+                                                #set $axis_max = $axis_cfg.get('max', None)
+                                            {
+                                                #set $asn_list = $axis_series_names.get($axis_id, [])
+                                                #if not $asn_list
+                                                    #set $asn_list = [$getVar('obs.label.' + $first_field)]
+                                                #end if
+                                                seriesName: [
+                                                    #for $asn in $asn_list
+                                                        "$asn",
+                                                    #end for
+                                                ],
+                                                #if $axis_title
+                                                title: {
+                                                    text: "$axis_title",
+                                                    style: {
+                                                        fontSize: '12px',
+                                                    }
+                                                },
+                                                #end if
+                                                opposite: $axis_opposite,
+                                                #if $axis_min is not None
+                                                min: $axis_min,
+                                                #end if
+                                                #if $axis_max is not None
+                                                max: $axis_max,
+                                                #end if
+                                                labels: {
+                                                    formatter: function (val) {
+                                                        #if $axis_decimals is not None
+                                                        return formatNumber(val, "%.$axis_decimals\f") + "$getVar('unit.label.' + $first_field)";
+                                                        #else
+                                                        return formatNumber(val, "$getVar('unit.format.' + $first_field)") + "$getVar('unit.label.' + $first_field)";
+                                                        #end if
+                                                    }
+                                                },
+                                            },
+                                            #end for
+                                        ],
+                                    #end if
+                                    #if len($axes_list) > 1
+                                    ## Multi-axis assigns each series an axis group, which makes ApexCharts
+                                    ## cluster the legend by axis (out of series order). Keep series order.
+                                    legend: { ...graph_${cc_type}_config.legend, clusterGroupedSeries: false },
+                                    #end if
+                                    series: [
+                                        #set $cc_color_list = []
+                                        #set $cc_pos = 0
+                                        #for $val, $cols in $cc_series_pairs
+                                            #if $getVar('day.' + val + '.has_data')
+                                                #if len($cols) == 1
+                                                    ## Single column for this field → no column label suffix
+                                                    {
+                                                        name: "$getVar('obs.label.' + val)",
+                                                        data: [ $getChartData(val, cols[0]) ]
+                                                    },
+                                                    #silent $cc_color_list.append($cc_color_refs[$cc_pos] if $cc_pos < len($cc_color_refs) else 'default')
+                                                    #set $cc_pos = $cc_pos + 1
+                                                #else
+                                                    ## Multiple columns → append column label to series name
+                                                    #for $col in $cols
+                                                        {
+                                                            name: "$getVar('obs.label.' + val) $gettext($col)",
+                                                            data: [ $getChartData(val, col) ]
+                                                        },
+                                                        #silent $cc_color_list.append($cc_color_refs[$cc_pos] if $cc_pos < len($cc_color_refs) else 'default')
+                                                        #set $cc_pos = $cc_pos + 1
+                                                    #end for
+                                                #end if
+                                            #else
+                                                #set $cc_pos = $cc_pos + len($cols)
+                                            #end if
+                                        #end for
+                                    ],
+                                    #if len($cc_color_refs) > 0 and len($cc_color_list) > 0
+                                        #set $cc_color_count = len($cc_color_list)
+                                        colors: neowxChartColors([
+                                        #for $cref in $cc_color_list
+                                            "$cref",
+                                        #end for
+                                        ], $cc_color_count, "$x"),
+                                    #end if
+                                }).render()
+                            });
+                        #end if
+                    #end if
+                #end if
+            #end for
+
+            ## Telemetry charts on this page. The include never touches the
+            ## alignment globals - a telemetry chart follows the page's window
+            ## like every chart beside it - so it only has to come after
+            ## graph_align_setup.inc and var graph_area_config, which it reads.
+            ## This page's own data window, so a telemetry chart here fetches what the
+            ## weather charts beside it fetch - not chart_days at default_interval.
+            #set global $tele_chart_span     = $day
+            #set global $tele_chart_interval = int($Extras.Charts.current_timespan)
+            #set global $tele_mode        = 'js'
+            #set global $tele_chart_items = [x for x in $panelItems('chart', page=$page, subpage=$subpage) if $isTelemetryItem(x)]
+            #include "inc/telemetry.inc"
+
+        </script>
+
+        <script src="$Extras.MQTT.paho_mqtt_url" type="text/javascript"></script>
+        <script type="text/javascript" src="${base_path}js/weewx-mqtt.js?v=$Extras.version"></script>
+
+    </body>
+</html>

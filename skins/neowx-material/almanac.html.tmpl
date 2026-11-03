@@ -1,5 +1,6 @@
 #encoding UTF-8
 #attr $page = 'almanac'
+#attr $subpage = 'almanac'
 ## +-------------------------------------------------------------------------+
 ## |    almanac.html.tmpl                Template file for "almanac" page    |
 ## +-------------------------------------------------------------------------+
@@ -7,12 +8,12 @@
 <html lang="$lang">
     <head>
         <title>$gettext("almanac") | $station.location</title>
-        #include "head.inc"
+        #include "inc/head.inc"
     </head>
     <body class="${Extras.Appearance.mode}-theme main-bg" ontouchstart="">
 
         #attr $active_nav = 'almanac'
-        #include "header.inc"
+        #include "inc/header.inc"
 
         ## If extended almanac information is available, do extra calculations.
         #if $almanac.hasExtras
@@ -40,185 +41,210 @@
 
                     #if $almanac.hasExtras
 
-                        <div class="col-12 mb-4">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <h5 class="h5-responsive $Extras.color-text">$gettext("sun")</h5>
-
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <h6 class="$Extras.color-text"><i class="wi wi-sunrise"></i>
-                                            $gettext("rise")</h6>
-                                            $almanac.sun.rise
-                                            <span class="d-block text-muted" data-toggle="tooltip" data-html="true"
-                                            title="$gettext("start_civil_twilight")">$almanac(horizon=-6).sun(use_center=1).rise</span>
-                                        </div>
-                                        <div class="col-4">
-                                            <h6 class="$Extras.color-text"><i class="wi wi-day-sunny"></i>
-                                            $gettext("transit")</h6>
-                                            $almanac.sun.transit
-                                        </div>
-                                        <div class="col-4">
-                                            <h6 class="$Extras.color-text"><i class="wi wi-sunset"></i>
-                                            $gettext("set")</h6>
-                                            $almanac.sun.set
-                                            <span class="d-block text-muted" data-toggle="tooltip" data-html="true"
-                                            title="$gettext("end_civil_twilight")">$almanac(horizon=-6).sun(use_center=1).set</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <h6 class="$Extras.color-text"><i class="wi wi-day-sunny"></i>
-                                            $gettext("daylight")</h6>
-                                            $almanac.sun.visible.long_form<br/>($sun_visible_change.long_form $change_str)
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="almanac-sun">
+                                #set global $panel_title = '<i class="wi wi-day-sunny mr-1"></i> ' + $gettext("sun")
+                                #set global $panel_id    = 'nwm-alm-sun'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-alm-sun" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-3 text-center">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <h6 class="$Extras.color-text"><i class="wi wi-sunrise"></i>
+                                                    $gettext("rise")</h6>
+                                                    $almanac.sun.rise
+                                                    <span class="d-block text-muted" data-toggle="tooltip" data-html="true"
+                                                    title="$gettext("start_civil_twilight")">$almanac(horizon=-6).sun(use_center=1).rise</span>
+                                                </div>
+                                                <div class="col-4">
+                                                    <h6 class="$Extras.color-text"><i class="wi wi-day-sunny"></i>
+                                                    $gettext("transit")</h6>
+                                                    $almanac.sun.transit
+                                                </div>
+                                                <div class="col-4">
+                                                    <h6 class="$Extras.color-text"><i class="wi wi-sunset"></i>
+                                                    $gettext("set")</h6>
+                                                    $almanac.sun.set
+                                                    <span class="d-block text-muted" data-toggle="tooltip" data-html="true"
+                                                    title="$gettext("end_civil_twilight")">$almanac(horizon=-6).sun(use_center=1).set</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <h6 class="$Extras.color-text"><i class="wi wi-day-sunny"></i>
+                                                    $gettext("daylight")</h6>
+                                                    $almanac.sun.visible.long_form<br/>($sun_visible_change.long_form $change_str)
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-12 mb-4">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <h5 class="h5-responsive $Extras.color-text">$gettext("celestial_bodies")</h5>
-                                    <table class="table table-striped text-left" style="table-layout: fixed; width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">$gettext("rise") <span class="d-md-none">/ $gettext("azimuth")</span></th>
-                                                <th scope="col">$gettext("transit") <span class="d-md-none">/ $gettext("sky_altitude")</span></th>
-                                                <th scope="col">$gettext("set")</th>
-                                                <th scope="col" class="d-none d-md-table-cell">$gettext("azimuth")</th>
-                                                <th scope="col" class="d-none d-md-table-cell">$gettext("sky_altitude")</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            #for $body in $bodies
-                                                #set $binder = $getattr($almanac,$body)
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="almanac-celestial-bodies">
+                                #set global $panel_title = '<i class="wi wi-stars mr-1"></i> ' + $gettext("celestial_bodies")
+                                #set global $panel_id    = 'nwm-alm-celestial-bodies'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-alm-celestial-bodies" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-3 text-center">
+                                            <div style="overflow-x: auto;">
+                                                <table class="table table-striped text-left mb-0" style="table-layout: fixed; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Name</th>
+                                                            <th scope="col">$gettext("rise") <span class="d-md-none">/ $gettext("azimuth")</span></th>
+                                                            <th scope="col">$gettext("transit") <span class="d-md-none">/ $gettext("sky_altitude")</span></th>
+                                                            <th scope="col">$gettext("set")</th>
+                                                            <th scope="col" class="d-none d-md-table-cell">$gettext("azimuth")</th>
+                                                            <th scope="col" class="d-none d-md-table-cell">$gettext("sky_altitude")</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        #for $body in $bodies
+                                                            #set $binder = $getattr($almanac,$body)
+                                                            <tr>
+                                                                <td scope="row">$gettext($body)</td>
+                                                                <td>$binder.rise<div class="d-md-none">$binder.azimuth.formatted°</div></td>
+                                                                <td>$binder.transit<div class="d-md-none">$binder.altitude.formatted°</div></td>
+                                                                <td>$binder.set</td>
+                                                                <td class="d-none d-md-table-cell">$binder.azimuth.formatted°</td>
+                                                                <td class="d-none d-md-table-cell">$binder.altitude.formatted°</td>
+                                                            </tr>
+                                                        #end for
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="almanac-equinox-solstice">
+                                #set global $panel_title = '<i class="wi wi-day-haze mr-1"></i> ' + $gettext("equinox") + ' &amp; ' + $gettext("solstice")
+                                #set global $panel_id    = 'nwm-alm-equinox-solstice'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-alm-equinox-solstice" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-3 text-center">
+                                            <table class="table table-striped text-left mb-0">
                                                 <tr>
-                                                    <td scope="row">$gettext($body)</td>
-                                                    <td>$binder.rise<div class="d-md-none">$binder.azimuth.formatted°</div></td>
-                                                    <td>$binder.transit<div class="d-md-none">$binder.altitude.formatted°</div></td>
-                                                    <td>$binder.set</td>
-                                                    <td class="d-none d-md-table-cell">$binder.azimuth.formatted°</td>
-                                                    <td class="d-none d-md-table-cell">$binder.altitude.formatted°</td>
+                                                    <td>$gettext("vernal_equinox"):</td>
+                                                    <td>$almanac.next_vernal_equinox</td>
                                                 </tr>
-                                            #end for
-                                        </tbody>
-                                    </table>
+                                                <tr>
+                                                    <td>$gettext("summer_solstice"):</td>
+                                                    <td>$almanac.next_summer_solstice</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>$gettext("autumnal_equinox"):</td>
+                                                    <td>$almanac.next_autumnal_equinox</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>$gettext("winter_solstice"):</td>
+                                                    <td>$almanac.next_winter_solstice</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-12 col-lg-6 mb-4">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <h5 class="h5-responsive $Extras.color-text">
-                                        $gettext("equinox")
-                                        & $gettext("solstice")
-                                    </h5>
-
-                                    <table class="table table-striped text-left">
-                                        <tr>
-                                            <td>$gettext("vernal_equinox"):</td>
-                                            <td>$almanac.next_vernal_equinox</td>
-                                        </tr>
-                                        <tr>
-                                            <td>$gettext("summer_solstice"):</td>
-                                            <td>$almanac.next_summer_solstice</td>
-                                        </tr>
-                                        <tr>
-                                            <td>$gettext("autumnal_equinox"):</td>
-                                            <td>$almanac.next_autumnal_equinox</td>
-                                        </tr>
-                                        <tr>
-                                            <td>$gettext("winter_solstice"):</td>
-                                            <td>$almanac.next_winter_solstice</td>
-                                        </tr>
-                                    </table>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-lg-6 mb-4">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <h5 class="h5-responsive $Extras.color-text">
-                                        $gettext("moonphases")
-                                    </h5>
-
-                                    <table class="table table-striped text-left">
-                                        <tr>
-                                            <td>$gettext("currently"):</td>
-                                            <td>
-                                                #if $almanac.moon_index == 0
-                                                    <i class="wi wi-moon-new mr-1" style="opacity: .75"></i>
-                                                #else if $almanac.moon_index == 1
-                                                    <i class="wi wi-moon-waxing-crescent-4 mr-1" style="opacity: .75"></i>
-                                                #else if $almanac.moon_index == 2
-                                                    <i class="wi wi-moon-first-quarter mr-1" style="opacity: .75"></i>
-                                                #else if $almanac.moon_index == 3
-                                                    <i class="wi wi-moon-waxing-gibbous-4 mr-1" style="opacity: .75"></i>
-                                                #else if $almanac.moon_index == 4
-                                                    <i class="wi wi-moon-full mr-1" style="opacity: .75"></i>
-                                                #else if $almanac.moon_index == 5
-                                                    <i class="wi wi-moon-waning-gibbous-4 mr-1" style="opacity: .75"></i>
-                                                #else if $almanac.moon_index == 6
-                                                    <i class="wi wi-moon-third-quarter mr-1" style="opacity: .75"></i>
-                                                #else if $almanac.moon_index == 7
-                                                    <i class="wi wi-moon-waning-crescent-4 mr-1" style="opacity: .75"></i>
+                        <div class="col-12 col-lg-6 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="almanac-moonphases">
+                                #set global $panel_title = '<i class="wi wi-moon-alt-waxing-crescent-3 mr-1"></i> ' + $gettext("moonphases")
+                                #set global $panel_id    = 'nwm-alm-moonphases'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-alm-moonphases" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-3 text-center">
+                                            <table class="table table-striped text-left mb-0">
+                                                <tr>
+                                                    <td>$gettext("currently"):</td>
+                                                    <td>
+                                                        #if $almanac.moon_index == 0
+                                                            <i class="wi wi-moon-new mr-1" style="opacity: .75"></i>
+                                                        #else if $almanac.moon_index == 1
+                                                            <i class="wi wi-moon-waxing-crescent-4 mr-1" style="opacity: .75"></i>
+                                                        #else if $almanac.moon_index == 2
+                                                            <i class="wi wi-moon-first-quarter mr-1" style="opacity: .75"></i>
+                                                        #else if $almanac.moon_index == 3
+                                                            <i class="wi wi-moon-waxing-gibbous-4 mr-1" style="opacity: .75"></i>
+                                                        #else if $almanac.moon_index == 4
+                                                            <i class="wi wi-moon-full mr-1" style="opacity: .75"></i>
+                                                        #else if $almanac.moon_index == 5
+                                                            <i class="wi wi-moon-waning-gibbous-4 mr-1" style="opacity: .75"></i>
+                                                        #else if $almanac.moon_index == 6
+                                                            <i class="wi wi-moon-third-quarter mr-1" style="opacity: .75"></i>
+                                                        #else if $almanac.moon_index == 7
+                                                            <i class="wi wi-moon-waning-crescent-4 mr-1" style="opacity: .75"></i>
+                                                        #else
+                                                            <i class="wi wi-moon-waning-crescent-3 mr-1" style="opacity: .75"></i>
+                                                        #end if
+                                                        $almanac.moon_fullness% $almanac.moon_phase
+                                                    </td>
+                                                </tr>
+                                                #if $almanac.next_full_moon.raw < $almanac.next_new_moon.raw
+                                                    <tr>
+                                                        <td>$gettext("next_full_moon"):</td>
+                                                        <td>$almanac.next_full_moon</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>$gettext("next_new_moon"):</td>
+                                                        <td>$almanac.next_new_moon</td>
+                                                    </tr>
                                                 #else
-                                                    <i class="wi wi-moon-waning-crescent-3 mr-1" style="opacity: .75"></i>
+                                                    <tr>
+                                                        <td>$gettext("next_new_moon"):</td>
+                                                        <td>$almanac.next_new_moon</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>$gettext("next_full_moon"):</td>
+                                                        <td>$almanac.next_full_moon</td>
+                                                    </tr>
                                                 #end if
-                                                $almanac.moon_fullness% $almanac.moon_phase
-                                            </td>
-                                        </tr>
-                                        #if $almanac.next_full_moon.raw < $almanac.next_new_moon.raw
-                                            <tr>
-                                                <td>$gettext("next_full_moon"):</td>
-                                                <td>$almanac.next_full_moon</td>
-                                            </tr>
-                                            <tr>
-                                                <td>$gettext("next_new_moon"):</td>
-                                                <td>$almanac.next_new_moon</td>
-                                            </tr>
-                                        #else
-                                            <tr>
-                                                <td>$gettext("next_new_moon"):</td>
-                                                <td>$almanac.next_new_moon</td>
-                                            </tr>
-                                            <tr>
-                                                <td>$gettext("next_full_moon"):</td>
-                                                <td>$almanac.next_full_moon</td>
-                                            </tr>
-                                        #end if
-                                    </table>
-
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                     #else
 
-                        <div class="col-12 mb-4">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <h5 class="h5-responsive $Extras.color-text">$gettext("sun")</h5>
-
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <h6 class="$Extras.color-text"><i class="wi wi-sunrise"></i>
-                                            $gettext("rise")</h6>
-                                            $almanac.sunrise
-                                        </div>
-                                        <div class="col-6">
-                                            <h6 class="$Extras.color-text"><i class="wi wi-sunset"></i>
-                                            $gettext("set")</h6>
-                                            $almanac.sunset
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="almanac-sun">
+                                #set global $panel_title = '<i class="wi wi-day-sunny mr-1"></i> ' + $gettext("sun")
+                                #set global $panel_id    = 'nwm-alm-sun'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-alm-sun" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-3 text-center">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <h6 class="$Extras.color-text"><i class="wi wi-sunrise"></i>
+                                                    $gettext("rise")</h6>
+                                                    $almanac.sunrise
+                                                </div>
+                                                <div class="col-6">
+                                                    <h6 class="$Extras.color-text"><i class="wi wi-sunset"></i>
+                                                    $gettext("set")</h6>
+                                                    $almanac.sunset
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -231,8 +257,8 @@
 
         </main>
 
-        #include "footer.inc"
-        #include "js.inc"
+        #include "inc/footer.inc"
+        #include "inc/js.inc"
 
     </body>
 </html>

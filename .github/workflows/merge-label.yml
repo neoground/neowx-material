@@ -19,7 +19,7 @@ jobs:
         run: |
           echo The PR was merged
           git checkout master
-          HEAD_VERSION=$( grep 'version = 1' skins/neowx-material/skin.conf | cut -d '=' -f 2 | xargs echo )
+          HEAD_VERSION=$( grep -E '^\s*version\s*=' skins/neowx-material/skin.conf | cut -d '=' -f 2 | xargs echo )
           echo "DIST_VERSION=${HEAD_VERSION}" >> $GITHUB_ENV     
           echo New label: $HEAD_VERSION
 
