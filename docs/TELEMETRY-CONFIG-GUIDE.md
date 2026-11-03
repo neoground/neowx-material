@@ -7,10 +7,14 @@ by your weather station. Each field is configured in a single block under
 `[[Telemetry]]` in `skin.conf`. A `sensor_type` key picks the gauge style; without
 one the field shows its raw value with no gauge.
 
-Which fields appear is controlled by the `items` of `telemetry` and
-`telemetry_chart` sections under `Extras.Appearance.[[[sections]]]`. Only
-fields listed there are displayed — the per-field config blocks are just
-configuration, not opt-in.
+A field is classified as telemetry — and displayed as a gauge or chart
+instead of a plain weather item — if it has a `[[Telemetry]] [[[<name>]]]`
+block **or** appears in the `items` of a `telemetry` / `telemetry_chart`
+section under `Extras.Appearance.[[[sections]]]`; either signal is enough on
+its own. Telemetry items aren't confined to the telemetry page either — the
+same name can be listed in a `card` or `chart` section on any dashboard page.
+See "Field discovery" and "Telemetry items on other dashboard pages" below
+for the full rule and its gotchas.
 
 | sensor_type | What renders | Typical sensor |
 |---|---|---|
@@ -103,10 +107,14 @@ Both are gone. Every field now has a single block directly under `[[Telemetry]]`
 
 ### Field discovery
 
-Fields are shown only when they appear in the `items` of a `telemetry` or
-`telemetry_chart` section under `[[Appearance]] [[[sections]]]`. The skin does
-not walk `[[Telemetry]]` sub-sections looking for fields, so the per-field
-blocks sit alongside scalar settings like `chart_days` without confusion.
+A field counts as telemetry — and renders as a gauge or telemetry chart
+instead of a plain weather item — if either of these is true:
+
+1. It has a `[[Telemetry]] [[[<name>]]]` block, or
+2. It is listed in the `items` of any `telemetry` / `telemetry_chart` section
+   under `[[Appearance]] [[[sections]]]`.
+
+Either signal is enough by itself; a field doesn't need both.
 
 ```ini
 [[Appearance]]
@@ -125,6 +133,59 @@ written after it (`mode`, `panelColor`, `defaultChartBehavior`, ...) as
 belonging to whichever `[[[[...]]]]` block was opened last, not to
 `[[Appearance]]` itself. Add or edit other Appearance settings above
 `[[[sections]]]`, never below it.
+
+**Warning — classification is global, not per-page.** Signal 2 above isn't
+scoped to the telemetry page: it applies everywhere a name is checked. Put a
+weather observation's name in a `telemetry` / `telemetry_chart` section's
+`items` — even by accident — and that name is telemetry on *every* page that
+would otherwise show it, rendering as a gauge (or a plain min/max/current
+card, without a `sensor_type`) instead of its usual weather card or chart.
+Keep weather observations out of `telemetry` / `telemetry_chart` sections.
+
+**Do not list `windSpeed` in a telemetry section.** Every card page draws its
+own combined windSpeed/windGust chart onto the `windSpeed` chart mount
+unconditionally, regardless of classification. Classifying `windSpeed` as
+telemetry adds a second chart targeting that same mount, so the page ends up
+with two charts fighting over one element.
+
+### Telemetry items on other dashboard pages
+
+A telemetry item isn't confined to the telemetry page or to `telemetry` /
+`telemetry_chart` sections. List its name in the `items` of an ordinary
+`card` or `chart` section on any dashboard page, alongside weather
+observations, and it renders in place:
+
+```ini
+[[[[cards]]]]
+    items = outTemp, outHumidity, outTempBatteryStatus
+```
+
+The section's `content` picks the form the item takes — a gauge in a `card`
+section, a time-series chart in a `chart` section — the same as described
+under "Per-field block structure" below. With no `sensor_type` configured it
+falls back to a plain min/max/current card, exactly as it would on the
+telemetry page.
+
+A telemetry chart placed this way fetches its host page's own time window at
+that page's own interval — the same data the weather charts beside it use:
+`current_timespan` on Current and Yesterday, `week_timespan` on Week,
+`month_timespan` on Month, `year_timespan` on Year, and one point per day on
+the archived month and year pages. So a telemetry chart on Week costs about
+the same as a weather chart on Week, and its axis and its data agree under
+every `tick_style`.
+
+`[[Telemetry]] chart_days`, `default_interval` and the per-field
+`chart_interval` describe the **telemetry page's** window only. That page is
+unchanged.
+
+With MQTT enabled, a gauge placed this way updates live like the weather
+cards around it, provided the item has a `[[MQTT]] [[[SensorMapping]]]`
+entry. The browser does not guess from the raw number: each gauge card
+carries the states, ranges and thresholds from its `[[Telemetry]]` block, so
+a `status` sensor switches between its configured labels, and a `voltage` or
+`signal` sensor moves its bar or cone and turns red at `low_threshold`. The
+min and max side columns wait for the next report, as on every card. See the
+"Telemetry gauges" note in the MQTT guide.
 
 ### Per-field block structure
 
@@ -152,6 +213,11 @@ now live in the same per-field block as everything else.
 When a field has no `chart_interval`, the global `default_interval` set directly
 under `[[Telemetry]]` is used. If that is also absent, the skin falls back to
 `300` seconds.
+
+Both settings govern the **telemetry page** only. A telemetry chart listed in a
+chart section on any other page uses that page's own interval instead (see
+"Telemetry items on other dashboard pages" above), so neither `chart_interval`
+nor `default_interval` has any effect there.
 
 ---
 
@@ -545,8 +611,8 @@ Controls the order of historical charts. Only fields listed in the section's
 | Key | Purpose | Default |
 |---|---|---|
 | `allow_zero_values` | Show fields whose value is 0 | `no` |
-| `chart_days` | Days of history in charts | `30` |
-| `default_interval` | Default chart data-point interval (seconds) | `300` |
+| `chart_days` | Days of history in charts on the telemetry page (other pages use their own window) | `30` |
+| `default_interval` | Default chart data-point interval (seconds) on the telemetry page | `300` |
 | `value_position` | Value line placement for all cards (`none` hides all values) | `bottom` \| `left` \| `right` \| `none` |
 
 ### Per-field keys — all sensor types
@@ -555,7 +621,7 @@ Controls the order of historical charts. Only fields listed in the section's
 |---|---|---|
 | `sensor_type` | Gauge style | `none` \| `voltage` \| `signal` \| `percent` \| `status` |
 | `show_value` | Show or hide the value | `yes` \| `no` |
-| `chart_interval` | Chart data-point interval for this field | seconds |
+| `chart_interval` | Chart data-point interval for this field, on the telemetry page | seconds |
 | `colors` | Chart color override | e.g. `palette1:3` |
 
 ### `voltage` keys

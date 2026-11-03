@@ -34,14 +34,12 @@
     # it as an 'unknown setting' on that section.
     #
     # Here we override the shipped "card" section's item order/selection,
-    # and add a brand-new "embedded" section for content = embedded, which
-    # no shipped section uses, so nothing claims those items first.
+    # and add a brand-new "embedded" section containing an embedded item:
     [[[sections]]]
       [[[[card]]]]
         items = forecast, outTemp, outHumidity, barometer, windSpeed, rain, inTemp, inHumidity
       [[[[embedded]]]]
         items = iFrame_windy
-        content = embedded
 
   [[Embedded]]
      [[[iFrame_windy]]]

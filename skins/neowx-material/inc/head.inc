@@ -6,14 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <!-- NeoWX Material skin v$Extras.version -->
+<meta name="generator" content="neowx-material $Extras.version">
+<meta name="neowx-version" content="$Extras.version">
 
-## Pre-warm the live.json fetch as early as possible (before the heavy JS libs and
-## charts load) so neowx-live.js can update the header/footer of non-current pages
-## without waiting on the charts. The promise is consumed later in neowx-live.js.
+#if not $varExists('base_path')
+    #set $base_path = ''
+#end if
 <script>
+    window.NX_BASE_PATH = '$base_path';
     window.NX_LIVE_DATA = (function () {
         try {
-            return fetch('live.json?_=' + Date.now(), { cache: 'no-store' })
+            return fetch((window.NX_BASE_PATH || '') + 'live.json?_=' + Date.now(), { cache: 'no-store' })
                 .then(function (r) {
                     if (!r.ok) { throw new Error('live.json HTTP ' + r.status); }
                     return r.json();
@@ -74,36 +77,36 @@
 #end if
 
 ## Favicons / mobile icons
-<link href="img/icon-16.ico" rel="shortcut icon" type="image/x-icon">
-<link href="img/icon-16.png" rel="icon" type="image/png" sizes="16x16">
-<link href="img/icon-32.png" rel="icon" type="image/png" sizes="32x32">
-<link href="img/icon-48.png" rel="icon" type="image/png" sizes="48x48">
+<link href="${base_path}img/icon-16.ico" rel="shortcut icon" type="image/x-icon">
+<link href="${base_path}img/icon-16.png" rel="icon" type="image/png" sizes="16x16">
+<link href="${base_path}img/icon-32.png" rel="icon" type="image/png" sizes="32x32">
+<link href="${base_path}img/icon-48.png" rel="icon" type="image/png" sizes="48x48">
 
-<link href="img/icon-180.png" rel="apple-touch-icon">
-<link href="img/icon-76.png" rel="apple-touch-icon" sizes="76x76">
-<link href="img/icon-120.png" rel="apple-touch-icon" sizes="120x120">
-<link href="img/icon-152.png" rel="apple-touch-icon" sizes="152x152">
+<link href="${base_path}img/icon-180.png" rel="apple-touch-icon">
+<link href="${base_path}img/icon-76.png" rel="apple-touch-icon" sizes="76x76">
+<link href="${base_path}img/icon-120.png" rel="apple-touch-icon" sizes="120x120">
+<link href="${base_path}img/icon-152.png" rel="apple-touch-icon" sizes="152x152">
 
-<link href="img/icon-192.png" rel="icon" sizes="192x192">
-<link href="img/icon-128.png" rel="icon" sizes="128x128">
+<link href="${base_path}img/icon-192.png" rel="icon" sizes="192x192">
+<link href="${base_path}img/icon-128.png" rel="icon" sizes="128x128">
 
-<link href="manifest.json" rel="manifest">
+<link href="${base_path}manifest.json" rel="manifest">
 
 ## Bootstrap core CSS
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="${base_path}css/bootstrap.min.css">
 
 ## MDB + skin style
-<link rel="stylesheet" href="css/style.min.css?v=$Extras.version">
+<link rel="stylesheet" href="${base_path}css/style.min.css?v=$Extras.version">
 
 ## Weather Icons
-<link rel="stylesheet" href="weather-icons/css/weather-icons.min.css">
-<link rel="stylesheet" href="weather-icons/css/weather-icons-wind.min.css">
+<link rel="stylesheet" href="${base_path}weather-icons/css/weather-icons.min.css">
+<link rel="stylesheet" href="${base_path}weather-icons/css/weather-icons-wind.min.css">
 
 ## Material Design Icons
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
 
 ## ApexChart stylesheet
-<link rel="stylesheet" href="js/vendor/apexcharts/apexcharts.css">
+<link rel="stylesheet" href="${base_path}js/vendor/apexcharts/apexcharts.css">
 
 ## Panel state restore.  Must be INLINE and must run before the body parses:
 ## the panels are painted from the server-rendered default, so anything that
@@ -225,102 +228,102 @@
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-href="img/splash/splash_1136x640.png"
+href="${base_path}img/splash/splash_1136x640.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
-href="img/splash/splash_2436x1125.png"
+href="${base_path}img/splash/splash_2436x1125.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-href="img/splash/splash_1792x828.png"
+href="${base_path}img/splash/splash_1792x828.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-href="img/splash/splash_828x1792.png"
+href="${base_path}img/splash/splash_828x1792.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-href="img/splash/splash_1334x750.png"
+href="${base_path}img/splash/splash_1334x750.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
-href="img/splash/splash_1242x2688.png"
+href="${base_path}img/splash/splash_1242x2688.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
-href="img/splash/splash_2208x1242.png"
+href="${base_path}img/splash/splash_2208x1242.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
-href="img/splash/splash_1125x2436.png"
+href="${base_path}img/splash/splash_1125x2436.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
-href="img/splash/splash_1242x2208.png"
+href="${base_path}img/splash/splash_1242x2208.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-href="img/splash/splash_2732x2048.png"
+href="${base_path}img/splash/splash_2732x2048.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
-href="img/splash/splash_2688x1242.png"
+href="${base_path}img/splash/splash_2688x1242.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-href="img/splash/splash_2224x1668.png"
+href="${base_path}img/splash/splash_2224x1668.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-href="img/splash/splash_750x1334.png"
+href="${base_path}img/splash/splash_750x1334.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-href="img/splash/splash_2048x2732.png"
+href="${base_path}img/splash/splash_2048x2732.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-href="img/splash/splash_2388x1668.png"
+href="${base_path}img/splash/splash_2388x1668.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-href="img/splash/splash_1668x2224.png"
+href="${base_path}img/splash/splash_1668x2224.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-href="img/splash/splash_640x1136.png"
+href="${base_path}img/splash/splash_640x1136.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-href="img/splash/splash_1668x2388.png"
+href="${base_path}img/splash/splash_1668x2388.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-href="img/splash/splash_2048x1536.png"
+href="${base_path}img/splash/splash_2048x1536.png"
 />
 <link
 rel="apple-touch-startup-image"
 media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-href="img/splash/splash_1536x2048.png"
+href="${base_path}img/splash/splash_1536x2048.png"
 />
 
 <style>
@@ -334,6 +337,7 @@ href="img/splash/splash_1536x2048.png"
     #set $enable_hover = $Extras.Appearance.get('enable_hover_effect', 'true')
     #if $enable_hover == 'true' or $enable_hover == True
         /* Hover effect for Value Cards and Graph Cards (Lift & Shadow) */
+        main .card:not(.card-forecast):hover,
         .temprow .card:not(.card-forecast):hover,
         .graphrow .card:not(.card-forecast):hover {
             box-shadow: 0 8px 15px rgba(0,0,0,0.3) !important;
@@ -342,6 +346,9 @@ href="img/splash/splash_1536x2048.png"
     #end if
 
     /* Prevents "Touch to Search" popups and blue text selection on mobile/desktop */
+    main .card,
+    main .card h3,
+    main .card .card-title,
     .temprow .card,
     .graphrow .card,
     .graphrow .card h3,
@@ -466,10 +473,9 @@ href="img/splash/splash_1536x2048.png"
 ## which wins is decided by the order they are emitted in below: section rules
 ## first, per-card rules after.
 #set $_CONTENT_CARD_KINDS = {
-    'chart': ('.card-chart',),
-    'telemetry_chart': ('.card-chart',),
-    'telemetry': ('.card-value',),
-    'embedded': ('.card',),
+    'chart': ('.card-chart', '.card-embedded'),
+    'telemetry_chart': ('.card-chart', '.card-embedded'),
+    'telemetry': ('.card-value', '.card-embedded'),
 }
 #set $_section_overrides = []
 #if $varExists('Extras.Appearance.sections')
@@ -485,7 +491,7 @@ href="img/splash/splash_1536x2048.png"
         ## A default (or unrecognised) content is the cards panel, which holds
         ## value cards and can hold the forecast card too.
         #set $_content = str($_section.get('content', '')).strip().lower()
-        #set $_kinds = $_CONTENT_CARD_KINDS.get($_content, ('.card-value', '.card-forecast'))
+        #set $_kinds = $_CONTENT_CARD_KINDS.get($_content, ('.card-value', '.card-forecast', '.card-embedded'))
         ## configobj gives a list for "a, b, c" and a string for a single name.
         #set $_items = $_section.get('items', [])
         #if isinstance($_items, str)

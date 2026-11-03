@@ -19,12 +19,12 @@ jobs:
 
       - name: Version diff
         run: |
-          # read version from file: ZonPHP/inc/version_info.php of head branch
-          HEAD_VERSION=$( grep 'version = 1' skins/neowx-material/skin.conf | cut -d '=' -f 2 | xargs echo )
+          # read version from file: skins/neowx-material/skin.conf of head branch
+          HEAD_VERSION=$( grep -E '^\s*version\s*=' skins/neowx-material/skin.conf | cut -d '=' -f 2 | xargs echo )
           echo "HEAD_VERSION --> $HEAD_VERSION"
           git checkout master
-          # read version from file: ZonPHP/inc/version_info.php of master branch
-          MASTER_VERSION=$( grep 'version = 1' skins/neowx-material/skin.conf | cut -d '=' -f 2 | xargs echo )
+          # read version from file: skins/neowx-material/skin.conf of master branch
+          MASTER_VERSION=$( grep -E '^\s*version\s*=' skins/neowx-material/skin.conf | cut -d '=' -f 2 | xargs echo )
           echo "MASTER_VERSION --> $MASTER_VERSION"
           #if [ "$HEAD_VERSION" \> "$MASTER_VERSION" ]; then
           if [ "$(printf '%s\n' "$HEAD_VERSION" "$MASTER_VERSION" | sort -V | head -n 1)" != "$HEAD_VERSION" ]; then

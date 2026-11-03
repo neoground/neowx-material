@@ -3,27 +3,33 @@
 ## |    js.inc                   Common javascript code for all templates    |
 ## +-------------------------------------------------------------------------+
 
+#if not $varExists('base_path')
+    #set $base_path = ''
+#end if
+
 ## jQuery
-<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="${base_path}js/jquery.min.js"></script>
 ## Bootstrap tooltips / JS
-<script type="text/javascript" src="js/popper.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${base_path}js/popper.min.js"></script>
+<script type="text/javascript" src="${base_path}js/bootstrap.min.js"></script>
 ## MDB core JavaScript
-<script type="text/javascript" src="js/mdb.min.js"></script>
+<script type="text/javascript" src="${base_path}js/mdb.min.js"></script>
 ## Vendor JS
 #if $lang == "en"
-    <script src="js/vendor/moment.min.js"></script>
+    <script src="${base_path}js/vendor/moment.min.js"></script>
 #else
-    <script src="js/vendor/moment-with-locales.min.js"></script>
+    <script src="${base_path}js/vendor/moment-with-locales.min.js"></script>
     <script type="text/javascript">moment.locale('$lang')</script>
 #end if
-<script src="js/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="${base_path}js/vendor/apexcharts/apexcharts.min.js"></script>
 ## NeoWX Material chart helpers (shared date formatter)
-<script type="text/javascript" src="js/neowx-date-format.js?v=$Extras.version"></script>
+<script type="text/javascript" src="${base_path}js/neowx-date-format.js?v=$Extras.version"></script>
 ## NeoWX Material App
-<script type="text/javascript" src="js/app.js?v=$Extras.version"></script>
+<script type="text/javascript" src="${base_path}js/app.js?v=$Extras.version"></script>
 ## Keeps header/footer chrome current on non-current (incl. frozen archive) pages
-<script type="text/javascript" src="js/neowx-live.js?v=$Extras.version"></script>
+<script type="text/javascript" src="${base_path}js/neowx-live.js?v=$Extras.version"></script>
+## Interactive date, week, month, and year navigation pickers
+<script type="text/javascript" src="${base_path}js/neowx-date-nav.js?v=$Extras.version"></script>
 
 <script type="text/javascript">
     // Show/update status label only if configured threshold > 0 in skin.conf
