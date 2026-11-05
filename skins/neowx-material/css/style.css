@@ -6599,6 +6599,44 @@ header .navbar {
   .rowdivider {
     display: none !important;
   }
+  .nwm-desktop-cols-2 > .nwm-layout-col {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .nwm-desktop-cols-2 > .nwm-layout-col .col-xl-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .nwm-desktop-cols-3 > .nwm-layout-col {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+  .nwm-desktop-cols-3 > .nwm-layout-col .col-xl-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .nwm-desktop-cols-3 > .nwm-layout-col .col-xl-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .nwm-desktop-cols-4 > .nwm-layout-col {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .nwm-desktop-cols-4 > .nwm-layout-col .col-xl-4,
+  .nwm-desktop-cols-4 > .nwm-layout-col .col-xl-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .nwm-desktop-cols-5 > .nwm-layout-col {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+  .nwm-desktop-cols-5 > .nwm-layout-col .col-xl-4,
+  .nwm-desktop-cols-5 > .nwm-layout-col .col-xl-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }
 @media (prefers-color-scheme: dark) {
   .auto-theme.main-bg {

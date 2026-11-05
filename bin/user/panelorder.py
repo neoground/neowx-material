@@ -129,7 +129,7 @@ from weewx.cheetahgenerator import SearchList
 
 log = logging.getLogger(__name__)
 
-VERSION = "2.4.0"
+VERSION = "2.5.0"
 
 # Segment types.  'type' is None for a section with no title, whose items
 # render loose rather than inside a panel.
@@ -150,7 +150,19 @@ SINGLETON_ITEMS = ("forecast",)
 # Keys a section may carry that are settings rather than typos.
 # items_title_align is read by inc/head.inc, not here - it is listed so a panel
 # that sets it is not reported as carrying an unknown setting.
-SETTING_KEYS = ("items", "title", "collapsed", "content", "items_title_align")
+SETTING_KEYS = (
+    "items",
+    "title",
+    "collapsed",
+    "content",
+    "items_title_align",
+    "column",
+    "full_width",
+)
+
+MAX_DESKTOP_COLUMNS = 5
+DEFAULT_DESKTOP_COLUMNS = 2
+COLUMN_PAGE_KEYS = tuple("column%d" % i for i in range(1, MAX_DESKTOP_COLUMNS + 1))
 
 # Sub-page override levels inside [[[pages]]].  A page key absent from this
 # map takes no sub-blocks at all, which is how 'today', 'yesterday', 'week',
@@ -169,7 +181,7 @@ SUBPAGES = {
 NON_PANEL_PAGES = ("almanac", "archive", "history")
 
 # Keys valid in a [[[[page]]]] or [[[[[subpage]]]]] block.
-PAGE_SETTING_KEYS = ("sections",)
+PAGE_SETTING_KEYS = ("sections", "desktop_columns") + COLUMN_PAGE_KEYS
 
 # Order settings from 1.68.x.  Only used to recognise an unmigrated config.
 LEGACY_KEYS = (
@@ -601,6 +613,26 @@ def _warn_page_blocks(appearance, page):
         )
 
 
+def _block_section_ids(block):
+    """Collect section ids from 'sections' and any 'column1'..'column5' keys."""
+    if block is None or not hasattr(block, "get"):
+        return []
+    out = []
+    seen = set()
+    if "sections" in block:
+        for sid in _as_list(block.get("sections")):
+            if sid not in seen:
+                seen.add(sid)
+                out.append(sid)
+    for col_key in COLUMN_PAGE_KEYS:
+        if col_key in block:
+            for sid in _as_list(block.get(col_key)):
+                if sid not in seen:
+                    seen.add(sid)
+                    out.append(sid)
+    return out
+
+
 def _page_order(appearance, page, subpage=None):
     """Ordered section ids for one page, or None if no page was specified.
 
@@ -610,8 +642,8 @@ def _page_order(appearance, page, subpage=None):
 
     For a specified page, returns the list of section ids configured in
     [[[pages]]] (sub-block first, then page block). If [[[pages]]] is missing
-    or the page has no 'sections' configured, logs an error and returns []
-    (showing nothing, with no implicit fallback).
+    or the page has no 'sections' (or 'column1'..'column5') configured, logs an
+    error and returns [] (showing nothing, with no implicit fallback).
     """
     if page is None:
         return None
@@ -646,8 +678,10 @@ def _page_order(appearance, page, subpage=None):
 
     entry, sub = _page_entries(appearance, page, subpage)
     for block in (sub, entry):
-        if block is not None and "sections" in block:
-            return _as_list(block.get("sections"))
+        if block is not None and (
+            "sections" in block or any(ck in block for ck in COLUMN_PAGE_KEYS)
+        ):
+            return _block_section_ids(block)
 
     problem = ("unconfigured-page-sections", key, str(subpage))
     if not _problem_seen(appearance, problem):
@@ -658,6 +692,82 @@ def _page_order(appearance, page, subpage=None):
             (" (subpage '%s')" % subpage) if subpage else "",
         )
     return []
+
+
+def desktop_columns_setting(skin_dict, page=None, subpage=None):
+    """Resolve desktop_columns (1..5): subpage -> page -> [[Appearance]] -> 2."""
+    appearance = _appearance(skin_dict)
+    entry, sub = _page_entries(appearance, page, subpage)
+    for scope_name, block in (
+        (subpage or page, sub),
+        (page, entry),
+        ("Appearance", appearance),
+    ):
+        if block is None or not hasattr(block, "get"):
+            continue
+        raw = block.get("desktop_columns")
+        if raw is None or str(raw).strip() == "":
+            continue
+        word = str(raw).strip()
+        try:
+            n = int(word)
+        except (ValueError, TypeError):
+            problem = ("desktop-columns", str(scope_name), word)
+            if not _problem_seen(appearance, problem):
+                _mark_problem(appearance, problem)
+                log.warning(
+                    "panelorder: desktop_columns = %s in '%s' is not an "
+                    "integer 1..%d; using default %d.",
+                    raw,
+                    scope_name,
+                    MAX_DESKTOP_COLUMNS,
+                    DEFAULT_DESKTOP_COLUMNS,
+                )
+            return DEFAULT_DESKTOP_COLUMNS
+        if n < 1:
+            return 1
+        if n > MAX_DESKTOP_COLUMNS:
+            return MAX_DESKTOP_COLUMNS
+        return n
+    return DEFAULT_DESKTOP_COLUMNS
+
+
+def _section_column(appearance, section, section_id):
+    """Resolve a section's optional 'column' / 'full_width' setting.
+
+    Returns:
+      - 'full' if column = full / all or full_width = true
+      - int 1..MAX_DESKTOP_COLUMNS if column = 1..5
+      - None if unset or invalid (auto-distribute)
+    """
+    raw_fw = section.get("full_width")
+    if raw_fw is not None and str(raw_fw).strip().lower() in TRUE_WORDS:
+        return "full"
+
+    raw = section.get("column")
+    if raw is None or str(raw).strip() == "":
+        return None
+    word = str(raw).strip().lower()
+    if word in ("full", "all"):
+        return "full"
+    try:
+        col_idx = int(word)
+        if 1 <= col_idx <= MAX_DESKTOP_COLUMNS:
+            return col_idx
+    except (ValueError, TypeError):
+        pass
+
+    problem = ("section-column", section_id, str(raw))
+    if not _problem_seen(appearance, problem):
+        _mark_problem(appearance, problem)
+        log.warning(
+            "panelorder: section '%s' has column = %s, which is not 1..%d or "
+            "'full'; ignoring it.",
+            section_id,
+            raw,
+            MAX_DESKTOP_COLUMNS,
+        )
+    return None
 
 
 def parse_sections(skin_dict, content=None, enable_panels=True, page=None,
@@ -724,19 +834,17 @@ def parse_sections(skin_dict, content=None, enable_panels=True, page=None,
             pentry = pages[pkey]
             if not hasattr(pentry, "get"):
                 continue
-            if "sections" in pentry:
-                for sid in _as_list(pentry.get("sections")):
-                    if sid not in seen:
-                        seen.add(sid)
-                        aggregated.append(sid)
+            for sid in _block_section_ids(pentry):
+                if sid not in seen:
+                    seen.add(sid)
+                    aggregated.append(sid)
             for sub_key_name in SUBPAGES.get(pkey, ()):
                 if sub_key_name in pentry and hasattr(pentry[sub_key_name], "get"):
                     sub_entry = pentry[sub_key_name]
-                    if "sections" in sub_entry:
-                        for sid in _as_list(sub_entry.get("sections")):
-                            if sid not in seen:
-                                seen.add(sid)
-                                aggregated.append(sid)
+                    for sid in _block_section_ids(sub_entry):
+                        if sid not in seen:
+                            seen.add(sid)
+                            aggregated.append(sid)
         section_ids = [sid for sid in aggregated if sid in sections]
     else:
         # Iterate the PAGE's order, not the declaration order - filtering the
@@ -805,27 +913,151 @@ def parse_sections(skin_dict, content=None, enable_panels=True, page=None,
             # user meant rather than rendering the Python repr.
             raw_title = ", ".join(str(p) for p in raw_title)
         title = str(raw_title).strip()
+        col_spec = _section_column(appearance, section, section_id)
         if enable_panels and title:
             segments.append(
                 {
+                    "id": section_id,
                     "type": _panel_type(appearance, section, section_id),
                     "title": title,
                     "items": items,
                     "slug": slugs[section_id],
                     "content": section_content,
+                    "column": col_spec,
                 }
             )
         else:
             segments.append({
+                "id": section_id,
                 "type": None,
                 "title": "",
                 "items": items,
                 "slug": slugs[section_id],
                 "content": section_content,
+                "column": col_spec,
             })
 
     _cache_set(appearance, cache_key, segments)
     return segments
+
+
+def _page_explicit_columns(appearance, page, subpage, n_cols):
+    """Return {col_idx (1..n_cols): [section_id, ...]} if explicit column1..N
+    settings exist on the active page/subpage block, else None."""
+    entry, sub = _page_entries(appearance, page, subpage)
+    for block in (sub, entry):
+        if block is None or not hasattr(block, "get"):
+            continue
+        if any(ck in block for ck in COLUMN_PAGE_KEYS):
+            col_map = {i: [] for i in range(1, n_cols + 1)}
+            for idx in range(1, MAX_DESKTOP_COLUMNS + 1):
+                ck = "column%d" % idx
+                if ck in block:
+                    target = min(idx, n_cols)
+                    for sid in _as_list(block.get(ck)):
+                        if sid not in col_map[target]:
+                            col_map[target].append(sid)
+            return col_map
+    return None
+
+
+def _distribute_column_run(run_segments, n_cols, explicit_cols=None):
+    """Distribute a run of non-full-width segments into 1..n_cols columns."""
+    buckets = {i: [] for i in range(1, n_cols + 1)}
+
+    # Build lookup from section_id -> column index if page defines column1..N
+    explicit_lookup = {}
+    if explicit_cols:
+        for col_idx, sids in explicit_cols.items():
+            for sid in sids:
+                if sid not in explicit_lookup:
+                    explicit_lookup[sid] = col_idx
+
+    unassigned = []
+    for seg in run_segments:
+        sid = seg.get("id")
+        sec_col = seg.get("column")
+        if sid in explicit_lookup:
+            buckets[explicit_lookup[sid]].append(seg)
+        elif isinstance(sec_col, int) and 1 <= sec_col <= MAX_DESKTOP_COLUMNS:
+            buckets[min(sec_col, n_cols)].append(seg)
+        else:
+            unassigned.append(seg)
+
+    if unassigned:
+        if n_cols == 2:
+            # Classic v1 two-column behavior: cards/telemetry on left (1),
+            # charts/telemetry_chart on right (2).
+            for seg in unassigned:
+                if seg.get("content") in ("chart", "telemetry_chart"):
+                    buckets[2].append(seg)
+                else:
+                    buckets[1].append(seg)
+        else:
+            # 3..5 columns: distribute sequentially across 1..n_cols
+            for idx, seg in enumerate(unassigned):
+                buckets[(idx % n_cols) + 1].append(seg)
+
+    columns = [
+        {"index": i, "segments": buckets[i]}
+        for i in range(1, n_cols + 1)
+        if buckets[i]
+    ]
+    return columns
+
+
+def parse_layout(skin_dict, enable_panels=True, page=None, subpage=None):
+    """Return layout bands for a page, supporting 1..5 desktop columns and
+    full-width spanning sections (column = full).
+
+    Each band in the returned list is a dict:
+      - {"type": "full", "segments": [seg, ...]}
+      - {"type": "columns", "count": len(cols), "configured": n_cols,
+         "columns": [{"index": 1, "segments": [...]}, ...]}
+    """
+    segments = parse_sections(
+        skin_dict, content=None, enable_panels=enable_panels, page=page, subpage=subpage
+    )
+    if not segments:
+        return []
+
+    n_cols = desktop_columns_setting(skin_dict, page=page, subpage=subpage)
+    if n_cols <= 1:
+        return [{"type": "full", "segments": list(segments)}]
+
+    appearance = _appearance(skin_dict)
+    explicit_cols = _page_explicit_columns(appearance, page, subpage, n_cols)
+
+    bands = []
+    current_run = []
+
+    def flush_run():
+        if not current_run:
+            return
+        cols = _distribute_column_run(current_run, n_cols, explicit_cols)
+        if len(cols) == 1:
+            bands.append({"type": "full", "segments": cols[0]["segments"]})
+        elif len(cols) > 1:
+            bands.append({
+                "type": "columns",
+                "count": len(cols),
+                "configured": n_cols,
+                "columns": cols,
+            })
+        del current_run[:]
+
+    for seg in segments:
+        if seg.get("column") == "full":
+            flush_run()
+            if bands and bands[-1]["type"] == "full":
+                bands[-1]["segments"].append(seg)
+            else:
+                bands.append({"type": "full", "segments": [seg]})
+        else:
+            current_run.append(seg)
+
+    flush_run()
+    return bands
 
 
 # The set of names any page would treat as telemetry, memoised per config in
@@ -945,6 +1177,11 @@ class PanelOrder(SearchList):
             return parse_sections(skin_dict, content, enable_panels, page,
                                   subpage)
 
+        def panel_layout(enable_panels=None, page=None, subpage=None):
+            if enable_panels is None:
+                enable_panels = enable_panels_setting(skin_dict)
+            return parse_layout(skin_dict, enable_panels, page, subpage)
+
         def panel_items(content=None, page=None, subpage=None):
             return order_items(skin_dict, content, page, subpage)
 
@@ -962,6 +1199,7 @@ class PanelOrder(SearchList):
 
         return [{
             "panelSegments": panel_segments,
+            "panelLayout": panel_layout,
             "panelItems": panel_items,
             "panelPageSetting": panel_page_setting,
             "panelSectionSlug": panel_section_slug,
