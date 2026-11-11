@@ -45,13 +45,26 @@
 #end def
 
 #if not $varExists('base_path')
-    #set $base_path = ''
+    #set global $base_path = ''
 #end if
 
 #def iframeCard($name, $section = "")
+    #set $bp = $getVar('base_path', '')
     #set iframe_url = $getVar('Extras.Embedded.' + name + '.url', "")
     #if $iframe_url != "" and not ($iframe_url.startswith('http://') or $iframe_url.startswith('https://') or $iframe_url.startswith('/') or $iframe_url.startswith('//'))
-        #set iframe_url = $base_path + $iframe_url
+        #set iframe_url = $bp + $iframe_url
+    #end if
+    #if $varExists('station') and $varExists('station.latitude_f') and $varExists('station.longitude_f')
+        #set $st_lat = str($station.latitude_f)
+        #set $st_lon = str($station.longitude_f)
+        #set iframe_url = $iframe_url.replace('{lat}', $st_lat).replace('{lon}', $st_lon).replace('{latitude}', $st_lat).replace('{longitude}', $st_lon).replace('$station.latitude_f', $st_lat).replace('$station.longitude_f', $st_lon)
+        ## Automatic station centering for shipped map templates if missing coordinates
+        #if 'embed.windy.com' in $iframe_url and 'lat=' not in $iframe_url
+            #set $sep = '&' if '?' in $iframe_url else '?'
+            #set iframe_url = $iframe_url + $sep + 'lat=' + $st_lat + '&lon=' + $st_lon
+        #else if 'rainviewer.com' in $iframe_url and 'loc=48.0,13.0,' in $iframe_url
+            #set iframe_url = $iframe_url.replace('loc=48.0,13.0,', 'loc=' + $st_lat + ',' + $st_lon + ',')
+        #end if
     #end if
     #set iframe_title = $getVar('Extras.Embedded.' + name + '.title', "")
     #set iframe_aspect = $getVar('Extras.Embedded.' + name + '.aspect_ratio', "4/3")
@@ -75,9 +88,15 @@
 #end def
 
 #def imageCard($name, $section = "")
+    #set $bp = $getVar('base_path', '')
     #set image_url = $getVar('Extras.Embedded.' + name + '.url', "")
     #if $image_url != "" and not ($image_url.startswith('http://') or $image_url.startswith('https://') or $image_url.startswith('/') or $image_url.startswith('data:'))
-        #set image_url = $base_path + $image_url
+        #set image_url = $bp + $image_url
+    #end if
+    #if $varExists('station') and $varExists('station.latitude_f') and $varExists('station.longitude_f')
+        #set $st_lat = str($station.latitude_f)
+        #set $st_lon = str($station.longitude_f)
+        #set image_url = $image_url.replace('{lat}', $st_lat).replace('{lon}', $st_lon).replace('{latitude}', $st_lat).replace('{longitude}', $st_lon).replace('$station.latitude_f', $st_lat).replace('$station.longitude_f', $st_lon)
     #end if
     ## by adding a timestamp parameter we prevent browser caching of the image
     #set $sep = '&' if '?' in $image_url else '?'
@@ -85,7 +104,10 @@
     #set image_title = $getVar('Extras.Embedded.' + name + '.title', "")
     #set image_link = $getVar('Extras.Embedded.' + name + '.link', "")
     #if $image_link != "" and not ($image_link.startswith('http://') or $image_link.startswith('https://') or $image_link.startswith('/') or $image_link.startswith('#'))
-        #set image_link = $base_path + $image_link
+        #set image_link = $bp + $image_link
+    #end if
+    #if $image_link != "" and $varExists('station') and $varExists('station.latitude_f') and $varExists('station.longitude_f')
+        #set image_link = $image_link.replace('{lat}', $st_lat).replace('{lon}', $st_lon).replace('{latitude}', $st_lat).replace('{longitude}', $st_lon).replace('$station.latitude_f', $st_lat).replace('$station.longitude_f', $st_lon)
     #end if
     #set image_new_tab = $getVar('Extras.Embedded.' + name + '.new_tab', "no")
     #set image_padding = $getVar('Extras.Embedded.' + name + '.padding', "no")

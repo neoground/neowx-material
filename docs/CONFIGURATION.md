@@ -235,6 +235,8 @@ You can embed external weather maps (Windy, RainViewer, Blitzortung), webcam sna
    ```
 2. Add the block name (`iFrame_windy`, `image_webcam`) to the `items` list of any section under `[[Appearance]] → [[[sections]]]`.
 
+> **Coordinate Placeholders**: Embedded iframe and image `url` (and `link`) attributes support dynamic station coordinate placeholders: `{lat}` and `{lon}` (or `{latitude}` and `{longitude}`). These automatically resolve to the weather station's configured latitude and longitude, allowing embeds such as Windy or RainViewer to automatically target your local area.
+
 ---
 
 ## 6. Further Configuration Guides
