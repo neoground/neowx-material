@@ -1,0 +1,35 @@
+name: version-check
+on:
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - '.github/**'
+jobs:
+  release:
+    name: Check Version
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Version diff
+        run: |
+          # read version from file: skins/neowx-material/skin.conf of head branch
+          HEAD_VERSION=$( grep -E '^\s*version\s*=' skins/neowx-material/skin.conf | cut -d '=' -f 2 | xargs echo )
+          echo "HEAD_VERSION --> $HEAD_VERSION"
+          git checkout master
+          # read version from file: skins/neowx-material/skin.conf of master branch
+          MASTER_VERSION=$( grep -E '^\s*version\s*=' skins/neowx-material/skin.conf | cut -d '=' -f 2 | xargs echo )
+          echo "MASTER_VERSION --> $MASTER_VERSION"
+          #if [ "$HEAD_VERSION" \> "$MASTER_VERSION" ]; then
+          if [ "$(printf '%s\n' "$HEAD_VERSION" "$MASTER_VERSION" | sort -V | head -n 1)" != "$HEAD_VERSION" ]; then
+            echo "Great job, master version $MASTER_VERSION will become $HEAD_VERSION soon"                    
+          else
+            echo "Head $HEAD_VERSION not updated before merging into master"
+            exit 1
+          fi

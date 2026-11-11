@@ -1,0 +1,579 @@
+#encoding UTF-8
+#attr $page = 'history'
+#attr $subpage = 'history'
+## +-------------------------------------------------------------------------+
+## |    history.html.tmpl                Template file for "history" page    |
+## +-------------------------------------------------------------------------+
+<!DOCTYPE html>
+<html lang="$lang">
+    <head>
+        <title>$gettext("history") | $station.location</title>
+        #include "inc/head.inc"
+    </head>
+    <body class="${Extras.Appearance.mode}-theme main-bg" ontouchstart="">
+
+        #attr $active_nav = 'history'
+        #include "inc/header.inc"
+
+        <main>
+
+            <div class="container">
+
+                <div class="row my-4 align-content-start">
+
+                    <div class="col-12 mb-4 text-center">
+                        <h2 class="h2-responsive text-dark">$gettext("weather_statistics")</h2>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-min-temp">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("min_temp")
+                            #set global $panel_id    = 'nwm-hist-min-temp'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-min-temp" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $min_temp_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-avg-temp">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("avg_temp")
+                            #set global $panel_id    = 'nwm-hist-avg-temp'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-avg-temp" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $avg_temp_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-max-temp">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("max_temp")
+                            #set global $panel_id    = 'nwm-hist-max-temp'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-max-temp" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $max_temp_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-summer-days">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("summer_days")
+                            #set global $panel_id    = 'nwm-hist-summer-days'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-summer-days" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $summer_days_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-tropical-days">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("tropical_days")
+                            #set global $panel_id    = 'nwm-hist-tropical-days'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-tropical-days" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $tropical_days_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-tropical-nights">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("tropical_nights")
+                            #set global $panel_id    = 'nwm-hist-tropical-nights'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-tropical-nights" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $tropical_nights_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-arctic-days">
+                            #set global $panel_title = '<i class="wi wi-thermometer mr-1"></i> ' + $gettext("arctic_days")
+                            #set global $panel_id    = 'nwm-hist-arctic-days'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-arctic-days" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                        $arctic_days_table
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    #if $alltime.rain.has_data
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="history-rain">
+                                #set global $panel_title = '<i class="wi wi-showers mr-1"></i> ' + $gettext("rain")
+                                #set global $panel_id    = 'nwm-hist-rain'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-hist-rain" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                            $rain_table
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="history-rain-days">
+                                #set global $panel_title = '<i class="wi wi-showers mr-1"></i> ' + $gettext("rain_days") + ' (> 0.2mm)'
+                                #set global $panel_id    = 'nwm-hist-rain-days'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-hist-rain-days" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                            $rain_days_table
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    #end if
+
+                    #if $alltime.windSpeed.has_data
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="history-max-wind">
+                                #set global $panel_title = '<i class="wi wi-strong-wind mr-1"></i> ' + $gettext("max_wind")
+                                #set global $panel_id    = 'nwm-hist-max-wind'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-hist-max-wind" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                            $max_wind_table
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="history-avg-wind">
+                                #set global $panel_title = '<i class="wi wi-strong-wind mr-1"></i> ' + $gettext("avg_wind")
+                                #set global $panel_id    = 'nwm-hist-avg-wind'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-hist-avg-wind" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                            $avg_wind_table
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    #end if
+
+                    #if $alltime.UV.has_data
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="history-uv-max">
+                                #set global $panel_title = '<i class="wi wi-day-sunny mr-1"></i> ' + $gettext("uv_max")
+                                #set global $panel_id    = 'nwm-hist-uv-max'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-hist-uv-max" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                            $uv_max_table
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    #end if
+
+                    #if $alltime.lightning_strike_count.has_data
+                        <div class="col-12 mb-3">
+                            <div class="card nwm-expansion-panel" data-section="history-lightning">
+                                #set global $panel_title = '<i class="wi wi-lightning mr-1"></i> ' + $gettext("lightning_strikes")
+                                #set global $panel_id    = 'nwm-hist-lightning'
+                                #set global $panel_type  = 'expanded'
+                                #include "inc/panel_header.inc"
+                                <div id="nwm-hist-lightning" class="collapse show">
+                                    <div class="nwm-panel-body">
+                                        <div class="card p-2 p-md-3" style="overflow-x: auto; white-space: nowrap;">
+                                            $lightning_strike_count_table
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    #end if
+
+                    ## RT Code Start
+                    <div class="col-12 mb-3">
+                        <div class="card nwm-expansion-panel" data-section="history-year-records">
+                            #set global $panel_title = '<i class="mdi mdi-calendar-blank-outline mr-1"></i> ' + $gettext("year_records")
+                            #set global $panel_id    = 'nwm-hist-year-records'
+                            #set global $panel_type  = 'expanded'
+                            #include "inc/panel_header.inc"
+                            <div id="nwm-hist-year-records" class="collapse show">
+                                <div class="nwm-panel-body">
+                                    <div class="card p-3" style="text-align: left; width: 100%; overflow-x: auto;">
+                                        <table class="table text-left records mb-0" style="width: 100%;">
+                                    #if $year.outTemp.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-thermometer"></i>
+                                            $getVar('obs.label.outTemp')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("highest")</td>
+                                            <td style="font-size:16px;">$year.outTemp.max</td>
+                                            <td style="font-size:16px;">$year.outTemp.maxtime</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("lowest")</td>
+                                            <td style="font-size:16px;">$year.outTemp.min</td>
+                                            <td style="font-size:16px;">$year.outTemp.mintime</td>
+                                        </tr>
+                                    #end if
+                                    #if $year.appTemp.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-day-windy"></i>
+                                            $getVar('obs.label.appTemp')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("highest")</td>
+                                            <td style="font-size:16px;">$year.appTemp.max</td>
+                                            <td style="font-size:16px;">$year.appTemp.maxtime</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("lowest")</td>
+                                            <td style="font-size:16px;">$year.appTemp.min</td>
+                                            <td style="font-size:16px;">$year.appTemp.mintime</td>
+                                        </tr>
+                                    #end if
+                                    #if $year.outHumidity.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-humidity"></i>
+                                            $getVar('obs.label.outHumidity')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("highest")</td>
+                                            <td style="font-size:16px;">$year.outHumidity.max</td>
+                                            <td style="font-size:16px;">$year.outHumidity.maxtime</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("lowest")</td>
+                                            <td style="font-size:16px;">$year.outHumidity.min</td>
+                                            <td style="font-size:16px;">$year.outHumidity.mintime</td>
+                                        </tr>
+                                    #end if
+                                    #if $year.barometer.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-barometer"></i>
+                                            $getVar('obs.label.barometer')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("highest")</td>
+                                            <td style="font-size:16px;">$year.barometer.max</td>
+                                            <td style="font-size:16px;">$year.barometer.maxtime</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("lowest")</td>
+                                            <td style="font-size:16px;">$year.barometer.min</td>
+                                            <td style="font-size:16px;">$year.barometer.mintime</td>
+                                        </tr>
+                                    #end if
+                                    #if $year.windSpeed.has_data or $year.windGust.has_data or $year.windrun.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-strong-wind"></i>
+                                            $getVar('obs.label.wind')</th>
+                                        </tr>
+                                        #if $year.windSpeed.has_data
+                                            <tr>
+                                                <td style="font-size:16px;">$gettext("highest") $getVar('obs.label.windSpeed')</td>
+                                                <td style="font-size:16px;">$year.windSpeed.max.format('%.0f')</td>
+                                                <td style="font-size:16px;">$year.windSpeed.maxtime</td>
+                                            </tr>
+                                        #end if
+                                        #if $year.windGust.has_data
+                                            <tr>
+                                                <td style="font-size:16px;">$gettext("highest") $getVar('obs.label.windGust')</td>
+                                                <td style="font-size:16px;">$year.windGust.max.format('%.0f')</td>
+                                                <td style="font-size:16px;">$year.windGust.maxtime</td>
+                                            </tr>
+                                        #end if
+                                        #if $year.windrun.has_data
+                                            <tr>
+                                                <td style="font-size:16px;">$gettext("longest") $getVar('obs.label.windrun')</td>
+                                                <td style="font-size:16px;">$year.windrun.max</td>
+                                                <td style="font-size:16px;">$year.windrun.maxtime</td>
+                                            </tr>
+                                        #end if
+                                    #end if
+                                    #if $year.rain.has_data or $year.rainRate.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-umbrella"></i>
+                                            $getVar('obs.label.rain')</th>
+                                        </tr>
+                                        #if $year.rain.has_data
+                                            <tr>
+                                                <td style="font-size:16px;">$gettext("most") $getVar('obs.label.rain')</td>
+                                                <td style="font-size:16px;">$year.rain.maxsum</td>
+                                                <td style="font-size:16px;">$year.rain.maxsumtime</td>
+                                            </tr>
+                                        #end if
+                                        #if $year.rainRate.has_data
+                                            <tr>
+                                                <td style="font-size:16px;">$gettext("highest") $getVar('obs.label.rainRate')</td>
+                                                <td style="font-size:16px;">$year.rainRate.max</td>
+                                                <td style="font-size:16px;">$year.rainRate.maxtime</td>
+                                            </tr>
+                                        #end if
+                                    #end if
+                                    #if $year.UV.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-day-sunny"></i>
+                                            $getVar('obs.label.UV')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("highest")</td>
+                                            <td style="font-size:16px;">$year.UV.max</td>
+                                            <td style="font-size:16px;">$year.UV.maxtime</td>
+                                        </tr>
+                                    #end if
+                                    #if $year.radiation.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-day-sunny"></i>
+                                            $getVar('obs.label.radiation')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("highest")</td>
+                                            <td style="font-size:16px;">$year.radiation.max</td>
+                                            <td style="font-size:16px;">$year.radiation.maxtime</td>
+                                        </tr>
+                                    #end if
+                                    #if $year.lightning_strike_count.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-lightning"></i>
+                                            $getVar('obs.label.lightning_strike_count')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("most")</td>
+                                            <td style="font-size:16px;">$year.lightning_strike_count.maxsum</td>
+                                            <td style="font-size:16px;">$year.lightning_strike_count.maxsumtime</td>
+                                        </tr>
+                                    #end if
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            ## RT Code End
+
+            <div class="col-12 mb-3">
+                <div class="card nwm-expansion-panel" data-section="history-alltime-records">
+                    #set global $panel_title = '<i class="mdi mdi-trophy-outline mr-1"></i> ' + $gettext("all_time_records")
+                    #set global $panel_id    = 'nwm-hist-alltime-records'
+                    #set global $panel_type  = 'expanded'
+                    #include "inc/panel_header.inc"
+                    <div id="nwm-hist-alltime-records" class="collapse show">
+                        <div class="nwm-panel-body">
+                            <div class="card p-3" style="text-align: left; width: 100%; overflow-x: auto;">
+                                <table class="table text-left records mb-0" style="width: 100%;">
+                                    #if $alltime.outTemp.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-thermometer"></i>
+                                            $getVar('obs.label.outTemp')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("highest")</td>
+                                            <td style="font-size:16px;">$alltime.outTemp.max</td>
+                                            <td style="font-size:16px;">$alltime.outTemp.maxtime</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("lowest")</td>
+                                            <td style="font-size:16px;">$alltime.outTemp.min</td>
+                                            <td style="font-size:16px;">$alltime.outTemp.mintime</td>
+                                        </tr>
+                                    #end if
+                                    #if $alltime.appTemp.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-day-windy"></i>
+                                            $getVar('obs.label.appTemp')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("highest")</td>
+                                            <td style="font-size:16px;">$alltime.appTemp.max</td>
+                                            <td style="font-size:16px;">$alltime.appTemp.maxtime</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("lowest")</td>
+                                            <td style="font-size:16px;">$alltime.appTemp.min</td>
+                                            <td style="font-size:16px;">$alltime.appTemp.mintime</td>
+                                        </tr>
+                                    #end if
+                                    #if $alltime.outHumidity.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-humidity"></i>
+                                            $getVar('obs.label.outHumidity')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("highest")</td>
+                                            <td style="font-size:16px;">$alltime.outHumidity.max</td>
+                                            <td style="font-size:16px;">$alltime.outHumidity.maxtime</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("lowest")</td>
+                                            <td style="font-size:16px;">$alltime.outHumidity.min</td>
+                                            <td style="font-size:16px;">$alltime.outHumidity.mintime</td>
+                                        </tr>
+                                    #end if
+                                    #if $alltime.barometer.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-barometer"></i>
+                                            $getVar('obs.label.barometer')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("highest")</td>
+                                            <td style="font-size:16px;">$alltime.barometer.max</td>
+                                            <td style="font-size:16px;">$alltime.barometer.maxtime</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("lowest")</td>
+                                            <td style="font-size:16px;">$alltime.barometer.min</td>
+                                            <td style="font-size:16px;">$alltime.barometer.mintime</td>
+                                        </tr>
+                                    #end if
+                                    #if $alltime.windSpeed.has_data or $alltime.windGust.has_data or $alltime.windrun.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-strong-wind"></i>
+                                            $getVar('obs.label.wind')</th>
+                                        </tr>
+                                        #if $alltime.windSpeed.has_data
+                                            <tr>
+                                                <td style="font-size:16px;">$gettext("highest") $getVar('obs.label.windSpeed')</td>
+                                                <td style="font-size:16px;">$alltime.windSpeed.max.format('%.0f')</td>
+                                                <td style="font-size:16px;">$alltime.windSpeed.maxtime</td>
+                                            </tr>
+                                        #end if
+                                        #if $alltime.windGust.has_data
+                                            <tr>
+                                                <td style="font-size:16px;">$gettext("highest") $getVar('obs.label.windGust')</td>
+                                                <td style="font-size:16px;">$alltime.windGust.max.format('%.0f')</td>
+                                                <td style="font-size:16px;">$alltime.windGust.maxtime</td>
+                                            </tr>
+                                        #end if
+                                        #if $alltime.windrun.has_data
+                                            <tr>
+                                                <td style="font-size:16px;">$gettext("longest") $getVar('obs.label.windrun')</td>
+                                                <td style="font-size:16px;">$alltime.windrun.max</td>
+                                                <td style="font-size:16px;">$alltime.windrun.maxtime</td>
+                                            </tr>
+                                        #end if
+                                    #end if
+                                    #if $alltime.rain.has_data or $alltime.rainRate.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-umbrella"></i>
+                                            $getVar('obs.label.rain')</th>
+                                        </tr>
+                                        #if $alltime.rain.has_data
+                                            <tr>
+                                                <td style="font-size:16px;">$gettext("most") $getVar('obs.label.rain')</td>
+                                                <td style="font-size:16px;">$alltime.rain.maxsum</td>
+                                                <td style="font-size:16px;">$alltime.rain.maxsumtime</td>
+                                            </tr>
+                                        #end if
+                                        #if $alltime.rainRate.has_data
+                                            <tr>
+                                                <td style="font-size:16px;">$gettext("highest") $getVar('obs.label.rainRate')</td>
+                                                <td style="font-size:16px;">$alltime.rainRate.max</td>
+                                                <td style="font-size:16px;">$alltime.rainRate.maxtime</td>
+                                            </tr>
+                                        #end if
+                                    #end if
+                                    #if $alltime.UV.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-day-sunny"></i>
+                                            $getVar('obs.label.UV')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("highest")</td>
+                                            <td style="font-size:16px;">$alltime.UV.max</td>
+                                            <td style="font-size:16px;">$alltime.UV.maxtime</td>
+                                        </tr>
+                                    #end if
+                                    #if $alltime.radiation.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-day-sunny"></i>
+                                            $getVar('obs.label.radiation')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("highest")</td>
+                                            <td style="font-size:16px;">$alltime.radiation.max</td>
+                                            <td style="font-size:16px;">$alltime.radiation.maxtime</td>
+                                        </tr>
+                                    #end if
+                                    #if $alltime.lightning_strike_count.has_data
+                                        <tr>
+                                            <th colspan="3" class="$Extras.color-text" style="text-align:left;font-size:20px;"><i class="wi wi-lightning"></i>
+                                            $getVar('obs.label.lightning_strike_count')</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:16px;">$gettext("most")</td>
+                                            <td style="font-size:16px;">$alltime.lightning_strike_count.maxsum</td>
+                                            <td style="font-size:16px;">$alltime.lightning_strike_count.maxsumtime</td>
+                                        </tr>
+                                    #end if
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+        #include "inc/footer.inc"
+        #include "inc/js.inc"
+
+    </body>
+</html>

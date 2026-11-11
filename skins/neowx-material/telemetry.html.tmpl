@@ -1,0 +1,154 @@
+#encoding UTF-8
+## +-------------------------------------------------------------------------+
+## |    telemetry.html.tmpl            Template file for "telemetry" page    |
+## +-------------------------------------------------------------------------+
+
+#attr $page = 'telemetry'
+#attr $subpage = 'telemetry'
+
+#def renderTeleSegment($seg, $panel_idx, $kind)
+    ## Mirrors the render guard in batteryCard()/chartCard() so a panel whose
+    ## items all lack data is hidden instead of drawing an empty box.
+    #set $vis_items = []
+    #for $x in $seg['items']
+        #if $isEmbeddedItem($x)
+            #silent $vis_items.append($x)
+        #else if $getVar('day.' + $x + '.has_data') and ($getVar('day.' + $x + '.max.raw') > 0 or $Extras.Telemetry.allow_zero_values == "yes")
+            #silent $vis_items.append($x)
+        #end if
+    #end for
+
+    ## $kind is this page's segment kind ('value' | 'chart') and names the
+    ## panel ids; the include's contract is 'card' | 'chart' | 'js'.
+    #set $mode = 'card' if $kind == 'value' else $kind
+
+    #if $seg['type'] is None
+        #for $x in $seg['items']
+            #if $isEmbeddedItem($x)
+                #set global $emb_item     = $x
+                #set global $emb_section  = $seg['slug']
+                #include "inc/embedded_region.inc"
+                #set global $emb_item     = None
+            #else
+                #set global $tele_mode    = $mode
+                #set global $tele_item    = $x
+                #set global $tele_section = $seg['slug']
+                #include "inc/telemetry.inc"
+            #end if
+        #end for
+    #else if len($vis_items) > 0
+        #set $p_exp   = ($seg['type'] != 'collapsed')
+        #set $p_show  = ' show' if $p_exp else ''
+        #set $p_id    = 'nwm-tele-' + $kind + '-panel-' + str($panel_idx)
+        <div class="col-12 mb-3">
+            <div class="card nwm-expansion-panel" data-section="$seg['slug']">
+                #set global $panel_title = $seg['title']
+                #set global $panel_id    = $p_id
+                #set global $panel_type  = $seg['type']
+                #include "inc/panel_header.inc"
+                <div id="${p_id}" class="collapse${p_show}">
+                    <div class="nwm-panel-body">
+                        <div class="row">
+                            #for $x in $seg['items']
+                                #if $isEmbeddedItem($x)
+                                    #set global $emb_item     = $x
+                                    #set global $emb_section  = $seg['slug']
+                                    #include "inc/embedded_region.inc"
+                                    #set global $emb_item     = None
+                                #else
+                                    #set global $tele_mode    = $mode
+                                    #set global $tele_item    = $x
+                                    #set global $tele_section = $seg['slug']
+                                    #include "inc/telemetry.inc"
+                                #end if
+                            #end for
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    #end if
+#end def
+
+## +-------------------------------------------------------------------------+
+## | The main page layout                                                    |
+## +-------------------------------------------------------------------------+
+
+<!DOCTYPE html>
+<html lang="$lang">
+    <head>
+        <title>$gettext("telemetry") | $station.location</title>
+        #include "inc/head.inc"
+    </head>
+    <body class="${Extras.Appearance.mode}-theme main-bg" ontouchstart="">
+
+        #attr $active_nav = ''
+        #include "inc/header.inc"
+
+        #set global $card_scope = $page
+        #set global $card_default = $Extras.Formatting.datetime_today
+        #include "inc/card_datetime.inc"
+
+        ## Resolve the page tick spec once (tick_style_telemetry -> tick_style ->
+        ## auto). All telemetry charts share the same span (Telemetry.chart_days,
+        ## 30 in the shipped config; 1 if unset). Snap the start to midnight so the
+        ## day-tier ticks land on midnight (not the current time-of-day).
+        #set global $_tel_chart_days = 1
+        #try
+            #set global $_tel_chart_days = int($getVar('Extras.Telemetry.chart_days', '1'))
+        #except
+            #set global $_tel_chart_days = 1
+        #end try
+        #set global $align_start = $span($day_delta=$_tel_chart_days, $boundary='midnight').start.raw
+        #set global $align_stop = $current.dateTime.raw
+        #include "inc/graph_align_setup.inc"
+        <main>
+            <div class="container-fluid">
+
+                <div class="row my-4 align-content-start">
+
+                    <div class="col-12 mb-4 text-center">
+                        <h2 class="h2-responsive text-dark">$gettext("telemetry")</h2>
+                    </div>
+
+                    #set $tele_segments = $panelSegments(page=$page, subpage=$subpage)
+                    #set $tele_panel_idx = 0
+                    #for $seg_i, $seg in $enumerate($tele_segments)
+                        #if $seg['type'] is not None
+                            #set $tele_panel_idx = $tele_panel_idx + 1
+                        #end if
+                        ## Section boundary. A col-12 fills a whole flex line, so this is
+                        ## what makes each section start on a fresh row. Panels are col-12
+                        ## already; plain sections need it emitted explicitly.
+                        #if $seg_i > 0
+                            <div class="col-12"></div>
+                        #end if
+                        #set $kind = 'chart' if $seg['content'] in ('chart', 'telemetry_chart') else 'value'
+                        $renderTeleSegment($seg, $tele_panel_idx, $kind)
+                    #end for
+
+                </div>
+            </div>
+        </main>
+
+        #include "inc/footer.inc"
+        #include "inc/js.inc"
+
+        ## +-------------------------------------------------------------------------+
+        ## | Chart definitions                                                       |
+        ## +-------------------------------------------------------------------------+
+
+        <script type="text/javascript">
+            // Config templates
+
+            var graph_area_config = {
+                #include "inc/graph_area_config.inc"
+            }
+
+            #set global $tele_mode        = 'js'
+            #set global $tele_chart_items = [x for x in $panelItems('telemetry_chart', page=$page, subpage=$subpage) if not $isEmbeddedItem(x)]
+            #include "inc/telemetry.inc"
+        </script>
+
+    </body>
+</html>

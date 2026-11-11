@@ -1,0 +1,1631 @@
+// +-------------------------------------------------------------------------+
+// |   N E O W X      M A T E R I A L      S P E C I F I C      S T Y L E    |
+// +-------------------------------------------------------------------------+
+
+// General classes / adjustments
+// ---------------------------------------------------------------------------
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  // ios webapp improvement
+  -webkit-tap-highlight-color: transparent;
+
+  // Some tooltips may create a horizontal scroll bar which we don't want
+  overflow-x: hidden;
+}
+
+.text-muted {
+  font-weight: 300;
+}
+
+.main-bg {
+  background: rgba(158, 158, 158, 0.1);
+}
+
+header .navbar-brand,
+header h1,
+.navbar-nav .nav-link {
+  white-space: normal !important;
+  word-wrap: break-word !important;
+}
+
+header {
+  position: relative;
+  z-index: 1030;
+
+  .navbar {
+    position: relative;
+    z-index: 1030;
+    height: auto !important;
+  }
+}
+
+.lo-text, .font-small, .hi-text {
+  font-size: 0.8rem !important;
+  line-height: 1.0 !important;
+}
+
+#forecast_hour_icons {
+  margin-bottom: 1px !important;
+  margin-top: 7px !important;
+}
+
+#forecast-table {
+  line-height: 1.3 !important;
+  padding-left: 10px !important;
+}
+
+.navbar .nav-flex-icons.header-icons {
+  font-size: 11pt !important;
+}
+
+.datetime-header {
+  font-size: 11pt !important;
+}
+
+// Very large (FHD) layout
+// ---------------------------------------------------------------------------
+
+@media screen and (min-width: 1660px) {
+  .temprow {
+    display: flex;
+    width: 50%;
+    margin: 1rem 0 0 0 !important;
+  }
+
+  .graphrow {
+    display: flex;
+    width: 50%;
+    margin: 1rem 0 0 0 !important;
+  }
+
+  .d-flex-xxl {
+    display: flex !important;
+  }
+
+  .temprow .col-xl-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .rowdivider {
+    display: none !important;
+  }
+}
+
+// Dark mode
+// ---------------------------------------------------------------------------
+
+@media (prefers-color-scheme: dark) {
+  .auto-theme {
+    &.main-bg {
+      background: #2e2e2e !important;
+    }
+
+    .card, .dropdown-menu, .dropdown-menu a {
+      background-color: #444 !important;
+      color: #ddd !important;
+    }
+
+    .text-muted {
+      color: #aaa;
+    }
+
+    // Adjusted colors. Default text is color 500, in dark: 300
+    // Not all colors need this, some look nice on dark bgs.
+
+    .purple-text {
+      color: #BA68C8 !important;
+    }
+
+    .deep-purple-text {
+      color: #9575CD !important;
+    }
+
+    .indigo-text {
+      color: #7986CB !important;
+    }
+
+    .teal-text {
+      color: #4DB6AC !important;
+    }
+
+    .brown-text {
+      color: #A1887F !important;
+    }
+
+    .blue-grey-text {
+      color: #90A4AE !important;
+    }
+
+    .text-dark, .table {
+      color: #ccc !important;
+    }
+  }
+}
+
+.dark-theme {
+  &.main-bg {
+    background: #2e2e2e !important;
+  }
+
+  .card, .dropdown-menu, .dropdown-menu a {
+    background-color: #444 !important;
+    color: #ddd !important;
+  }
+
+  .text-muted {
+    color: #aaa;
+  }
+
+  // Adjusted colors. Default text is color 500, in dark: 300
+  // Not all colors need this, some look nice on dark bgs.
+
+  .purple-text {
+    color: #BA68C8 !important;
+  }
+
+  .deep-purple-text {
+    color: #9575CD !important;
+  }
+
+  .indigo-text {
+    color: #7986CB !important;
+  }
+
+  .teal-text {
+    color: #4DB6AC !important;
+  }
+
+  .brown-text {
+    color: #A1887F !important;
+  }
+
+  .blue-grey-text {
+    color: #90A4AE !important;
+  }
+
+  .text-dark, .table {
+    color: #ccc !important;
+  }
+}
+
+// Fix for bright color bgs
+// Normally color 500, darker version: color 700
+
+.lime {
+  background-color: #AFB42B !important;
+}
+
+.yellow {
+  background-color: #FBC02D !important
+}
+
+@media (max-width: 1200px) {
+  .navbar .nav-flex-icons.header-icons {
+    font-size: 10pt !important;
+  }
+  .datetime-header {
+    font-size: 10pt !important;
+  }
+}
+
+@media (max-width: 1036px) {
+  .navbar .nav-flex-icons.header-icons {
+    font-size: 9pt !important;
+  }
+  .datetime-header {
+    font-size: 9pt !important;
+  }
+}
+
+.ml-3, .mx-3 {
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
+}
+
+.navbar-brand {
+  margin-right: 0 !important;
+}
+
+.mr-4, .mx-4 {
+  margin-right: 0.5rem !important;
+}
+
+/* Override Bootstrap utility to set a consistent line-height where used
+   and preserve the existing margin-bottom behavior. */
+.mb-3, .my-3 {
+  margin-bottom: 1rem !important;
+  line-height: 18px;
+}
+
+/* Restore spacing (gutters) between footer columns only.
+   Bootstrap normally provides 15px left/right padding on .col-* elements
+   but some custom rules in this stylesheet may override those.
+   Target the footer specifically so other layouts are unaffected. */
+// ===== Collapsible Expansion Panels ===========================================
+
+.nwm-expansion-panel {
+  // Override card default so the header radius follows the state
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.nwm-panel-header {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  min-height: 48px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  &[aria-expanded="true"] {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+}
+
+.nwm-panel-title {
+  flex: 1;
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 14px 0;
+}
+
+.nwm-panel-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+// Rotate chevron when the Bootstrap collapse is open
+.nwm-panel-header[aria-expanded="true"] .nwm-panel-icon {
+  transform: rotate(180deg);
+}
+
+.nwm-panel-body {
+  padding: 1.25rem 15px 0.25rem;
+  background-color: rgba(158, 158, 158, 0.07);
+
+  .card {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+}
+
+// Clean subtle border for standalone value cards
+.card.card-value {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+// Dark mode – panel and cards
+@media (prefers-color-scheme: dark) {
+  .auto-theme {
+    .nwm-expansion-panel {
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+      .nwm-panel-header {
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        &[aria-expanded="true"] {
+          border-bottom-color: rgba(255, 255, 255, 0.08);
+        }
+      }
+
+      .nwm-panel-body {
+        background-color: #2e2e2e !important;
+
+        .card {
+          border-color: rgba(255, 255, 255, 0.08);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+
+    .card.card-value {
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+  }
+}
+
+.dark-theme {
+  .nwm-expansion-panel {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    .nwm-panel-header {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+      }
+      &[aria-expanded="true"] {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+      }
+    }
+
+    .nwm-panel-body {
+      background-color: #2e2e2e !important;
+
+      .card {
+        border-color: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+
+  .card.card-value {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+// ==============================================================================
+
+footer.page-footer {
+  .row {
+    margin-left: -15px !important;
+    margin-right: -15px !important;
+  }
+  .row > [class*="col-"] {
+    // Keep consistent gutter padding for footer columns so
+    // left and right match exactly. Avoid using !important
+    // so utility classes can still override if needed.
+    padding-left: 19px;
+    padding-right: 19px;
+    // Some user agents or resets may render these elements as
+    // table-related display types which prevents horizontal
+    // padding from taking effect. Force block-level display so
+    // padding-left/right behave as expected.
+    display: block;
+    // Make all footer columns use the same base font sizing so
+    // the about/table column visually matches the links column.
+    font-size: 14px;
+    // Use light weight to match the links block
+    font-weight: 300;
+    line-height: 18px;
+  }
+
+  // Force a visible gap inside footer tables: set a right padding
+  // on table cells so the columns have spacing even if display
+  // utilities change table layout behavior.
+  table td {
+    // Keep right gutter so table internals align with columns.
+    // Remove vertical padding here to avoid forcing a fixed
+    // row height; vertical spacing is handled by line-height
+    // and surrounding elements so the table column behaves
+    // like the links column (height: auto).
+    padding-left: 19px;
+    height: auto;
+    vertical-align: top;
+  }
+
+  // If the template applies the d-inline utility to the table,
+  // make it behave as an inline-table so table internals (tbody,
+  // tr, td) keep their layout and inherit font sizing correctly.
+  table.d-inline {
+    display: inline-table !important;
+  }
+
+  // Make the first footer column (about block) visually match
+  // the links block by using the same font size and line-height.
+  .row > .col-md-5 {
+    font-size: 14px;
+    // Use the same light weight as the links column
+    font-weight: 300;
+    line-height: 18px;
+
+    // Ensure table cells and other inline elements inherit the sizing
+    table, table td, table th, p, ul, li, a {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 18px;
+    }
+
+    // Ensure the about-column's table cells do not add extra
+    // vertical spacing so this column matches the links column.
+    table td {
+      padding-left: 19px;
+      height: auto;
+      vertical-align: top;
+    }
+  }
+
+  // Make the rightmost (third) footer column explicitly match the
+  // left column's spacing and line-height so both sides look identical.
+  .row > .col-md-3 {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+
+    // Ensure inline elements inside the links column inherit sizing
+    p, ul, li, a {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 18px;
+    }
+
+    // Give the links list the requested padding: top/right/bottom = 1rem,
+    // left = 19px so it lines up with the other footer columns.
+    ul {
+      padding: 1px 1px 1px 19px;
+      margin: 0;
+    }
+  }
+}
+
+
+// ==============================================================================
+
+// Pop-up window
+// ---------------------------------------------------------------------------
+// The "expand" buttons - one added to every ApexCharts toolbar (Appearance /
+// enableChartPopup), one on every [[Embedded]] card (enableEmbeddedPopup) -
+// and the modal they share.
+
+// ApexCharts appends custom icons after the hamburger menu, and its `index`
+// option cannot move ours reliably: the zoom buttons are left out on charts
+// with chart.zoom.enabled = false (the line charts), so a fixed position lands
+// somewhere different depending on the chart. Reordering the flex container
+// does not care how many buttons there are. This is a no-op when the pop-up
+// button is switched off, since the menu is last already.
+.apexcharts-toolbar .apexcharts-menu-icon {
+  order: 1;
+}
+
+// ...and the pop-up's close button goes after even that, so it ends up where
+// the dialog's own close button used to be: last, in the top-right corner.
+.apexcharts-toolbar .neowx-chart-close-icon {
+  order: 2;
+}
+
+// ApexCharts styles .apexcharts-toolbar-custom-icon itself, but its icon
+// sizing and hover rules only name the built-in buttons, so both are repeated
+// here at the vendor's own values - this button sits in the vendor's toolbar,
+// so a near-miss on the hover shade shows up next to the buttons either side
+// of it. fill/stroke come from attributes on the inline SVG in inc/js.inc.
+.apexcharts-toolbar-custom-icon.neowx-chart-popup-icon,
+.apexcharts-toolbar-custom-icon.neowx-chart-close-icon {
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: rgba(15, 23, 42, 0.06);
+    color: #1f2937;
+  }
+}
+
+// Hosted in a card or a dialog header, the toolbar is outside the canvas whose
+// theme class the vendor's selected/hover rules hang off, so they are restated
+// here against the toolbar itself. The theme-dependent half lives with the
+// [[Embedded]] toolbar's dark rules further down, so both are dressed the same.
+.nwm-hosted-toolbar {
+  .apexcharts-pan-icon.apexcharts-selected,
+  .apexcharts-reset-zoom-icon.apexcharts-selected,
+  .apexcharts-selection-icon.apexcharts-selected,
+  .apexcharts-zoom-icon.apexcharts-selected {
+    background: rgba(0, 143, 251, 0.12);
+    color: #008ffb;
+  }
+
+  button:hover {
+    background: rgba(15, 23, 42, 0.06);
+    color: #1f2937;
+  }
+}
+
+.apexcharts-theme-dark .apexcharts-toolbar-custom-icon.neowx-chart-popup-icon:hover,
+.apexcharts-theme-dark .apexcharts-toolbar-custom-icon.neowx-chart-close-icon:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+// Embedded cards have no toolbar of their own, so this rebuilds the look of
+// the ApexCharts one. Those values are deliberately copied rather than reused
+// through .apexcharts-* selectors: that stylesheet is vendored, and leaning on
+// it would turn the next ApexCharts upgrade into a silent restyling here.
+//
+// chart_toolbar = separate gives chart cards this same toolbar, built in
+// js/app.js - which is the point of it: one button, one place, one set of
+// rules, whichever kind of card it sits on.
+.nwm-embed-toolbar,
+.card > .nwm-hosted-toolbar {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 11;
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  padding: 3px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.nwm-embed-toolbar-icon {
+  cursor: pointer;
+  // WCAG 2.5.8 Target Size (Minimum): 24x24 CSS px hit target.
+  width: 26px;
+  height: 24px;
+  color: #6e8192;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.12s ease, color 0.12s ease;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    pointer-events: none;
+  }
+
+  &:hover {
+    background: rgba(15, 23, 42, 0.06);
+    color: #1f2937;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #008ffb;
+    outline-offset: 1px;
+  }
+}
+
+#neowx-popup {
+  // modal-xl caps the dialog at 1140px, which leaves most of a wide screen
+  // unused. The whole point of the pop-up is room, so take nearly all of it
+  // and let the margins be the only gutter. Only from the sm breakpoint up:
+  // below it Bootstrap gives the dialog .5rem margins and full width, and
+  // capping at 100vw - 4rem there would make it narrower, not wider.
+  @media (min-width: 576px) {
+    .modal-dialog {
+      max-width: calc(100vw - 4rem);
+    }
+  }
+
+  // Card headings are centred by default, and the dialog is meant to read as
+  // the card enlarged - see the items_title_align rules below for the rest. The close button is out of the flex flow entirely, so centring
+  // the row centres the title on the dialog rather than on what is left of it.
+  .modal-header {
+    position: relative;
+    justify-content: center;
+  }
+
+  // The close button, and a chart toolbar in "align" mode, share this seat:
+  // centred on the header row, right edge on the header's own padding.
+  // neowxAlignChartToolbar clears the inline top/right ApexCharts set from the
+  // canvas, so this one rule places both - which is why the corner does not
+  // move between modes.
+  .modal-header .nwm-popup-close,
+  .modal-header .nwm-hosted-toolbar {
+    // Stated rather than inherited from the vendored .apexcharts-toolbar rule,
+    // which is what a hosted toolbar would otherwise be relying on to be taken
+    // out of the header's centred flex row.
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+  }
+
+  // In "align" mode the chart's toolbar takes that seat and ends with a close
+  // button of its own, so this one would be a second one underneath it.
+  &.nwm-popup-own-close .modal-header .nwm-popup-close {
+    display: none;
+  }
+
+  // js/app.js gives the title the same classes a card heading has (size and
+  // accent colour, both from NEOWX_TITLE_CLASS in inc/js.inc). What it cannot pick
+  // up there is what the headings get from sitting in a .card .card-body, and
+  // Bootstrap's own .modal-title line-height is looser than a heading's.
+  .modal-title {
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+    // Symmetric, so the title stays centred while a long one still breaks
+    // before it reaches the close button rather than running under it.
+    padding: 0 3rem;
+  }
+
+  // A pop-up is the card enlarged, so its title follows that card's
+  // Appearance/items_title_align. js/app.js copies the resolved value onto the modal
+  // and measures --nwm-item-title-reserve from whatever sits in the header's corner
+  // - the chart toolbar in "align" mode, the close button otherwise. The 3rem
+  // fallback is the symmetric padding above, for the moment before it has been
+  // measured.
+  &[data-item-title-align="left"] .modal-title,
+  &[data-item-title-align="center-adjusted"] .modal-title {
+    // Spanning the header, not shrink-wrapped to the text. The header centres
+    // its flex items, so a title sized to its own text is already sitting in
+    // the middle and text-align inside it has nothing left to decide - which
+    // is what made a left-aligned card open a centred dialog. On a card the
+    // heading is a block filling the body, so the question never arose there.
+    flex: 1 1 auto;
+    padding-left: 0;
+    padding-right: var(--nwm-item-title-reserve, 3rem);
+  }
+
+  &[data-item-title-align="left"] .modal-title {
+    text-align: left;
+  }
+
+  .modal-body {
+    // A copied chart is created with height: '100%' and ApexCharts measures
+    // that against this element (minus its padding), so the dialog needs a
+    // real height. 11rem covers 3.5rem of dialog margins plus a ~4rem header,
+    // and the remaining slack keeps a taller header from pushing the modal
+    // past the viewport.
+    height: calc(100vh - 11rem);
+    min-height: 280px;
+  }
+
+  // The media below is sized in percentages, and a percentage height only
+  // resolves when every element up to the one with a real height has a
+  // definite height too. Without this the mount point is auto-height and an
+  // iframe silently falls back to its 150px default. (A chart is unaffected
+  // either way: ApexCharts measures the mount's parent itself.)
+  #neowx-popup-mount {
+    height: 100%;
+  }
+
+  // An image keeps its own proportions rather than the card's cropped ratio.
+  .nwm-embed-popup-media {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  img.nwm-embed-popup-media {
+    object-fit: contain;
+  }
+}
+
+// Dark mode - the modal is appended to <body>, outside any .card, so it needs
+// the same treatment the cards get above.
+@media (prefers-color-scheme: dark) {
+  .auto-theme {
+    .nwm-embed-toolbar,
+    .nwm-hosted-toolbar {
+      background: rgba(28, 28, 31, 0.82);
+    }
+
+    .nwm-embed-toolbar-icon,
+    .nwm-hosted-toolbar button {
+      color: #d4d6dc;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+      }
+    }
+
+    // The hamburger's dropdown is a child of the toolbar, so it travelled too.
+    .nwm-hosted-toolbar .apexcharts-menu {
+      background: rgba(28, 28, 31, 0.92);
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #f3f4f6;
+    }
+
+    .nwm-hosted-toolbar .apexcharts-menu-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    #neowx-popup {
+      .modal-content {
+        background-color: #444 !important;
+        color: #ddd !important;
+      }
+
+      .modal-header {
+        border-bottom-color: rgba(255, 255, 255, 0.15);
+      }
+
+    }
+  }
+}
+
+.dark-theme {
+  .nwm-embed-toolbar,
+  .nwm-hosted-toolbar {
+    background: rgba(28, 28, 31, 0.82);
+  }
+
+  .nwm-embed-toolbar-icon,
+  .nwm-hosted-toolbar button {
+    color: #d4d6dc;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+  }
+
+  // The hamburger's dropdown is a child of the toolbar, so it travelled too.
+  .nwm-hosted-toolbar .apexcharts-menu {
+    background: rgba(28, 28, 31, 0.92);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f3f4f6;
+  }
+
+  .nwm-hosted-toolbar .apexcharts-menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  #neowx-popup {
+    .modal-content {
+      background-color: #444 !important;
+      color: #ddd !important;
+    }
+
+    .modal-header {
+      border-bottom-color: rgba(255, 255, 255, 0.15);
+    }
+
+  }
+}
+
+// =============================================================================
+// Unified Header Navigation Hub (Option 2)
+// =============================================================================
+.nwm-nav-hub {
+  position: relative;
+  z-index: 1031;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 2rem;
+  padding: 0.2rem 0.45rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  gap: 0.2rem;
+
+  &, * {
+    font-family: inherit;
+  }
+
+  .navbar-nav {
+    .nav-link {
+      padding: 0.2rem 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.82) !important;
+      border-radius: 1rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      text-transform: capitalize;
+
+      &:hover {
+        color: #ffffff !important;
+        background: rgba(255, 255, 255, 0.12);
+      }
+    }
+
+    .nav-item.active .nav-link {
+      color: #ffffff !important;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+.nwm-stepper-group {
+  position: relative;
+  z-index: 1032;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 140px;
+  max-width: 185px;
+  flex-shrink: 0;
+  gap: 0.15rem;
+}
+
+.nwm-header-center {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 100px;
+  max-width: 135px;
+  flex-shrink: 0;
+  text-align: center;
+  position: relative;
+  z-index: 1033;
+
+  &.show {
+    z-index: 1045;
+  }
+}
+
+.nwm-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  text-decoration: none !important;
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: all 0.18s ease-in-out;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover:not(.disabled):not(:disabled) {
+    background: rgba(255, 255, 255, 0.28);
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.45);
+    transform: scale(1.06);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active:not(.disabled):not(:disabled) {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.38);
+  }
+
+  &.disabled,
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+    pointer-events: auto !important;
+    transform: none;
+  }
+
+  i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.nwm-header-picker-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 1.25rem;
+  color: #ffffff !important;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  height: 1.85rem;
+  line-height: 1.5;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  width: 100%;
+  max-width: 135px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover,
+  &:focus {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.45);
+    color: #ffffff !important;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+  }
+
+  .nwm-picker-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nwm-picker-arrow {
+    font-size: 1rem;
+    line-height: 1;
+    opacity: 0.85;
+    margin-left: 1px;
+    flex-shrink: 0;
+  }
+}
+
+.nwm-picker-dropdown {
+  position: absolute;
+  top: 100%;
+  background: rgba(33, 37, 41, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  padding: 0.5rem;
+  color: #ffffff;
+  z-index: 1060 !important;
+  margin-top: 0.35rem;
+  min-width: 190px;
+  max-width: 310px;
+  animation: nwmFadeDown 0.15s ease-out;
+
+  &.dropdown-menu-center {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+  }
+
+  body.light-theme & {
+    background: rgba(255, 255, 255, 0.98);
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    color: #212529;
+  }
+}
+
+@keyframes nwmFadeDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.nwm-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+  margin-bottom: 0.4rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+
+  body.light-theme & {
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .nwm-picker-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+  }
+
+  .nwm-picker-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 0;
+
+    body.light-theme & {
+      background: rgba(0, 0, 0, 0.06);
+      color: #333333;
+    }
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.25);
+      body.light-theme & {
+        background: rgba(0, 0, 0, 0.12);
+      }
+    }
+
+    &:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+    }
+  }
+
+  .nwm-picker-select {
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.35rem;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.1rem 0.3rem;
+    outline: none;
+    cursor: pointer;
+
+    body.light-theme & {
+      background: rgba(0, 0, 0, 0.05);
+      border-color: rgba(0, 0, 0, 0.15);
+      color: #212529;
+    }
+
+    option {
+      background-color: #2b2b2b;
+      color: #ffffff;
+
+      body.light-theme & {
+        background-color: #ffffff;
+        color: #212529;
+      }
+    }
+  }
+}
+
+.nwm-picker-filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  overflow-x: auto;
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.35rem;
+  scrollbar-width: thin;
+
+  .nwm-picker-tab {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.75rem;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+
+    body.light-theme & {
+      background: rgba(0, 0, 0, 0.05);
+      color: #555555;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      body.light-theme & {
+        background: rgba(0, 0, 0, 0.1);
+        color: #111111;
+      }
+    }
+
+    &.active {
+      background: #007bff;
+      color: #ffffff;
+    }
+  }
+}
+
+.nwm-picker-grid-years {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.3rem;
+  max-height: 210px;
+  overflow-y: auto;
+}
+
+.nwm-picker-grid-months {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.3rem;
+}
+
+.nwm-picker-grid-weeks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.3rem;
+  max-height: 210px;
+  overflow-y: auto;
+}
+
+.nwm-picker-grid-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.7;
+  margin-bottom: 0.25rem;
+}
+
+.nwm-picker-grid-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.nwm-picker-empty-cell {
+  display: block;
+  height: 1.7rem;
+}
+
+.nwm-picker-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 0.35rem;
+  text-decoration: none !important;
+  color: inherit !important;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 1.7rem;
+
+  &:hover:not(.disabled):not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+    body.light-theme & {
+      background: rgba(0, 0, 0, 0.08);
+      color: #111111 !important;
+    }
+  }
+
+  &.active {
+    background: #007bff !important;
+    color: #ffffff !important;
+    font-weight: 700;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &.today {
+    border-color: #007bff;
+  }
+
+  &.disabled,
+  &:disabled {
+    opacity: 0.25 !important;
+    cursor: not-allowed;
+    pointer-events: none;
+    text-decoration: none !important;
+  }
+}
+
+.nwm-header-input {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 1.25rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  width: 100%;
+  max-width: 135px;
+  height: 1.85rem;
+  line-height: 1.5;
+
+  &:hover,
+  &:focus {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.45);
+    color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+    opacity: 0.85;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.nwm-header-label {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0 0.25rem;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  text-align: center;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nwm-header-select {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 1.25rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  height: 1.85rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 135px;
+
+  &:hover,
+  &:focus {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.45);
+    color: #ffffff;
+  }
+
+  option {
+    background-color: #2b2b2b;
+    color: #ffffff;
+  }
+}
+
+.nwm-noaa-slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  flex-shrink: 0;
+}
+
+.nwm-hub-divider {
+  width: 1px;
+  height: 1.3rem;
+  background: rgba(255, 255, 255, 0.22);
+  margin: 0 0.15rem;
+  align-self: center;
+}
+
+#nwm-date-missing-modal {
+  .modal-content {
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(33, 37, 41, 0.98);
+    color: #ffffff;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+
+    body.light-theme &,
+    body:not(.dark-theme) & {
+      background: #ffffff;
+      color: #212529;
+      border-color: rgba(0, 0, 0, 0.12);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    }
+  }
+
+  .close {
+    color: inherit;
+    opacity: 0.7;
+    text-shadow: none;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 991.98px) {
+  .nwm-nav-hub {
+    width: 100%;
+    border-radius: 0.75rem;
+    flex-direction: column;
+    padding: 0.65rem;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+  }
+  .nwm-stepper-group {
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+  }
+  .nwm-hub-divider {
+    display: none !important;
+  }
+  .nwm-nav-hub .navbar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 0.25rem;
+  }
+}
+
+// =============================================================================
+// Collapsible Sleek Drawer Footer (Option 2)
+// =============================================================================
+footer.page-footer.nwm-collapsible-footer {
+  margin-top: 2rem;
+  padding-top: 0 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+
+  .nwm-footer-drawer {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.14);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .nwm-footer-heading {
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    margin-bottom: 0.65rem;
+    display: flex;
+    align-items: center;
+
+    i {
+      font-size: 1.1rem;
+      opacity: 0.85;
+    }
+  }
+
+  .nwm-footer-card {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.75rem;
+    padding: 0.85rem 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .nwm-footer-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.86rem;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .nwm-footer-meta-label {
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 500;
+  }
+
+  .nwm-footer-meta-value {
+    color: #ffffff;
+    font-weight: 600;
+    text-align: right;
+    margin-left: 0.5rem;
+  }
+
+  .nwm-footer-about-text {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.4;
+  }
+
+  .nwm-footer-links-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .nwm-footer-link-chip {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1.25rem;
+    padding: 0.35rem 0.75rem;
+    color: #ffffff !important;
+    font-size: 0.83rem;
+    font-weight: 500;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+
+    i {
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.45);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .nwm-footer-btn-chip {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(0, 188, 212, 0.22);
+    border: 1px solid rgba(0, 188, 212, 0.45);
+    border-radius: 1.25rem;
+    padding: 0.2rem 0.65rem;
+    color: #ffffff !important;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(0, 188, 212, 0.38);
+      border-color: rgba(0, 188, 212, 0.7);
+      transform: translateY(-1px);
+    }
+  }
+
+  .nwm-footer-bar {
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  .nwm-footer-info {
+    flex: 1 1 auto;
+  }
+
+  .nwm-footer-text {
+    font-size: 0.84rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+
+    a {
+      color: #ffffff;
+      text-decoration: underline;
+      text-decoration-color: rgba(255, 255, 255, 0.35);
+      transition: all 0.18s ease;
+
+      &:hover {
+        text-decoration-color: #ffffff;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .nwm-footer-item {
+    display: inline;
+    white-space: nowrap;
+  }
+
+  .nwm-sep {
+    display: inline-block;
+    opacity: 0.45;
+    font-size: 0.75rem;
+    margin: 0 0.35rem;
+  }
+
+  .nwm-version {
+    opacity: 0.85;
+    margin-left: 0.15rem;
+  }
+
+  .nwm-footer-disclaimer {
+    font-size: 0.79rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.76);
+
+    a {
+      color: rgba(255, 255, 255, 0.88);
+      text-decoration: underline;
+      text-decoration-color: rgba(255, 255, 255, 0.3);
+
+      &:hover {
+        color: #ffffff;
+        text-decoration-color: #ffffff;
+      }
+    }
+  }
+
+  .nwm-footer-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 1.5rem;
+    color: #ffffff !important;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    transition: all 0.2s ease;
+    outline: none !important;
+    box-shadow: none !important;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.45);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18) !important;
+    }
+
+    .nwm-footer-chevron {
+      transition: transform 0.25s ease;
+      display: inline-block;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    &.expanded .nwm-footer-chevron,
+    &[aria-expanded="true"] .nwm-footer-chevron {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+// Responsive behavior for credits & disclaimer line
+@media (max-width: 1599.98px) {
+  footer.page-footer.nwm-collapsible-footer {
+    .nwm-disclaimer-sep {
+      display: none !important;
+    }
+    .nwm-disclaimer-break {
+      display: block !important;
+      height: 0.15rem;
+    }
+    .nwm-footer-disclaimer {
+      display: inline-block;
+    }
+  }
+}
+
+@media (min-width: 1600px) {
+  footer.page-footer.nwm-collapsible-footer {
+    .nwm-disclaimer-sep {
+      display: inline-block;
+    }
+    .nwm-disclaimer-break {
+      display: none !important;
+    }
+    .nwm-footer-disclaimer {
+      display: inline;
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  footer.page-footer.nwm-collapsible-footer {
+    .nwm-footer-text {
+      text-align: center;
+    }
+    .nwm-footer-toggle-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .nwm-footer-drawer .nwm-footer-card {
+      min-height: auto;
+    }
+  }
+}
+
+

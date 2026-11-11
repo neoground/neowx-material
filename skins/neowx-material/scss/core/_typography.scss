@@ -1,0 +1,73 @@
+@use "bootstrap/variables" as bootstrap-variables;
+@use "colors";
+@use "mixins";
+@use "variables";
+
+// Typography
+@use "sass:map";
+
+// General properties
+body {
+  font-family: variables.$mdb-font-family;
+  font-weight: bootstrap-variables.$font-weight-light;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bootstrap-variables.$font-weight-light;
+}
+
+// Blockquote
+.blockquote {
+  padding: variables.$blockquote-padding-y variables.$blockquote-padding-x;
+  border-left: .25rem solid #eceeef;
+  &.text-right {
+    border-right: .25rem solid #eceeef;
+    border-left: none;
+  }
+  .bq-title {
+    margin-bottom: 0;
+    font-size: variables.$font-size-large;
+    font-weight: 400;
+  }
+  p {
+    padding: variables.$blockquote-p-padding-y 0;
+    font-size: variables.$blockquote-p-font-size;
+  }
+}
+
+@each $name, $color in colors.$basic {
+  .bq-#{$name} {
+    border-left: 3px solid $color !important;
+    .bq-title {
+      color: $color !important;
+    }
+  }
+}
+
+// Responsive headings
+@each $key, $val in bootstrap-variables.$grid-breakpoints {
+  @include mixins.media-breakpoint-up($key) {
+    $y: map.get(variables.$responsive-headings, $key);
+    @each $name, $value in $y {
+      .#{$name}-responsive {
+        font-size: $value;
+      }
+    }
+  }
+}
+
+@each $name, $color in colors.$basic-mdb-colors {
+  @include mixins.text-emphasis-variant(".text-#{$name}", $color);
+}
+
+.font-small {
+  font-size: variables.$font-size-small;
+}
+
+.font-extra-small {
+  font-size: variables.$font-size-extra-small;
+}
+
+strong {
+  font-weight: 500;
+}

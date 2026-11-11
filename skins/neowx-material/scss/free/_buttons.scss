@@ -1,0 +1,106 @@
+@use "core/colors";
+@use "core/mixins";
+@use "core/variables";
+
+// Buttons
+.btn {
+  margin: variables.$btn-margin-basic;
+  color: inherit;
+  text-transform: uppercase;
+  word-wrap: break-word;
+  white-space: normal;
+  cursor: pointer;
+  border: 0;
+  border-radius: variables.$border-radius-base;
+  box-shadow: variables.$z-depth-1;
+  transition: variables.$btn-transition;
+  @include mixins.button-size(variables.$btn-padding-y-basic, variables.$btn-padding-x-basic, variables.$btn-font-size-basic);
+
+  @include mixins.hover-focus-active {
+    outline: 0;
+    box-shadow: variables.$z-depth-1-half;
+  }
+
+  &.btn-block {
+    margin: inherit;
+  }
+
+  .fas,
+  .fab,
+  .far {
+    &.right {
+      margin-left: variables.$btn-icon-margin;
+    }
+    &.left {
+      margin-right: variables.$btn-icon-margin;
+    }
+  }
+
+  &.btn-lg {
+    @include mixins.button-size(variables.$btn-padding-y-large, variables.$btn-padding-x-large, variables.$btn-font-size-large);
+  }
+  &.btn-md {
+    @include mixins.button-size(variables.$btn-padding-y-medium, variables.$btn-padding-x-medium, variables.$btn-font-size-medium);
+  }
+  &.btn-sm {
+    @include mixins.button-size(variables.$btn-padding-y-small, variables.$btn-padding-x-small, variables.$btn-font-size-small);
+  }
+
+  &.disabled,
+  &:disabled {
+    @include mixins.hover-focus-active {
+      box-shadow: variables.$z-depth-1;
+    }
+  }
+
+  &[class*="btn-outline-"] {
+    padding-top: variables.$btn-outline-padding-y-basic;
+    padding-bottom: variables.$btn-outline-padding-y-basic;
+    &.btn-lg {
+      padding-top: variables.$btn-outline-padding-y-large;
+      padding-bottom: variables.$btn-outline-padding-y-large;
+    }
+    &.btn-md {
+      padding-top: variables.$btn-outline-padding-y-medium;
+      padding-bottom: variables.$btn-outline-padding-y-medium;
+    }
+    &.btn-sm {
+      padding-top: variables.$btn-outline-padding-y-small;
+      padding-bottom: variables.$btn-outline-padding-y-small;
+    }
+  }
+}
+
+.btn-link {
+  color: colors.$black-base;
+  background-color: transparent;
+  box-shadow: none;
+  @include mixins.hover-focus-active {
+    color: colors.$black-base;
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.btn-group {
+  > .btn:not(:first-child),
+  > .btn-group:not(:first-child) {
+    margin-left: -(variables.$btn-group-margin);
+  }
+}
+
+@each $btn_name, $color_value in colors.$mdb-colors {
+  @include mixins.make-button($btn_name, $color_value);
+  @include mixins.make-outline-button($btn_name, $color_value);
+}
+
+@each $name, $val in colors.$gradients {
+  @include mixins.make-gradient-button($name, $val);
+}
+
+.btn-warning:focus,
+.btn-warning:not(:disabled):not(.disabled).active,
+.btn-warning:not(:disabled):not(.disabled):active,
+.show > .btn-warning.dropdown-toggle {
+  color: colors.$white-base;
+}

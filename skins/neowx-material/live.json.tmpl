@@ -1,0 +1,84 @@
+#encoding UTF-8
+#import time
+## +-------------------------------------------------------------------------+
+## |    live.json.tmpl       Always-current data for non-current page chrome  |
+## +-------------------------------------------------------------------------+
+##
+## This file is regenerated on EVERY report cycle (see [[LiveData]] in
+## skin.conf). Static / frozen pages (archive month + year summaries) fetch it
+## client-side via js/neowx-live.js so their header date, almanac and footer
+## versions stay current even though the HTML itself is never rebuilt.
+##
+## All times below are the STATION's local time (the machine weewx runs on),
+## matching the live "current" page.
+#set $date_fmt = $Extras.Formatting.get('date', '%x')
+#set $datetime_fmt = $Extras.Formatting.get('datetime', '%x %H:%M')
+#if $almanac.hasExtras
+#set $has_extras = "true"
+#else
+#set $has_extras = "false"
+#end if
+#set $cur_year = $time.strftime('%Y')
+#set $cur_month = $time.strftime('%Y-%m')
+#set $cur_week = $time.strftime('%Y-%V')
+#set $cur_day = $time.strftime('%Y-%m-%d')
+#set $url_live = 'index.html'
+#set $url_day = 'index.html'
+#set $url_week = 'archive/' + $cur_year + '/weeks/week-' + $cur_week + '.html'
+#set $url_month = 'archive/' + $cur_year + '/months/month-' + $cur_month + '.html'
+#set $url_year = 'archive/' + $cur_year + '/year-' + $cur_year + '.html'
+#if $varExists('alltime') and $alltime.start.raw is not None
+#set $start_date_val = $alltime.start.format('%Y-%m-%d')
+#else
+#set $start_date_val = '1970-01-01'
+#end if
+#if $varExists('archive_start_date') and $archive_start_date not in ('1970-01-01', '')
+#if $archive_start_date > $start_date_val
+#set $start_date_val = $archive_start_date
+#end if
+#end if
+{
+    "today": "$cur_day",
+    "date": "$time.strftime($date_fmt)",
+    "year": "$cur_year",
+    "week": "$cur_week",
+    "month": "$cur_month",
+    "archive_start_date": "$start_date_val",
+    "archive_stop_date": "$cur_day",
+    "generated": "$time.strftime('%Y-%m-%dT%H:%M:%S')",
+    "archive_urls": {
+        "live": "$url_live",
+        "day": "$url_day",
+        "week": "$url_week",
+        "month": "$url_month",
+        "year": "$url_year"
+    },
+    "versions": {
+        "weewx": "$station.version",
+        "skin": "$Extras.version"
+    },
+    "uptime": {
+        "station": "$station.uptime.long_form",
+        "server": "$station.os_uptime.long_form"
+    },
+    "almanac": {
+        "hasExtras": $has_extras,
+        "sunrise": "$almanac.sunrise",
+        "sunset": "$almanac.sunset"#slurp
+#if $almanac.hasExtras
+,
+        "sun": {
+            "rise": "$almanac.sun.rise",
+            "set": "$almanac.sun.set"
+        },
+        "moon": {
+            "rise": "$almanac.moon.rise",
+            "set": "$almanac.moon.set"
+        },
+        "moon_phase": "$almanac.moon_phase",
+        "moon_index": $almanac.moon_index,
+        "moon_fullness": "$almanac.moon_fullness"
+#end if
+
+    }
+}

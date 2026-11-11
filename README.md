@@ -1,121 +1,115 @@
 # NeoWX Material
 
-**The most versatile and modern weewx skin**
+**The most modern and feature-rich Material Design skin for WeeWX weather stations**
 
-You want a modern UI for your weather station and its archive?
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=flat-square)](https://weewx.seehausen.org/)
+[![GitHub Issues](https://img.shields.io/github/issues/seehase/neowx-material?style=flat-square)](https://github.com/seehase/neowx-material/issues)
+[![License](https://img.shields.io/github/license/seehase/neowx-material?style=flat-square)](LICENSE)
 
-Including translation, customization, great appearance on tablets and
-smartphones, and even a dark mode?
+An actively maintained evolution of NeoWX Material featuring **interactive archive navigation**, **per-page collapsible layouts**, **real-time MQTT WebSocket updates**, **7-day Open-Meteo forecasts**, **multi-axis ApexCharts**, **station telemetry**, and **12 built-in languages**.
 
-Then this skin is the one you're looking for!
+> **Live Demo:** [weewx.seehausen.org](https://weewx.seehausen.org/)
 
-This is the new version of the famous NeoWX (based on Sofaskin), 
-including a modern Material Design UI, full weather data archive, 
-and many more new features.
+---
 
-## Key features
+## 🎉 What's New in Release 2.0
 
-- beautiful Material Design
-- many color schemes to choose from
-- interactive and zoomable charts
-- wind direction + speed visualization as a wind rose
-- accessible HTML + NOAA TXT file archive for all years and months
-- easy translation - provides many languages out of the box! 
-  (or add your own translation)
-- auto dark mode - works great on mobile and desktop
-- responsive design - optimized for modern tablets and smartphones
-- support for all available sensors
-- many options to customize your reports even more - 
-  have a look at the skin.conf
-- ...and much more!
+- **🗓️ Interactive Archive Navigation & Date Pickers**: Adaptive header stepper controls (`<` / `>`) and Material dropdown calendar, week, month, and year pickers with `archive_start_date` bounds, proactive 404 protection, and one-click NOAA report access.
+- **🗂️ Full Day & ISO Week Archives with Live-First Backfill (`NeowxArchiveGenerator`)**: Generates structured daily (`day-YYYY-MM-DD`), ISO weekly (`week-YYYY-WW`), monthly (`month-YYYY-MM`), and yearly (`year-YYYY`) archives in `archive/YYYY/...`. Current pages always render first (~5–10s), while missing historical pages backfill newest-to-oldest in batches across 5-minute cycles (`archive_batch_size`, `archive_max_run_time`, `archive_history`, `archive_start_date`).
+- **🧩 Per-Page Section Layout (`[[[pages]]]` & `[[[sections]]]`)**: Explicitly define which sections appear on each page (`today`, `day`, `week`, `month`, `year`, `telemetry`) in exact top-to-bottom order. Wrap any group in a collapsible Material expansion panel (now also on **History** and **Almanac** pages) with persistent browser tab state.
+- **🔌 Mix-and-Match Telemetry & Embedded Cards**: Place battery/voltage/signal gauges, telemetry charts, or embedded iFrames/images (Windy, RainViewer, Blitzortung, webcams) inside *any* card or chart section on *any* page.
+- **⚡ Live Header/Footer Sync**: Archived pages stay up to date in the header and footer via `neowx-live.js` (`live.json`) without stale-value flashing.
 
-Learn more about all features on our project page: 
-[NeoWX Material | Neoground Projects](https://neoground.com/projects/neowx-material).
+---
 
-## Installation
+## ✨ Core Highlights
 
-See the [official documentation](https://neoground.com/docs/neowx-material/index) for more information.
+- **🔴 Real-Time MQTT Updates**: Instant live sensor updates over WebSockets without page reload, configurable value-change flash animations, live connection indicator, and live updates for dashboard telemetry gauges. → [MQTT Guide](docs/MQTT.md)
+- **⚙️ Powerful Configuration & Upgrade-Safe Patching**: Control 20+ Material color schemes, auto dark mode, cards, charts, and embedded widgets in `skin.conf`. Keep your customizations intact across skin upgrades with `config_patcher.py`. → [Configuration Guide](docs/CONFIGURATION.md) • [Config Patcher](docs/CONFIG-PATCHER.md)
+- **🌍 12 Languages & Flexible Date Formatting**: Complete translations for Catalan, Danish, Dutch, English, Finnish, French, German, Italian, Polish, Slovak, Spanish, and Swedish, plus customizable date/time formats for cards and charts. → [Localization Guide](docs/LOCALIZATION.md) • [Date Formatting](docs/DATE-FORMATTING.md)
+- **📊 Multi-Axis Interactive Charts & Trend Indicators**: Zoomable ApexCharts with multiple independent left/right Y-axes, fullscreen mode, wind rose, and unit-aware trend indicators (`multi` WMO/NWS, `davis`, `strict`). → [Multi-Axis Guide](docs/MULTI-AXIS-USAGE-GUIDE.md) • [Trend Indicators](docs/TREND-INDICATORS.md)
+- **📡 Station Telemetry & 7-Day Weather Forecast**: Dedicated station health monitoring (battery status, voltage gauges, `rxCheckPercent` signal quality) and built-in 7-day [Open-Meteo](https://open-meteo.com) forecasts. → [Telemetry Guide](docs/TELEMETRY-CONFIG-GUIDE.md)
 
-1. [Download](https://neoground.com/projects/neowx-material) the latest version
-2. Install the extension: `wee_extension --install=path/to/neowx-material.zip`
-3. restart weewx: `sudo service weewx restart`
+---
 
-If your skin doesn't change edit the `weewx.conf` and set `skin = neowx-material`
-in the `[StdReport]` section, after that reload weewx: `sudo service weewx reload`.
+## 📥 Installation
 
-This skin works best with the python ephem module installed 
-(needed for the almanac). Install `pyephem` via pip, or the 
-`python3-ephem` package via package manager.
+1. **Install the extension:**
+   ```bash
+   weectl extension install https://github.com/seehase/neowx-material/archive/refs/heads/master.zip
+   ```
 
-## Contribution
+2. **Enable the skin in `weewx.conf` (if not set automatically):**
+   ```ini
+   [StdReport]
+       [[neowx-material]]
+           skin = neowx-material
+           enable = true
+           lang = en  # ca, da, de, en, es, fi, fr, it, nl, pl, se, sk
+   ```
 
-Feel free to add your own improvements. Contributions are always welcome!
+3. **Restart WeeWX:**
+   ```bash
+   sudo systemctl restart weewx
+   ```
 
-Our previous skin, NeoWX, was used all over the world in many countries.
-We hope that this skin will do the same. Please consider translating our skin
-in your language.
+> **Optional Enhanced Almanac:** Install [weewx-skyfield-almanac](https://github.com/roe-dl/weewx-skyfield-almanac) for extended sun, moon, planet, and twilight calculations on the Almanac page:
+> ```bash
+> weectl extension install https://github.com/roe-dl/weewx-skyfield-almanac/archive/master.zip
+> ```
 
-If you want to provide any improvements, feel free to create a pull request.
-We use [Gitmoji](https://gitmoji.dev/) commit messages.
+---
 
-## Development
+## ⚙️ Quick Configuration
 
-Setting up the development environment is easy:
+All skin settings live under `[Extras]` and `[CheetahGenerator]` in `skins/neowx-material/skin.conf`:
 
-- clone / download repository
-- install npm packages (`yarn install` / `npm install`)
-- for easy testing create a symlink from your `WEEWX_HOME/skins/neowx-material`
-  to the `src` directory
-  
-For basic tasks npm / yarn scripts are available.
+- **Layout & Archives**: Configure page sections under `[[Appearance]] → [[[pages]]]` / `[[[sections]]]` and control historical archive generation with `archive_start_date`, `archive_history`, and `archive_batch_size` under `[CheetahGenerator]`. See the [Configuration & Layout Guide](docs/CONFIGURATION.md).
+- **Preserve Settings Across Updates**: Save your overrides in `skin.conf.patch` and apply them anytime:
+  ```bash
+  ./config_patcher.py skin.conf skin.conf.patch
+  ```
+  See the [Configuration Patcher Guide](docs/CONFIG-PATCHER.md).
+- **Enable Live MQTT**: Set `enabled = true`, `host`, `port`, and `topic` under `[Extras] → [[MQTT]]`. See the [MQTT Setup Guide](docs/MQTT.md).
 
-Styling is done via SCSS, compile it to `css/style.css` by: `yarn run build-css`.
+---
 
-### Available scripts
+## 📚 Documentation
 
-| Script           | Description                                                           |
-| ---------------- | --------------------------------------------------------------------- |
-| build-css        | Create css/style.css from SCSS files                                  |
-| build-minify-css | Create minified css/style.min.css from SCSS files                     |
-| cleanup-build    | Remove development files from dist directory                          |
-| copy-directories | Copy directories from src to dist (for building)                      |
-| copy-files       | Copy files from src to dist (for building)                            |
-| delete-build     | Remove files inside dist/skins/neowx-material                         |
-| build            | Build job: delete-build, build-minify-css, copy files + dirs, cleanup |
-| create-zip       | Creates a zip file of the dist directory. Use this after `build`      |
+Detailed guides and references are located in the [`docs/`](docs/) directory:
 
-### Building
+| Guide | Description |
+| :--- | :--- |
+| **[Configuration & Layout Guide](docs/CONFIGURATION.md)** | Page/section layout (`[[[pages]]]`, `[[[sections]]]`), collapsible panels, Release 2.0 archive navigation & backfill (`archive_start_date`, `archive_history`, `archive_batch_size`), forecasts, and embedded iFrames/images |
+| **[Configuration Patcher Guide](docs/CONFIG-PATCHER.md)** | Preserve your `skin.conf` customizations automatically across skin updates |
+| **[MQTT Real-Time Updates Guide](docs/MQTT.md)** | Mosquitto/WebSocket setup, WeeWX MQTT extension, flash effects, and sensor mapping |
+| **[Localization & Language Guide](docs/LOCALIZATION.md)** | Configuring the 12 supported languages, OS/systemd locales, and adding translations |
+| **[Date & Time Formatting Guide](docs/DATE-FORMATTING.md)** | Customizing date/time formats on charts (`moment.js`) and cards (`strftime`) |
+| **[Telemetry Configuration Guide](docs/TELEMETRY-CONFIG-GUIDE.md)** | Battery status, voltage gauges, signal quality (`rxCheckPercent`), and dashboard embedding |
+| **[Voltage Battery Gauge Migration](docs/VOLTAGE-BATTERY-GAUGE-UPDATE.md)** | Migrating from binary battery status flags to voltage-based gauges |
+| **[Multi-Axis Charts – Usage Guide](docs/MULTI-AXIS-USAGE-GUIDE.md)** | Combining observations with different scales on independent left/right Y-axes |
+| **[Multi-Axis Charts – Quick Reference](docs/MULTI-AXIS-QUICK-REFERENCE.md)** | Compact cheat-sheet for `[[[[yaxis]]]]` and `[[[[yaxis_config]]]]` syntax |
+| **[Trend Indicators Guide](docs/TREND-INDICATORS.md)** | Unit-aware current-page trend arrows, `trend_type` styles (`multi`, `davis`, `strict`), and thresholds |
 
-To create a dist package run `yarn run build`. This will clean up the dist environment
-and copy all files, directories and create the minified CSS.
+---
 
-You find the final skin at `dist/skins/neowx-material`. 
-Create a zip-file of the `dist` directory to create the final package
-which you can easily install with `wee_extension`.
+## 👨‍💻 Development & Contributing
 
-You may need to adjust the values if you add / change file names. In this case you
-may also need to adjust the dist/install.py script which contains a list of all
-files which should be copied to the weewx skin directory on installation.
+Contributions, bug reports, and translations are welcome! Open an issue or pull request on [GitHub](https://github.com/seehase/neowx-material/issues).
 
-Building is currently only supported on linux systems due to system commands used
-in the npm scripts. On other systems this needs to be adjusted or done manually.
+To build the SCSS stylesheet after editing files in `skins/neowx-material/scss/`:
 
-## Thank You!
+```bash
+cd skins/neowx-material
+yarn install
+yarn run build
+```
 
-This config and some parts of the skin are based on the template code      
-of the original "Standard" skin of weewx. Many thanks to Tom Keffer and     
-the weewx contributors. 
-One of the best solutions for your weather station under linux!
+---
 
-The design is based on 
-[Material Design for Bootstrap (MDB) Free](https://mdbootstrap.com).
+## 📜 Credits & License
 
-The NOAA reports, and some parts of the configuration 
-are based on the Standard weewx skin as well.
-
-These 3rd party libraries are used:
-
-- [Apexcharts](https://github.com/apexcharts/apexcharts.js) (MIT license)
-- [MomentJS](https://github.com/moment/moment) (MIT license)
-- [Weather Icons by Erik Flowers](https://github.com/erikflowers/weather-icons)
-  (MIT / SIL OFL 1.1 license)
+- **Maintained by:** [@seehase](https://github.com/seehase) and contributors.
+- **Original Skin:** Based on [NeoWX Material](https://github.com/neoground/neowx-material) by Neoground GmbH.
+- **Built With:** [WeeWX](https://weewx.com), Material Design for Bootstrap (MDB), [ApexCharts](https://apexcharts.com), [MomentJS](https://momentjs.com), [Weather Icons](https://erikflowers.github.io/weather-icons/), [Open-Meteo API](https://open-meteo.com), and Paho MQTT.
+- **License:** Distributed under the original [LICENSE](LICENSE).
