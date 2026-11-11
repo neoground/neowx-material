@@ -19,6 +19,18 @@
           order: 3;
         }
       }
+      @media (min-width: 1200px) and (max-width: 1299.98px) {
+        .navbar .navbar-nav .nav-link {
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+        }
+        .navbar .nav-flex-icons .nav-item {
+          margin-right: 0.5rem !important;
+        }
+      }
+      .navbar .nav-flex-icons .nav-item:last-child {
+        margin-right: 0 !important;
+      }
       @media (max-width: 1199.98px) {
         .navbar .nav-flex-icons {
           order: 3;
@@ -136,6 +148,18 @@
                     #end if
                 #end if
 
+                #if $Extras.Header.get("earthquakes_nav_link", "no") == "yes" or $Extras.get("earthquakes_nav_link", "no") == "yes"
+                    #if $active_nav == 'earthquakes'
+                    <li class="nav-item active mr-1 mr-xl-2">
+                        <a class="nav-link" href="earthquakes.html">$Extras.Translations[$Extras.language].earthquakes</a>
+                    </li>
+                    #else
+                    <li class="nav-item mr-1 mr-xl-2">
+                        <a class="nav-link" href="earthquakes.html">$Extras.Translations[$Extras.language].earthquakes</a>
+                    </li>
+                    #end if
+                #end if
+
                 #if $Extras.Header.custom1_url != ""
                 <li class="nav-item mr-1 mr-xl-2">
                     <a class="nav-link" href="$Extras.Header.custom1_url">$Extras.Header.custom1_label</a>
@@ -162,7 +186,7 @@
                     <i class="wi wi-moonrise mr-1" style="opacity: .75"></i> $almanac.moon.rise <br>
                     <i class="wi wi-moonset mr-1" style="opacity: .75"></i> $almanac.moon.set
                 </li>
-                <li class="nav-item mr-2 mr-xl-3 text-white text-center" style="line-height: 1.75; white-space: nowrap;" >
+                <li class="nav-item text-white text-center" style="line-height: 1.75; white-space: nowrap;" >
                     <span title="$almanac.moon_phase" data-toggle="tooltip" style="white-space: nowrap;">
                         #if $almanac.moon_phase == $almanac.moon_phases[0]
                         <i class="wi wi-moon-new mr-1" style="opacity: .75"></i>

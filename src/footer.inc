@@ -36,6 +36,16 @@
                         <td></td>
                     </tr>
                     #end if
+                    #if $Extras.Footer.get("show_earthquakes", "no") == "yes"
+                    <tr>
+                        <td>
+                            <a href="earthquakes.html">
+                                $Extras.Translations[$Extras.language].earthquakes
+                            </a>
+                        </td>
+                        <td></td>
+                    </tr>
+                    #end if
                 </table>
 
                 #if $Extras.Footer.about != ""

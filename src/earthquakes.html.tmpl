@@ -1,0 +1,261 @@
+#encoding UTF-8
+## +-------------------------------------------------------------------------+
+## |    earthquakes.html.tmpl         Template for local earthquakes page    |
+## +-------------------------------------------------------------------------+
+
+<!DOCTYPE html>
+<html lang="$Extras.language">
+<head>
+    <title>$Extras.Translations[$Extras.language].earthquakes | $station.location</title>
+    #include "head.inc"
+    <link rel="stylesheet" href="css/vendor/leaflet/leaflet.css">
+    <style>
+      #earthquake-map {
+        width: 100%;
+        height: 640px;
+        border-radius: 4px;
+        z-index: 1;
+        background: #d8e5f2;
+      }
+      .leaflet-control-layers-toggle {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23212121' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 2 7 12 12 22 7 12 2'/%3E%3Cpolyline points='2 17 12 22 22 17'/%3E%3Cpolyline points='2 12 12 17 22 12'/%3E%3C/svg%3E") !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-size: 20px 20px !important;
+        width: 34px !important;
+        height: 34px !important;
+        filter: none !important;
+      }
+      .quake-list-scroll {
+        max-height: 540px;
+        overflow-y: auto;
+      }
+      .quake-item {
+        transition: background-color 0.15s ease-in-out;
+      }
+      .dark-theme .quake-item,
+      .dark-theme .list-group-item {
+        background-color: #444 !important;
+        color: #ddd !important;
+        border-color: #555 !important;
+      }
+      .dark-theme .quake-item:hover,
+      .dark-theme .list-group-item:hover {
+        background-color: #505050 !important;
+        color: #fff !important;
+      }
+      .dark-theme .leaflet-tile-pane {
+        filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+      }
+      .dark-theme .leaflet-container {
+        background: #2b3340 !important;
+      }
+      .dark-theme .leaflet-popup-content,
+      .dark-theme .leaflet-popup-content-wrapper,
+      .dark-theme .leaflet-popup-tip {
+        background: #383838 !important;
+        color: #f5f5f5 !important;
+      }
+      .dark-theme .leaflet-popup-content a {
+        color: #82b1ff !important;
+      }
+      .dark-theme .leaflet-popup-content .text-muted {
+        color: #b0bec5 !important;
+      }
+      .dark-theme .leaflet-popup-close-button {
+        color: #bbb !important;
+      }
+      .dark-theme .leaflet-popup-close-button:hover {
+        color: #fff !important;
+      }
+      .dark-theme .leaflet-control-layers {
+        background: #383838 !important;
+        color: #ddd !important;
+        border-color: #555 !important;
+      }
+      .dark-theme .leaflet-control-layers-toggle {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 2 7 12 12 22 7 12 2'/%3E%3Cpolyline points='2 12 12 17 22 12'/%3E%3Cpolyline points='2 17 12 22 22 17'/%3E%3C/svg%3E") !important;
+        filter: none !important;
+      }
+      .dark-theme .leaflet-bar a {
+        background-color: #383838 !important;
+        color: #ddd !important;
+        border-bottom-color: #555 !important;
+      }
+      .dark-theme .leaflet-bar a:hover {
+        background-color: #484848 !important;
+        color: #fff !important;
+      }
+      .dark-theme .leaflet-control-attribution {
+        background: rgba(43, 51, 64, 0.8) !important;
+        color: #90a4ae !important;
+      }
+      .dark-theme .leaflet-control-attribution a {
+        color: #b0bec5 !important;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .auto-theme .quake-item,
+        .auto-theme .list-group-item {
+          background-color: #444 !important;
+          color: #ddd !important;
+          border-color: #555 !important;
+        }
+        .auto-theme .quake-item:hover,
+        .auto-theme .list-group-item:hover {
+          background-color: #505050 !important;
+          color: #fff !important;
+        }
+        .auto-theme .leaflet-tile-pane {
+          filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+        }
+        .auto-theme .leaflet-container {
+          background: #2b3340 !important;
+        }
+        .auto-theme .leaflet-popup-content,
+        .auto-theme .leaflet-popup-content-wrapper,
+        .auto-theme .leaflet-popup-tip {
+          background: #383838 !important;
+          color: #f5f5f5 !important;
+        }
+        .auto-theme .leaflet-popup-content a {
+          color: #82b1ff !important;
+        }
+        .auto-theme .leaflet-popup-content .text-muted {
+          color: #b0bec5 !important;
+        }
+        .auto-theme .leaflet-popup-close-button {
+          color: #bbb !important;
+        }
+        .auto-theme .leaflet-popup-close-button:hover {
+          color: #fff !important;
+        }
+        .auto-theme .leaflet-control-layers {
+          background: #383838 !important;
+          color: #ddd !important;
+          border-color: #555 !important;
+        }
+        .auto-theme .leaflet-control-layers-toggle {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 2 7 12 12 22 7 12 2'/%3E%3Cpolyline points='2 12 12 17 22 12'/%3E%3Cpolyline points='2 17 12 22 22 17'/%3E%3C/svg%3E") !important;
+          filter: none !important;
+        }
+        .auto-theme .leaflet-bar a {
+          background-color: #383838 !important;
+          color: #ddd !important;
+          border-bottom-color: #555 !important;
+        }
+        .auto-theme .leaflet-bar a:hover {
+          background-color: #484848 !important;
+          color: #fff !important;
+        }
+        .auto-theme .leaflet-control-attribution {
+          background: rgba(43, 51, 64, 0.8) !important;
+          color: #90a4ae !important;
+        }
+        .auto-theme .leaflet-control-attribution a {
+          color: #b0bec5 !important;
+        }
+      }
+      .leaflet-popup-content {
+        font-family: inherit;
+        color: #212121;
+      }
+      .dark-theme .leaflet-popup-content,
+      .auto-theme .leaflet-popup-content {
+        color: #f5f5f5;
+      }
+    </style>
+</head>
+<body class="${Extras.Appearance.mode}-theme main-bg" ontouchstart="">
+
+#attr $active_nav = 'earthquakes'
+#include "header.inc"
+
+#set $radius_km = $Extras.get("Earthquakes", {}).get("radius_km", 300)
+#set $min_mag = $Extras.get("Earthquakes", {}).get("min_magnitude", 2.5)
+#set $timespan_days = $Extras.get("Earthquakes", {}).get("timespan_days", 7)
+#set $basemap = $Extras.get("Earthquakes", {}).get("basemap", "vector")
+#set $custom_tile_url = $Extras.get("Earthquakes", {}).get("custom_tile_url", "")
+#set $show_faults = $Extras.get("Earthquakes", {}).get("show_faults", "yes")
+
+<main class="container-fluid mt-4 mb-4">
+    <div class="row">
+
+        <!-- Left Column: Summary Badges & Scrollable Event List -->
+        <div class="col-12 col-lg-5 mb-4">
+            <div class="card mb-3">
+                <div class="card-body p-3 text-center">
+                    <div class="row">
+                        <div class="col-4 border-right">
+                            <div class="text-muted font-small text-uppercase">Events ($timespan_days d)</div>
+                            <h4 class="h3-responsive font-weight-bold mb-0 $Extras.color-text" id="quake-total-count">-</h4>
+                        </div>
+                        <div class="col-4 border-right">
+                            <div class="text-muted font-small text-uppercase">Max Mag</div>
+                            <h4 class="h3-responsive font-weight-bold mb-0 text-danger" id="quake-max-mag">-</h4>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-muted font-small text-uppercase">Latest</div>
+                            <h4 class="h3-responsive font-weight-bold mb-0 $Extras.color-text" id="quake-latest-time">-</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header py-2 px-3 d-flex justify-content-between align-items-center">
+                    <span class="font-weight-bold $Extras.color-text">
+                        <i class="fas fa-list mr-1"></i> $Extras.Translations[$Extras.language].earthquakes (&ge; M$min_mag)
+                    </span>
+                    <span class="badge badge-light font-small">$radius_km km radius</span>
+                </div>
+                <div class="card-body p-0 quake-list-scroll" id="earthquake-list">
+                    <div class="p-4 text-center text-muted font-small">
+                        <div class="spinner-border spinner-border-sm text-primary mr-2" role="status"></div>
+                        Loading earthquake feed from USGS...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Interactive Leaflet Map -->
+        <div class="col-12 col-lg-7 mb-4">
+            <div class="card">
+                <div class="card-header py-2 px-3 d-flex justify-content-between align-items-center">
+                    <span class="font-weight-bold $Extras.color-text">
+                        <i class="fas fa-map-marked-alt mr-1"></i> Regional Seismic Map
+                    </span>
+                    <a href="https://earthquake.usgs.gov/earthquakes/map/?extent=59.10838,-153.4021&extent=63.48493,-144.85474&range=week&magnitude=2.5&listOnlyShown=true&baseLayer=terrain"
+                       target="_blank" rel="noopener" class="font-small font-weight-bold $Extras.color-text">
+                        Open on USGS &rarr;
+                    </a>
+                </div>
+                <div class="card-body p-2">
+                    <div id="earthquake-map"
+                         data-lat="$station.latitude_f"
+                         data-lon="$station.longitude_f"
+                         data-station-name="$station.location"
+                         data-radius="$radius_km"
+                         data-minmag="$min_mag"
+                         data-timespan="$timespan_days"
+                         data-basemap="$basemap"
+                         data-tile-url="$custom_tile_url"
+                         data-show-faults="$show_faults"
+                         data-theme-mode="${Extras.Appearance.mode}"
+                         data-theme-color="$Extras.color">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+#include "footer.inc"
+#include "js.inc"
+
+<script src="js/vendor/leaflet/leaflet.js"></script>
+<script src="js/vendor/geojson/world-land.js"></script>
+<script src="js/earthquakes.js"></script>
+</body>
+</html>
