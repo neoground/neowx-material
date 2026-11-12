@@ -111,20 +111,46 @@
                         <h2 class="h2-responsive text-dark">$gettext("telemetry")</h2>
                     </div>
 
-                    #set $tele_segments = $panelSegments(page=$page, subpage=$subpage)
+                    #set $tele_layout = $panelLayout(page=$page, subpage=$subpage)
                     #set $tele_panel_idx = 0
-                    #for $seg_i, $seg in $enumerate($tele_segments)
-                        #if $seg['type'] is not None
-                            #set $tele_panel_idx = $tele_panel_idx + 1
+                    #for $band in $tele_layout
+                        #if $band['type'] == 'columns'
+                            <div class="col-12">
+                                <div class="row align-content-start nwm-desktop-cols-$band['count']">
+                                    #for $col in $band['columns']
+                                        <div class="col-12 nwm-layout-col" data-column="$col['index']">
+                                            <div class="row align-content-start">
+                                                #for $seg_i, $seg in $enumerate($col['segments'])
+                                                    #if $seg['type'] is not None
+                                                        #set $tele_panel_idx = $tele_panel_idx + 1
+                                                    #end if
+                                                    #if $seg_i > 0
+                                                        <div class="col-12"></div>
+                                                    #end if
+                                                    #set $kind = 'chart' if $seg['content'] in ('chart', 'telemetry_chart') else 'value'
+                                                    $renderTeleSegment($seg, $tele_panel_idx, $kind)
+                                                #end for
+                                            </div>
+                                        </div>
+                                    #end for
+                                </div>
+                            </div>
+                        #else
+                            <div class="col-12 nwm-layout-full">
+                                <div class="row align-content-start">
+                                    #for $seg_i, $seg in $enumerate($band['segments'])
+                                        #if $seg['type'] is not None
+                                            #set $tele_panel_idx = $tele_panel_idx + 1
+                                        #end if
+                                        #if $seg_i > 0
+                                            <div class="col-12"></div>
+                                        #end if
+                                        #set $kind = 'chart' if $seg['content'] in ('chart', 'telemetry_chart') else 'value'
+                                        $renderTeleSegment($seg, $tele_panel_idx, $kind)
+                                    #end for
+                                </div>
+                            </div>
                         #end if
-                        ## Section boundary. A col-12 fills a whole flex line, so this is
-                        ## what makes each section start on a fresh row. Panels are col-12
-                        ## already; plain sections need it emitted explicitly.
-                        #if $seg_i > 0
-                            <div class="col-12"></div>
-                        #end if
-                        #set $kind = 'chart' if $seg['content'] in ('chart', 'telemetry_chart') else 'value'
-                        $renderTeleSegment($seg, $tele_panel_idx, $kind)
                     #end for
 
                 </div>

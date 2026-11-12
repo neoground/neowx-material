@@ -25,8 +25,9 @@ Under `[Extras]` and `[[Appearance]]`, you can customize the visual style of you
         transition_speed = normal    # slow, normal, fast
         card_border_radius = medium  # none, small, medium, large
 
-        # Collapsible panels behavior
+        # Collapsible panels & desktop column layout
         enablePanels = true
+        desktop_columns = 2          # 1 (single column), 2 (default classic left/right split), or 3..5
         rememberPanelState = true    # Keep user-expanded/collapsed state across tab refreshes
         panel_header_bg_light = "#e8eaf6"
         panel_header_text_light = "#1a237e"
@@ -40,7 +41,7 @@ Under `[Extras]` and `[[Appearance]]`, you can customize the visual style of you
 
 Release 2.0 provides a declarative layout system under `[Extras] → [[Appearance]]` with two main blocks:
 1. **`[[[sections]]]`** — defines named groups of cards, charts, telemetry items, or embedded items, optionally wrapped in collapsible Material Design expansion panels.
-2. **`[[[pages]]]`** — defines which sections appear on each page (`today`, `day`, `yesterday`, `week`, `month`, `year`, `telemetry`) and in what top-to-bottom order.
+2. **`[[[pages]]]`** — defines which sections appear on each page (`today`, `day`, `yesterday`, `week`, `month`, `year`, `telemetry`) and in what order.
 
 > **Important ConfigObj Ordering Rule:** Always write plain `key = value` settings inside a block **above** any `[[[subsection]]]` in `skin.conf`. ConfigObj folds plain settings written below a subsection into that subsection.
 
@@ -51,6 +52,7 @@ Each section under `[[[sections]]]` supports:
 - **`title`** *(optional)* — omit for an ungrouped row; set a string (or translation key) to wrap the section in a Material expansion panel with a header.
 - **`collapsed`** *(optional)* — `false` (default, starts expanded), `true` (starts collapsed), or `none` (panel header shown, always open, no toggle button).
 - **`content`** *(optional)* — `card` (default), `chart`, `telemetry`, or `telemetry_chart`.
+- **`column`** *(optional)* — `1..5` to pin the section to a specific desktop column, or `full` to span `100%` of the desktop width across all columns (ideal for embedded weather maps, webcams, or wide sections).
 
 ```ini
 [Extras]
@@ -76,12 +78,36 @@ Each section under `[[[sections]]]` supports:
                 title = Weather Maps & Webcams
                 items = iFrame_windy, iFrame_rainviewer, imageLogo
                 collapsed = false
+                column = full
 ```
 
 - **Cross-Section Flexibility:**
   - **Telemetry items** (battery gauges, voltages, `rxCheckPercent`) can be added to any `card` or `chart` section on any page. In a `card` section they render as a gauge (if configured under `[[Telemetry]]`), and in a `chart` section they render a time-series chart using that page's time window.
   - **Embedded items** (`iFrame_*`, `image_*` defined under `[[Embedded]]`) can be placed inside any `card`, `chart`, or dedicated section.
 - **Auto-Hide Empty Panels:** Sections whose items all have no data in the database are automatically hidden rather than rendered empty.
+
+### Multi-Column Desktop Layout (`desktop_columns` & `column = full`)
+
+On wide desktop screens (`>= 1660px`), `desktop_columns` controls how many side-by-side columns are displayed (on screens `< 1660px`, all sections stack vertically):
+- **`desktop_columns = 2` *(default)*** — Classic two-column desktop split: card/telemetry sections are placed in **Column 1 (Left)** and chart sections are placed in **Column 2 (Right)** in their configured order.
+- **`desktop_columns = 1`** — Single-column vertical flow where all sections span the full width sequentially down the page.
+- **`desktop_columns = 3..5`** — Multi-column layout for ultra-wide / 4K monitors.
+- **Full-Width Spanning Sections (`column = full`)** — Any section with `column = full` (or `full_width = true`) breaks out of the multi-column split and spans `100%` across all columns.
+- **Per-Page Overrides & Explicit Column Lists** — Any page under `[[[pages]]]` can override `desktop_columns` or explicitly assign sections using `column1 .. column5`:
+
+```ini
+[Extras]
+    [[Appearance]]
+        [[[pages]]]
+            [[[[today]]]]
+                # Optional per-page column count override:
+                # desktop_columns = 2
+                # Optional explicit column assignment (when omitted, desktop_columns = 2
+                # automatically puts card sections in column 1 and chart sections in column 2):
+                # column1 = cards_with_forecast, additional_cards
+                # column2 = charts
+                sections = cards_with_forecast, additional_cards, charts, embedded_items
+```
 
 ### Assigning Sections to Pages (`[[[pages]]]`)
 
