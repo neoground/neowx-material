@@ -247,8 +247,6 @@
       return;
     }
 
-    var eventBounds = L.latLngBounds([[opts.stationLat, opts.stationLon]]);
-
     var html = '<div class="list-group list-group-flush">';
 
     features.forEach(function (feat, idx) {
@@ -262,8 +260,6 @@
       var magNum = props.mag || 0;
       if (magNum > maxMag) maxMag = magNum;
       if (!latestTime || props.time > latestTime) latestTime = props.time;
-
-      eventBounds.extend([qLat, qLon]);
 
       var distKm = calculateDistance(opts.stationLat, opts.stationLon, qLat, qLon);
       var distMiles = distKm * 0.621371;
@@ -346,8 +342,8 @@
     }
 
     try {
-      if (features.length > 0) {
-        map.fitBounds(eventBounds, { padding: isEmbed ? [16, 16] : [28, 28], maxZoom: 8.5 });
+      if (map._coverageCircle && !map._hasUserPanned) {
+        map.fitBounds(map._coverageCircle.getBounds(), { padding: isEmbed ? [15, 15] : [20, 20] });
       }
     } catch (e) {}
   }
@@ -424,6 +420,11 @@
       setupBasemap(popupMap, cachedOptions);
       addStationMarker(popupMap, cachedOptions);
       var circle = addCoverageCircle(popupMap, cachedOptions);
+      popupMap._coverageCircle = circle;
+      popupMap._hasUserPanned = false;
+      popupMap.on('dragstart zoomstart', function () {
+        popupMap._hasUserPanned = true;
+      });
       popupMap.fitBounds(circle.getBounds(), { padding: [15, 15] });
 
       var faultsRendered = false;
@@ -541,6 +542,11 @@
     setupBasemap(map, cachedOptions);
     addStationMarker(map, cachedOptions);
     var coverageCircle = addCoverageCircle(map, cachedOptions);
+    map._coverageCircle = coverageCircle;
+    map._hasUserPanned = false;
+    map.on('dragstart zoomstart', function () {
+      map._hasUserPanned = true;
+    });
     map.fitBounds(coverageCircle.getBounds(), { padding: [15, 15] });
 
     setTimeout(function () {
