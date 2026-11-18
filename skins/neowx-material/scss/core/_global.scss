@@ -1,0 +1,157 @@
+@use "colors";
+@use "mixins";
+@use "variables";
+
+// Globals
+// Full palette of colors
+@each $color_name, $color in colors.$mdb-colors-1 {
+  @each $color_type, $color_value in $color {
+    @if $color_type == "base" {
+      .#{$color_name} {
+        background-color: $color_value !important;
+      }
+      .#{$color_name}-text {
+        color: $color-value !important;
+      }
+      .rgba-#{$color_name}-slight,
+      .rgba-#{$color_name}-slight:after {
+        background-color: rgba($color_value, .1);
+      }
+      .rgba-#{$color_name}-light,
+      .rgba-#{$color_name}-light:after {
+        background-color: rgba($color_value, .3);
+      }
+      .rgba-#{$color_name}-strong,
+      .rgba-#{$color_name}-strong:after {
+        background-color: rgba($color_value, .7);
+      }
+    }
+    @else {
+      @if colors.$enable_full_palette {
+        .#{$color_name}.#{$color_type} {
+          background-color: $color_value !important;
+        }
+      }
+    }
+  }
+}
+
+// Stylish color
+@each $color_name, $color_value in colors.$stylish-rgba {
+  .#{$color_name} {
+    background-color: $color_value;
+  }
+}
+
+// Material colors palette
+@each $color_name, $color in colors.$material-colors {
+  .#{$color_name} {
+    background-color: $color !important;
+  }
+}
+
+// Basic gradients
+@each $name, $val in colors.$gradients {
+  @include mixins.make-gradient($name, $val);
+}
+@each $name, $val in colors.$gradients-rgba {
+  @include mixins.make-gradient-rgba($name, $val);
+}
+
+.dark-grey-text {
+  color: #4f4f4f !important;
+  &:hover,
+  &:focus {
+    color: #4f4f4f !important;
+  }
+}
+
+// Shadow on hover
+.hoverable {
+  box-shadow: none;
+  transition: variables.$transition-hoverable;
+  &:hover {
+    box-shadow: variables.$z-depth-2;
+    transition: variables.$transition-hoverable;
+  }
+}
+
+// Shadows
+.z-depth-0 {
+  box-shadow: none !important;
+}
+.z-depth-1 {
+  box-shadow: variables.$z-depth-1 !important;
+}
+.z-depth-1-half {
+  box-shadow: variables.$z-depth-1-half !important;
+}
+.z-depth-2 {
+  box-shadow: variables.$z-depth-2 !important;
+}
+.z-depth-3 {
+  box-shadow: variables.$z-depth-3 !important;
+}
+.z-depth-4 {
+  box-shadow: variables.$z-depth-4 !important;
+}
+.z-depth-5 {
+  box-shadow: variables.$z-depth-5 !important;
+}
+
+// Disabled cursor
+.disabled,
+:disabled {
+  pointer-events: none !important;
+}
+
+// Links
+a {
+  color: variables.$link-color;
+  text-decoration: none;
+  cursor: pointer;
+  transition: variables.$transition-basic;
+  &:hover {
+    color: variables.$link-hover-color;
+    text-decoration: none;
+    transition: variables.$transition-basic;
+  }
+  &.disabled,
+  &:disabled {
+    &:hover {
+      color: variables.$link-color;
+    }
+  }
+}
+
+a:not([href]):not([tabindex]), a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+// Divider
+.divider-new {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: variables.$divider-margin-y;
+  margin-bottom: variables.$divider-margin-y;
+  > h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0;
+  }
+  &:before,
+  &:after {
+    flex: 1;
+    height: 1.5px;
+    height: variables.$divider-height;
+    content: "";
+    background: #c6c6c6;
+  }
+  &:before {
+    margin: 0 variables.$divider-margin-x 0 0;
+  }
+  &:after {
+    margin: 0 0 0 variables.$divider-margin-x;
+  }
+}

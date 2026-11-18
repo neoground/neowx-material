@@ -1,0 +1,20 @@
+@use "core/bootstrap/variables" as bootstrapVariables;
+@use "core/colors";
+@use "core/mixins";
+@use "core/variables";
+
+// Badges
+.badge {
+  color: bootstrapVariables.$white !important;
+  border-radius: variables.$border-radius-base;
+  box-shadow: variables.$z-depth-1;
+}
+.badge-pill {
+  padding-right: variables.$badge-pill-padding-x;
+  padding-left: variables.$badge-pill-padding-x;
+  border-radius: variables.$badge-pill-border-radius;
+}
+@each $name, $color in colors.$basic-mdb-colors {
+  @include mixins.make-badge($name, $color);
+}
+

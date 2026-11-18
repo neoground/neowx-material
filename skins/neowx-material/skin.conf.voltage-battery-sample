@@ -1,0 +1,113 @@
+# Sample skin.conf Configuration for Telemetry Gauges
+# Copy the relevant section to your skin.conf under [Extras]
+#
+# For the current configuration format and a full migration guide see:
+#   docs/TELEMETRY-CONFIG-GUIDE.md
+
+[Extras]
+    [[Telemetry]]
+        allow_zero_values = yes
+        chart_days = 30
+        default_interval = 300
+        value_position = bottom
+
+        # ================================================================
+        # EXAMPLE 1: Console Battery — voltage sensor (0 V to 4.5 V)
+        # ================================================================
+        [[[consBatteryVoltage]]]
+            sensor_type = voltage
+            max_voltage = 4.5      # voltage that means 100%
+            min_voltage = 0.0      # voltage that means 0%
+            low_threshold = 50     # below 50%, gauge turns red
+            chart_interval = 300
+
+        # ================================================================
+        # EXAMPLE 2: Outside Temperature Sensor Battery (0 V to 4.5 V)
+        # ================================================================
+        [[[outTempBatteryVoltage]]]
+            sensor_type = voltage
+            max_voltage = 4.5
+            min_voltage = 0.0
+            low_threshold = 30     # below 30%, gauge turns red
+            chart_interval = 300
+
+        # ================================================================
+        # EXAMPLE 3: 12V Battery System
+        # ================================================================
+        [[[battery12v]]]
+            sensor_type = voltage
+            max_voltage = 14.4     # fully charged 12V battery
+            min_voltage = 10.5     # discharged 12V battery
+            low_threshold = 30
+
+        # ================================================================
+        # EXAMPLE 4: 3.7V LiPo Battery
+        # ================================================================
+        [[[lipoBattery]]]
+            sensor_type = voltage
+            max_voltage = 4.2      # fully charged LiPo
+            min_voltage = 3.0      # minimum safe voltage
+            low_threshold = 25     # below 25%, gauge turns red
+
+        # ================================================================
+        # EXAMPLE 5: Status-based battery (reports 0 = OK, 1 = Low)
+        # ================================================================
+        [[[outTempBatteryStatus]]]
+            sensor_type = status
+            0 = OK
+            1 = Low
+            chart_position_0 = 1
+            chart_position_1 = 0
+            max_chart_position = 1
+            low_state = 1
+            low_when = at_or_above
+            chart_interval = 3600
+
+        # ================================================================
+        # EXAMPLE 6: Ecowitt battery status (0 = Normal, 9 = Low)
+        # ================================================================
+        [[[wh31_batt]]]
+            sensor_type = status
+            0 = Normal
+            9 = Low
+            chart_position_0 = 1
+            chart_position_9 = 0
+            max_chart_position = 1
+            low_state = 9
+            low_when = at_or_above
+            chart_interval = 3600
+
+        # ================================================================
+        # EXAMPLE 7: Signal strength (WiFi-style cone gauge)
+        # ================================================================
+        [[[rxCheckPercent]]]
+            sensor_type = signal
+            max_signal = 100       # raw value that means 100%
+            min_signal = 0         # raw value that means 0%
+            low_threshold = 30     # below 30%, cone turns red
+
+        # ================================================================
+        # EXAMPLE 8: Percentage battery (sensor already reports 0-100%)
+        # ================================================================
+        [[[extraBattery7]]]
+            sensor_type = percent
+            low_threshold = 20
+
+        # ================================================================
+        # EXAMPLE 9: Raw numeric value — no gauge
+        # ================================================================
+        [[[supplyVoltage]]]
+            sensor_type = none
+
+# ====================================================================
+# Configuration Notes:
+# ====================================================================
+#
+# - Each field needs ONE block directly under [[Telemetry]]
+# - sensor_type picks the gauge: voltage | signal | percent | status | none
+# - Being listed in a telemetry section's items under Appearance.[[[sections]]] opts the field in —
+#   no "enabled" key needed
+# - Per-field chart_interval overrides the global default_interval
+# - For the full reference and migration guide see docs/TELEMETRY-CONFIG-GUIDE.md
+#
+# ====================================================================

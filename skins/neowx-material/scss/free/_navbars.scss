@@ -1,0 +1,106 @@
+@use "core/bootstrap/variables" as bootstrapVariables;
+@use "core/colors";
+@use "core/mixins";
+@use "core/variables";
+
+// Navbars
+.navbar {
+  font-weight: variables.$navbar-font-weight;
+  box-shadow: variables.$z-depth-1;
+  form {
+    .md-form {
+      input {
+        margin: 0 variables.$navbar-form-input-mr variables.$navbar-form-input-mb variables.$navbar-form-input-ml;
+      }
+    }
+  }
+  .breadcrumb {
+    padding: variables.$navbar-breadcrumb-padding-top 0 0 variables.$navbar-breadcrumb-padding-left;
+    margin: 0;
+    font-size: variables.$navbar-double-font-size;
+    font-weight: variables.$navbar-font-weight;
+    background-color: inherit;
+    .breadcrumb-item {
+      color: colors.$white-base;
+      &.active {
+        color: variables.$navbar-breadcrumb-color;
+      }
+      &:before {
+        color: variables.$navbar-breadcrumb-color;
+      }
+    }
+  }
+  .navbar-toggler {
+    border-width: 0;
+    outline: 0;
+  }
+  .nav-flex-icons {
+    flex-direction: row;
+  }
+  .container {
+    @media (max-width: variables.$medium-screen) {
+      width: 100%;
+      .navbar-toggler-right {
+        right: 0;
+      }
+    }
+  }
+  .nav-item {
+    .nav-link {
+      display: block;
+      &.disabled {
+        &:active {
+          pointer-events: none;
+        }
+      }
+      .fas, .fab, .far {
+        padding-right: variables.$navbar-flex-icons-padding-lg;
+        padding-left: variables.$navbar-flex-icons-padding-lg;
+      }
+      @media (max-width: variables.$medium-screen) {
+        padding-right: variables.$navbar-flex-icons-padding-md;
+        padding-left: variables.$navbar-flex-icons-padding-md;
+      }
+    }
+  }
+  .dropdown-menu {
+    position: absolute !important;
+    margin-top: 0;
+    a {
+      padding: variables.$navbar-dropdown-menu-padding;
+      font-size: variables.$navbar-dropdown-font-size;
+      font-weight: variables.$navbar-font-weight;
+      &:not(.active) {
+        color: bootstrapVariables.$black;
+      }
+    }
+    form {
+      @media (max-width: variables.$small-screen) {
+        width: 17rem;
+      }
+      @media (min-width: variables.$small-screen) {
+        width: 22rem;
+      }
+    }
+  }
+  &.navbar-light {
+    @include mixins.make-navbar(variables.$navbar-light-disabled-color, variables.$navbar-light-toggler-icon, bootstrapVariables.$black, variables.$navbar-light-hover-color, variables.$navbar-light-bg-active-color);
+  }
+  &.navbar-dark {
+    @include mixins.make-navbar(variables.$navbar-dark-disabled-color, variables.$navbar-dark-toggler-icon, bootstrapVariables.$white, variables.$navbar-dark-hover-color, variables.$navbar-dark-bg-active-color);
+  }
+  &.scrolling-navbar {
+    @media (min-width: variables.$small-screen) {
+      padding-top: variables.$navbar-scrolling-padding;
+      padding-bottom: variables.$navbar-scrolling-padding;
+      transition: variables.$navbar-scrolling-transition;
+      .navbar-nav > li {
+        transition-duration: variables.$navbar-scrolling-transition-duration;
+      }
+      &.top-nav-collapse {
+        padding-top: variables.$navbar-top-collapse-padding;
+        padding-bottom: variables.$navbar-top-collapse-padding;
+      }
+    }
+  }
+}

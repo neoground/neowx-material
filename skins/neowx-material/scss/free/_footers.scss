@@ -1,0 +1,21 @@
+@use "core/colors";
+@use "core/variables";
+
+// Footers
+footer {
+  &.page-footer {
+    bottom: 0;
+    color: colors.$white-base;
+    .container-fluid {
+      width: auto;
+    }
+    .footer-copyright {
+      overflow: hidden;
+      color: variables.$footer-copyright-color;
+      background-color: variables.$footer-copyright-bg-color;
+    }
+    a {
+      color: colors.$white-base;
+    }
+  }
+}

@@ -1,0 +1,258 @@
+## Shared embedded-content region.
+##
+## Cheetah's #include does NOT share #defs across files, so the defs that
+## render an embedded item live here, beside the code that calls them.  What
+## this file needs from its caller it reads itself: $page and $subpage are
+## #attr values, and those DO resolve inside an include (footer.inc has read
+## $page this way for years).  So every caller is a bare one-line include with
+## no #set global handoff to forget.
+##
+## Out of scope by design: almanac, history and archive render no panel
+## regions.  See the [[[pages]]] comments in skin.conf.
+
+#def notFoundCard($name)
+    #set $_col_cls = $getVar('_emb_col_class', 'col-12 col-md-6 col-xl-4 mb-4')
+    <div class="$_col_cls">
+        <div class="card">
+            <div class="card-body text-center">
+                Section definition not found for "$name"
+            </div>
+        </div>
+    </div>
+#end def
+
+## +-------------------------------------------------------------------------+
+## | Expand button for [[Embedded]] cards. Styled to match the ApexCharts    |
+## | chart toolbars. The data-nwm-embed-popup attribute is the contract: a   |
+## | delegated click handler in js/app.js keys on it, so renaming it here    |
+## | silently stops the button working.                                      |
+## |                                                                         |
+## | The toolbar must stay a direct child of .card, next to .card-body -     |
+## | it anchors against Bootstrap's .card { position: relative }, and the    |
+## | handler walks up to .card to find the heading and the media.            |
+## +-------------------------------------------------------------------------+
+
+#def embedToolbar()
+    ## Default-on, so normalise rather than exact-match - see the same handling
+    ## of enableChartPopup in js.inc.
+    #if str($Extras.Appearance.get('enableEmbeddedPopup', 'true')).strip().lower() not in ('false', 'no', '0')
+        <div class="nwm-embed-toolbar">
+            <button type="button" class="nwm-embed-toolbar-icon" data-nwm-embed-popup
+                    title="$gettext('expand')" aria-label="$gettext('expand')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+            </button>
+        </div>
+    #end if
+#end def
+
+#if not $varExists('base_path')
+    #set global $base_path = ''
+#end if
+
+#def earthquakeCard($name, $section = "")
+    #set $bp = $getVar('base_path', '')
+    #set eq_title = $getVar('Extras.Embedded.' + name + '.title', $gettext("earthquakes"))
+    #set eq_aspect = $getVar('Extras.Embedded.' + name + '.aspect_ratio', "4/3")
+    #set eq_radius = $getVar('Extras.Embedded.' + name + '.radius_km', $getVar('Extras.Earthquakes.radius_km', "300"))
+    #set eq_min_mag = $getVar('Extras.Embedded.' + name + '.min_magnitude', $getVar('Extras.Earthquakes.min_magnitude', "2.5"))
+    #set eq_timespan = $getVar('Extras.Embedded.' + name + '.timespan_days', $getVar('Extras.Earthquakes.timespan_days', "7"))
+    #set eq_basemap = $getVar('Extras.Embedded.' + name + '.basemap', $getVar('Extras.Earthquakes.basemap', "vector"))
+    #set eq_tile_url = $getVar('Extras.Embedded.' + name + '.custom_tile_url', $getVar('Extras.Earthquakes.custom_tile_url', ""))
+    #set eq_faults = $getVar('Extras.Embedded.' + name + '.show_faults', $getVar('Extras.Earthquakes.show_faults', "yes"))
+    #set $st_lat = str($station.latitude_f) if ($varExists('station') and $varExists('station.latitude_f')) else '0'
+    #set $st_lon = str($station.longitude_f) if ($varExists('station') and $varExists('station.longitude_f')) else '0'
+    #set $raw_lat = str($getVar('Extras.Embedded.' + name + '.latitude', $getVar('Extras.Embedded.' + name + '.lat', $getVar('Extras.Earthquakes.latitude', $getVar('Extras.Earthquakes.lat', '{lat}'))))).strip()
+    #set $raw_lon = str($getVar('Extras.Embedded.' + name + '.longitude', $getVar('Extras.Embedded.' + name + '.lon', $getVar('Extras.Earthquakes.longitude', $getVar('Extras.Earthquakes.lon', '{lon}'))))).strip()
+    #set $eq_lat = $raw_lat.replace('{lat}', $st_lat).replace('{latitude}', $st_lat).replace('$station.latitude_f', $st_lat) if $raw_lat != '' else $st_lat
+    #set $eq_lon = $raw_lon.replace('{lon}', $st_lon).replace('{longitude}', $st_lon).replace('$station.longitude_f', $st_lon) if $raw_lon != '' else $st_lon
+    #set $_col_cls = $getVar('_emb_col_class', 'col-12 col-md-6 col-xl-4 mb-4')
+    <div class="$_col_cls">
+        <div class="card card-embedded overflow-hidden" data-name="$name" data-section="$section">
+            #if str($Extras.Appearance.get('enableEmbeddedPopup', 'true')).strip().lower() not in ('false', 'no', '0')
+                <div class="nwm-embed-toolbar">
+                    <button type="button" class="nwm-embed-toolbar-icon" data-nwm-earthquake-popup
+                            title="$gettext('expand')" aria-label="$gettext('expand')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+                    </button>
+                </div>
+            #end if
+            <div class="card-body text-center d-flex flex-column px-0 pb-0 overflow-hidden">
+                #if eq_title != ""
+                    <h5 class="h5-responsive $Extras.color-text">
+                        <i class="mdi mdi-map-marker-radius-outline mr-1"></i>$eq_title
+                    </h5>
+                #end if
+                <div id="earthquake-map" class="flex-grow-1 w-100 earthquake-embed-map" style="aspect-ratio: ${eq_aspect}; min-height: 240px;"
+                     data-lat="$eq_lat"
+                     data-lon="$eq_lon"
+                     data-station-name="$station.location"
+                     data-radius="$eq_radius"
+                     data-minmag="$eq_min_mag"
+                     data-timespan="$eq_timespan"
+                     data-basemap="$eq_basemap"
+                     data-tile-url="$eq_tile_url"
+                     data-show-faults="$eq_faults"
+                     data-theme-mode="${Extras.Appearance.mode}"
+                     data-theme-color="$Extras.color">
+                </div>
+            </div>
+        </div>
+    </div>
+#end def
+
+#def iframeCard($name, $section = "")
+    #set $bp = $getVar('base_path', '')
+    #set iframe_url = $getVar('Extras.Embedded.' + name + '.url', "")
+    #if $iframe_url != "" and not ($iframe_url.startswith('http://') or $iframe_url.startswith('https://') or $iframe_url.startswith('/') or $iframe_url.startswith('//'))
+        #set iframe_url = $bp + $iframe_url
+    #end if
+    #if $varExists('station') and $varExists('station.latitude_f') and $varExists('station.longitude_f')
+        #set $st_lat = str($station.latitude_f)
+        #set $st_lon = str($station.longitude_f)
+        #set iframe_url = $iframe_url.replace('{lat}', $st_lat).replace('{lon}', $st_lon).replace('{latitude}', $st_lat).replace('{longitude}', $st_lon).replace('$station.latitude_f', $st_lat).replace('$station.longitude_f', $st_lon)
+        ## Automatic station centering for shipped map templates if missing coordinates
+        #if 'embed.windy.com' in $iframe_url and 'lat=' not in $iframe_url
+            #set $sep = '&' if '?' in $iframe_url else '?'
+            #set iframe_url = $iframe_url + $sep + 'lat=' + $st_lat + '&lon=' + $st_lon
+        #else if 'rainviewer.com' in $iframe_url and 'loc=48.0,13.0,' in $iframe_url
+            #set iframe_url = $iframe_url.replace('loc=48.0,13.0,', 'loc=' + $st_lat + ',' + $st_lon + ',')
+        #end if
+    #end if
+    #set iframe_title = $getVar('Extras.Embedded.' + name + '.title', "")
+    #set iframe_aspect = $getVar('Extras.Embedded.' + name + '.aspect_ratio', "4/3")
+    #set $_col_cls = $getVar('_emb_col_class', 'col-12 col-md-6 col-xl-4 mb-4')
+    #if iframe_url != ""
+        <div class="$_col_cls">
+            <div class="card card-embedded overflow-hidden" data-name="$name" data-section="$section">
+                $embedToolbar()
+                <div class="card-body text-center d-flex flex-column px-0 ${'pb-0' if iframe_title != '' else 'py-0'} overflow-hidden">
+                    #if iframe_title != ""
+                        <h5 class="h5-responsive $Extras.color-text">
+                            $iframe_title
+                        </h5>
+                    #end if
+                    <iframe src="$iframe_url" frameborder="0" class="flex-grow-1 w-100" style="aspect-ratio: ${iframe_aspect};"></iframe>
+                </div>
+            </div>
+        </div>
+    #else
+        $notFoundCard($name)
+    #end if
+#end def
+
+#def imageCard($name, $section = "")
+    #set $bp = $getVar('base_path', '')
+    #set image_url = $getVar('Extras.Embedded.' + name + '.url', "")
+    #if $image_url != "" and not ($image_url.startswith('http://') or $image_url.startswith('https://') or $image_url.startswith('/') or $image_url.startswith('data:'))
+        #set image_url = $bp + $image_url
+    #end if
+    #if $varExists('station') and $varExists('station.latitude_f') and $varExists('station.longitude_f')
+        #set $st_lat = str($station.latitude_f)
+        #set $st_lon = str($station.longitude_f)
+        #set image_url = $image_url.replace('{lat}', $st_lat).replace('{lon}', $st_lon).replace('{latitude}', $st_lat).replace('{longitude}', $st_lon).replace('$station.latitude_f', $st_lat).replace('$station.longitude_f', $st_lon)
+    #end if
+    ## by adding a timestamp parameter we prevent browser caching of the image
+    #set $sep = '&' if '?' in $image_url else '?'
+    #set $timestamp = int($time.time() / 60)
+    #set image_title = $getVar('Extras.Embedded.' + name + '.title', "")
+    #set image_link = $getVar('Extras.Embedded.' + name + '.link', "")
+    #if $image_link != "" and not ($image_link.startswith('http://') or $image_link.startswith('https://') or $image_link.startswith('/') or $image_link.startswith('#'))
+        #set image_link = $bp + $image_link
+    #end if
+    #if $image_link != "" and $varExists('station') and $varExists('station.latitude_f') and $varExists('station.longitude_f')
+        #set image_link = $image_link.replace('{lat}', $st_lat).replace('{lon}', $st_lon).replace('{latitude}', $st_lat).replace('{longitude}', $st_lon).replace('$station.latitude_f', $st_lat).replace('$station.longitude_f', $st_lon)
+    #end if
+    #set image_new_tab = $getVar('Extras.Embedded.' + name + '.new_tab', "no")
+    #set image_padding = $getVar('Extras.Embedded.' + name + '.padding', "no")
+    #set image_aspect = $getVar('Extras.Embedded.' + name + '.aspect_ratio', "4/3")
+    #set image_alt = $getVar('Extras.Embedded.' + name + '.alt', "Image")
+
+    #if image_padding != "yes"
+        #set padding_x = "px-0"
+        #if image_title != ""
+            #set padding_y = "pb-0"
+        #else
+            #set padding_y = "py-0"
+        #end if
+    #else
+        #set padding_x = "px-3"
+        #if image_title != ""
+            #set padding_y = "pb-3"
+        #else
+            #set padding_y = "py-3"
+        #end if
+    #end if
+
+    #if image_url != ""
+        #set $_col_cls = $getVar('_emb_col_class', 'col-12 col-md-6 col-xl-4 mb-4')
+        <div class="$_col_cls">
+            <div class="card card-embedded overflow-hidden" data-name="$name" data-section="$section">
+                $embedToolbar()
+                <div class="card-body text-center d-flex flex-column ${padding_x} ${padding_y} overflow-hidden">
+                    #if image_title != ""
+                        <h5 class="h5-responsive $Extras.color-text">
+                            $image_title
+                        </h5>
+                    #end if
+                    #if image_link != ""
+                        #if image_new_tab.lower() == "yes"
+                            <a href="$image_link" target="_blank" rel="noopener noreferrer" class="flex-grow-1 d-flex flex-column w-100">
+                            #else
+                                <a href="$image_link" class="flex-grow-1 d-flex flex-column w-100">
+                                #end if
+                            #end if
+
+                            <img src="${image_url}${sep}ts=${timestamp}" alt="${image_alt}" class="flex-grow-1 w-100" style="aspect-ratio: ${image_aspect};" />
+                            #if image_link != ""
+                            </a>
+                        #end if
+                    </div>
+                </div>
+            </div>
+        #else
+            $notFoundCard($name)
+        #end if
+    #end def
+
+## +-------------------------------------------------------------------------+
+## | Helper: render items inside a panel (or directly) for embedded content   |
+## +-------------------------------------------------------------------------+
+
+#def renderEmbItem($x, $section = "")
+    #if $x.lower().startswith("earthquake") or $x.lower() == "earthquakes"
+        $earthquakeCard($x, $section)
+    #else if $x.lower().startswith("iframe")
+        $iframeCard($x, $section)
+    #else if $x.lower().startswith("image")
+        $imageCard($x, $section)
+    #else if $varExists('Extras.Embedded.' + $x)
+        #if $x.lower().startswith("earthquake") or $x.lower() == "earthquakes"
+            $earthquakeCard($x, $section)
+        #else if $getVar('Extras.Embedded.' + $x + '.link', '') != '' or $getVar('Extras.Embedded.' + $x + '.alt', '') != '' or $getVar('Extras.Embedded.' + $x + '.padding', '') != '' or str($getVar('Extras.Embedded.' + $x + '.url', '')).lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'))
+            $imageCard($x, $section)
+        #else
+            $iframeCard($x, $section)
+        #end if
+    #else
+        $notFoundCard($x)
+    #end if
+#end def
+
+#if $getVar('emb_item', None)
+    #set $_sec_slug = $getVar('emb_section', '')
+    #set $_is_chart_sec = False
+    #if $varExists('page_segments')
+        #for $_seg in $page_segments
+            #if $_seg.get('slug') == $_sec_slug and $_seg.get('content') in ('chart', 'telemetry_chart')
+                #set $_is_chart_sec = True
+            #end if
+        #end for
+    #end if
+    #if $_is_chart_sec or $getVar('emb_mode', '') == 'chart'
+        #set global $_emb_col_class = 'col-12 col-xl-6 mb-4'
+    #else
+        #set global $_emb_col_class = 'col-12 col-md-6 col-xl-4 mb-4'
+    #end if
+    $renderEmbItem($emb_item, $_sec_slug)
+    #set global $emb_mode = None
+#end if

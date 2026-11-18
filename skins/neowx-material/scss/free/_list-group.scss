@@ -1,0 +1,35 @@
+@use "core/variables";
+
+// List group
+.media {
+  .media-left {
+    padding: variables.$list-group-padding;
+
+    img {
+      box-shadow: variables.$z-depth-1;
+    }
+  }
+}
+
+.list-group {
+  .list-group-item {
+    &:first-child {
+      border-top-left-radius: variables.$border-radius-base;
+      border-top-right-radius: variables.$border-radius-base;
+    }
+
+    &:last-child {
+      border-bottom-right-radius: variables.$border-radius-base;
+      border-bottom-left-radius: variables.$border-radius-base;
+    }
+  }
+
+  a,
+  button {
+    transition: variables.$list-group-transition;
+
+    &:hover {
+      transition: variables.$list-group-transition;
+    }
+  }
+}

@@ -1,0 +1,53 @@
+[Extras]
+  [[Header]]
+    custom1_label = Homepage
+    custom1_url = https://myhomepage.org/
+
+  [[Footer]]
+    name = station Name
+    link1_label = Lightning Maps
+    link1_url = https://www.lightningmaps.org/#m=ses;t=3;s=0;o=0;b=;ts=0;y=48.7750;x=11.4550;z=8;d=2;dl=2;dc=0;
+
+  [[Appearance]]
+    # A patch section merges INTO the shipped section with the same id; it
+    # does not replace the section, and it cannot delete it. Reuse one of the
+    # nine shipped [[[sections]]] ids to override its items/title/etc.:
+    # card, external_sensors, chart, custom_charts, additional_charts,
+    # external_sensor_charts, other_charts, telemetry_cards, telemetry_charts.
+    #
+    # A section id that ISN'T one of those (like "main" below in an older
+    # version of this sample) is instead APPENDED after the shipped sections,
+    # and every one of its items gets de-duplicated away by whichever shipped
+    # section already claims them.
+    #
+    # To hide a shipped panel, override its items with an empty value - a
+    # section with no items never renders:
+    #     [[[[external_sensors]]]]
+    #         items =
+    #
+    # See docs/CONFIG-PATCHER.md for the full explanation.
+    #
+    # IMPORTANT: keep [[[sections]]] LAST inside [[Appearance]], here and in
+    # skin.conf.  It is a subsection, so configobj treats every plain setting
+    # written below it as belonging to whichever [[[[...]]]] block came last.
+    # A setting that lands there silently stops working, and panelorder logs
+    # it as an 'unknown setting' on that section.
+    #
+    # Here we override the shipped "card" section's item order/selection,
+    # and add a brand-new "embedded" section containing an embedded item:
+    [[[sections]]]
+      [[[[card]]]]
+        items = forecast, outTemp, outHumidity, barometer, windSpeed, rain, inTemp, inHumidity
+      [[[[embedded]]]]
+        items = iFrame_windy
+
+  [[Embedded]]
+     [[[iFrame_windy]]]
+       url = "https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=default&metricWind=default&zoom=5&overlay=wind&product=ecmwf&level=surface&lat=48.717&lon=11.495"
+       title = Windy Map
+
+  [[Forecast]]
+    variables = temperature, precipitation, uv-sun, wind, evapotranspiration
+    forecast_separator = yes
+    show_today_tomorrow = yes
+    show_hourly_icons = yes
