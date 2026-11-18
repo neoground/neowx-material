@@ -4,6 +4,9 @@
   var cachedData = null;
   var cachedFaultsData = null;
   var cachedOptions = null;
+  var isLoading = false;
+  var loadError = null;
+  var activePopupState = null;
 
   var themeColors = {
     'red': '#f44336', 'pink': '#e91e63', 'purple': '#9c27b0', 'deep-purple': '#673ab7',
@@ -228,6 +231,13 @@
     var markersMap = {};
     var isEmbed = (map.getContainer().id === 'earthquake-map');
 
+    if (map._quakeMarkers) {
+      map._quakeMarkers.forEach(function (m) {
+        try { map.removeLayer(m); } catch (e) {}
+      });
+    }
+    map._quakeMarkers = [];
+
     if (features.length === 0) {
       if (listEl) {
         listEl.innerHTML = '<div class="p-3 text-muted font-small text-center">No earthquakes &ge; M' + opts.minMag + ' recorded within ' + opts.radiusKm + ' km in the past ' + opts.timespanDays + ' days.</div>';
@@ -271,6 +281,7 @@
         opacity: 1,
         fillOpacity: 0.75
       }).addTo(map);
+      map._quakeMarkers.push(marker);
 
       var popupContent = '<div class="font-small"><strong>M ' + mag + ' - ' + props.place + '</strong><br>' +
         'Depth: ' + qDepth.toFixed(1) + ' km<br>' +
@@ -298,6 +309,7 @@
     if (listEl) {
       listEl.innerHTML = html;
 
+      var pendingMoveEnd = null;
       listEl.querySelectorAll('.quake-item').forEach(function (itemEl) {
         itemEl.addEventListener('click', function () {
           var id = this.dataset.id;
@@ -305,7 +317,10 @@
           var lon = parseFloat(this.dataset.lon);
 
           map.closePopup();
-          map.off('moveend');
+          if (pendingMoveEnd) {
+            map.off('moveend', pendingMoveEnd);
+            pendingMoveEnd = null;
+          }
 
           var currentZoom = map.getZoom();
           if (currentZoom >= 8) {
@@ -314,11 +329,13 @@
             map.flyTo([lat, lon], 8, { duration: 0.7, easeLinearity: 0.25 });
           }
 
-          map.once('moveend', function () {
+          pendingMoveEnd = function () {
+            pendingMoveEnd = null;
             if (markersMap[id]) {
               markersMap[id].openPopup();
             }
-          });
+          };
+          map.once('moveend', pendingMoveEnd);
         });
       });
     }
@@ -347,12 +364,13 @@
     }
 
     var popupMap = null;
-    var modal = document.getElementById('neowx-popup');
-    if (modal) {
-      modal.classList.add('nwm-popup-earthquakes');
-    }
+    var modal = null;
 
     neowxOpenPopup(title, function (mount) {
+      modal = mount.closest ? mount.closest('.modal') : document.getElementById('neowx-popup');
+      if (modal) {
+        modal.classList.add('nwm-popup-earthquakes');
+      }
       mount.innerHTML = [
         '<div class="row nwm-earthquake-modal-row h-100">',
         '  <div class="col-12 col-lg-7 mb-3 mb-lg-0 d-flex flex-column nwm-eq-map-col">',
@@ -408,8 +426,10 @@
       var circle = addCoverageCircle(popupMap, cachedOptions);
       popupMap.fitBounds(circle.getBounds(), { padding: [15, 15] });
 
+      var faultsRendered = false;
       if (cachedOptions.showFaults && cachedFaultsData) {
         renderFaultsOnMap(popupMap, cachedFaultsData, cachedOptions);
+        faultsRendered = true;
       }
 
       var listEl = document.getElementById('earthquake-popup-list');
@@ -417,13 +437,39 @@
       var maxMagEl = document.getElementById('quake-popup-max-mag');
       var latestEl = document.getElementById('quake-popup-latest-time');
 
-      var features = (cachedData && cachedData.features) ? cachedData.features : [];
-      populateMapAndList(popupMap, features, cachedOptions, listEl, countEl, maxMagEl, latestEl);
+      function updatePopupContent() {
+        if (!popupMap) return;
+        if (cachedOptions.showFaults && cachedFaultsData && !faultsRendered) {
+          renderFaultsOnMap(popupMap, cachedFaultsData, cachedOptions);
+          faultsRendered = true;
+        }
+        if (isLoading && !cachedData) {
+          if (listEl) {
+            listEl.innerHTML = '<div class="p-3 text-center text-muted font-small">Loading events...</div>';
+          }
+          return;
+        }
+        if (loadError && !cachedData) {
+          if (listEl) {
+            listEl.innerHTML = '<div class="alert alert-warning font-small m-3">Could not load earthquake data: ' + loadError + '</div>';
+          }
+          if (countEl) countEl.innerText = '-';
+          if (maxMagEl) maxMagEl.innerText = '-';
+          if (latestEl) latestEl.innerText = '-';
+          return;
+        }
+        var features = (cachedData && cachedData.features) ? cachedData.features : [];
+        populateMapAndList(popupMap, features, cachedOptions, listEl, countEl, maxMagEl, latestEl);
+      }
+
+      activePopupState = { update: updatePopupContent };
+      updatePopupContent();
 
       setTimeout(function () {
-        popupMap.invalidateSize();
+        if (popupMap) popupMap.invalidateSize();
       }, 150);
     }, function () {
+      activePopupState = null;
       if (modal) {
         modal.classList.remove('nwm-popup-earthquakes');
       }
@@ -438,11 +484,16 @@
     var mapContainer = document.getElementById('earthquake-map');
     if (!mapContainer || typeof L === 'undefined') return;
 
-    var stationLat = parseFloat(mapContainer.dataset.lat) || 0;
-    var stationLon = parseFloat(mapContainer.dataset.lon) || 0;
-    var radiusKm = parseFloat(mapContainer.dataset.radius) || 300;
-    var minMag = parseFloat(mapContainer.dataset.minmag) || 2.5;
-    var timespanDays = parseInt(mapContainer.dataset.timespan, 10) || 7;
+    var stationLat = parseFloat(mapContainer.dataset.lat);
+    if (isNaN(stationLat)) stationLat = 0;
+    var stationLon = parseFloat(mapContainer.dataset.lon);
+    if (isNaN(stationLon)) stationLon = 0;
+    var radiusKm = parseFloat(mapContainer.dataset.radius);
+    if (isNaN(radiusKm) || radiusKm <= 0) radiusKm = 300;
+    var minMag = parseFloat(mapContainer.dataset.minmag);
+    if (isNaN(minMag)) minMag = 2.5;
+    var timespanDays = parseInt(mapContainer.dataset.timespan, 10);
+    if (isNaN(timespanDays) || timespanDays <= 0) timespanDays = 7;
     var basemap = (mapContainer.dataset.basemap || 'vector').toLowerCase();
     var customTileUrl = mapContainer.dataset.tileUrl || '';
     var showFaults = (mapContainer.dataset.showFaults || 'yes').toLowerCase() !== 'no';
@@ -582,6 +633,9 @@
               } catch (e) {}
               cachedFaultsData = data;
               renderFaultsOnMap(map, data, cachedOptions);
+              if (activePopupState && activePopupState.update) {
+                activePopupState.update();
+              }
             }
           })
           .catch(function () {});
@@ -597,7 +651,7 @@
       '&starttime=' + startTime +
       '&orderby=time';
 
-    var cacheKey = 'neowx_earthquakes_cache_' + stationLat + '_' + stationLon + '_' + radiusKm + '_' + minMag;
+    var cacheKey = 'neowx_earthquakes_cache_' + stationLat + '_' + stationLon + '_' + radiusKm + '_' + minMag + '_' + timespanDays;
     var cached = null;
     try {
       var item = localStorage.getItem(cacheKey);
@@ -611,8 +665,12 @@
 
     if (cached) {
       cachedData = cached;
+      isLoading = false;
+      loadError = null;
       renderData(cached);
     } else {
+      isLoading = true;
+      loadError = null;
       fetch(apiUrl)
         .then(function (res) {
           if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -626,12 +684,22 @@
             }));
           } catch (e) {}
           cachedData = data;
+          isLoading = false;
+          loadError = null;
           renderData(data);
+          if (activePopupState && activePopupState.update) {
+            activePopupState.update();
+          }
         })
         .catch(function (err) {
+          isLoading = false;
+          loadError = (err && err.message) ? err.message : 'Request failed';
           var listEl = document.getElementById('earthquake-list');
           if (listEl) {
-            listEl.innerHTML = '<div class="alert alert-warning font-small m-3">Could not load earthquake data: ' + err.message + '</div>';
+            listEl.innerHTML = '<div class="alert alert-warning font-small m-3">Could not load earthquake data: ' + loadError + '</div>';
+          }
+          if (activePopupState && activePopupState.update) {
+            activePopupState.update();
           }
         });
     }

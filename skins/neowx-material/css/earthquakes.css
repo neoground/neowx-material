@@ -227,7 +227,6 @@
   font-family: inherit;
   color: #212121;
 }
-.dark-theme .leaflet-popup-content,
-.auto-theme .leaflet-popup-content {
+.dark-theme .leaflet-popup-content {
   color: #f5f5f5;
 }

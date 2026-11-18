@@ -91,11 +91,14 @@ from weewx.cheetahgenerator import SearchList
 from weewx.tags import TimespanBinder
 import weeutil.weeutil
 
+VERSION = "1.1.0"
+
 log = logging.getLogger(__name__)
 
 class MyXSearch(SearchList):
     def __init__(self, generator):
         SearchList.__init__(self, generator)
+        log.info("historygenerator version %s", VERSION)
 
         self.table_dict = generator.skin_dict['HistoryReport']
 

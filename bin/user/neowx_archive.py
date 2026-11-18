@@ -56,7 +56,7 @@ except ImportError:
         filename = filename.replace('YYYY', '%Y').replace('MM', '%m').replace('DD', '%d').replace('WW', '%V')
         return dt.strftime(filename)
 
-VERSION = "1.2.0"
+VERSION = "1.2.1"
 
 log = logging.getLogger(__name__)
 
@@ -121,8 +121,8 @@ class NeowxArchiveGenerator(weewx.cheetahgenerator.CheetahGenerator):
     # refreshed in the background during Pass 2 ('history').
     MIN_ARCHIVE_VERSION = {
         'SummaryByYear':  '2.0.0',
-        'SummaryByMonth': '2.0.0',
-        'SummaryByWeek':  '2.0.0',
+        'SummaryByMonth': '2.1.4',
+        'SummaryByWeek':  '2.1.4',
         'SummaryByDay':   '2.0.0',
     }
 
@@ -200,10 +200,31 @@ class NeowxArchiveGenerator(weewx.cheetahgenerator.CheetahGenerator):
         self._run_start_time = None
         self._backfill_count = 0
         self._backfill_limit_logged = False
+        # ISO-8601 week spans (genWeekSpans / %V) always start on Monday (0).
+        # Ensure stn_info.week_start is 0 so WeeWX's TimeBinder ($week) queries
+        # the exact same Monday-to-Monday span regardless of weewx.conf week_start.
+        if hasattr(self, 'stn_info') and self.stn_info is not None:
+            try:
+                self.stn_info.week_start = 0
+            except Exception:
+                pass
         # Ensure outputted_dict tracks all generator keys
         for k in self.generator_dict:
             if k not in self.outputted_dict:
                 self.outputted_dict[k] = []
+
+    def _getSearchList(self, encoding, timespan, default_binding, section_name, file_name):
+        """Builds the Cheetah search list and enforces Monday (0) week_start on
+        TimeBinder instances so $week aligns with genWeekSpans ISO weeks.
+        """
+        search_list = super(NeowxArchiveGenerator, self)._getSearchList(
+            encoding, timespan, default_binding, section_name, file_name
+        )
+        for entry in search_list:
+            opt_dict = getattr(entry, 'option_dict', None)
+            if isinstance(opt_dict, dict):
+                opt_dict['week_start'] = 0
+        return search_list
 
     @staticmethod
     def _resolve_archive_start_date(raw_val, first_good_ts, stop_ts):
@@ -694,10 +715,13 @@ class NeowxArchiveGenerator(weewx.cheetahgenerator.CheetahGenerator):
         stop_mo = stop_dt.month
         stop_day = stop_dt.day
         stop_iso_yr, stop_iso_wk, _ = stop_dt.isocalendar()
+        stop_monday = stop_dt.date() - datetime.timedelta(days=stop_dt.weekday())
+        stop_wk_yr = stop_monday.year
+        stop_wk_num = stop_monday.isocalendar()[1]
 
         current_live_url = f"{base_path}index.html"
         current_day_url = f"{base_path}index.html"
-        current_week_url = f"{base_path}archive/{stop_yr:04d}/weeks/week-{stop_yr:04d}-{stop_iso_wk:02d}.html"
+        current_week_url = f"{base_path}archive/{stop_wk_yr:04d}/weeks/week-{stop_wk_yr:04d}-{stop_wk_num:02d}.html"
         current_month_url = f"{base_path}archive/{stop_yr:04d}/months/month-{stop_yr:04d}-{stop_mo:02d}.html"
         current_year_url = f"{base_path}archive/{stop_yr:04d}/year-{stop_yr:04d}.html"
 
@@ -706,24 +730,41 @@ class NeowxArchiveGenerator(weewx.cheetahgenerator.CheetahGenerator):
             target_mo = stop_mo if is_current_year else 12
             ctx_month_str = f"{target_mo:02d}"
             context_month_link = f"{base_path}archive/{context_year_str}/months/month-{context_year_str}-{ctx_month_str}.html"
-            target_wk = stop_iso_wk if is_current_year else 1
-            context_week_link = f"{base_path}archive/{context_year_str}/weeks/week-{context_year_str}-{target_wk:02d}.html"
+            if is_current_year:
+                context_week_link = current_week_url
+            else:
+                jan1 = datetime.date(yr, 1, 1)
+                first_monday_yr = jan1 if jan1.weekday() == 0 else jan1 + datetime.timedelta(days=(7 - jan1.weekday()))
+                if first_monday_yr < start_dt.date() and start_dt.year == yr:
+                    first_monday_yr = start_dt.date() - datetime.timedelta(days=start_dt.date().weekday())
+                yr_wk_yr = first_monday_yr.year
+                yr_wk_num = first_monday_yr.isocalendar()[1]
+                context_week_link = f"{base_path}archive/{yr_wk_yr:04d}/weeks/week-{yr_wk_yr:04d}-{yr_wk_num:02d}.html"
             target_day_str = f"{stop_yr:04d}-{stop_mo:02d}-{stop_day:02d}" if is_current_year else f"{yr:04d}-01-01"
             context_day_link = f"{base_path}index.html" if is_current_year else f"{base_path}archive/{context_year_str}/days/day-{target_day_str}.html"
         elif summarize_by == 'SummaryByMonth':
             context_month_link = f"{base_path}archive/{context_year_str}/months/month-{context_year_str}-{context_month_str}.html"
-            first_day_mo = datetime.date(yr, mo, 1)
-            mo_wk = first_day_mo.isocalendar()[1]
-            context_week_link = f"{base_path}archive/{context_year_str}/weeks/week-{context_year_str}-{mo_wk:02d}.html"
+            if is_current_month:
+                context_week_link = current_week_url
+            else:
+                first_day_mo = datetime.date(yr, mo, 1)
+                first_monday_mo = first_day_mo if first_day_mo.weekday() == 0 else first_day_mo + datetime.timedelta(days=(7 - first_day_mo.weekday()))
+                if first_monday_mo < start_dt.date() and (start_dt.year, start_dt.month) == (yr, mo):
+                    first_monday_mo = start_dt.date() - datetime.timedelta(days=start_dt.date().weekday())
+                elif first_monday_mo > stop_dt.date():
+                    first_monday_mo = stop_monday
+                mo_wk_yr = first_monday_mo.year
+                mo_wk_num = first_monday_mo.isocalendar()[1]
+                context_week_link = f"{base_path}archive/{mo_wk_yr:04d}/weeks/week-{mo_wk_yr:04d}-{mo_wk_num:02d}.html"
             target_day = stop_day if is_current_month else 1
             context_day_link = f"{base_path}index.html" if is_current_month else f"{base_path}archive/{context_year_str}/days/day-{context_year_str}-{context_month_str}-{target_day:02d}.html"
         elif summarize_by == 'SummaryByWeek':
             context_month_link = f"{base_path}archive/{context_year_str}/months/month-{context_year_str}-{context_month_str}.html"
-            context_week_link = f"{base_path}archive/{context_year_str}/weeks/week-{context_year_str}-{context_week_str}.html"
+            context_week_link = f"{base_path}archive/{ref_monday.year:04d}/weeks/week-{ref_monday.year:04d}-{ref_monday.isocalendar()[1]:02d}.html"
             context_day_link = f"{base_path}index.html" if is_current_week else f"{base_path}archive/{context_year_str}/days/day-{context_day_str}.html"
         else:
             context_month_link = f"{base_path}archive/{context_year_str}/months/month-{context_year_str}-{context_month_str}.html"
-            context_week_link = f"{base_path}archive/{context_year_str}/weeks/week-{context_year_str}-{context_week_str}.html"
+            context_week_link = f"{base_path}archive/{ref_monday.year:04d}/weeks/week-{ref_monday.year:04d}-{ref_monday.isocalendar()[1]:02d}.html"
             today_iso = stop_dt.strftime('%Y-%m-%d')
             context_day_link = f"{base_path}index.html" if (is_current_day or context_day_str == today_iso) else f"{base_path}archive/{context_year_str}/days/day-{context_day_str}.html"
 
