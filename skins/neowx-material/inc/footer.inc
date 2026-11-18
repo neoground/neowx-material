@@ -192,6 +192,11 @@
                         <span class="nwm-disclaimer-break"></span>
                         <span class="nwm-footer-disclaimer">Weather forecast data provided by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> under (<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>) license. Data may be modified (e.g., unit conversion, aggregation).</span>
                     #end if
+                    #set $_show_eq_attribution = ($varExists('panelItems') and any(str(i).strip().lower().startswith('earthquake') for i in $panelItems(page=$getVar('page', None), subpage=$getVar('subpage', None))))
+                    #if $_show_eq_attribution
+                        <span class="nwm-sep nwm-disclaimer-sep">&bull;</span>
+                        <span class="nwm-footer-disclaimer">Seismic &amp; fault data: <a href="https://earthquake.usgs.gov/" target="_blank" rel="noopener">USGS</a> (Public Domain) &bull; Map: <a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a>, <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a>, &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors (ODbL).</span>
+                    #end if
                 </div>
             </div>
 
