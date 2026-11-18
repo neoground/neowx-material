@@ -10,6 +10,8 @@ An actively maintained evolution of NeoWX Material featuring **interactive archi
 
 > **Live Demo:** [weewx.seehausen.org](https://weewx.seehausen.org/)
 
+![NeoWX Material Screenshot](docs/img/screenshot.png)
+
 ---
 
 ## 🎉 What's New in Release 2.0

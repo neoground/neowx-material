@@ -230,12 +230,15 @@ document.addEventListener('DOMContentLoaded', function () {
     var drawer = document.getElementById('nwm-footer-drawer');
     if (!toggleBtn || !drawer) return;
 
-    if (localStorage.getItem('nwm_footer_open') === '1') {
-        if (window.jQuery && window.jQuery(drawer).collapse) {
-            window.jQuery(drawer).collapse('show');
-        } else {
-            drawer.classList.add('show');
+    var userTriggeredOpen = false;
+    toggleBtn.addEventListener('click', function () {
+        if (!drawer.classList.contains('show')) {
+            userTriggeredOpen = true;
         }
+    });
+
+    if (localStorage.getItem('nwm_footer_open') === '1') {
+        drawer.classList.add('show');
         toggleBtn.setAttribute('aria-expanded', 'true');
         toggleBtn.classList.add('expanded');
     }
@@ -246,7 +249,15 @@ document.addEventListener('DOMContentLoaded', function () {
             toggleBtn.classList.add('expanded');
             localStorage.setItem('nwm_footer_open', '1');
         });
+        window.jQuery(drawer).on('shown.bs.collapse', function () {
+            if (userTriggeredOpen) {
+                userTriggeredOpen = false;
+                var footer = drawer.closest('footer') || drawer;
+                footer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+        });
         window.jQuery(drawer).on('hide.bs.collapse', function () {
+            userTriggeredOpen = false;
             toggleBtn.setAttribute('aria-expanded', 'false');
             toggleBtn.classList.remove('expanded');
             localStorage.setItem('nwm_footer_open', '0');

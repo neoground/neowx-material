@@ -94,6 +94,20 @@ header {
     display: none !important;
   }
 
+  // v2 full-width bands (column = full or desktop_columns = 1):
+  // 2 columns x 2 items per column = 4 items across 100% width (25% each),
+  // so cards, embedded items, and charts in a full-width panel have the exact
+  // same 25% viewport width as in a 2-column band!
+  // Forecast cards (.card-forecast) stay at 3 per row (col-xl-4 = 33.333%) so
+  // a 3-day forecast fills 100% cleanly.
+  .nwm-layout-full {
+    .col-xl-4:not(:has(> .card-forecast)),
+    .col-xl-6 {
+      flex: 0 0 25%;
+      max-width: 25%;
+    }
+  }
+
   // v2 desktop_columns (2..5) layout bands
   .nwm-desktop-cols-2 > .nwm-layout-col {
     flex: 0 0 50%;

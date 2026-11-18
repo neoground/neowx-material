@@ -25,10 +25,12 @@
     #if $seg['type'] is None
         #for $x in $seg['items']
             #if $isEmbeddedItem($x)
+                #set global $emb_mode     = $mode
                 #set global $emb_item     = $x
                 #set global $emb_section  = $seg['slug']
                 #include "inc/embedded_region.inc"
                 #set global $emb_item     = None
+                #set global $emb_mode     = None
             #else
                 #set global $tele_mode    = $mode
                 #set global $tele_item    = $x

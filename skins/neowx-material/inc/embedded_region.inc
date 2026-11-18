@@ -11,7 +11,8 @@
 ## regions.  See the [[[pages]]] comments in skin.conf.
 
 #def notFoundCard($name)
-    <div class="col-12 col-md-6 col-xl-4 mb-4">
+    #set $_col_cls = $getVar('_emb_col_class', 'col-12 col-md-6 col-xl-4 mb-4')
+    <div class="$_col_cls">
         <div class="card">
             <div class="card-body text-center">
                 Section definition not found for "$name"
@@ -64,7 +65,8 @@
     #set $raw_lon = str($getVar('Extras.Embedded.' + name + '.longitude', $getVar('Extras.Embedded.' + name + '.lon', $getVar('Extras.Earthquakes.longitude', $getVar('Extras.Earthquakes.lon', '{lon}'))))).strip()
     #set $eq_lat = $raw_lat.replace('{lat}', $st_lat).replace('{latitude}', $st_lat).replace('$station.latitude_f', $st_lat) if $raw_lat != '' else $st_lat
     #set $eq_lon = $raw_lon.replace('{lon}', $st_lon).replace('{longitude}', $st_lon).replace('$station.longitude_f', $st_lon) if $raw_lon != '' else $st_lon
-    <div class="col-12 col-md-6 col-xl-4 mb-4">
+    #set $_col_cls = $getVar('_emb_col_class', 'col-12 col-md-6 col-xl-4 mb-4')
+    <div class="$_col_cls">
         <div class="card card-embedded overflow-hidden" data-name="$name" data-section="$section">
             #if str($Extras.Appearance.get('enableEmbeddedPopup', 'true')).strip().lower() not in ('false', 'no', '0')
                 <div class="nwm-embed-toolbar">
@@ -118,8 +120,9 @@
     #end if
     #set iframe_title = $getVar('Extras.Embedded.' + name + '.title', "")
     #set iframe_aspect = $getVar('Extras.Embedded.' + name + '.aspect_ratio', "4/3")
+    #set $_col_cls = $getVar('_emb_col_class', 'col-12 col-md-6 col-xl-4 mb-4')
     #if iframe_url != ""
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="$_col_cls">
             <div class="card card-embedded overflow-hidden" data-name="$name" data-section="$section">
                 $embedToolbar()
                 <div class="card-body text-center d-flex flex-column px-0 ${'pb-0' if iframe_title != '' else 'py-0'} overflow-hidden">
@@ -181,7 +184,8 @@
     #end if
 
     #if image_url != ""
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
+        #set $_col_cls = $getVar('_emb_col_class', 'col-12 col-md-6 col-xl-4 mb-4')
+        <div class="$_col_cls">
             <div class="card card-embedded overflow-hidden" data-name="$name" data-section="$section">
                 $embedToolbar()
                 <div class="card-body text-center d-flex flex-column ${padding_x} ${padding_y} overflow-hidden">
@@ -235,5 +239,20 @@
 #end def
 
 #if $getVar('emb_item', None)
-    $renderEmbItem($emb_item, $getVar('emb_section', ''))
+    #set $_sec_slug = $getVar('emb_section', '')
+    #set $_is_chart_sec = False
+    #if $varExists('page_segments')
+        #for $_seg in $page_segments
+            #if $_seg.get('slug') == $_sec_slug and $_seg.get('content') in ('chart', 'telemetry_chart')
+                #set $_is_chart_sec = True
+            #end if
+        #end for
+    #end if
+    #if $_is_chart_sec or $getVar('emb_mode', '') == 'chart'
+        #set global $_emb_col_class = 'col-12 col-xl-6 mb-4'
+    #else
+        #set global $_emb_col_class = 'col-12 col-md-6 col-xl-4 mb-4'
+    #end if
+    $renderEmbItem($emb_item, $_sec_slug)
+    #set global $emb_mode = None
 #end if
