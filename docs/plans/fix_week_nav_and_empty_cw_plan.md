@@ -63,6 +63,13 @@ elif summarize_by == 'SummaryByMonth':
 3. **`skins/neowx-material/inc/head.inc` & `skins/neowx-material/inc/js.inc`**:
    - Load earthquake CSS and JS based on whether the current page's recognized layout items (`$panelItems(page=$getVar('page', None), subpage=$getVar('subpage', None))`) include any `earthquake*` item (with fallback if `panelItems` is unavailable).
 
+### D. Coordinate Placeholders & Custom Location Override for Earthquake Map
+- **`skins/neowx-material/skin.conf`**:
+  - Under `[[Embedded]] [[[earthquake_map]]]`, add `latitude = {lat}` and `longitude = {lon}` (with comments explaining that `{lat}` / `{lon}` or empty uses the WeeWX station coordinates, or explicit coordinates like `48.123` / `11.123` can be specified).
+  - Also support optional `latitude` / `longitude` under `[[Earthquakes]]` as a global fallback before `$station.latitude_f` / `$station.longitude_f`.
+- **`skins/neowx-material/inc/embedded_region.inc`**:
+  - In `earthquakeCard($name, $section = "")`, resolve `eq_lat` and `eq_lon` by checking `Extras.Embedded.<name>.latitude` (or `lat`), then `Extras.Earthquakes.latitude` (or `lat`), defaulting to `{lat}` / `{lon}`, and replacing `{lat}`, `{lon}`, `{latitude}`, `{longitude}`, `$station.latitude_f`, `$station.longitude_f` (and empty strings) with `$station.latitude_f` and `$station.longitude_f`. Pass the resolved `data-lat="$eq_lat"` and `data-lon="$eq_lon"` to `#earthquake-map`.
+
 ---
 
 ## 3. Files to Modify

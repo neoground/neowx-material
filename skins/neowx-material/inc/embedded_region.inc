@@ -58,6 +58,12 @@
     #set eq_basemap = $getVar('Extras.Earthquakes.basemap', "vector")
     #set eq_tile_url = $getVar('Extras.Earthquakes.custom_tile_url', "")
     #set eq_faults = $getVar('Extras.Earthquakes.show_faults', "yes")
+    #set $st_lat = str($station.latitude_f) if ($varExists('station') and $varExists('station.latitude_f')) else '0'
+    #set $st_lon = str($station.longitude_f) if ($varExists('station') and $varExists('station.longitude_f')) else '0'
+    #set $raw_lat = str($getVar('Extras.Embedded.' + name + '.latitude', $getVar('Extras.Embedded.' + name + '.lat', $getVar('Extras.Earthquakes.latitude', $getVar('Extras.Earthquakes.lat', '{lat}'))))).strip()
+    #set $raw_lon = str($getVar('Extras.Embedded.' + name + '.longitude', $getVar('Extras.Embedded.' + name + '.lon', $getVar('Extras.Earthquakes.longitude', $getVar('Extras.Earthquakes.lon', '{lon}'))))).strip()
+    #set $eq_lat = $raw_lat.replace('{lat}', $st_lat).replace('{latitude}', $st_lat).replace('$station.latitude_f', $st_lat) if $raw_lat != '' else $st_lat
+    #set $eq_lon = $raw_lon.replace('{lon}', $st_lon).replace('{longitude}', $st_lon).replace('$station.longitude_f', $st_lon) if $raw_lon != '' else $st_lon
     <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card card-embedded overflow-hidden" data-name="$name" data-section="$section">
             #if str($Extras.Appearance.get('enableEmbeddedPopup', 'true')).strip().lower() not in ('false', 'no', '0')
@@ -75,8 +81,8 @@
                     </h5>
                 #end if
                 <div id="earthquake-map" class="flex-grow-1 w-100 earthquake-embed-map" style="aspect-ratio: ${eq_aspect}; min-height: 240px;"
-                     data-lat="$station.latitude_f"
-                     data-lon="$station.longitude_f"
+                     data-lat="$eq_lat"
+                     data-lon="$eq_lon"
                      data-station-name="$station.location"
                      data-radius="$eq_radius"
                      data-minmag="$eq_min_mag"

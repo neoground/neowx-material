@@ -120,9 +120,9 @@ class NeowxArchiveGenerator(weewx.cheetahgenerator.CheetahGenerator):
     # so existing historical HTML files with a lower embedded version are automatically
     # refreshed in the background during Pass 2 ('history').
     MIN_ARCHIVE_VERSION = {
-        'SummaryByYear':  '2.0.0',
-        'SummaryByMonth': '2.1.4',
-        'SummaryByWeek':  '2.1.4',
+        'SummaryByYear':  '2.2.0',
+        'SummaryByMonth': '2.2.0',
+        'SummaryByWeek':  '2.2.0',
         'SummaryByDay':   '2.0.0',
     }
 
