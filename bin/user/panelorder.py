@@ -145,7 +145,7 @@ CONTENTS = (CARD, "chart", "telemetry", "telemetry_chart")
 # (forecast-table, forecast_hour_icons) and its own #include-plus-#set global
 # handoff; a second copy would duplicate those ids and the two would fight
 # over the globals.  Everything else may now repeat once per section.
-SINGLETON_ITEMS = ("forecast",)
+SINGLETON_ITEMS = ("forecast", "earthquake_map", "earthquakes")
 
 # Keys a section may carry that are settings rather than typos.
 # items_title_align is read by inc/head.inc, not here - it is listed so a panel
@@ -1123,11 +1123,11 @@ def _embedded_names(skin_dict):
 
 
 def is_embedded_item(skin_dict, name):
-    """True when a listed item represents embedded content (iframe or image).
+    """True when a listed item represents embedded content (iframe, image, or earthquake).
 
     Either of:
     - defined under [Extras][[Embedded]]
-    - starts with 'iFrame' or 'image' (case-insensitive)
+    - starts with 'iFrame', 'image', or 'earthquake' (case-insensitive)
     """
     if name is None:
         return False
@@ -1135,7 +1135,11 @@ def is_embedded_item(skin_dict, name):
     if sname in _embedded_names(skin_dict):
         return True
     sname_lower = sname.lower()
-    return sname_lower.startswith("iframe") or sname_lower.startswith("image")
+    return (
+        sname_lower.startswith("iframe")
+        or sname_lower.startswith("image")
+        or sname_lower.startswith("earthquake")
+    )
 
 
 def order_items(skin_dict, content=None, page=None, subpage=None):

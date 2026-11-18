@@ -346,3 +346,10 @@
         return sectors[index % sectors.length];
     }
 </script>
+
+## Regional Earthquakes JS (Leaflet, GeoJSON landmass, USGS feed)
+#if $varExists('Extras.Embedded.earthquake_map') or $varExists('Extras.Embedded.earthquakes')
+<script src="${base_path}js/vendor/leaflet/leaflet.js"></script>
+<script src="${base_path}js/vendor/geojson/world-land.js"></script>
+<script src="${base_path}js/earthquakes.js?v=$Extras.version"></script>
+#end if

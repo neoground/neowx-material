@@ -10,7 +10,7 @@ def loader():
 class BasicInstaller(ExtensionInstaller):
     def __init__(self):
         super(BasicInstaller, self).__init__(
-            version="2.1.3",
+            version="2.1.4",
             name="neowx-material",
             description="The most versatile and modern weewx skin",
             author="Neoweewx",
@@ -25,8 +25,10 @@ class BasicInstaller(ExtensionInstaller):
                         "skins/neowx-material/archive/NOAA/NOAA-%Y.txt.tmpl",
                         "skins/neowx-material/day-%Y-%m-%d.html.tmpl",
                         "skins/neowx-material/css/bootstrap.min.css",
+                        "skins/neowx-material/css/earthquakes.css",
                         "skins/neowx-material/css/style.min.css",
                         "skins/neowx-material/css/style.min.css.map",
+                        "skins/neowx-material/css/vendor/leaflet/leaflet.css",
                         "skins/neowx-material/fonts/OFL.txt",
                         "skins/neowx-material/fonts/Rubik-Light.eot",
                         "skins/neowx-material/fonts/Rubik-Light.woff",
@@ -99,6 +101,9 @@ class BasicInstaller(ExtensionInstaller):
                         "skins/neowx-material/js/neowx-date-format.js",
                         "skins/neowx-material/js/neowx-live.js",
                         "skins/neowx-material/js/neowx-date-nav.js",
+                        "skins/neowx-material/js/earthquakes.js",
+                        "skins/neowx-material/js/vendor/leaflet/leaflet.js",
+                        "skins/neowx-material/js/vendor/geojson/world-land.js",
                         "skins/neowx-material/js/bootstrap.min.js",
                         "skins/neowx-material/inc/js.inc",
                         "skins/neowx-material/js/jquery.min.js",

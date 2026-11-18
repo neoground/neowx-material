@@ -288,9 +288,10 @@ class MyXSearch(SearchList):
 
             try:
                 unit_type = reading.converter.group_unit_dict[reading.value_t[2]]
-            except KeyError:
-                log.info("%s: obs_type %s no unit found" % (os.path.basename(__file__),
-                                                            obs_type))
+            except (KeyError, AttributeError):
+                log.info("%s: obs_type %s no unit found or observation not in database" % (os.path.basename(__file__),
+                                                                                           obs_type))
+                return "Could not generate table %s" % table_name
             unit_formatted = ''
 
             # 'units' option in skin.conf?
