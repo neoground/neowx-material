@@ -346,3 +346,11 @@
         return sectors[index % sectors.length];
     }
 </script>
+
+## Regional Earthquakes JS (Leaflet, GeoJSON landmass, USGS feed)
+#set $_has_eq_item = ($varExists('panelItems') and any(str($i).strip().lower().startswith('earthquake') for i in $panelItems(page=$getVar('page', None), subpage=$getVar('subpage', None)))) or (not $varExists('panelItems') and ($varExists('Extras.Embedded.earthquake_map') or $varExists('Extras.Embedded.earthquakes')))
+#if $_has_eq_item
+<script src="${base_path}js/vendor/leaflet/leaflet.js"></script>
+<script src="${base_path}js/vendor/geojson/world-land.js"></script>
+<script src="${base_path}js/earthquakes.js?v=$Extras.version"></script>
+#end if

@@ -91,11 +91,14 @@ from weewx.cheetahgenerator import SearchList
 from weewx.tags import TimespanBinder
 import weeutil.weeutil
 
+VERSION = "1.1.0"
+
 log = logging.getLogger(__name__)
 
 class MyXSearch(SearchList):
     def __init__(self, generator):
         SearchList.__init__(self, generator)
+        log.info("historygenerator version %s", VERSION)
 
         self.table_dict = generator.skin_dict['HistoryReport']
 
@@ -288,9 +291,10 @@ class MyXSearch(SearchList):
 
             try:
                 unit_type = reading.converter.group_unit_dict[reading.value_t[2]]
-            except KeyError:
-                log.info("%s: obs_type %s no unit found" % (os.path.basename(__file__),
-                                                            obs_type))
+            except (KeyError, AttributeError):
+                log.info("%s: obs_type %s no unit found or observation not in database" % (os.path.basename(__file__),
+                                                                                           obs_type))
+                return "Could not generate table %s" % table_name
             unit_formatted = ''
 
             # 'units' option in skin.conf?

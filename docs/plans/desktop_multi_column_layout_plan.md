@@ -121,11 +121,14 @@ Proposed SCSS scaling (`@media screen and (min-width: 1660px)`) using wrapper `.
 
 | Context (`>= 1660px`) | Column Width | Value / Embedded Cards per Row | Charts per Row |
 | :--- | :--- | :--- | :--- |
-| **`desktop_columns = 1` or `column = full`** | `100%` | 3 cards (`col-xl-4` = 33.3%) | 2 charts (`col-xl-6` = 50%) |
+| **`desktop_columns = 1` or `column = full`** | `100%` | 4 cards (`25%` each, matching 2-col card width; Forecast cards with `card-forecast` stay 3 per row at `33.33%`) | 4 charts (`25%` each) |
 | **`desktop_columns = 2` (Classic v1)** | `50%` | 2 cards (`50%` each, matching v1 `.temprow`) | 2 charts (`50%` each, matching v1 `.graphrow`) |
 | **`desktop_columns = 3`** | `33.333%` | 2 cards (`50%` each) | 1 chart (`100%` full column width) |
 | **`desktop_columns = 4`** | `25%` | 1 card (`100%` full column width) | 1 chart (`100%` full column width) |
 | **`desktop_columns = 5`** | `20%` | 1 card (`100%` full column width) | 1 chart (`100%` full column width) |
+
+- **Mixed Chart & Embedded Cards Alignment:**
+  - In `inc/embedded_region.inc`, when an embedded item (`earthquakeCard`, `iframeCard`, `imageCard`) is rendered inside a `content = chart` or `content = telemetry_chart` section (`$seg['content'] in ('chart', 'telemetry_chart')`), use `col-12 col-xl-6 mb-4 d-flex` and `w-100` on `.card-embedded` so embedded cards match the exact column width and row height of adjacent `.card-chart` cards.
 
 - **Below `1660px` (`< 1660px`):**
   - `.nwm-layout-col` stacks vertically at `100%` width (`flex: 0 0 100%; max-width: 100%`), so tablets, laptops, and mobile devices keep the exact existing responsive layout.

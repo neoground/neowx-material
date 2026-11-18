@@ -10,6 +10,8 @@ An actively maintained evolution of NeoWX Material featuring **interactive archi
 
 > **Live Demo:** [weewx.seehausen.org](https://weewx.seehausen.org/)
 
+![NeoWX Material Screenshot](docs/img/screenshot.png)
+
 ---
 
 ## 🎉 What's New in Release 2.0
@@ -90,6 +92,7 @@ Detailed guides and references are located in the [`docs/`](docs/) directory:
 | **[Multi-Axis Charts – Usage Guide](docs/MULTI-AXIS-USAGE-GUIDE.md)** | Combining observations with different scales on independent left/right Y-axes |
 | **[Multi-Axis Charts – Quick Reference](docs/MULTI-AXIS-QUICK-REFERENCE.md)** | Compact cheat-sheet for `[[[[yaxis]]]]` and `[[[[yaxis_config]]]]` syntax |
 | **[Trend Indicators Guide](docs/TREND-INDICATORS.md)** | Unit-aware current-page trend arrows, `trend_type` styles (`multi`, `davis`, `strict`), and thresholds |
+| **[Regional Earthquakes Map Guide](docs/EARTHQUAKE-CONFIG.md)** | Configuring the interactive USGS earthquake map, fault lines overlay, offline vector/OSM basemaps, and custom coordinates |
 
 ---
 
@@ -111,5 +114,8 @@ yarn run build
 
 - **Maintained by:** [@seehase](https://github.com/seehase) and contributors.
 - **Original Skin:** Based on [NeoWX Material](https://github.com/neoground/neowx-material) by Neoground GmbH.
-- **Built With:** [WeeWX](https://weewx.com), Material Design for Bootstrap (MDB), [ApexCharts](https://apexcharts.com), [MomentJS](https://momentjs.com), [Weather Icons](https://erikflowers.github.io/weather-icons/), [Open-Meteo API](https://open-meteo.com), and Paho MQTT.
+- **Built With & Data Sources:**
+  - [WeeWX](https://weewx.com), Material Design for Bootstrap (MDB), [ApexCharts](https://apexcharts.com), [MomentJS](https://momentjs.com), [Weather Icons](https://erikflowers.github.io/weather-icons/), and Paho MQTT.
+  - **Weather Forecast:** [Open-Meteo API](https://open-meteo.com) ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)).
+  - **Regional Earthquakes & Maps:** [Leaflet 1.9.4](https://leafletjs.com/) (BSD-2-Clause), [USGS Earthquake Hazards Program & Quaternary Fault and Fold Database](https://earthquake.usgs.gov/) (U.S. Public Domain), [Natural Earth](https://www.naturalearthdata.com/) vector basemap (Public Domain), and [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors (ODbL).
 - **License:** Distributed under the original [LICENSE](LICENSE).

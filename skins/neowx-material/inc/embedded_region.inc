@@ -11,7 +11,8 @@
 ## regions.  See the [[[pages]]] comments in skin.conf.
 
 #def notFoundCard($name)
-    <div class="col-12 col-md-6 col-xl-4 mb-4">
+    #set $_col_cls = $getVar('_emb_col_class', 'col-12 col-md-6 col-xl-4 mb-4')
+    <div class="$_col_cls">
         <div class="card">
             <div class="card-body text-center">
                 Section definition not found for "$name"
@@ -48,6 +49,57 @@
     #set global $base_path = ''
 #end if
 
+#def earthquakeCard($name, $section = "")
+    #set $bp = $getVar('base_path', '')
+    #set eq_title = $getVar('Extras.Embedded.' + name + '.title', $gettext("earthquakes"))
+    #set eq_aspect = $getVar('Extras.Embedded.' + name + '.aspect_ratio', "4/3")
+    #set eq_radius = $getVar('Extras.Embedded.' + name + '.radius_km', $getVar('Extras.Earthquakes.radius_km', "300"))
+    #set eq_min_mag = $getVar('Extras.Embedded.' + name + '.min_magnitude', $getVar('Extras.Earthquakes.min_magnitude', "2.5"))
+    #set eq_timespan = $getVar('Extras.Embedded.' + name + '.timespan_days', $getVar('Extras.Earthquakes.timespan_days', "7"))
+    #set eq_basemap = $getVar('Extras.Embedded.' + name + '.basemap', $getVar('Extras.Earthquakes.basemap', "vector"))
+    #set eq_tile_url = $getVar('Extras.Embedded.' + name + '.custom_tile_url', $getVar('Extras.Earthquakes.custom_tile_url', ""))
+    #set eq_faults = $getVar('Extras.Embedded.' + name + '.show_faults', $getVar('Extras.Earthquakes.show_faults', "yes"))
+    #set $st_lat = str($station.latitude_f) if ($varExists('station') and $varExists('station.latitude_f')) else '0'
+    #set $st_lon = str($station.longitude_f) if ($varExists('station') and $varExists('station.longitude_f')) else '0'
+    #set $raw_lat = str($getVar('Extras.Embedded.' + name + '.latitude', $getVar('Extras.Embedded.' + name + '.lat', $getVar('Extras.Earthquakes.latitude', $getVar('Extras.Earthquakes.lat', '{lat}'))))).strip()
+    #set $raw_lon = str($getVar('Extras.Embedded.' + name + '.longitude', $getVar('Extras.Embedded.' + name + '.lon', $getVar('Extras.Earthquakes.longitude', $getVar('Extras.Earthquakes.lon', '{lon}'))))).strip()
+    #set $eq_lat = $raw_lat.replace('{lat}', $st_lat).replace('{latitude}', $st_lat).replace('$station.latitude_f', $st_lat) if $raw_lat != '' else $st_lat
+    #set $eq_lon = $raw_lon.replace('{lon}', $st_lon).replace('{longitude}', $st_lon).replace('$station.longitude_f', $st_lon) if $raw_lon != '' else $st_lon
+    #set $_col_cls = $getVar('_emb_col_class', 'col-12 col-md-6 col-xl-4 mb-4')
+    <div class="$_col_cls">
+        <div class="card card-embedded overflow-hidden" data-name="$name" data-section="$section">
+            #if str($Extras.Appearance.get('enableEmbeddedPopup', 'true')).strip().lower() not in ('false', 'no', '0')
+                <div class="nwm-embed-toolbar">
+                    <button type="button" class="nwm-embed-toolbar-icon" data-nwm-earthquake-popup
+                            title="$gettext('expand')" aria-label="$gettext('expand')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+                    </button>
+                </div>
+            #end if
+            <div class="card-body text-center d-flex flex-column px-0 pb-0 overflow-hidden">
+                #if eq_title != ""
+                    <h5 class="h5-responsive $Extras.color-text">
+                        <i class="mdi mdi-map-marker-radius-outline mr-1"></i>$eq_title
+                    </h5>
+                #end if
+                <div id="earthquake-map" class="flex-grow-1 w-100 earthquake-embed-map" style="aspect-ratio: ${eq_aspect}; min-height: 240px;"
+                     data-lat="$eq_lat"
+                     data-lon="$eq_lon"
+                     data-station-name="$station.location"
+                     data-radius="$eq_radius"
+                     data-minmag="$eq_min_mag"
+                     data-timespan="$eq_timespan"
+                     data-basemap="$eq_basemap"
+                     data-tile-url="$eq_tile_url"
+                     data-show-faults="$eq_faults"
+                     data-theme-mode="${Extras.Appearance.mode}"
+                     data-theme-color="$Extras.color">
+                </div>
+            </div>
+        </div>
+    </div>
+#end def
+
 #def iframeCard($name, $section = "")
     #set $bp = $getVar('base_path', '')
     #set iframe_url = $getVar('Extras.Embedded.' + name + '.url', "")
@@ -68,8 +120,9 @@
     #end if
     #set iframe_title = $getVar('Extras.Embedded.' + name + '.title', "")
     #set iframe_aspect = $getVar('Extras.Embedded.' + name + '.aspect_ratio', "4/3")
+    #set $_col_cls = $getVar('_emb_col_class', 'col-12 col-md-6 col-xl-4 mb-4')
     #if iframe_url != ""
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="$_col_cls">
             <div class="card card-embedded overflow-hidden" data-name="$name" data-section="$section">
                 $embedToolbar()
                 <div class="card-body text-center d-flex flex-column px-0 ${'pb-0' if iframe_title != '' else 'py-0'} overflow-hidden">
@@ -131,7 +184,8 @@
     #end if
 
     #if image_url != ""
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
+        #set $_col_cls = $getVar('_emb_col_class', 'col-12 col-md-6 col-xl-4 mb-4')
+        <div class="$_col_cls">
             <div class="card card-embedded overflow-hidden" data-name="$name" data-section="$section">
                 $embedToolbar()
                 <div class="card-body text-center d-flex flex-column ${padding_x} ${padding_y} overflow-hidden">
@@ -165,12 +219,16 @@
 ## +-------------------------------------------------------------------------+
 
 #def renderEmbItem($x, $section = "")
-    #if $x.lower().startswith("iframe")
+    #if $x.lower().startswith("earthquake") or $x.lower() == "earthquakes"
+        $earthquakeCard($x, $section)
+    #else if $x.lower().startswith("iframe")
         $iframeCard($x, $section)
     #else if $x.lower().startswith("image")
         $imageCard($x, $section)
     #else if $varExists('Extras.Embedded.' + $x)
-        #if $getVar('Extras.Embedded.' + $x + '.link', '') != '' or $getVar('Extras.Embedded.' + $x + '.alt', '') != '' or $getVar('Extras.Embedded.' + $x + '.padding', '') != '' or str($getVar('Extras.Embedded.' + $x + '.url', '')).lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'))
+        #if $x.lower().startswith("earthquake") or $x.lower() == "earthquakes"
+            $earthquakeCard($x, $section)
+        #else if $getVar('Extras.Embedded.' + $x + '.link', '') != '' or $getVar('Extras.Embedded.' + $x + '.alt', '') != '' or $getVar('Extras.Embedded.' + $x + '.padding', '') != '' or str($getVar('Extras.Embedded.' + $x + '.url', '')).lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'))
             $imageCard($x, $section)
         #else
             $iframeCard($x, $section)
@@ -181,5 +239,20 @@
 #end def
 
 #if $getVar('emb_item', None)
-    $renderEmbItem($emb_item, $getVar('emb_section', ''))
+    #set $_sec_slug = $getVar('emb_section', '')
+    #set $_is_chart_sec = False
+    #if $varExists('page_segments')
+        #for $_seg in $page_segments
+            #if $_seg.get('slug') == $_sec_slug and $_seg.get('content') in ('chart', 'telemetry_chart')
+                #set $_is_chart_sec = True
+            #end if
+        #end for
+    #end if
+    #if $_is_chart_sec or $getVar('emb_mode', '') == 'chart'
+        #set global $_emb_col_class = 'col-12 col-xl-6 mb-4'
+    #else
+        #set global $_emb_col_class = 'col-12 col-md-6 col-xl-4 mb-4'
+    #end if
+    $renderEmbItem($emb_item, $_sec_slug)
+    #set global $emb_mode = None
 #end if

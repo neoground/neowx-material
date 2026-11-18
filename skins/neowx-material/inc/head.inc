@@ -108,6 +108,13 @@
 ## ApexChart stylesheet
 <link rel="stylesheet" href="${base_path}js/vendor/apexcharts/apexcharts.css">
 
+## Regional Earthquakes stylesheet (Leaflet & theme)
+#set $_has_eq_item = ($varExists('panelItems') and any(str($i).strip().lower().startswith('earthquake') for i in $panelItems(page=$getVar('page', None), subpage=$getVar('subpage', None)))) or (not $varExists('panelItems') and ($varExists('Extras.Embedded.earthquake_map') or $varExists('Extras.Embedded.earthquakes')))
+#if $_has_eq_item
+<link rel="stylesheet" href="${base_path}css/vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="${base_path}css/earthquakes.css?v=$Extras.version">
+#end if
+
 ## Panel state restore.  Must be INLINE and must run before the body parses:
 ## the panels are painted from the server-rendered default, so anything that
 ## waits for DOMContentLoaded shows the wrong state first and corrects it
