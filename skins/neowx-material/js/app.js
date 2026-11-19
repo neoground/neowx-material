@@ -25,6 +25,124 @@ function debugLog(message) {
     }
 }
 
+// --- BALANCED ROW PACKING FOR .nwm-grid-item ROWS --------------------------
+// Runs synchronously right when app.js loads (after </main> and BEFORE
+// ApexCharts / Leaflet initialize) so items paint and measure at their final
+// balanced width with zero flash or double chart render.
+(function initBalancedGrid() {
+    function getLayoutConfig() {
+        var cfg = window.NWM_LAYOUT_CONFIG;
+        if (!cfg || typeof cfg !== 'object') {
+            return {
+                breakpoints: [768, 1200, 1400],
+                balanceRows: true,
+                sectionBalance: {}
+            };
+        }
+        return {
+            breakpoints: Array.isArray(cfg.breakpoints) ? cfg.breakpoints : [768, 1200, 1400],
+            balanceRows: cfg.balanceRows !== false,
+            sectionBalance: (cfg.sectionBalance && typeof cfg.sectionBalance === 'object') ? cfg.sectionBalance : {}
+        };
+    }
+
+    function isBalancingEnabled(slug, cfg) {
+        if (slug && Object.prototype.hasOwnProperty.call(cfg.sectionBalance, slug)) {
+            return !!cfg.sectionBalance[slug];
+        }
+        return cfg.balanceRows;
+    }
+
+    function applyGroupBalance(group, slug, cfg) {
+        var i;
+        for (i = 0; i < group.length; i++) {
+            group[i].style.removeProperty('--nwm-cols-eff');
+        }
+        if (!isBalancingEnabled(slug, cfg) || group.length === 0) {
+            return;
+        }
+        var rawCols = window.getComputedStyle(group[0]).getPropertyValue('--nwm-cols');
+        var maxCols = parseInt(rawCols, 10);
+        if (!maxCols || maxCols < 1) {
+            maxCols = 1;
+        }
+        var count = group.length;
+        var rows = Math.ceil(count / maxCols);
+        var effCols = Math.ceil(count / rows);
+        if (effCols !== maxCols) {
+            var effStr = String(effCols);
+            for (i = 0; i < group.length; i++) {
+                group[i].style.setProperty('--nwm-cols-eff', effStr);
+            }
+        }
+    }
+
+    function nwmBalanceGrid() {
+        var cfg = getLayoutConfig();
+        var items = document.querySelectorAll('.nwm-grid-item');
+        if (!items.length) {
+            return;
+        }
+        var rowsSeen = [];
+        var i;
+        for (i = 0; i < items.length; i++) {
+            var parent = items[i].parentElement;
+            if (parent && rowsSeen.indexOf(parent) === -1) {
+                rowsSeen.push(parent);
+            }
+        }
+        for (i = 0; i < rowsSeen.length; i++) {
+            var children = rowsSeen[i].children;
+            var group = [];
+            var groupSlug = null;
+            for (var j = 0; j < children.length; j++) {
+                var child = children[j];
+                if (child.classList && child.classList.contains('nwm-grid-item')) {
+                    if (child.style && child.style.display === 'none') {
+                        continue;
+                    }
+                    var slug = child.getAttribute('data-item-section') || '';
+                    if (group.length > 0 && slug !== groupSlug) {
+                        applyGroupBalance(group, groupSlug, cfg);
+                        group = [];
+                    }
+                    group.push(child);
+                    groupSlug = slug;
+                } else if (group.length > 0) {
+                    applyGroupBalance(group, groupSlug, cfg);
+                    group = [];
+                    groupSlug = null;
+                }
+            }
+            if (group.length > 0) {
+                applyGroupBalance(group, groupSlug, cfg);
+            }
+        }
+    }
+
+    window.nwmBalanceGrid = nwmBalanceGrid;
+
+    // Run immediately (DOM above js.inc is already parsed)
+    nwmBalanceGrid();
+
+    // Re-balance automatically whenever crossing any configured breakpoint
+    if (typeof window.matchMedia === 'function') {
+        var cfg = getLayoutConfig();
+        for (var b = 0; b < cfg.breakpoints.length; b++) {
+            var bp = parseInt(cfg.breakpoints[b], 10);
+            if (!bp || bp <= 0) {
+                continue;
+            }
+            var mql = window.matchMedia('(min-width: ' + bp + 'px)');
+            if (typeof mql.addEventListener === 'function') {
+                mql.addEventListener('change', nwmBalanceGrid);
+            } else if (typeof mql.addListener === 'function') {
+                mql.addListener(nwmBalanceGrid);
+            }
+        }
+    }
+})();
+
 document.addEventListener('DOMContentLoaded', function () {
     const valueCards = document.querySelectorAll('.card-value');
     const valueCardNames = Array.from(valueCards).map(card => card.getAttribute('data-name'));

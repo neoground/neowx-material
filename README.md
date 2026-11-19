@@ -27,6 +27,7 @@ An actively maintained evolution of NeoWX Material featuring **interactive archi
 ## ✨ Core Highlights
 
 - **🔴 Real-Time MQTT Updates**: Instant live sensor updates over WebSockets without page reload, configurable value-change flash animations, live connection indicator, and live updates for dashboard telemetry gauges. → [MQTT Guide](docs/MQTT.md)
+- **📐 Configurable Responsive Grid & Balanced Row Packing**: Customize the 4 viewport breakpoints (`small`, `medium`, `large`, `desktop`), multi-column desktop bands (`desktop_columns = 1..5`), per-section `items_per_row` (from maximized single full-width items to 4+ per row), and automatic balanced row packing (`balance_rows`) across cards, charts, forecasts, telemetry, and embedded widgets. → [Layout Configuration Guide](docs/LAYOUT-CONFIGURATION.md)
 - **⚙️ Powerful Configuration & Upgrade-Safe Patching**: Control 20+ Material color schemes, auto dark mode, cards, charts, and embedded widgets in `skin.conf`. Keep your customizations intact across skin upgrades with `config_patcher.py`. → [Configuration Guide](docs/CONFIGURATION.md) • [Config Patcher](docs/CONFIG-PATCHER.md)
 - **🌍 12 Languages & Flexible Date Formatting**: Complete translations for Catalan, Danish, Dutch, English, Finnish, French, German, Italian, Polish, Slovak, Spanish, and Swedish, plus customizable date/time formats for cards and charts. → [Localization Guide](docs/LOCALIZATION.md) • [Date Formatting](docs/DATE-FORMATTING.md)
 - **📊 Multi-Axis Interactive Charts & Trend Indicators**: Zoomable ApexCharts with multiple independent left/right Y-axes, fullscreen mode, wind rose, and unit-aware trend indicators (`multi` WMO/NWS, `davis`, `strict`). → [Multi-Axis Guide](docs/MULTI-AXIS-USAGE-GUIDE.md) • [Trend Indicators](docs/TREND-INDICATORS.md)
@@ -66,7 +67,7 @@ An actively maintained evolution of NeoWX Material featuring **interactive archi
 
 All skin settings live under `[Extras]` and `[CheetahGenerator]` in `skins/neowx-material/skin.conf`:
 
-- **Layout & Archives**: Configure page sections under `[[Appearance]] → [[[pages]]]` / `[[[sections]]]` and control historical archive generation with `archive_start_date`, `archive_history`, and `archive_batch_size` under `[CheetahGenerator]`. See the [Configuration & Layout Guide](docs/CONFIGURATION.md).
+- **Responsive Layout & Archives**: Customize breakpoints, balanced row packing (`[[[Layout]]]`), and page sections (`[[[pages]]]` / `[[[sections]]]`) under `[[Appearance]]`, and control historical archive generation under `[CheetahGenerator]`. See the [Layout Configuration Guide](docs/LAYOUT-CONFIGURATION.md) and [Configuration & Layout Guide](docs/CONFIGURATION.md).
 - **Preserve Settings Across Updates**: Save your overrides in `skin.conf.patch` and apply them anytime:
   ```bash
   ./config_patcher.py skin.conf skin.conf.patch
@@ -83,6 +84,7 @@ Detailed guides and references are located in the [`docs/`](docs/) directory:
 | Guide | Description |
 | :--- | :--- |
 | **[Configuration & Layout Guide](docs/CONFIGURATION.md)** | Page/section layout (`[[[pages]]]`, `[[[sections]]]`), collapsible panels, Release 2.0 archive navigation & backfill (`archive_start_date`, `archive_history`, `archive_batch_size`), forecasts, and embedded iFrames/images |
+| **[Layout Configuration Guide](docs/LAYOUT-CONFIGURATION.md)** | Configurable responsive breakpoints (`[[[Layout]]]`), multi-column desktop bands (`desktop_columns`), balanced row packing (`balance_rows`), and section-level `items_per_row` overrides |
 | **[Configuration Patcher Guide](docs/CONFIG-PATCHER.md)** | Preserve your `skin.conf` customizations automatically across skin updates |
 | **[MQTT Real-Time Updates Guide](docs/MQTT.md)** | Mosquitto/WebSocket setup, WeeWX MQTT extension, flash effects, and sensor mapping |
 | **[Localization & Language Guide](docs/LOCALIZATION.md)** | Configuring the 12 supported languages, OS/systemd locales, and adding translations |

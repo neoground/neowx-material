@@ -66,10 +66,10 @@
                             </div>
                         #end if
                         <div class="nwm-footer-meta-row">
-                            <span class="nwm-footer-meta-label">$gettext("panels")</span>
+                            <span class="nwm-footer-meta-label">$gettext("view")</span>
                             <span class="nwm-footer-meta-value">
-                                <button type="button" class="nwm-footer-btn-chip" id="nwm-reset-panels-btn" style="border:none; cursor:pointer;" title="$gettext('reset_panels_tooltip')">
-                                    <i class="mdi mdi-restore mr-1"></i>$gettext("reset_panels")
+                                <button type="button" class="nwm-footer-btn-chip" id="nwm-reset-view-btn" style="border:none; cursor:pointer;" title="$gettext('reset_view_tooltip')">
+                                    <i class="mdi mdi-restore mr-1"></i>$gettext("reset_view")
                                 </button>
                             </span>
                         </div>
@@ -216,13 +216,45 @@
         </div>
 
         ## Update notification
-        #if $update_check and $update_check.available
-            <div class="alert alert-info alert-dismissible fade show mx-3 my-2 text-center" role="alert">
-                <span class="mdi mdi-information-outline mr-1"></span>
-                $gettext("update_available")
-                <strong>v$update_check.latest_version</strong>
-                ($gettext("current"): v$update_check.current_version)
-                <a href="$update_check.github_url" target="_blank" rel="noopener" class="alert-link ml-1">$gettext("view_on_github")</a>
+        #set $uc = $update_check if $varExists('update_check') else None
+        #set $uc_skin = $uc.get('skin') if $uc else None
+        #set $uc_weewx = $uc.get('weewx') if $uc else None
+        ## Backwards compatibility if WeeWX still has updatecheck.py v1.0.x loaded before restart
+        #if $uc and $uc.available and not $uc_skin and not $uc_weewx and $uc.get('latest_version')
+            #set $uc_skin = $uc
+        #end if
+        #if ($uc_skin and $uc_skin.available) or ($uc_weewx and $uc_weewx.available)
+            #set $skin_latest_attr = $uc_skin.latest_version if ($uc_skin and $uc_skin.available) else ''
+            #set $weewx_latest_attr = $uc_weewx.latest_version if ($uc_weewx and $uc_weewx.available) else ''
+            <div id="nwm-update-banner"
+                 class="alert alert-info alert-dismissible fade show mx-3 my-2 nwm-update-banner"
+                 role="alert"
+                 data-skin-latest="$skin_latest_attr"
+                 data-weewx-latest="$weewx_latest_attr">
+                <button type="button" class="close nwm-update-close" id="nwm-update-banner-close"
+                        aria-label="$gettext('close')" title="$gettext('close')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="nwm-update-banner-body">
+                    #if $uc_skin and $uc_skin.available
+                        <div class="nwm-update-line">
+                            <span class="mdi mdi-information-outline mr-1"></span>
+                            $gettext("update_available")
+                            <strong>v$uc_skin.latest_version</strong>
+                            ($gettext("current"): v$uc_skin.current_version)
+                            <a href="$uc_skin.github_url" target="_blank" rel="noopener noreferrer" class="alert-link ml-1">$gettext("view_on_github")</a>
+                        </div>
+                    #end if
+                    #if $uc_weewx and $uc_weewx.available
+                        <div class="nwm-update-line">
+                            <span class="mdi mdi-information-outline mr-1"></span>
+                            $gettext("update_available_weewx")
+                            <strong>v$uc_weewx.latest_version</strong>
+                            ($gettext("current"): v$uc_weewx.current_version)
+                            <a href="$uc_weewx.github_url" target="_blank" rel="noopener noreferrer" class="alert-link ml-1">$gettext("view_on_github")</a>
+                        </div>
+                    #end if
+                </div>
             </div>
         #end if
     </div>
@@ -230,52 +262,117 @@
 </footer>
 
 <script>
+(function () {
+    var UPDATE_DISMISS_KEY = 'nwm-update-dismissed';
+    var banner = document.getElementById('nwm-update-banner');
+    var isCurrentPage = #if $getVar('active_nav', '') == 'current'#true#else#false#end if#;
+
+    function readDismissed() {
+        try {
+            var raw = localStorage.getItem(UPDATE_DISMISS_KEY);
+            if (!raw) return null;
+            var parsed = JSON.parse(raw);
+            if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+                localStorage.removeItem(UPDATE_DISMISS_KEY);
+                return null;
+            }
+            return {
+                skin: typeof parsed.skin === 'string' ? parsed.skin : '',
+                weewx: typeof parsed.weewx === 'string' ? parsed.weewx : ''
+            };
+        } catch (err) {
+            return null;
+        }
+    }
+
+    if (banner) {
+        var skinLatest = banner.getAttribute('data-skin-latest') || '';
+        var weewxLatest = banner.getAttribute('data-weewx-latest') || '';
+        var dismissed = readDismissed();
+
+        if (dismissed) {
+            var skinCovered = !skinLatest || dismissed.skin === skinLatest;
+            var weewxCovered = !weewxLatest || dismissed.weewx === weewxLatest;
+            if (skinCovered && weewxCovered) {
+                banner.style.display = 'none';
+            } else {
+                // A newer skin or WeeWX version is available than what was dismissed
+                try {
+                    localStorage.removeItem(UPDATE_DISMISS_KEY);
+                } catch (err) {}
+            }
+        }
+
+        var closeBtn = document.getElementById('nwm-update-banner-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function () {
+                try {
+                    localStorage.setItem(UPDATE_DISMISS_KEY, JSON.stringify({
+                        skin: skinLatest,
+                        weewx: weewxLatest
+                    }));
+                } catch (err) {}
+                banner.classList.remove('show');
+                banner.style.display = 'none';
+            });
+        }
+    } else if (isCurrentPage) {
+        // Station is up to date on the live page; remove stale dismissed state
+        try {
+            localStorage.removeItem(UPDATE_DISMISS_KEY);
+        } catch (err) {}
+    }
+})();
+
 document.addEventListener('DOMContentLoaded', function () {
     var toggleBtn = document.getElementById('nwm-footer-toggle');
     var drawer = document.getElementById('nwm-footer-drawer');
-    if (!toggleBtn || !drawer) return;
-
-    var userTriggeredOpen = false;
-    toggleBtn.addEventListener('click', function () {
-        if (!drawer.classList.contains('show')) {
-            userTriggeredOpen = true;
-        }
-    });
-
-    if (localStorage.getItem('nwm_footer_open') === '1') {
-        drawer.classList.add('show');
-        toggleBtn.setAttribute('aria-expanded', 'true');
-        toggleBtn.classList.add('expanded');
-    }
-
-    if (window.jQuery) {
-        window.jQuery(drawer).on('show.bs.collapse', function () {
-            toggleBtn.setAttribute('aria-expanded', 'true');
-            toggleBtn.classList.add('expanded');
-            localStorage.setItem('nwm_footer_open', '1');
-        });
-        window.jQuery(drawer).on('shown.bs.collapse', function () {
-            if (userTriggeredOpen) {
-                userTriggeredOpen = false;
-                var footer = drawer.closest('footer') || drawer;
-                footer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    if (toggleBtn && drawer) {
+        var userTriggeredOpen = false;
+        toggleBtn.addEventListener('click', function () {
+            if (!drawer.classList.contains('show')) {
+                userTriggeredOpen = true;
             }
         });
-        window.jQuery(drawer).on('hide.bs.collapse', function () {
-            userTriggeredOpen = false;
-            toggleBtn.setAttribute('aria-expanded', 'false');
-            toggleBtn.classList.remove('expanded');
-            localStorage.setItem('nwm_footer_open', '0');
-        });
+
+        try {
+            if (localStorage.getItem('nwm_footer_open') === '1') {
+                drawer.classList.add('show');
+                toggleBtn.setAttribute('aria-expanded', 'true');
+                toggleBtn.classList.add('expanded');
+            }
+        } catch (err) {}
+
+        if (window.jQuery) {
+            window.jQuery(drawer).on('show.bs.collapse', function () {
+                toggleBtn.setAttribute('aria-expanded', 'true');
+                toggleBtn.classList.add('expanded');
+                try { localStorage.setItem('nwm_footer_open', '1'); } catch (err) {}
+            });
+            window.jQuery(drawer).on('shown.bs.collapse', function () {
+                if (userTriggeredOpen) {
+                    userTriggeredOpen = false;
+                    var footer = drawer.closest('footer') || drawer;
+                    footer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                }
+            });
+            window.jQuery(drawer).on('hide.bs.collapse', function () {
+                userTriggeredOpen = false;
+                toggleBtn.setAttribute('aria-expanded', 'false');
+                toggleBtn.classList.remove('expanded');
+                try { localStorage.setItem('nwm_footer_open', '0'); } catch (err) {}
+            });
+        }
     }
 
-    var resetBtn = document.getElementById('nwm-reset-panels-btn');
+    var resetBtn = document.getElementById('nwm-reset-view-btn');
     if (resetBtn) {
         resetBtn.addEventListener('click', function (e) {
             e.preventDefault();
             try {
                 sessionStorage.removeItem('nwm-panels');
                 localStorage.removeItem('nwm-panels');
+                localStorage.removeItem('nwm-update-dismissed');
             } catch (err) {}
             window.location.reload();
         });

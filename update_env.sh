@@ -14,6 +14,7 @@ fi
 
 SRC_DIR="/Users/seehausen/Developer/neowx-material/skins/neowx-material"
 DEST_DIR="/Volumes/docker/weewx/skins/neowx-material"
+DEST_DIR2="/Volumes/docker/weewx/skins/neo"
 
 
 # Read current version from destination skin.conf
@@ -61,6 +62,7 @@ echo "New version: $NEW_VERSION"
 # Copy files, excluding node_modules
 echo "Copying skins/neowx-material directory..."
 rsync -a --exclude 'node_modules' "$SRC_DIR/" "$DEST_DIR/"
+rsync -a --exclude 'node_modules' "$SRC_DIR/" "$DEST_DIR2/"
 
 # Copy bin/user directory
 echo "Copying bin/user directory..."
@@ -77,6 +79,10 @@ rsync -a "$SRC_DIR/css/" "/Volumes/web/css/"
 # Run config_patcher.py
 cd "$DEST_DIR"
 python3 config_patcher.py skin.conf skin.conf.patch
+
+# Run config_patcher.py
+cd "$DEST_DIR2"
+python3 config_patcher.py skin.conf skin.conf-demo.patch
 
 # Update version in destination skin.conf
 echo "Updating version to $NEW_VERSION in destination skin.conf..."

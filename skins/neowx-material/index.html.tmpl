@@ -15,7 +15,7 @@
     #def valuesCard($name, $section = "")
         ## ET requires a valid positive sum to be shown
         #if $getVar('day.' + name + '.has_data') and ($name != 'ET' or ($day.ET.sum.raw is not None and $day.ET.sum.raw >= 0.0))
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
                 <div class="card card-value" data-name="$name" data-section="$section">
                     <div class="card-body text-center">
                         <h3 class="h5-responsive $Extras.color-text">
@@ -156,7 +156,7 @@
             #set $cc_any_has_data = any($chartHasData(v) for v in $cc_vals_list)
             #set $cc_sensors_str = chr(44).join($cc_vals_list)
             #if len($cc_vals_list) > 0 and $cc_any_has_data
-                <div class="col-12 col-xl-6 mb-4">
+                <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
                     <div class="card card-chart" data-name="$name" data-section="$section" data-sensors="$cc_sensors_str">
                         <div class="card-body text-center">
                             <h5 class="h5-responsive $Extras.color-text">$cc_title</h5>
@@ -167,7 +167,7 @@
             #end if
         #end if
     #else if ($chartHasData($name) or $name == "windvec") and $name not in ["appTemp", "windrun"] and ($name != 'ET' or ($day.ET.sum.raw is not None and $day.ET.sum.raw >= 0.0))
-        <div class="col-12 col-xl-6 mb-4">
+        <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
             <div class="card card-chart" data-name="$name" data-section="$section">
                 <div class="card-body text-center">
                     <h5 class="h5-responsive $Extras.color-text">
