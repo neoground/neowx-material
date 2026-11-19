@@ -60,7 +60,7 @@
 ##
 #def batteryCard($name, $section = "")
     #if $getVar('day.' + name + '.has_data') and ($getVar('day.' + name + '.max.raw') > 0 or $Extras.Telemetry.allow_zero_values == "yes")
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
             ## data-nwm-gauge is a contract with js/weewx-mqtt.js (updateGaugeCard).
             ## The MQTT updater would otherwise rewrite this heading with a bare
             ## number and unit, turning a mapped state like "OK" into "0.0 V"
@@ -206,7 +206,7 @@
 ##
 #def teleChartCard($name, $section = "")
     #if $getVar('day.' + name + '.has_data') and ($getVar('day.' + name + '.max.raw') > 0 or $Extras.Telemetry.allow_zero_values == "yes")
-        <div class="col-12 col-xl-6 mb-4">
+        <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
             <div class="card card-chart h-100" data-name="$name" data-section="$section">
                 <div class="card-body text-center">
                     <h5 class="h5-responsive $Extras.color-text">

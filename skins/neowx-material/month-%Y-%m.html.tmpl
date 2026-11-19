@@ -19,7 +19,7 @@
 #def valuesCard($name, $section = "")
     ## ET requires a valid positive sum to be shown
     #if $getVar('month.' + name + '.has_data') and ($name != 'ET' or ($month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0))
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
             <div class="card card-value" data-name="$name" data-section="$section">
                 <div class="card-body text-center">
                     <h3 class="h5-responsive $Extras.color-text">
@@ -116,7 +116,7 @@
             #set $cc_any_has_data = any($getVar('month.' + v + '.has_data') for v in $cc_vals_list)
             #set $cc_sensors_str = chr(44).join($cc_vals_list)
             #if len($cc_vals_list) > 0 and $cc_any_has_data
-                <div class="col-12 col-xl-6 mb-4">
+                <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
                     <div class="card card-chart" data-name="$name" data-section="$section" data-sensors="$cc_sensors_str">
                         <div class="card-body text-center">
                             <h5 class="h5-responsive $Extras.color-text">$cc_title</h5>
@@ -127,7 +127,7 @@
             #end if
         #end if
     #else if ($getVar('month.' + name + '.has_data') or $name == "windvec") and $name != "appTemp" and ($name != 'ET' or ($month.ET.sum.raw is not None and $month.ET.sum.raw > 0.0))
-        <div class="col-12 col-xl-6 mb-4">
+        <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
             <div class="card card-chart" data-name="$name" data-section="$section">
                 <div class="card-body text-center">
                     <h5 class="h5-responsive $Extras.color-text">
@@ -165,7 +165,7 @@
             $valuesCard('ET', $section)
         #end if
     #else if $x == "temperatureThresholdDays"
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
             <div class="card" data-name="temperatureThresholdDays" data-section="$section">
                 <div class="card-body text-center">
                     <h3 class="h5-responsive $Extras.color-text">$gettext("summer_days")</h3>
@@ -177,7 +177,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
             <div class="card">
                 <div class="card-body text-center">
                     <h3 class="h5-responsive $Extras.color-text">$gettext("tropical_days")</h3>
@@ -189,7 +189,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
             <div class="card">
                 <div class="card-body text-center">
                     <h3 class="h5-responsive $Extras.color-text">$gettext("tropical_nights")</h3>
@@ -201,7 +201,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
             <div class="card">
                 <div class="card-body text-center">
                     <h3 class="h5-responsive $Extras.color-text">$gettext("arctic_days")</h3>

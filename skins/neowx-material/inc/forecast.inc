@@ -85,7 +85,7 @@
             #end if
         #end if
         #for $i, $x in $enumerate($fcast.daily)
-            <div class="col-12 col-md-6 col-xl-4 mb-4">
+            <div class="col-12 nwm-grid-item mb-4" data-item-section="$section">
                 <div class="card card-forecast" data-name="forecast" data-section="$section">
                     <div class="card-body text-center pb-1">
                         <h3 class="h5-responsive $Extras.color-text">

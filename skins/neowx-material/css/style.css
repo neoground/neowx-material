@@ -6578,69 +6578,57 @@ header .navbar {
   font-size: 11pt !important;
 }
 
-@media screen and (min-width: 1660px) {
-  .temprow {
-    display: flex;
-    width: 50%;
-    margin: 1rem 0 0 0 !important;
+.nwm-grid-item {
+  flex: 0 0 calc(100% / var(--nwm-cols-eff, var(--nwm-cols, 1)));
+  max-width: calc(100% / var(--nwm-cols-eff, var(--nwm-cols, 1)));
+}
+
+:where(.nwm-layout-col) {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+:where(.nwm-grid-item) {
+  --nwm-cols: 1;
+}
+
+@media screen and (min-width: 768px) {
+  :where(.nwm-grid-item) {
+    --nwm-cols: 2;
   }
-  .graphrow {
-    display: flex;
-    width: 50%;
-    margin: 1rem 0 0 0 !important;
+}
+@media screen and (min-width: 1200px) {
+  :where(.nwm-grid-item) {
+    --nwm-cols: 3;
   }
-  .d-flex-xxl {
-    display: flex !important;
-  }
-  .temprow .col-xl-4 {
+}
+@media screen and (min-width: 1400px) {
+  :where(.nwm-desktop-cols-2 > .nwm-layout-col) {
     flex: 0 0 50%;
     max-width: 50%;
   }
-  .rowdivider {
-    display: none !important;
-  }
-  .nwm-layout-full .col-xl-4:not(:has(> .card-forecast)),
-  .nwm-layout-full .col-xl-6 {
-    flex: 0 0 25%;
-    max-width: 25%;
-  }
-  .nwm-desktop-cols-2 > .nwm-layout-col {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-  .nwm-desktop-cols-2 > .nwm-layout-col .col-xl-4 {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-  .nwm-desktop-cols-3 > .nwm-layout-col {
+  :where(.nwm-desktop-cols-3 > .nwm-layout-col) {
     flex: 0 0 33.333333%;
     max-width: 33.333333%;
   }
-  .nwm-desktop-cols-3 > .nwm-layout-col .col-xl-4 {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-  .nwm-desktop-cols-3 > .nwm-layout-col .col-xl-6 {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-  .nwm-desktop-cols-4 > .nwm-layout-col {
+  :where(.nwm-desktop-cols-4 > .nwm-layout-col) {
     flex: 0 0 25%;
     max-width: 25%;
   }
-  .nwm-desktop-cols-4 > .nwm-layout-col .col-xl-4,
-  .nwm-desktop-cols-4 > .nwm-layout-col .col-xl-6 {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-  .nwm-desktop-cols-5 > .nwm-layout-col {
+  :where(.nwm-desktop-cols-5 > .nwm-layout-col) {
     flex: 0 0 20%;
     max-width: 20%;
   }
-  .nwm-desktop-cols-5 > .nwm-layout-col .col-xl-4,
-  .nwm-desktop-cols-5 > .nwm-layout-col .col-xl-6 {
-    flex: 0 0 100%;
-    max-width: 100%;
+  :where(.nwm-layout-full .nwm-grid-item) {
+    --nwm-cols: 4;
+  }
+  :where(.nwm-desktop-cols-2 > .nwm-layout-col .nwm-grid-item) {
+    --nwm-cols: 2;
+  }
+  :where(.nwm-desktop-cols-3 > .nwm-layout-col .nwm-grid-item),
+  :where(.nwm-desktop-cols-4 > .nwm-layout-col .nwm-grid-item),
+  :where(.nwm-desktop-cols-5 > .nwm-layout-col .nwm-grid-item) {
+    --nwm-cols: 1;
   }
 }
 @media (prefers-color-scheme: dark) {
@@ -7805,6 +7793,59 @@ footer.page-footer.nwm-collapsible-footer .nwm-footer-toggle-btn .nwm-footer-che
 }
 footer.page-footer.nwm-collapsible-footer .nwm-footer-toggle-btn.expanded .nwm-footer-chevron, footer.page-footer.nwm-collapsible-footer .nwm-footer-toggle-btn[aria-expanded=true] .nwm-footer-chevron {
   transform: rotate(180deg);
+}
+footer.page-footer.nwm-collapsible-footer .nwm-update-banner {
+  position: relative;
+  padding: 0.65rem 2.75rem 0.65rem 1.25rem;
+  text-align: center;
+  color: #0c5460;
+}
+footer.page-footer.nwm-collapsible-footer .nwm-update-banner .nwm-update-banner-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  color: #0c5460;
+}
+footer.page-footer.nwm-collapsible-footer .nwm-update-banner .nwm-update-line {
+  line-height: 1.45;
+  color: #0c5460;
+}
+footer.page-footer.nwm-collapsible-footer .nwm-update-banner a.alert-link {
+  color: #062c33;
+  text-decoration: underline;
+  text-decoration-color: rgba(6, 44, 51, 0.45);
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+footer.page-footer.nwm-collapsible-footer .nwm-update-banner a.alert-link:hover, footer.page-footer.nwm-collapsible-footer .nwm-update-banner a.alert-link:focus {
+  color: #041d22;
+  text-decoration-color: #041d22;
+}
+footer.page-footer.nwm-collapsible-footer .nwm-update-banner .nwm-update-close {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.5rem;
+  padding: 0.2rem 0.45rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #0c5460;
+  text-shadow: none;
+  opacity: 0.65;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+footer.page-footer.nwm-collapsible-footer .nwm-update-banner .nwm-update-close:hover, footer.page-footer.nwm-collapsible-footer .nwm-update-banner .nwm-update-close:focus {
+  color: #062c33;
+  opacity: 1;
+  outline: none;
+}
+footer.page-footer.nwm-collapsible-footer .nwm-update-banner .nwm-update-close:focus-visible {
+  outline: 2px solid #0c5460;
+  outline-offset: 1px;
+  border-radius: 3px;
 }
 
 @media (max-width: 1599.98px) {

@@ -8,6 +8,7 @@ __pycache__/
 /neowx-material-latest.zip
 /private/
 /skins/neowx-material/skin.conf.patch
+/skins/neowx-material/skin.conf-demo.patch
 /todo.md
 /.superpowers/
 /.agents/

@@ -122,14 +122,22 @@ isEmbeddedItem classifies a single item name: true if the name has a
 (case-insensitive).
 """
 
+import json
 import logging
+import re
 import weakref
 
-from weewx.cheetahgenerator import SearchList
+try:
+    from weewx.cheetahgenerator import SearchList
+except ImportError:
+    # Fallback when imported outside of WeeWX (e.g. unit tests)
+    class SearchList:
+        def __init__(self, generator):
+            self.generator = generator
 
 log = logging.getLogger(__name__)
 
-VERSION = "2.6.0"
+VERSION = "2.7.0"
 
 # Segment types.  'type' is None for a section with no title, whose items
 # render loose rather than inside a panel.
@@ -158,11 +166,30 @@ SETTING_KEYS = (
     "items_title_align",
     "column",
     "full_width",
+    "items_per_row",
+    "items_per_row_small",
+    "items_per_row_medium",
+    "items_per_row_large",
+    "items_per_row_desktop",
+    "balance_rows",
 )
 
 MAX_DESKTOP_COLUMNS = 5
 DEFAULT_DESKTOP_COLUMNS = 2
 COLUMN_PAGE_KEYS = tuple("column%d" % i for i in range(1, MAX_DESKTOP_COLUMNS + 1))
+
+LAYOUT_RANGES = ("small", "medium", "large", "desktop")
+DEFAULT_LAYOUT_RANGES = {
+    "small": {"min_width": 0, "items_per_row": 1},
+    "medium": {"min_width": 768, "items_per_row": 2},
+    "large": {"min_width": 1200, "items_per_row": 3},
+    "desktop": {"min_width": 1400, "items_per_row": 4},
+}
+DEFAULT_BALANCE_ROWS = True
+MIN_ITEMS_PER_ROW = 1
+MAX_ITEMS_PER_ROW = 12
+MAX_BREAKPOINT_PX = 10000
+_SAFE_SLUG_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
 # Sub-page override levels inside [[[pages]]].  A page key absent from this
 # map takes no sub-blocks at all, which is how 'today', 'yesterday', 'week',
@@ -1164,8 +1191,305 @@ def order_items(skin_dict, content=None, page=None, subpage=None):
     return out
 
 
+_LAYOUT_CONFIG_KEY = ("__layout_config__",)
+
+
+def _warn_once(appearance, problem, msg, *args):
+    """Log a warning once per (appearance, problem) key."""
+    if not _problem_seen(appearance, problem):
+        _mark_problem(appearance, problem)
+        log.warning(msg, *args)
+
+
+def _parse_bounded_int(raw, min_val, max_val):
+    """Parse raw config value strictly as an int within [min_val, max_val]."""
+    if raw is None or isinstance(raw, bool):
+        return None
+    text = str(raw).strip()
+    if not text or not re.match(r"^[0-9]+$", text):
+        return None
+    val = int(text)
+    if val < min_val or val > max_val:
+        return None
+    return val
+
+
+def _parse_bool_flag(raw):
+    """Parse a boolean string using TRUE_WORDS / FALSE_WORDS, or return None."""
+    if raw is None:
+        return None
+    if isinstance(raw, bool):
+        return raw
+    text = str(raw).strip().lower()
+    if text in TRUE_WORDS:
+        return True
+    if text in FALSE_WORDS:
+        return False
+    return None
+
+
+def parse_layout_config(skin_dict):
+    """Parse [Extras] -> [[Appearance]] -> [[[Layout]]] and per-section grid
+    overrides into a validated, memoised dictionary."""
+    appearance = _appearance(skin_dict)
+    cached = _cache_get(appearance, _LAYOUT_CONFIG_KEY)
+    if cached is not None:
+        return cached
+
+    layout_block = appearance.get("Layout")
+    if not hasattr(layout_block, "get"):
+        layout_block = {}
+
+    balance_rows = DEFAULT_BALANCE_ROWS
+    raw_balance = layout_block.get("balance_rows")
+    if raw_balance is not None and str(raw_balance).strip() != "":
+        parsed_balance = _parse_bool_flag(raw_balance)
+        if parsed_balance is not None:
+            balance_rows = parsed_balance
+        else:
+            _warn_once(
+                appearance,
+                ("layout_balance_rows", "Layout", str(raw_balance)),
+                "panelorder: Layout balance_rows = %r is not a valid boolean; using %s.",
+                raw_balance,
+                DEFAULT_BALANCE_ROWS,
+            )
+
+    ranges = {}
+    for rname in LAYOUT_RANGES:
+        defaults = DEFAULT_LAYOUT_RANGES[rname]
+        rblock = layout_block.get(rname)
+        if not hasattr(rblock, "get"):
+            rblock = {}
+
+        min_w = defaults["min_width"]
+        raw_min = rblock.get("min_width")
+        if raw_min is not None and str(raw_min).strip() != "":
+            parsed_min = _parse_bounded_int(raw_min, 0, MAX_BREAKPOINT_PX)
+            if parsed_min is not None:
+                min_w = parsed_min
+            else:
+                _warn_once(
+                    appearance,
+                    ("layout_min_width", rname, str(raw_min)),
+                    "panelorder: Layout.%s min_width = %r is invalid (expected 0..%d); using %d.",
+                    rname,
+                    raw_min,
+                    MAX_BREAKPOINT_PX,
+                    min_w,
+                )
+
+        items_n = defaults["items_per_row"]
+        raw_items = rblock.get("items_per_row")
+        if raw_items is not None and str(raw_items).strip() != "":
+            parsed_items = _parse_bounded_int(raw_items, MIN_ITEMS_PER_ROW, MAX_ITEMS_PER_ROW)
+            if parsed_items is not None:
+                items_n = parsed_items
+            else:
+                _warn_once(
+                    appearance,
+                    ("layout_items_per_row", rname, str(raw_items)),
+                    "panelorder: Layout.%s items_per_row = %r is invalid (expected %d..%d); using %d.",
+                    rname,
+                    raw_items,
+                    MIN_ITEMS_PER_ROW,
+                    MAX_ITEMS_PER_ROW,
+                    items_n,
+                )
+
+        ranges[rname] = {"min_width": min_w, "items_per_row": items_n}
+
+    # Enforce strictly ascending breakpoints: small < medium < large < desktop
+    widths = [ranges[r]["min_width"] for r in LAYOUT_RANGES]
+    if not (widths[0] < widths[1] < widths[2] < widths[3]):
+        _warn_once(
+            appearance,
+            ("layout_bp_order", "Layout", str(widths)),
+            "panelorder: Layout min_width breakpoints %s must be strictly ascending; falling back to defaults.",
+            widths,
+        )
+        for rname in LAYOUT_RANGES:
+            ranges[rname]["min_width"] = DEFAULT_LAYOUT_RANGES[rname]["min_width"]
+
+    # Section-level items_per_row and balance_rows overrides
+    section_overrides = {}
+    section_balance = {}
+    sections_cfg = appearance.get("sections")
+    if hasattr(sections_cfg, "keys"):
+        for sid in sections_cfg.keys():
+            sec = sections_cfg[sid]
+            if not hasattr(sec, "get"):
+                continue
+            slug = section_slug(skin_dict, sid)
+            if not slug or not _SAFE_SLUG_RE.match(slug):
+                continue
+
+            scalar_n = None
+            raw_scalar = sec.get("items_per_row")
+            if raw_scalar is not None and str(raw_scalar).strip() != "":
+                parsed_scalar = _parse_bounded_int(raw_scalar, MIN_ITEMS_PER_ROW, MAX_ITEMS_PER_ROW)
+                if parsed_scalar is not None:
+                    scalar_n = parsed_scalar
+                else:
+                    _warn_once(
+                        appearance,
+                        ("section_items_per_row", sid, str(raw_scalar)),
+                        "panelorder: section '%s' items_per_row = %r is invalid (expected %d..%d); ignoring.",
+                        sid,
+                        raw_scalar,
+                        MIN_ITEMS_PER_ROW,
+                        MAX_ITEMS_PER_ROW,
+                    )
+
+            per_range = {}
+            for rname in LAYOUT_RANGES:
+                key = "items_per_row_%s" % rname
+                raw_r = sec.get(key)
+                if raw_r is not None and str(raw_r).strip() != "":
+                    parsed_r = _parse_bounded_int(raw_r, MIN_ITEMS_PER_ROW, MAX_ITEMS_PER_ROW)
+                    if parsed_r is not None:
+                        per_range[rname] = parsed_r
+                    else:
+                        _warn_once(
+                            appearance,
+                            ("section_items_per_row_range", sid, key, str(raw_r)),
+                            "panelorder: section '%s' %s = %r is invalid (expected %d..%d); ignoring.",
+                            sid,
+                            key,
+                            raw_r,
+                            MIN_ITEMS_PER_ROW,
+                            MAX_ITEMS_PER_ROW,
+                        )
+
+            if scalar_n is not None or per_range:
+                resolved = {}
+                for rname in LAYOUT_RANGES:
+                    if rname in per_range:
+                        resolved[rname] = per_range[rname]
+                    elif scalar_n is not None:
+                        if rname == "desktop":
+                            resolved[rname] = scalar_n
+                        else:
+                            resolved[rname] = min(scalar_n, ranges[rname]["items_per_row"])
+                if resolved:
+                    section_overrides[slug] = resolved
+
+            raw_sec_bal = sec.get("balance_rows")
+            if raw_sec_bal is not None and str(raw_sec_bal).strip() != "":
+                parsed_sec_bal = _parse_bool_flag(raw_sec_bal)
+                if parsed_sec_bal is not None:
+                    section_balance[slug] = parsed_sec_bal
+                else:
+                    _warn_once(
+                        appearance,
+                        ("section_balance_rows", sid, str(raw_sec_bal)),
+                        "panelorder: section '%s' balance_rows = %r is not a valid boolean; ignoring.",
+                        sid,
+                        raw_sec_bal,
+                    )
+
+    result = {
+        "balance_rows": balance_rows,
+        "ranges": ranges,
+        "sections": section_overrides,
+        "section_balance": section_balance,
+    }
+    _cache_set(appearance, _LAYOUT_CONFIG_KEY, result)
+    return result
+
+
+def generate_layout_css(skin_dict):
+    """Build deterministic CSS rules for responsive breakpoints, multi-column
+    desktop bands, and per-section items_per_row overrides."""
+    cfg = parse_layout_config(skin_dict)
+    ranges = cfg["ranges"]
+    sections = cfg["sections"]
+
+    lines = []
+
+    # Base (small) range: stacked 1-column layout
+    lines.append(".nwm-layout-col { flex: 0 0 100%; max-width: 100%; }")
+    lines.append(".nwm-grid-item { --nwm-cols: %d; }" % ranges["small"]["items_per_row"])
+    for slug in sorted(sections.keys()):
+        if "small" in sections[slug] and _SAFE_SLUG_RE.match(slug):
+            lines.append(
+                '.nwm-grid-item[data-item-section="%s"] { --nwm-cols: %d; }'
+                % (slug, sections[slug]["small"])
+            )
+
+    # Medium and Large ranges
+    for rname in ("medium", "large"):
+        bp = ranges[rname]["min_width"]
+        cols = ranges[rname]["items_per_row"]
+        block = ["  .nwm-grid-item { --nwm-cols: %d; }" % cols]
+        for slug in sorted(sections.keys()):
+            if rname in sections[slug] and _SAFE_SLUG_RE.match(slug):
+                block.append(
+                    '  .nwm-grid-item[data-item-section="%s"] { --nwm-cols: %d; }'
+                    % (slug, sections[slug][rname])
+                )
+        lines.append("@media screen and (min-width: %dpx) {\n%s\n}" % (bp, "\n".join(block)))
+
+    # Desktop range: activates desktop_columns 2..5 and full-width band sizing
+    d_bp = ranges["desktop"]["min_width"]
+    d_cols = ranges["desktop"]["items_per_row"]
+    col_widths = {
+        2: "50%",
+        3: "33.333333%",
+        4: "25%",
+        5: "20%",
+    }
+    d_block = []
+    for k in range(2, MAX_DESKTOP_COLUMNS + 1):
+        w = col_widths[k]
+        d_block.append(
+            "  .nwm-desktop-cols-%d > .nwm-layout-col { flex: 0 0 %s; max-width: %s; }"
+            % (k, w, w)
+        )
+    d_block.append("  .nwm-layout-full .nwm-grid-item { --nwm-cols: %d; }" % d_cols)
+    for k in range(2, MAX_DESKTOP_COLUMNS + 1):
+        per_col = max(1, d_cols // k)
+        d_block.append(
+            "  .nwm-desktop-cols-%d > .nwm-layout-col .nwm-grid-item { --nwm-cols: %d; }"
+            % (k, per_col)
+        )
+    for slug in sorted(sections.keys()):
+        if "desktop" in sections[slug] and _SAFE_SLUG_RE.match(slug):
+            n = sections[slug]["desktop"]
+            d_block.append(
+                '  .nwm-layout-full .nwm-grid-item[data-item-section="%s"], '
+                '[class*="nwm-desktop-cols-"] > .nwm-layout-col .nwm-grid-item[data-item-section="%s"] '
+                "{ --nwm-cols: %d; }"
+                % (slug, slug, n)
+            )
+    lines.append("@media screen and (min-width: %dpx) {\n%s\n}" % (d_bp, "\n".join(d_block)))
+
+    return "\n".join(lines)
+
+
+def generate_layout_config_json(skin_dict):
+    """Build script-safe JSON config for client-side balanced row packing."""
+    cfg = parse_layout_config(skin_dict)
+    ranges = cfg["ranges"]
+    payload = {
+        "breakpoints": [
+            ranges["medium"]["min_width"],
+            ranges["large"]["min_width"],
+            ranges["desktop"]["min_width"],
+        ],
+        "balanceRows": bool(cfg["balance_rows"]),
+        "sectionBalance": {
+            slug: bool(val)
+            for slug, val in sorted(cfg["section_balance"].items())
+            if _SAFE_SLUG_RE.match(slug)
+        },
+    }
+    raw = json.dumps(payload, separators=(",", ":"))
+    return raw.replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
+
+
 class PanelOrder(SearchList):
-    """Exposes the two helpers above to Cheetah."""
+    """Exposes the layout and panel helpers to Cheetah."""
 
     def __init__(self, generator):
         SearchList.__init__(self, generator)
@@ -1186,6 +1510,12 @@ class PanelOrder(SearchList):
                 enable_panels = enable_panels_setting(skin_dict)
             return parse_layout(skin_dict, enable_panels, page, subpage)
 
+        def panel_layout_css():
+            return generate_layout_css(skin_dict)
+
+        def panel_layout_config_json():
+            return generate_layout_config_json(skin_dict)
+
         def panel_items(content=None, page=None, subpage=None):
             return order_items(skin_dict, content, page, subpage)
 
@@ -1204,6 +1534,8 @@ class PanelOrder(SearchList):
         return [{
             "panelSegments": panel_segments,
             "panelLayout": panel_layout,
+            "panelLayoutCSS": panel_layout_css,
+            "panelLayoutConfigJSON": panel_layout_config_json,
             "panelItems": panel_items,
             "panelPageSetting": panel_page_setting,
             "panelSectionSlug": panel_section_slug,

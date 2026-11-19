@@ -98,6 +98,18 @@
 ## MDB + skin style
 <link rel="stylesheet" href="${base_path}css/style.min.css?v=$Extras.version">
 
+## Responsive layout breakpoints & per-section grid rules from skin.conf [[[Layout]]]
+#if $varExists('panelLayoutCSS')
+<style id="nwm-layout-css">
+$panelLayoutCSS()
+</style>
+#end if
+#if $varExists('panelLayoutConfigJSON')
+<script>
+window.NWM_LAYOUT_CONFIG = $panelLayoutConfigJSON();
+</script>
+#end if
+
 ## Weather Icons
 <link rel="stylesheet" href="${base_path}weather-icons/css/weather-icons.min.css">
 <link rel="stylesheet" href="${base_path}weather-icons/css/weather-icons-wind.min.css">
